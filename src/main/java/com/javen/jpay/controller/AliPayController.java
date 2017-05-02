@@ -7,16 +7,22 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
+import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeCancelModel;
+import com.alipay.api.domain.AlipayTradePayModel;
+import com.alipay.api.domain.AlipayTradePrecreateModel;
+import com.alipay.api.domain.AlipayTradeQueryModel;
+import com.alipay.api.domain.AlipayTradeRefundModel;
+import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.javen.jpay.alipay.AliPayApi;
-import com.javen.jpay.alipay.BizContent;
 import com.javen.jpay.util.ParamsUtils;
 import com.javen.jpay.util.StringUtils;
 import com.javen.jpay.vo.AjaxResult;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
-import com.jfinal.kit.JsonKit;
 import com.jfinal.log.Log;
 
 public class AliPayController extends Controller {
@@ -58,21 +64,21 @@ public class AliPayController extends Controller {
 	public void wapPay() {
 		String body = "我是测试数据";
 		String subject = "Javen 测试";
-		String total_amount = "0.01";
-		String passback_params = "1";
-
-		BizContent content = new BizContent();
-		content.setBody(body);
-		content.setOut_trade_no(StringUtils.getOutTradeNo());
-		content.setPassback_params(passback_params);
-		content.setSubject(subject);
-		content.setTotal_amount(total_amount);
-		content.setProduct_code("QUICK_WAP_PAY");
+		String totalAmount = "0.01";
+		String passbackParams = "1";
 		String returnUrl = AliPayApi.notify_domain+"/alipay/return_url";
 		String notifyUrl = AliPayApi.notify_domain+"/alipay/notify_url";
 
+		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
+		model.setBody(body);
+		model.setSubject(subject);
+		model.setTotalAmount(totalAmount);
+		model.setPassbackParams(passbackParams);
+		model.setOutTradeNo(StringUtils.getOutTradeNo());
+		model.setProductCode("QUICK_WAP_PAY");
+		
 		try {
-			AliPayApi.wapPay(getResponse(), JsonKit.toJson(content),returnUrl,notifyUrl);
+			AliPayApi.wapPay(getResponse(), model,returnUrl,notifyUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,21 +99,23 @@ public class AliPayController extends Controller {
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.Yhpibd&treeId=194&articleId=105170&docType=1#s4
 	 */
 	public void tradePay() {
-		String auth_code = getPara("auth_code");
+		String authCode = getPara("auth_code");
 		String subject = "Javen 支付宝条形码支付测试";
-		String total_amount = "100";
-		BizContent content = new BizContent();
+		String totalAmount = "100";
+		String alipayStoreId = "123";
 
-		content.setOut_trade_no(StringUtils.getOutTradeNo());
-		content.setScene("bar_code");
-		content.setAuth_code(auth_code);
-		content.setSubject(subject);
-		content.setStore_id("123");
-		content.setTimeout_express("2m");
-		content.setTotal_amount(total_amount);
-
+		
+		AlipayTradePayModel model = new AlipayTradePayModel();
+		model.setAlipayStoreId(alipayStoreId);
+		model.setAuthCode(authCode);
+		model.setSubject(subject);
+		model.setTotalAmount(totalAmount);
+		model.setOutTradeNo(StringUtils.getOutTradeNo());
+		model.setTimeoutExpress("5m");
+		model.setProductCode("bar_code");
+		
 		try {
-			String resultStr = AliPayApi.tradePay(JsonKit.toJson(content));
+			String resultStr = AliPayApi.tradePay(model);
 			renderText(resultStr);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,17 +126,18 @@ public class AliPayController extends Controller {
 	 */
 	public void tradePrecreatePay() {
 		String subject = "Javen 支付宝扫码支付测试";
-		String total_amount = "86";
-		BizContent content = new BizContent();
-
-		content.setOut_trade_no(StringUtils.getOutTradeNo());
-		content.setSubject(subject);
-		content.setStore_id("123");
-		content.setTimeout_express("2m");
-		content.setTotal_amount(total_amount);
+		String totalAmount = "86";
+		String storeId = "123";
+		
+		AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
+		model.setSubject(subject);
+		model.setTotalAmount(totalAmount);
+		model.setStoreId(storeId);
+		model.setTimeoutExpress("5m");
+		model.setOutTradeNo(StringUtils.getOutTradeNo());
 
 		try {
-			String resultStr = AliPayApi.tradePrecreatePay(JsonKit.toJson(content));
+			String resultStr = AliPayApi.tradePrecreatePay(model);
 			JSONObject jsonObject = JSONObject.parseObject(resultStr);
 			String qr_code = jsonObject.getJSONObject("alipay_trade_precreate_response").getString("qr_code");
 			renderText(qr_code);
@@ -144,18 +153,17 @@ public class AliPayController extends Controller {
 	public void transfer() {
 		boolean isSuccess = false;
 		String total_amount = "100";
-
-		BizContent content = new BizContent();
-
-		content.setOut_biz_no(StringUtils.getOutTradeNo());
-		content.setPayee_type("ALIPAY_LOGONID");
-		content.setPayee_account("abpkvd0206@sandbox.com");
-		content.setAmount(total_amount);
-		content.setPayer_show_name("测试退款");
-		content.setPayee_real_name("沙箱环境");
-		content.setRemark("javen测试单笔转账到支付宝");
+		AlipayFundTransToaccountTransferModel model = new AlipayFundTransToaccountTransferModel();
+		model.setOutBizNo(StringUtils.getOutTradeNo());
+		model.setPayeeType("ALIPAY_LOGONID");
+		model.setPayeeAccount("abpkvd0206@sandbox.com");
+		model.setAmount(total_amount);
+		model.setPayerShowName("测试退款");
+		model.setPayerRealName("沙箱环境");
+		model.setRemark("javen测试单笔转账到支付宝");
+		
 		try {
-			isSuccess = AliPayApi.transfer(JsonKit.toJson(content));
+			isSuccess = AliPayApi.transfer(model);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -165,11 +173,12 @@ public class AliPayController extends Controller {
 	 * 下载对账单
 	 */
 	public void dataDataserviceBill(){
-		
+		String para = getPara("billDate");
 		try {
-			String resultStr = AliPayApi.billDownloadurlQuery("{" +
-					"    \"bill_type\":\"trade\"," +
-					"    \"bill_date\":\"2017-04-24\"}");
+			AlipayDataDataserviceBillDownloadurlQueryModel model = new AlipayDataDataserviceBillDownloadurlQueryModel();
+			model.setBillType("trade");
+			model.setBillDate(para);
+			String resultStr = AliPayApi.billDownloadurlQuery(model);
 			renderText(resultStr);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
@@ -180,13 +189,13 @@ public class AliPayController extends Controller {
 	 */
 	public void tradeRefund(){
 		
-		String bizContent = "{" +
-				"    \"out_trade_no\":\"042517111114931\"," +
-				"    \"trade_no\":\"2017042521001004200200236813\"," +
-				"    \"refund_reason\":\"正常退款\"," +
-				"    \"refund_amount\":\"86.00\"}";
 		try {
-			String resultStr = AliPayApi.tradeRefund(bizContent);
+			AlipayTradeRefundModel model = new AlipayTradeRefundModel();
+			model.setOutTradeNo("042517111114931");
+			model.setTradeNo("2017042521001004200200236813");
+			model.setRefundAmount("86.00");
+			model.setRefundReason("正常退款");
+			String resultStr = AliPayApi.tradeRefund(model);
 			renderText(resultStr);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
@@ -194,24 +203,24 @@ public class AliPayController extends Controller {
 	}
 	
 	public void tradeCancel(){
-		String bizContent = "{" +
-				"    \"out_trade_no\":\"042518024814931\"," +
-				"    \"trade_no\":\"2017042521001004200200236814\"" +
-				"  }";
 		try {
-			boolean isSuccess = AliPayApi.isTradeCancel(bizContent);
+			AlipayTradeCancelModel model = new AlipayTradeCancelModel();
+			model.setOutTradeNo("042518024814931");
+			model.setTradeNo("2017042521001004200200236814");
+			
+			boolean isSuccess = AliPayApi.isTradeCancel(model);
 			renderJson(isSuccess);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
 	}
 	public void tradeQuery(){
-		String bizContent = "{" +
-				"    \"out_trade_no\":\"042518024814931\"," +
-				"    \"trade_no\":\"2017042521001004200200236814\"" +
-				"  }";
 		try {
-			boolean isSuccess = AliPayApi.isTradeQuery(bizContent);
+			AlipayTradeQueryModel model = new AlipayTradeQueryModel();
+			model.setOutTradeNo("042518024814931");
+			model.setTradeNo("2017042521001004200200236814");
+			
+			boolean isSuccess = AliPayApi.isTradeQuery(model);
 			renderJson(isSuccess);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
@@ -221,11 +230,11 @@ public class AliPayController extends Controller {
 		String out_trade_no = getPara("out_trade_no");
 //		String trade_no = getPara("trade_no");
 		
-		BizContent bizContent = new BizContent();
-		bizContent.setOut_trade_no(out_trade_no);
-		
+		AlipayTradeQueryModel model = new AlipayTradeQueryModel();
+		model.setOutTradeNo(out_trade_no);
+
 		try {
-			String resultStr = AliPayApi.tradeQuery(JsonKit.toJson(bizContent)).getBody();
+			String resultStr = AliPayApi.tradeQuery(model).getBody();
 			renderText(resultStr);;
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
