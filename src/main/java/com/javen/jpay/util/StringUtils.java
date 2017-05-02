@@ -3,6 +3,9 @@ package com.javen.jpay.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -33,6 +36,19 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 
+	
+	/**
+	 * 要求外部订单号必须唯一。
+	 * @return
+	 */
+	public  static String getOutTradeNo() {
+		SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+		Date date = new Date();
+		String key = format.format(date);
+		key = key + System.currentTimeMillis();
+		key = key.substring(0, 15);
+		return key;
+	}
 	 /**
 	 * 将字符串中特定模式的字符转换成map中对应的值
 	 * 

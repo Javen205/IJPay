@@ -2,83 +2,54 @@ package com.javen.jpay.controller;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.javen.jpay.alipay.AliPayApi;
 import com.javen.jpay.alipay.BizContent;
-import com.javen.jpay.alipay.OrderInfoUtil2_0;
+import com.javen.jpay.util.ParamsUtils;
+import com.javen.jpay.util.StringUtils;
 import com.javen.jpay.vo.AjaxResult;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.JsonKit;
-import com.jfinal.kit.Prop;
-import com.jfinal.kit.PropKit;
-import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 
 public class AliPayController extends Controller {
-	private static final Prop prop = PropKit.use("alipay.properties");
 	private Log log = Log.getLog(AliPayController.class);
 	private AjaxResult result = new AjaxResult();
-	private boolean isDebug = true;
 
+	
 	public void index() {
 		renderText("test");
 	}
-
+	
 	/**
-	 * App支付
+	 * app支付
 	 */
-	public void appPay() {
-		String orderInfo;
+	public void appPay(){
 		try {
-
-			String body = "我是测试数据";
-			String passback_params = "123";
-			String subject = "1";
-			String total_amount = "0.01";
-			String notify_url = "http://javentech.tunnel.qydev.com/alipay/pay_notify";
-
-			String appId;
-			String rsa_private;
-			if (isDebug) {
-				appId = prop.get("test_appId").trim();
-				rsa_private = prop.get("test_rsa_private").trim();
-				System.out.println("test。。。。");
-			} else {
-				appId = prop.get("appId").trim();
-				rsa_private = prop.get("rsa_private").trim();
-			}
-			System.out.println("appId:" + appId);
-			System.out.println("rsa_private:" + rsa_private);
-
-			BizContent content = new BizContent();
-			content.setBody(body);
-			content.setOut_trade_no(OrderInfoUtil2_0.getOutTradeNo());
-			content.setPassback_params(passback_params);
-			content.setSubject(subject);
-
-			content.setTotal_amount(total_amount);
-			content.setProduct_code("QUICK_MSECURITY_PAY");
-
-			Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(appId, notify_url, content);
-			String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
-			String sign = OrderInfoUtil2_0.getSign(params, rsa_private);
-			orderInfo = orderParam + "&" + sign;
-			log.info("orderInfo>" + orderInfo);
+			AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+			model.setBody("我是测试数据");
+			model.setSubject("App支付测试-By Javen");
+			model.setOutTradeNo(StringUtils.getOutTradeNo());
+			model.setTimeoutExpress("30m");
+			model.setTotalAmount("0.01");
+			model.setPassbackParams("callback params");
+			model.setProductCode("QUICK_MSECURITY_PAY");
+			String orderInfo = AliPayApi.startAppPayStr(model,AliPayApi.notify_domain+"/alipay/app_pay_notify");
 			result.success(orderInfo);
 			renderJson(result);
-
-		} catch (Exception e) {
+			
+		} catch (AlipayApiException e) {
 			e.printStackTrace();
 			result.addError("system error");
 		}
 	}
-
-	
 
 
 	/**
@@ -92,13 +63,13 @@ public class AliPayController extends Controller {
 
 		BizContent content = new BizContent();
 		content.setBody(body);
-		content.setOut_trade_no(OrderInfoUtil2_0.getOutTradeNo());
+		content.setOut_trade_no(StringUtils.getOutTradeNo());
 		content.setPassback_params(passback_params);
 		content.setSubject(subject);
 		content.setTotal_amount(total_amount);
 		content.setProduct_code("QUICK_WAP_PAY");
-		String returnUrl = "http://javentech.tunnel.qydev.com/alipay/return_url";
-		String notifyUrl = "http://javentech.tunnel.qydev.com/alipay/notify_url";
+		String returnUrl = AliPayApi.notify_domain+"/alipay/return_url";
+		String notifyUrl = AliPayApi.notify_domain+"/alipay/notify_url";
 
 		try {
 			AliPayApi.wapPay(getResponse(), JsonKit.toJson(content),returnUrl,notifyUrl);
@@ -127,7 +98,7 @@ public class AliPayController extends Controller {
 		String total_amount = "100";
 		BizContent content = new BizContent();
 
-		content.setOut_trade_no(OrderInfoUtil2_0.getOutTradeNo());
+		content.setOut_trade_no(StringUtils.getOutTradeNo());
 		content.setScene("bar_code");
 		content.setAuth_code(auth_code);
 		content.setSubject(subject);
@@ -150,7 +121,7 @@ public class AliPayController extends Controller {
 		String total_amount = "86";
 		BizContent content = new BizContent();
 
-		content.setOut_trade_no(OrderInfoUtil2_0.getOutTradeNo());
+		content.setOut_trade_no(StringUtils.getOutTradeNo());
 		content.setSubject(subject);
 		content.setStore_id("123");
 		content.setTimeout_express("2m");
@@ -176,7 +147,7 @@ public class AliPayController extends Controller {
 
 		BizContent content = new BizContent();
 
-		content.setOut_biz_no(OrderInfoUtil2_0.getOutTradeNo());
+		content.setOut_biz_no(StringUtils.getOutTradeNo());
 		content.setPayee_type("ALIPAY_LOGONID");
 		content.setPayee_account("abpkvd0206@sandbox.com");
 		content.setAmount(total_amount);
@@ -266,86 +237,64 @@ public class AliPayController extends Controller {
 		log.debug("notify_url readData>>"+params);
 		System.out.println("notify_url readData>>"+params);
 		try {
-			Map<String, String> paramsMap = stringToMap(params);// 将异步通知中收到的所有参数都存放到map中
-			for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
-				System.out.println(entry.getKey()+"= "+entry.getValue());
-			}
-			String alipayPulicKey = prop.get("wap_alipayPulicKey");
-			System.out.println("alipayPulicKey>"+alipayPulicKey);
-			boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, alipayPulicKey, "UTF-8" ,"RSA2"); // 调用SDK验证签名
+			Map<String, String> requestParams = ParamsUtils.getUrlParams(params);
+			String alipayPulicKey = AliPayApi.alipayPulicKey;
+			System.out.println(alipayPulicKey.equals("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPkP2VJMR6vWCX8RwSFqNIa3klCdvRFJbuS1PN1anzQeeL9eOwtU7kGdI85yxb0dcdPzOYlG+jf9go8W9hBlgjxSRoXxLx03Yfl7cLmzJO9l9vIM1+HmNF0Ctm+el4Yi9dGs/P6q7lcHPUqs/RXGfeLrg33GMVwJbLmRcDZYeIcqPAA1OVF/4SHYr+f+O7glDOd60z+veOOexyoHmvUzYWlEz5+R4kOCNM/Z0w7KGgEYvHbZopexuTuFgUWy/9tYlNrnX+cZUWXVTskLUgD1UGWM1dS5+qfriqY9MPEwJjetcPJkoCK7A4IReE4q1DffUY9KS50/1ML+7na3R/p/UQIDAQAB")+" length>"+alipayPulicKey.length()+" >>"+"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPkP2VJMR6vWCX8RwSFqNIa3klCdvRFJbuS1PN1anzQeeL9eOwtU7kGdI85yxb0dcdPzOYlG+jf9go8W9hBlgjxSRoXxLx03Yfl7cLmzJO9l9vIM1+HmNF0Ctm+el4Yi9dGs/P6q7lcHPUqs/RXGfeLrg33GMVwJbLmRcDZYeIcqPAA1OVF/4SHYr+f+O7glDOd60z+veOOexyoHmvUzYWlEz5+R4kOCNM/Z0w7KGgEYvHbZopexuTuFgUWy/9tYlNrnX+cZUWXVTskLUgD1UGWM1dS5+qfriqY9MPEwJjetcPJkoCK7A4IReE4q1DffUY9KS50/1ML+7na3R/p/UQIDAQAB".length());
+			boolean signVerified = AlipaySignature.rsaCheckV1(requestParams, AliPayApi.alipayPulicKey, AliPayApi.charset ,AliPayApi.signType); // 调用SDK验证签名
 			if (signVerified) {
 				// TODO
 				// 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
 				renderText("success");
+				return;
 			} else {
 				// TODO 验签失败则记录异常日志，并在response中返回failure.
 				renderText("failure");
+				return;
 			}
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
+			renderText("failure");
 		}
-		renderText("failure");
 	}
 	
 	
 	/**
 	 * App支付支付回调通知
-	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.TxBJbS&
-	 * treeId=193&articleId=105301&docType=1#s3
+	 * https://doc.open.alipay.com/docs/doc.htm?treeId=54&articleId=106370&docType=1#s3
 	 */
-	public void pay_notify() {
-		String queryString = getRequest().getQueryString();
-		System.out.println("支付宝回调参数：" + queryString);
-		log.debug("支付宝回调参数：" + queryString);
-
-		String notify_time = getPara("notify_time");
-		String notify_type = getPara("notify_type");
-		String notify_id = getPara("notify_id");
-		String app_id = getPara("app_id");
-		String charset = getPara("charset");
-		String version = getPara("version");
-		String sign_type = getPara("sign_type");
-		String sign = getPara("sign");
-		String trade_no = getPara("trade_no");
-		String out_trade_no = getPara("out_trade_no");
-
-		//////////////// 一下是可选参数//////////////////////////
-
-		String buyer_id = getPara("buyer_id");
-		String buyer_logon_id = getPara("buyer_logon_id");
-		String trade_status = getPara("trade_status");
-		String total_amount = getPara("total_amount");
-		String receipt_amount = getPara("receipt_amount");
-
-		String passback_params = getPara("passback_params");// 附加参数
-
-		renderText(queryString);
-	}
-
-	/**
-	 * 从request中获得参数Map，并返回可读的Map
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private Map<String, String> stringToMap(String params) {
-		// 返回值Map
-		Map<String, String> returnMap = null;
-		if (!StrKit.isBlank(params)) {
-			returnMap = new HashMap<String, String>();
-			String[] KeyValues = params.split("&");
-			for (int i = 0; i < KeyValues.length; i++) {
-				String[] keyValue = KeyValues[i].split("=");
-				String key = keyValue[0];
-				String value = keyValue[1];
-				returnMap.put(key, value);
+	public void app_pay_notify() {
+		try {
+			//获取支付宝POST过来反馈信息
+			Map<String,String> params = new HashMap<String,String>();
+			Map<String, String[]> requestParams = getRequest().getParameterMap();
+			for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			    String name = (String) iter.next();
+			    String[] values = (String[]) requestParams.get(name);
+			    String valueStr = "";
+			    for (int i = 0; i < values.length; i++) {
+			        valueStr = (i == values.length - 1) ? valueStr + values[i]
+			                    : valueStr + values[i] + ",";
+			  }
+			  //乱码解决，这段代码在出现乱码时使用。
+			  //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+			  params.put(name, valueStr);
+			 }
+			//切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
+			//boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
+			boolean flag = AlipaySignature.rsaCheckV1(params, AliPayApi.alipayPulicKey, AliPayApi.charset, AliPayApi.signType);
+			if (flag) {
+				// TODO
+				System.out.println("success");
+				renderText("success");
+				return;
+			}else {
+				// TODO
+				System.out.println("failure");
+				renderText("failure");
 			}
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+			renderText("failure");
 		}
-		return returnMap;
-	}
-
-	public static void main(String[] args) {
-		System.out.println("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPkP2VJMR6vWCX8RwSFqNIa3klCdvRFJbuS1PN1anzQeeL9eOwtU7kGdI85yxb0dcdPzOYlG+jf9go8W9hBlgjxSRoXxLx03Yfl7cLmzJO9l9vIM1+HmNF0Ctm+el4Yi9dGs/P6q7lcHPUqs/RXGfeLrg33GMVwJbLmRcDZYeIcqPAA1OVF/4SHYr+f+O7glDOd60z+veOOexyoHmvUzYWlEz5+R4kOCNM/Z0w7KGgEYvHbZopexuTuFgUWy/9tYlNrnX+cZUWXVTskLUgD1UGWM1dS5+qfriqY9MPEwJjetcPJkoCK7A4IReE4q1DffUY9KS50/1ML+7na3R/p/UQIDAQAB"
-				.equals("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPkP2VJMR6vWCX8RwSFqNIa3klCdvRFJbuS1PN1anzQeeL9eOwtU7kGdI85yxb0dcdPzOYlG+jf9go8W9hBlgjxSRoXxLx03Yfl7cLmzJO9l9vIM1+HmNF0Ctm+el4Yi9dGs/P6q7lcHPUqs/RXGfeLrg33GMVwJbLmRcDZYeIcqPAA1OVF/4SHYr+f+O7glDOd60z+veOOexyoHmvUzYWlEz5+R4kOCNM/Z0w7KGgEYvHbZopexuTuFgUWy/9tYlNrnX+cZUWXVTskLUgD1UGWM1dS5+qfriqY9MPEwJjetcPJkoCK7A4IReE4q1DffUY9KS50/1ML+7na3R/p/UQIDAQAB"));
 	}
 }

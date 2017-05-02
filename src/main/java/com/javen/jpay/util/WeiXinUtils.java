@@ -1,12 +1,6 @@
 package com.javen.jpay.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.jfinal.kit.StrKit;
-import com.jfinal.weixin.sdk.api.ApiResult;
-import com.jfinal.weixin.sdk.api.TemplateData;
-import com.jfinal.weixin.sdk.api.TemplateMsgApi;
 
 public class WeiXinUtils {
 	
@@ -99,76 +93,5 @@ public class WeiXinUtils {
         return String.valueOf(Character.toChars(hexEmoji));  
     }
 	
-	/**
-	 * 发送模板消息
-	 * @param orderId
-	 * @param price
-	 * @param couresName
-	 * @param teacherName
-	 * @param openId
-	 * @param url
-	 * @return
-	 */
-	public static ApiResult sendTemplateMessage_2(String orderId,String price,String couresName,String teacherName,String openId,String url){
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日  HH时mm分ss秒");
-		String time=sdf.format(new Date());
-		ApiResult result = TemplateMsgApi.send(TemplateData.New()
-				.setTemplate_id("7y1wUbeiYFsUONKH1IppVi47WwViICAjREZSdR3Zahc")
-				.setTopcolor("#743A3A")
-				.setTouser(openId)
-				.setUrl(url)
-				.add("first", "您好,你已成功购买课程", "#000000")
-				.add("keyword1", orderId, "#FF0000")
-				.add("keyword2", price+"元", "#c4c400")
-				.add("keyword3", couresName, "#c4c400")
-				.add("keyword4",teacherName, "#c4c400")
-				.add("keyword5",time, "#0000FF")
-				.add("remark", "\n 请点击详情直接看课程直播，祝生活愉快", "#008000")
-				.build());
-		
-		
-		return result;
-	}
-	
-	public static ApiResult sendTemplateMessageByOpen(String orderId,String price,String couresName,String teacherName,String openId,String url){
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日  HH时mm分ss秒");
-		String time=sdf.format(new Date());
-		ApiResult result = TemplateMsgApi.send(TemplateData.New()
-				.setTemplate_id("7y1wUbeiYFsUONKH1IppVi47WwViICAjREZSdR3Zahc")
-				.setTopcolor("#743A3A")
-				.setTouser(openId)
-				.setUrl(url)
-				.add("first", "您好,你已成功购买课程", "#000000")
-				.add("keyword1", orderId, "#FF0000")
-				.add("keyword2", price+"元", "#c4c400")
-				.add("keyword3", couresName, "#c4c400")
-				.add("keyword4",teacherName, "#c4c400")
-				.add("keyword5",time+"\n我们的专业客服人员会在24小时内与您联系，请注意接听我们的电话，再次感谢您的支持！", "#000000")
-				.add("remark", "\n 请点击详情直接看课程直播，祝生活愉快", "#008000")
-				.build());
-		
-		return result;
-	}
-	
-	public static ApiResult sendTemplateMessageByPrivate(String orderId,String price,String couresName,String teacherName,String openId,String url){
-		
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日  HH时mm分ss秒");
-		String time=sdf.format(new Date());
-		ApiResult result = TemplateMsgApi.send(TemplateData.New()
-				.setTemplate_id("7y1wUbeiYFsUONKH1IppVi47WwViICAjREZSdR3Zahc")
-				.setTopcolor("#743A3A")
-				.setTouser(openId)
-				.setUrl(url)
-				.add("first", "您好,你已成功购买课程", "#000000")
-				.add("keyword1", orderId, "#FF0000")
-				.add("keyword2", price+"元", "#c4c400")
-				.add("keyword3", couresName, "#c4c400")
-				.add("keyword4",teacherName, "#c4c400")
-				.add("keyword5",time, "#000000")
-				.add("remark", "\n我们的专业客服人员会在24小时内与您联系，请注意接听我们的电话，再次感谢您的支持！", "#008000")
-				.build());
-		
-		return result;
-	}
-	
+
 }

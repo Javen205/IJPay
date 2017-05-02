@@ -8,9 +8,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.request.AlipayDataDataserviceBillDownloadurlQueryRequest;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeCancelRequest;
 import com.alipay.api.request.AlipayTradeOrderSettleRequest;
 import com.alipay.api.request.AlipayTradePayRequest;
@@ -21,6 +23,7 @@ import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.alipay.api.response.AlipayDataDataserviceBillDownloadurlQueryResponse;
 import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeCancelResponse;
 import com.alipay.api.response.AlipayTradeOrderSettleResponse;
 import com.alipay.api.response.AlipayTradePayResponse;
@@ -37,16 +40,48 @@ public class AliPayApi {
 
 	private static final Prop prop = PropKit.use("alipay.properties");
 
-	static AlipayClient alipayClient;
-	static String charset = "UTF-8";
-	static String privateKey = prop.get("wap_privateKey");
-	static String alipayPulicKey = prop.get("wap_alipayPulicKey");
-	static String serverUrl = prop.get("wap_serverUrl");
-	static String appId = prop.get("wap_appId");
-	static String format = "json";
+	public static AlipayClient alipayClient;
+	public static String charset = "UTF-8";
+	public static String privateKey = prop.get("privateKey");
+	public static String alipayPulicKey = prop.get("alipayPulicKey");
+	public static String serverUrl = prop.get("serverUrl");
+	public static String appId = prop.get("appId");
+	public static String format = "json";
+	public static String signType = "RSA2";
+	public static String notify_domain = prop.get("notify_domain");
 
 	static {
-		alipayClient = new DefaultAlipayClient(serverUrl, appId, privateKey, format, charset, alipayPulicKey, "RSA2");
+		alipayClient = new DefaultAlipayClient(serverUrl, appId, privateKey, format, charset, alipayPulicKey, signType);
+	}
+	/**
+	 * App支付
+	 * @param model
+	 * @param notifyUrl 
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String startAppPayStr(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
+		AlipayTradeAppPayResponse response = appPay(model,notifyUrl);
+		return response.getBody();
+	}
+	
+	/**
+	 * App 支付
+	 * https://doc.open.alipay.com/docs/doc.htm?treeId=54&articleId=106370&docType=1
+	 * @param model
+	 * @param notifyUrl 
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayTradeAppPayResponse appPay(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
+		//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+		//SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
+		//这里和普通的接口调用不同，使用的是sdkExecute
+        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+		return response;
 	}
 
 	/**
