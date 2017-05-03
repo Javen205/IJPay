@@ -13,6 +13,7 @@ import com.javen.jpay.weixin.api.PayApi;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PathKit;
+import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
@@ -24,19 +25,20 @@ import com.jfinal.weixin.sdk.utils.JsonUtils;
 
 /**
  * @author Javen
- * 2016年3月19日
+ * 2017年4月19日
  */
-public class WeixinPayController extends Controller {
-	static Log log=Log.getLog(WeixinPayController.class);
+public class WeixinSubPayController extends Controller {
+	static Log log=Log.getLog(WeixinSubPayController.class);
 	private AjaxResult ajax = new AjaxResult();
+	private static final Prop prop = PropKit.use("wxsubpay.properties");
 
 	//商户相关资料
-	String appid = PropKit.get("appId");
-	String mch_id = PropKit.get("mch_id");
-	String sub_mch_id = PropKit.get("sub_mch_id");
-	String sub_appid = PropKit.get("sub_appid");
-	String paternerKey = PropKit.get("paternerKey");
-	String notify_url = PropKit.get("domain")+"/wxpay/pay_notify";
+	String appid = prop.get("appId");
+	String mch_id = prop.get("mch_id");
+	String sub_mch_id = prop.get("sub_mch_id");
+	String sub_appid = prop.get("sub_appid");
+	String paternerKey = prop.get("paternerKey");
+	String notify_url = prop.get("domain")+"/wxpay/pay_notify";
 	
 	
 	public void index(){

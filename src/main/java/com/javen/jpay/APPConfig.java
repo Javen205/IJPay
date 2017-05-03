@@ -7,9 +7,9 @@ import com.alibaba.druid.wall.WallFilter;
 import com.javen.jpay.controller.AliPayController;
 import com.javen.jpay.controller.ApiController;
 import com.javen.jpay.controller.IndexController;
-import com.javen.jpay.controller.WeiXinOauthController;
 import com.javen.jpay.controller.WeixinMsgController;
-import com.javen.jpay.controller.WeixinPayController;
+import com.javen.jpay.controller.WeixinOauthController;
+import com.javen.jpay.controller.WeixinSubPayController;
 import com.javen.jpay.ext.plugin.log.Slf4jLogFactory;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -74,9 +74,9 @@ public class APPConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/", IndexController.class);
 		me.add("/msg", WeixinMsgController.class);
-		me.add("/wxpay", WeixinPayController.class,"/");
+		me.add("/wxpay", WeixinSubPayController.class,"/");
 		me.add("/alipay", AliPayController.class,"/");
-		me.add("/oauth", WeiXinOauthController.class);
+		me.add("/oauth", WeixinOauthController.class);
 		me.add("/api", ApiController.class);
 	}
 
