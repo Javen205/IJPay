@@ -152,7 +152,7 @@
 function scanCode(){
 	$.showLoading("正在加载...");
 	var total_fee=$.trim($("#money").val());
-	$.post("<%=path%>/wxpay/scanCode", {
+	$.post("<%=path%>/wxsubpay/scanCode", {
 			total_fee : total_fee,
 		}, function(res) {
 			$.hideLoading();
@@ -182,7 +182,7 @@ function scanCode(){
 		$.showLoading("正在加载...");
 		var total_fee=$.trim($("#micropay_money").val());
 		var auth_code=$.trim($("#auth_code").val());
-		$.post("<%=path%>/wxpay/micropay",
+		$.post("<%=path%>/wxsubpay/micropay",
 		    {
 		      total_fee:total_fee,
 		      auth_code:auth_code,
@@ -209,7 +209,7 @@ function scanCode(){
 	function wxpay(){
 		$.showLoading("正在加载...");
 		var total_fee=$.trim($("#web_money").val());
-		$.post("<%=path%>/wxpay",
+		$.post("<%=path%>/wxsubpay",
 		    {
 		      total_fee:total_fee,
 		    },

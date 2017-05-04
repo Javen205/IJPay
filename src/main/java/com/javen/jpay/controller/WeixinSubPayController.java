@@ -38,7 +38,7 @@ public class WeixinSubPayController extends Controller {
 	String sub_mch_id = prop.get("sub_mch_id");
 	String sub_appid = prop.get("sub_appid");
 	String paternerKey = prop.get("paternerKey");
-	String notify_url = prop.get("domain")+"/wxpay/pay_notify";
+	String notify_url = prop.get("domain")+"/wxsubpay/pay_notify";
 	
 	
 	public void index(){

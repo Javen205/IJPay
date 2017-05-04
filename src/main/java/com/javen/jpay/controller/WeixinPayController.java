@@ -13,8 +13,8 @@ import com.jfinal.weixin.sdk.api.PaymentApi;
 import com.jfinal.weixin.sdk.kit.IpKit;
 import com.jfinal.weixin.sdk.kit.PaymentKit;
 
-public class WeixinAppPayController extends Controller {
-	static Log log=Log.getLog(WeixinAppPayController.class);
+public class WeixinPayController extends Controller {
+	static Log log=Log.getLog(WeixinPayController.class);
 
 	private static final Prop prop = PropKit.use("wxpay.properties");
 	private AjaxResult ajax = new AjaxResult();
