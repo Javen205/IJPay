@@ -2,3 +2,4 @@
 /dev/config.properties
 /dev/wxpay.properties
 /dev/wxsubpay.properties
+/dev/alipcpay.properties
