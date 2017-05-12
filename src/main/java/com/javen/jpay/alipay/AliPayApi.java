@@ -13,6 +13,8 @@ import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
 import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.domain.AlipayTradeCancelModel;
+import com.alipay.api.domain.AlipayTradeCloseModel;
+import com.alipay.api.domain.AlipayTradeCreateModel;
 import com.alipay.api.domain.AlipayTradeOrderSettleModel;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.domain.AlipayTradePrecreateModel;
@@ -24,6 +26,8 @@ import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeCancelRequest;
+import com.alipay.api.request.AlipayTradeCloseRequest;
+import com.alipay.api.request.AlipayTradeCreateRequest;
 import com.alipay.api.request.AlipayTradeOrderSettleRequest;
 import com.alipay.api.request.AlipayTradePayRequest;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
@@ -35,6 +39,8 @@ import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeCancelResponse;
+import com.alipay.api.response.AlipayTradeCloseResponse;
+import com.alipay.api.response.AlipayTradeCreateResponse;
 import com.alipay.api.response.AlipayTradeOrderSettleResponse;
 import com.alipay.api.response.AlipayTradePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
@@ -50,17 +56,17 @@ public class AliPayApi {
 	private static final Prop prop = PropKit.use("alipay.properties");
 
 	public static AlipayClient alipayClient;
-	public static String charset = "UTF-8";
-	public static String privateKey = prop.get("privateKey");
-	public static String alipayPulicKey = prop.get("alipayPulicKey");
-	public static String serverUrl = prop.get("serverUrl");
-	public static String appId = prop.get("appId");
-	public static String format = "json";
-	public static String signType = "RSA2";
-	public static String notify_domain = prop.get("notify_domain");
+	public static String CHARSET = "UTF-8";
+	public static String PRIVATE_KEY = prop.get("privateKey");
+	public static String ALIPAY_PUBLIC_KEY = prop.get("alipayPulicKey");
+	public static String SERVICE_URL = prop.get("serverUrl");
+	public static String APP_ID = prop.get("appId");
+	public static String FORMAT = "json";
+	public static String SIGN_TYPE = "RSA2";
+	public static String NOTIFY_DOMAIN = prop.get("notify_domain");
 
 	static {
-		alipayClient = new DefaultAlipayClient(serverUrl, appId, privateKey, format, charset, alipayPulicKey, signType);
+		alipayClient = new DefaultAlipayClient(SERVICE_URL, APP_ID, PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
 	}
 	/**
 	 * App支付
@@ -108,7 +114,7 @@ public class AliPayApi {
 		alipayRequest.setBizModel(model);// 填充业务参数
 		String form = alipayClient.pageExecute(alipayRequest).getBody(); // 调用SDK生成表单
 		HttpServletResponse httpResponse = response;
-		httpResponse.setContentType("text/html;charset=" + charset);
+		httpResponse.setContentType("text/html;charset=" + CHARSET);
 		httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
 		httpResponse.getWriter().flush();
 	}
@@ -134,115 +140,20 @@ public class AliPayApi {
 	/**
 	 * 扫码支付
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.i0UVZn&treeId=193&articleId=105170&docType=1#s4
+	 * @param notifyUrl 
 	 * @return
 	 * @throws AlipayApiException 
 	 */
-	public static String tradePrecreatePay(AlipayTradePrecreateModel model) throws AlipayApiException{
-		AlipayTradePrecreateResponse response = tradePrecreatePayToResponse(model);
+	public static String tradePrecreatePay(AlipayTradePrecreateModel model, String notifyUrl) throws AlipayApiException{
+		AlipayTradePrecreateResponse response = tradePrecreatePayToResponse(model,notifyUrl);
 		return response.getBody();
 	}
-	public static AlipayTradePrecreateResponse tradePrecreatePayToResponse(AlipayTradePrecreateModel model) throws AlipayApiException{
+	public static AlipayTradePrecreateResponse tradePrecreatePayToResponse(AlipayTradePrecreateModel model, String notifyUrl) throws AlipayApiException{
 		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
 		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
 		return alipayClient.execute(request);
 	}
-	/**
-	 * 退款
-	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.SAyEeI&docType=4&apiId=759
-	 * @param content
-	 * @return
-	 * @throws AlipayApiException
-	 */
-	public static String tradeRefund(AlipayTradeRefundModel model) throws AlipayApiException{
-		AlipayTradeRefundResponse response = tradeRefundToResponse(model);
-		return response.getBody();
-	}
-	public static AlipayTradeRefundResponse tradeRefundToResponse(AlipayTradeRefundModel model) throws AlipayApiException{
-		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
-		request.setBizModel(model);
-		return alipayClient.execute(request);
-	}
-	/**
-	 * 对账
-	 * @param bizContent
-	 * @return
-	 * @throws AlipayApiException
-	 */
-	public static String billDownloadurlQuery(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException{
-		AlipayDataDataserviceBillDownloadurlQueryResponse response =  billDownloadurlQueryToResponse(model);
-		return response.getBody();
-	}
-	
-	public static AlipayDataDataserviceBillDownloadurlQueryResponse  billDownloadurlQueryToResponse (AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException{
-		AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
-		request.setBizModel(model);
-		return alipayClient.execute(request);
-	}
-	
-	/**
-	 * 交易撤销接口
-	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.XInh6e&docType=4&apiId=866
-	 * @param bizContent
-	 * @return
-	 * @throws AlipayApiException
-	 */
-	public static boolean isTradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
-		AlipayTradeCancelResponse response = tradeCancel(model);
-		if(response.isSuccess()){
-			return true;
-		}
-		return false;
-	}
-	
-	public static AlipayTradeCancelResponse tradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
-		AlipayTradeCancelRequest request = new AlipayTradeCancelRequest();
-		request.setBizModel(model);
-		AlipayTradeCancelResponse response = alipayClient.execute(request);
-		return response;
-	}
-	
-	/**
-	 * 交易查询接口
-	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.8H2JzG&docType=4&apiId=757
-	 * @param bizContent
-	 * @return
-	 * @throws AlipayApiException
-	 */
-	public static boolean isTradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
-		AlipayTradeQueryResponse response = tradeQuery(model);
-		if(response.isSuccess()){
-			return true;
-		}
-		return false;
-	}
-	
-	public static AlipayTradeQueryResponse  tradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
-		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-		request.setBizModel(model);
-		return alipayClient.execute(request);
-	}
-	
-	/**
-	 * 交易结算接口
-	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.nl0RS3&docType=4&apiId=1147
-	 * @param bizContent
-	 * @return
-	 * @throws AlipayApiException
-	 */
-	public static boolean isTradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
-		AlipayTradeOrderSettleResponse  response  = tradeOrderSettle(model);
-		if(response.isSuccess()){
-			return true;
-		}
-		return false;
-	}
-	
-	public static AlipayTradeOrderSettleResponse tradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
-		AlipayTradeOrderSettleRequest request = new AlipayTradeOrderSettleRequest();
-		request.setBizModel(model);
-		return alipayClient.execute(request);
-	}
-	
 	
 	/**
 	 * 单笔转账到支付宝账户
@@ -298,5 +209,143 @@ public class AliPayApi {
 		request.setBizModel(model);
 		return alipayClient.execute(request);
 	}
+	
+	/**
+	 * 交易查询接口
+	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.8H2JzG&docType=4&apiId=757
+	 * @param bizContent
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static boolean isTradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
+		AlipayTradeQueryResponse response = tradeQuery(model);
+		if(response.isSuccess()){
+			return true;
+		}
+		return false;
+	}
+	
+	public static AlipayTradeQueryResponse  tradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
+		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+		request.setBizModel(model);
+		return alipayClient.execute(request);
+	}
+	
+	
+	/**
+	 * 交易撤销接口
+	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.XInh6e&docType=4&apiId=866
+	 * @param bizContent
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static boolean isTradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
+		AlipayTradeCancelResponse response = tradeCancel(model);
+		if(response.isSuccess()){
+			return true;
+		}
+		return false;
+	}
+	
+	public static AlipayTradeCancelResponse tradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
+		AlipayTradeCancelRequest request = new AlipayTradeCancelRequest();
+		request.setBizModel(model);
+		AlipayTradeCancelResponse response = alipayClient.execute(request);
+		return response;
+	}
+	/**
+	 * 关闭订单
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static boolean isTradeClose(AlipayTradeCloseModel model) throws AlipayApiException{
+		AlipayTradeCloseResponse response = tradeClose(model);
+		if(response.isSuccess()){
+			return true;
+		}
+		return false;
+	}
+	
+	public static AlipayTradeCloseResponse tradeClose(AlipayTradeCloseModel model) throws AlipayApiException{
+		AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
+		request.setBizModel(model);
+		return alipayClient.execute(request);
+		
+	}
+	/**
+	 * 统一收单交易创建接口
+	 * @param model
+	 * @param notifyUrl 
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayTradeCreateResponse tradeCreate(AlipayTradeCreateModel model, String notifyUrl) throws AlipayApiException{
+		AlipayTradeCreateRequest request = new AlipayTradeCreateRequest();
+		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
+		return alipayClient.execute(request);
+	}
+	
+	
+	/**
+	 * 退款
+	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.SAyEeI&docType=4&apiId=759
+	 * @param content
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String tradeRefund(AlipayTradeRefundModel model) throws AlipayApiException{
+		AlipayTradeRefundResponse response = tradeRefundToResponse(model);
+		return response.getBody();
+	}
+	public static AlipayTradeRefundResponse tradeRefundToResponse(AlipayTradeRefundModel model) throws AlipayApiException{
+		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+		request.setBizModel(model);
+		return alipayClient.execute(request);
+	}
+	
+	
+	/**
+	 * 对账
+	 * @param bizContent
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String billDownloadurlQuery(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException{
+		AlipayDataDataserviceBillDownloadurlQueryResponse response =  billDownloadurlQueryToResponse(model);
+		return response.getBody();
+	}
+	
+	public static AlipayDataDataserviceBillDownloadurlQueryResponse  billDownloadurlQueryToResponse (AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException{
+		AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
+		request.setBizModel(model);
+		return alipayClient.execute(request);
+	}
+	
+	
+	/**
+	 * 交易结算接口
+	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.nl0RS3&docType=4&apiId=1147
+	 * @param bizContent
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static boolean isTradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
+		AlipayTradeOrderSettleResponse  response  = tradeOrderSettle(model);
+		if(response.isSuccess()){
+			return true;
+		}
+		return false;
+	}
+	
+	public static AlipayTradeOrderSettleResponse tradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
+		AlipayTradeOrderSettleRequest request = new AlipayTradeOrderSettleRequest();
+		request.setBizModel(model);
+		return alipayClient.execute(request);
+	}
+	
+	
+	
 	
 }
