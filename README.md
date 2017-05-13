@@ -2,6 +2,10 @@
 
 [![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
 
+GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
+
+OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
+
 - [JPay](https://github.com/Javen205/JPay)、[微信、支付宝App支付-JPay0.0.2发布](http://blog.csdn.net/zyw_java/article/details/70140210) 是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
 
 - IJPay是JPay服务端-实现微信、支付宝系列支付
