@@ -1,10 +1,6 @@
 package com.javen.jpay.controller;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
@@ -14,6 +10,7 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.domain.AlipayTradeCancelModel;
 import com.alipay.api.domain.AlipayTradeCloseModel;
 import com.alipay.api.domain.AlipayTradeCreateModel;
+import com.alipay.api.domain.AlipayTradeOrderSettleModel;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.domain.AlipayTradePrecreateModel;
 import com.alipay.api.domain.AlipayTradeQueryModel;
@@ -98,19 +95,16 @@ public class AliPayController extends Controller {
 		String authCode = getPara("auth_code");
 		String subject = "Javen 支付宝条形码支付测试";
 		String totalAmount = "100";
-		String alipayStoreId = "123";
+		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
 
 		AlipayTradePayModel model = new AlipayTradePayModel();
-		model.setAlipayStoreId(alipayStoreId);
 		model.setAuthCode(authCode);
 		model.setSubject(subject);
 		model.setTotalAmount(totalAmount);
 		model.setOutTradeNo(StringUtils.getOutTradeNo());
-		model.setTimeoutExpress("5m");
-		model.setProductCode("bar_code");
-
+		model.setScene("bar_code");
 		try {
-			String resultStr = AliPayApi.tradePay(model);
+			String resultStr = AliPayApi.tradePay(model,notifyUrl);
 			renderText(resultStr);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,6 +265,8 @@ public class AliPayController extends Controller {
 		
 	}
 	
+	
+	
 	/**
 	 * 关闭订单
 	 */
@@ -290,10 +286,27 @@ public class AliPayController extends Controller {
 		}
 	}
 	
+	/**
+	 * 结算
+	 */
+	public void tradeOrderSettle(){
+		String tradeNo = getPara("tradeNo");//支付宝订单号
+		try {
+			AlipayTradeOrderSettleModel model = new AlipayTradeOrderSettleModel();
+			model.setOutRequestNo(StringUtils.getOutTradeNo());
+			model.setTradeNo(tradeNo);
+			
+			String resultStr = AliPayApi.tradeOrderSettle(model ).getBody();
+			renderText(resultStr);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void return_url() {
 		try {
 			// 获取支付宝GET过来反馈信息
-			Map<String, String> map = toMap(getRequest());
+			Map<String, String> map = AliPayApi.toMap(getRequest());
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -321,7 +334,7 @@ public class AliPayController extends Controller {
 	public void notify_url() {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = toMap(getRequest());
+			Map<String, String> params = AliPayApi.toMap(getRequest());
 
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -331,7 +344,7 @@ public class AliPayController extends Controller {
 					AliPayApi.SIGN_TYPE);
 
 			if (verify_result) {// 验证成功
-				// TODO 请在这里加上商户的业务逻辑程序代码
+				// TODO 请在这里加上商户的业务逻辑程序代码 异步通知可能出现订单重复通知 需要做去重处理
 				System.out.println("notify_url 验证成功succcess");
 				renderText("success");
 				return;
@@ -355,7 +368,7 @@ public class AliPayController extends Controller {
 	public void app_pay_notify() {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = toMap(getRequest());
+			Map<String, String> params = AliPayApi.toMap(getRequest());
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -384,7 +397,7 @@ public class AliPayController extends Controller {
 	 */
 	public void precreate_notify_url(){
 		try {
-			Map<String, String> map = toMap(getRequest());
+			Map<String, String> map = AliPayApi.toMap(getRequest());
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey()+" = "+entry.getValue());
 			}
@@ -404,27 +417,5 @@ public class AliPayController extends Controller {
 			e.printStackTrace();
 			renderText("failure");
 		}
-	}
-	/**
-	 * 将异步通知的参数转化为Map
-	 * @param request
-	 * @return
-	 */
-	private Map<String, String> toMap(HttpServletRequest request) {
-		System.out.println(">>>>" + request.getQueryString());
-		Map<String, String> params = new HashMap<String, String>();
-		Map<String, String[]> requestParams = request.getParameterMap();
-		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
-			String name = (String) iter.next();
-			String[] values = (String[]) requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-			}
-			// 乱码解决，这段代码在出现乱码时使用。
-			// valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-			params.put(name, valueStr);
-		}
-		return params;
 	}
 }
