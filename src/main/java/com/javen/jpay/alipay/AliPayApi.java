@@ -27,7 +27,6 @@ import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.request.AlipayDataDataserviceBillDownloadurlQueryRequest;
-import com.alipay.api.request.AlipayEcoMycarTradeRefundRequest;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
@@ -36,6 +35,7 @@ import com.alipay.api.request.AlipayTradeCloseRequest;
 import com.alipay.api.request.AlipayTradeCreateRequest;
 import com.alipay.api.request.AlipayTradeFastpayRefundQueryRequest;
 import com.alipay.api.request.AlipayTradeOrderSettleRequest;
+import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradePayRequest;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
@@ -373,6 +373,27 @@ public class AliPayApi {
 		AlipayTradeOrderSettleRequest request = new AlipayTradeOrderSettleRequest();
 		request.setBizModel(model);
 		return alipayClient.execute(request);
+	}
+	
+	/**
+	 * 电脑网站支付(PC支付)
+	 * @param model
+	 * @param notifyUrl
+	 * @param returnUrl
+	 * @return
+	 * @throws AlipayApiException
+	 * @throws IOException 
+	 */
+	public static void tradePage(HttpServletResponse httpResponse, AlipayTradePayModel model, String notifyUrl, String returnUrl) throws AlipayApiException, IOException{
+		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
+		request.setReturnUrl(returnUrl);
+		String form  = alipayClient.pageExecute(request).getBody();//调用SDK生成表单
+		httpResponse.setContentType("text/html;charset=" + CHARSET);
+		httpResponse.getWriter().write(form);//直接将完整的表单html输出到页面
+	    httpResponse.getWriter().flush();
+	    httpResponse.getWriter().close();
 	}
 	
 	

@@ -83,6 +83,33 @@ public class AliPayController extends Controller {
 		}
 		renderNull();
 	}
+	
+	/**
+	 * PC支付
+	 */
+	public void pcPay(){
+		try {
+			String totalAmount = "88.88"; 
+			String outTradeNo =StringUtils.getOutTradeNo();
+			log.info("pc outTradeNo>"+outTradeNo);
+			
+			String returnUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/return_url";
+			String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
+			AlipayTradePayModel model = new AlipayTradePayModel();
+			
+			model.setOutTradeNo(outTradeNo);
+			model.setProductCode("FAST_INSTANT_TRADE_PAY");
+			model.setTotalAmount(totalAmount);
+			model.setSubject("Javen PC支付测试");
+			model.setBody("Javen IJPay PC支付测试");
+			
+			AliPayApi.tradePage(getResponse(),model , notifyUrl, returnUrl);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
 
 	
 
