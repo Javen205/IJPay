@@ -28,7 +28,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 
 ##### 支付宝系列支付
 
-
+- [支付宝支付-PC电脑网站支付](http://blog.csdn.net/zyw_java/article/details/71970972)
 
 - [支付宝支付-支付宝常用的12个接口封装、异步通知](http://blog.csdn.net/zyw_java/article/details/71844328)
 
