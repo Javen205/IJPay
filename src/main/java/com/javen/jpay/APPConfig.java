@@ -11,7 +11,6 @@ import com.javen.jpay.controller.WeixinMsgController;
 import com.javen.jpay.controller.WeixinOauthController;
 import com.javen.jpay.controller.WeixinPayController;
 import com.javen.jpay.controller.WeixinSubPayController;
-import com.javen.jpay.ext.plugin.log.Slf4jLogFactory;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -63,7 +62,6 @@ public class APPConfig extends JFinalConfig {
 		me.setViewType(ViewType.JSP);
         me.setError404View("/error/404.jsp");
         me.setError500View("/error/500.jsp");
-		me.setLogFactory(new Slf4jLogFactory());
 		// ApiConfigKit 设为开发模式可以在开发阶段输出请求交互的 xml 与 json 数据
 		ApiConfigKit.setDevMode(me.getDevMode());
 
@@ -138,13 +136,13 @@ public class APPConfig extends JFinalConfig {
 	
 	@Override
 	public void beforeJFinalStop() {
-		log.error("beforeJFinalStop");
+		log.info("beforeJFinalStop");
 		super.beforeJFinalStop();
 	}
 	
 	@Override
 	public void afterJFinalStart() {
-		log.error("afterJFinalStart");
+		log.info("afterJFinalStart");
 	}
 
 	/**
