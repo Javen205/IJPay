@@ -21,15 +21,12 @@ import com.alipay.api.response.AlipayTradeCreateResponse;
 import com.javen.jpay.alipay.AliPayApi;
 import com.javen.jpay.util.StringUtils;
 import com.javen.jpay.vo.AjaxResult;
+import com.jfinal.core.Controller;
 import com.jfinal.log.Log;
 
-public class AliPayController extends AliPayBaseController {
+public class AliPayBaseController extends Controller {
 	private Log log = Log.getLog(AliPayController.class);
 	private AjaxResult result = new AjaxResult();
-
-	public void index() {
-		renderText("AliPay test");
-	}
 
 	/**
 	 * app支付
@@ -37,7 +34,7 @@ public class AliPayController extends AliPayBaseController {
 	public void appPay() {
 		try {
 			AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-			model.setBody("我是测试数据-By Javen");
+			model.setBody("我是测试数据");
 			model.setSubject("App支付测试-By Javen");
 			model.setOutTradeNo(StringUtils.getOutTradeNo());
 			model.setTimeoutExpress("30m");
@@ -58,9 +55,9 @@ public class AliPayController extends AliPayBaseController {
 	 * Wap支付
 	 */
 	public void wapPay() {
-		String body = "我是测试数据-By Javen";
+		String body = "我是测试数据";
 		String subject = "Javen Wap支付测试";
-		String totalAmount = "1";
+		String totalAmount = "0.01";
 		String passbackParams = "1";
 		String returnUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/return_url";
 		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";

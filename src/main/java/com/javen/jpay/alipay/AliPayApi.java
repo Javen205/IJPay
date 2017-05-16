@@ -403,7 +403,6 @@ public class AliPayApi {
 	 * @return
 	 */
 	public static Map<String, String> toMap(HttpServletRequest request) {
-		System.out.println(">>>>" + request.getQueryString());
 		Map<String, String> params = new HashMap<String, String>();
 		Map<String, String[]> requestParams = request.getParameterMap();
 		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {

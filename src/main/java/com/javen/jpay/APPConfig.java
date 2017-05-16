@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
-import com.javen.jpay.controller.AliPCPayControler;
 import com.javen.jpay.controller.AliPayController;
 import com.javen.jpay.controller.ApiController;
 import com.javen.jpay.controller.IndexController;
@@ -79,7 +78,6 @@ public class APPConfig extends JFinalConfig {
 		me.add("/wxpay", WeixinPayController.class,"/");
 		me.add("/wxsubpay", WeixinSubPayController.class,"/");
 		me.add("/alipay", AliPayController.class,"/");
-		me.add("/alipcpay", AliPCPayControler.class,"/");
 		me.add("/oauth", WeixinOauthController.class);
 		me.add("/api", ApiController.class);
 	}
