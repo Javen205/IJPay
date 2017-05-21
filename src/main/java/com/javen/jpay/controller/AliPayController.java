@@ -19,16 +19,47 @@ import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.response.AlipayTradeCreateResponse;
 import com.javen.jpay.alipay.AliPayApi;
+import com.javen.jpay.alipay.AliPayApiConfig;
+import com.javen.jpay.alipay.AliPayApiController;
 import com.javen.jpay.util.StringUtils;
 import com.javen.jpay.vo.AjaxResult;
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
-
-public class AliPayController extends AliPayBaseController {
+/**
+ * @Email javen205@126.com
+ * @author Javen
+ * 2017年5月20日
+ */
+public class AliPayController extends AliPayApiController {
 	private Log log = Log.getLog(AliPayController.class);
+	
+	private  final Prop prop = PropKit.use("alipay.properties");
+	private  String charset = "UTF-8";
+	private  String private_key = prop.get("privateKey");
+	private  String alipay_public_key = prop.get("alipayPulicKey");
+	private  String service_url = prop.get("serverUrl");
+	private  String app_id = prop.get("appId");
+	private  String sign_type = "RSA2";
+	private  String notify_domain = prop.get("notify_domain");
+	
 	private AjaxResult result = new AjaxResult();
 
+	@Override
+	public AliPayApiConfig getApiConfig() {
+		AliPayApiConfig aliPayApiConfig = AliPayApiConfig.New()
+		.setAppId(app_id)
+		.setAlipayPublicKey(alipay_public_key)
+		.setCharset(charset)
+		.setPrivateKey(private_key)
+		.setServiceUrl(service_url)
+		.setSignType(sign_type)
+		.build();
+		return aliPayApiConfig;
+	}
+	
 	public void index() {
-		renderText("AliPay test");
+		renderText("欢迎使用IJPay 中的支付宝支付 -By Javen205");
 	}
 
 	/**
@@ -44,7 +75,7 @@ public class AliPayController extends AliPayBaseController {
 			model.setTotalAmount("0.01");
 			model.setPassbackParams("callback params");
 			model.setProductCode("QUICK_MSECURITY_PAY");
-			String orderInfo = AliPayApi.startAppPayStr(model, AliPayApi.NOTIFY_DOMAIN + "/alipay/app_pay_notify");
+			String orderInfo = AliPayApi.startAppPayStr(model, notify_domain + "/alipay/app_pay_notify");
 			result.success(orderInfo);
 			renderJson(result);
 
@@ -62,8 +93,8 @@ public class AliPayController extends AliPayBaseController {
 		String subject = "Javen Wap支付测试";
 		String totalAmount = "1";
 		String passbackParams = "1";
-		String returnUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/return_url";
-		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
+		String returnUrl = notify_domain + "/alipay/return_url";
+		String notifyUrl = notify_domain + "/alipay/notify_url";
 
 		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
 		model.setBody(body);
@@ -92,8 +123,8 @@ public class AliPayController extends AliPayBaseController {
 			String outTradeNo =StringUtils.getOutTradeNo();
 			log.info("pc outTradeNo>"+outTradeNo);
 			
-			String returnUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/return_url";
-			String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
+			String returnUrl = notify_domain + "/alipay/return_url";
+			String notifyUrl = notify_domain + "/alipay/notify_url";
 			AlipayTradePayModel model = new AlipayTradePayModel();
 			
 			model.setOutTradeNo(outTradeNo);
@@ -121,7 +152,7 @@ public class AliPayController extends AliPayBaseController {
 		String authCode = getPara("auth_code");
 		String subject = "Javen 支付宝条形码支付测试";
 		String totalAmount = "100";
-		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
+		String notifyUrl = notify_domain + "/alipay/notify_url";
 
 		AlipayTradePayModel model = new AlipayTradePayModel();
 		model.setAuthCode(authCode);
@@ -147,7 +178,7 @@ public class AliPayController extends AliPayBaseController {
 		String authCode = getPara("auth_code");
 		String subject = "Javen 支付宝声波支付测试";
 		String totalAmount = "100";
-		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/notify_url";
+		String notifyUrl = notify_domain + "/alipay/notify_url";
 
 		AlipayTradePayModel model = new AlipayTradePayModel();
 		model.setAuthCode(authCode);
@@ -170,7 +201,7 @@ public class AliPayController extends AliPayBaseController {
 		String subject = "Javen 支付宝扫码支付测试";
 		String totalAmount = "86";
 		String storeId = "123";
-		String notifyUrl = AliPayApi.NOTIFY_DOMAIN + "/alipay/precreate_notify_url";
+		String notifyUrl = notify_domain + "/alipay/precreate_notify_url";
 
 		AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
 		model.setSubject(subject);
@@ -299,7 +330,7 @@ public class AliPayController extends AliPayBaseController {
 	public void tradeCreate(){
 		String outTradeNo = getPara("outTradeNo");
 		
-		String notifyUrl = AliPayApi.NOTIFY_DOMAIN+ "/alipay/notify_url";;
+		String notifyUrl = notify_domain+ "/alipay/notify_url";;
 		
 		AlipayTradeCreateModel model = new AlipayTradeCreateModel();
 		model.setOutTradeNo(outTradeNo);
@@ -363,8 +394,8 @@ public class AliPayController extends AliPayBaseController {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
 
-			boolean verify_result = AlipaySignature.rsaCheckV1(map, AliPayApi.ALIPAY_PUBLIC_KEY, AliPayApi.CHARSET,
-					AliPayApi.SIGN_TYPE);
+			boolean verify_result = AlipaySignature.rsaCheckV1(map, alipay_public_key, charset,
+					sign_type);
 
 			if (verify_result) {// 验证成功
 				// TODO 请在这里加上商户的业务逻辑程序代码
@@ -392,8 +423,8 @@ public class AliPayController extends AliPayBaseController {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
 
-			boolean verify_result = AlipaySignature.rsaCheckV1(params, AliPayApi.ALIPAY_PUBLIC_KEY, AliPayApi.CHARSET,
-					AliPayApi.SIGN_TYPE);
+			boolean verify_result = AlipaySignature.rsaCheckV1(params, alipay_public_key, charset,
+					sign_type);
 
 			if (verify_result) {// 验证成功
 				// TODO 请在这里加上商户的业务逻辑程序代码 异步通知可能出现订单重复通知 需要做去重处理
@@ -427,8 +458,8 @@ public class AliPayController extends AliPayBaseController {
 			// 切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
 			// boolean AlipaySignature.rsaCheckV1(Map<String, String> params,
 			// String publicKey, String charset, String sign_type)
-			boolean flag = AlipaySignature.rsaCheckV1(params, AliPayApi.ALIPAY_PUBLIC_KEY, AliPayApi.CHARSET,
-					AliPayApi.SIGN_TYPE);
+			boolean flag = AlipaySignature.rsaCheckV1(params, alipay_public_key, charset,
+					sign_type);
 			if (flag) {
 				// TODO
 				System.out.println("success");
@@ -453,8 +484,8 @@ public class AliPayController extends AliPayBaseController {
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey()+" = "+entry.getValue());
 			}
-			boolean flag = AlipaySignature.rsaCheckV1(map, AliPayApi.ALIPAY_PUBLIC_KEY, AliPayApi.CHARSET,
-					AliPayApi.SIGN_TYPE);
+			boolean flag = AlipaySignature.rsaCheckV1(map, alipay_public_key, charset,
+					sign_type);
 			if (flag) {
 				// TODO
 				System.out.println("precreate_notify_url success");
@@ -470,4 +501,6 @@ public class AliPayController extends AliPayBaseController {
 			renderText("failure");
 		}
 	}
+
+	
 }
