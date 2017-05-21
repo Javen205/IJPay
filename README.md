@@ -15,7 +15,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 
 微信服务商模式下 **微信扫码支付**、**微信刷卡支付**、**微信公众号支付支付**
 
-<img src="http://i4.buimg.com/4851/557cb6cd0d1ea9ba.gif" width = "300" alt="欢迎加入微信圈子" align=center />
+<img src="http://i4.buimg.com/4851/557cb6cd0d1ea9ba.gif" width = "300" alt="微信服务商下各种支付" align=center />
 
 
 ##### 微信系列支付
@@ -43,3 +43,11 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 - [Android版-支付宝APP支付](http://blog.csdn.net/zyw_java/article/details/54024238)
 
 - [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
+
+
+
+
+>如果对你有帮助,请任意打赏支持
+
+
+<img src="http://img.blog.csdn.net/20170425211154361?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenl3X2phdmE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width = "300" alt="任意打赏" align=center />
