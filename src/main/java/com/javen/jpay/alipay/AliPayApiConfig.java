@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.jfinal.kit.StrKit;
 /**
  * @Email javen205@126.com
  * @author Javen
@@ -29,90 +30,88 @@ public class AliPayApiConfig implements Serializable {
 	}
 	
 	public AliPayApiConfig build(){
-		this.alipayClient = new DefaultAlipayClient(serviceUrl, appId, privateKey, format, charset, alipayPublicKey,signType);
+		this.alipayClient = new DefaultAlipayClient(getServiceUrl(), getAppId(), getPrivateKey(), getFormat(), getCharset(), getAlipayPublicKey(),getSignType());
 		return this;
 	}
-	
-	
 
 	public String getPrivateKey() {
-		if (privateKey == null)
+		if (StrKit.isBlank(privateKey))
 			throw new IllegalStateException("privateKey 未被赋值");
 		return privateKey;
 	}
 	public AliPayApiConfig setPrivateKey(String privateKey) {
-		if (privateKey == null)
+		if (StrKit.isBlank(privateKey))
 			throw new IllegalArgumentException("privateKey 值不能为 null");
 		this.privateKey = privateKey;
 		return this;
 	}
 
 	public String getAlipayPublicKey() {
-		if (alipayPublicKey == null)
+		if (StrKit.isBlank(alipayPublicKey))
 			throw new IllegalStateException("alipayPublicKey 未被赋值");
 		return alipayPublicKey;
 	}
 	public AliPayApiConfig setAlipayPublicKey(String alipayPublicKey) {
-		if (alipayPublicKey == null)
+		if (StrKit.isBlank(alipayPublicKey))
 			throw new IllegalArgumentException("alipayPublicKey 值不能为 null");
 		this.alipayPublicKey = alipayPublicKey;
 		return this;
 	}
 
 	public String getAppId() {
-		if (appId == null)
+		if (StrKit.isBlank(appId))
 			throw new IllegalStateException("appId 未被赋值");
 		return appId;
 	}
 	public AliPayApiConfig setAppId(String appId) {
-		if (appId == null)
+		if (StrKit.isBlank(appId))
 			throw new IllegalArgumentException("appId 值不能为 null");
 		this.appId = appId;
 		return this;
 	}
 
 	public String getServiceUrl() {
-		if (serviceUrl == null)
+		if (StrKit.isBlank(serviceUrl))
 			throw new IllegalStateException("serviceUrl 未被赋值");
 		return serviceUrl;
 	}
 	
 
 	public AliPayApiConfig setServiceUrl(String serviceUrl) {
-		if (serviceUrl == null)
+		if (StrKit.isBlank(serviceUrl))
 			serviceUrl = "https://openapi.alipay.com/gateway.do";
 		this.serviceUrl = serviceUrl;
 		return this;
 	}
 
 	public String getCharset() {
-		if (charset == null)
+		if (StrKit.isBlank(charset))
 			charset = "UTF-8";
 		return charset;
 	}
 
 	public AliPayApiConfig setCharset(String charset) {
-		if (serviceUrl == null)
-			serviceUrl = "UTF-8";
+		if (StrKit.isBlank(charset))
+			charset = "UTF-8";
 		this.charset = charset;
 		return this;
 	}
 
 	public String getSignType() {
-		if (signType == null)
+		if (StrKit.isBlank(signType))
 			signType = "RSA2";
 		return signType;
 	}
 
 	public AliPayApiConfig setSignType(String signType) {
-		if (signType == null)
+		if (StrKit.isBlank(signType))
 			signType = "RSA2";
 		this.signType = signType;
 		return this;
 	}
 
 	public String getFormat() {
-		if (format == null)
+		if (StrKit.isBlank(format))
 			format = "json";
 		return format;
 	}
