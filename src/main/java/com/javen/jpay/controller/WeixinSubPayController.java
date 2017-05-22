@@ -9,7 +9,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.javen.jpay.ext.kit.ZxingKit;
 import com.javen.jpay.vo.AjaxResult;
-import com.javen.jpay.weixin.api.PayApi;
+import com.javen.jpay.weixin.api.WxPayApi;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PathKit;
@@ -82,7 +82,7 @@ public class WeixinSubPayController extends Controller {
 		
 		String sign = PaymentKit.createSign(params, paternerKey);
 		params.put("sign", sign);
-		String xmlResult =  PayApi.pushOrder(params);
+		String xmlResult =  WxPayApi.pushOrder(params);
 		
 		System.out.println(xmlResult);
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
@@ -228,7 +228,7 @@ public class WeixinSubPayController extends Controller {
 		String sign = PaymentKit.createSign(params, paternerKey);
 		params.put("sign", sign);
 		
-		String xmlResult = PayApi.pushOrder(params);
+		String xmlResult = WxPayApi.pushOrder(params);
 		
 		System.out.println(xmlResult);
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);

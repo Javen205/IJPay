@@ -14,8 +14,8 @@ import com.jfinal.weixin.sdk.utils.HttpUtils;
  * 2017年4月15日
  * 服务商模式、商户模式接口相同只是请求参数不同
  */
-public class PayApi {
-	static Log log = Log.getLog(PayApi.class);
+public class WxPayApi {
+	static Log log = Log.getLog(WxPayApi.class);
 	//统一下单接口
 	private static final String UNIFIEDORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	//订单查询
@@ -40,14 +40,16 @@ public class PayApi {
 	private final static String MICROPAY_URL =  "https://api.mch.weixin.qq.com/pay/micropay";
 
 	
-	private PayApi() {}
+	private WxPayApi() {}
 	/**
 	 * 交易类型枚举
 	 * @author Javen
 	 * 2017年4月15日
+	 * JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
+	 * MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
 	 */
 	public static enum TradeType {
-		JSAPI, NATIVE, APP, WAP
+		JSAPI, NATIVE, APP, WAP , MICROPAY
 	}
 	
 	/**
@@ -167,7 +169,7 @@ public class PayApi {
 	 * @return
 	 */
 	public static String micropay(Map<String, String> params){
-		return PayApi.doPost(MICROPAY_URL, params);
+		return WxPayApi.doPost(MICROPAY_URL, params);
 	}
 	
 	
@@ -193,7 +195,7 @@ public class PayApi {
 		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
 		String qrCodeUrl=PaymentKit.replace(url, "XXXXX", packageSign,appid,mch_id,product_id,timeStamp,nonceStr);
 		if (isToShortUrl) {
-			String shortResult = PayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
+			String shortResult = WxPayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
 			if (PropKit.getBoolean("devMode", false)) {
 				log.info(shortResult);
 			}
