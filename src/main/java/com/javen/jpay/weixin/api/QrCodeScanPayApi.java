@@ -36,7 +36,7 @@ public class QrCodeScanPayApi {
 		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
 		String qrCodeUrl=PaymentKit.replace(url, "XXXXX", packageSign,appid,mch_id,product_id,timeStamp,nonceStr);
 		if (isToShortUrl) {
-			String shortResult = PayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
+			String shortResult = WxPayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
 			if (PropKit.getBoolean("devMode", false)) {
 				System.out.println(shortResult);
 			}
@@ -83,7 +83,7 @@ public class QrCodeScanPayApi {
 		
 		Map<String, String> params = a.addParams(product_id);
 		
-		String xmlResult = PayApi.pushOrder(params);
+		String xmlResult = WxPayApi.pushOrder(params);
 		if (PropKit.getBoolean("devMode", false)) {
 			System.out.println("prepay_xml>>>"+xmlResult);
 		}
@@ -146,7 +146,7 @@ public class QrCodeScanPayApi {
 	public static AjaxResult scanModeTwoPay(String appid, String sub_appid, String mch_id, String sub_mch_id, String device_info, String body, String detail, String attach, String out_trade_no, String total_fee, String spbill_create_ip, String notify_url, String trade_type, String paternerKey){
 		AjaxResult ajax = new AjaxResult();
 		Map<String, String> params = PaymentKit.buildUnifiedOrderParasMap(appid, sub_appid, mch_id, sub_mch_id, device_info, body, detail, attach, out_trade_no, total_fee, spbill_create_ip, notify_url, trade_type, paternerKey,null);
-		String xmlResult = PayApi.pushOrder(params);
+		String xmlResult = WxPayApi.pushOrder(params);
 		if (PropKit.getBoolean("devMode", false)) {
 			System.out.println(xmlResult);
 		}

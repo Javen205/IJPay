@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.javen.jpay.weixin.utils.PaymentKit;
 import com.jfinal.kit.PropKit;
-import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.utils.HttpUtils;
 /**
@@ -174,7 +173,7 @@ public class WxPayApi {
 	
 	
 	/**
-	 * 扫码模式一之生成二维码
+	 * 商户模式下 扫码模式一之生成二维码
 	 * @param appid
 	 * @param mch_id
 	 * @param product_id
@@ -201,9 +200,9 @@ public class WxPayApi {
 			}
 			Map<String, String> shortMap = PaymentKit.xmlToMap(shortResult);
 			String return_code = shortMap.get("return_code");
-			if (StrKit.notBlank(return_code) && "SUCCESS".equals(return_code)) {
+			if (PaymentKit.codeIsOK(return_code)) {
 				String result_code = shortMap.get("result_code");
-				if (StrKit.notBlank(result_code) && "SUCCESS".equals(result_code)) {
+				if (PaymentKit.codeIsOK(result_code)) {
 					qrCodeUrl = shortMap.get("short_url");
 				}
 			}
@@ -211,6 +210,8 @@ public class WxPayApi {
 		
 		return qrCodeUrl;
 	}
+
+
 	
 	public static String doPost(String url, Map<String, String> params){
 		return HttpUtils.post(url, PaymentKit.toXml(params));

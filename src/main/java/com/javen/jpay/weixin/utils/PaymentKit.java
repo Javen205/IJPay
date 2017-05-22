@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import com.javen.jpay.weixin.api.WxPayApiConfigKit;
 import com.jfinal.kit.HashKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.weixin.sdk.utils.Charsets;
@@ -236,6 +237,32 @@ public class PaymentKit {
 		String sign = params.get("sign");
 		String localSign = PaymentKit.createSign(params, paternerKey);
 		return sign.equals(localSign);
+	}
+	/**
+	 * 预付订单再次签名
+	 * @param prepay_id
+	 * @return Map
+	 */
+	public static Map<String, String> prepayIdCreateSign(String prepay_id) {
+		Map<String, String> packageParams = new HashMap<String, String>();
+		packageParams.put("appId", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
+		packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+		packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
+		packageParams.put("package", "prepay_id=" + prepay_id);
+		packageParams.put("signType", "MD5");
+		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
+		packageParams.put("paySign", packageSign);
+		return packageParams;
+	}
+	
+	
+	/**
+	 * 判断接口返回的code是否是SUCCESS
+	 * @param return_code、result_code
+	 * @return
+	 */
+	public static boolean codeIsOK(String return_code) {
+		return StrKit.notBlank(return_code) && "SUCCESS".equals(return_code);
 	}
 	
 

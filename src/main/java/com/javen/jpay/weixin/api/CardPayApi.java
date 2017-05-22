@@ -18,7 +18,7 @@ public class CardPayApi {
 	 * @return
 	 */
 	public static String micropay(Map<String, String> params){
-		return PayApi.doPost(MICROPAY_URL, params);
+		return WxPayApi.doPost(MICROPAY_URL, params);
 	}
 	
 	/**
