@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javen.jpay.vo.AjaxResult;
+import com.javen.jpay.weixin.utils.PaymentKit;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
-import com.jfinal.weixin.sdk.kit.PaymentKit;
 
 public class QrCodeScanPayApi {
 	/**
@@ -34,9 +34,9 @@ public class QrCodeScanPayApi {
 		packageParams.put("time_stamp", timeStamp);
 		packageParams.put("nonce_str", nonceStr);
 		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
-		String qrCodeUrl=replace(url, "XXXXX", packageSign,appid,mch_id,product_id,timeStamp,nonceStr);
+		String qrCodeUrl=PaymentKit.replace(url, "XXXXX", packageSign,appid,mch_id,product_id,timeStamp,nonceStr);
 		if (isToShortUrl) {
-			String shortResult = PayApi.toShortUrl(PayApi.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
+			String shortResult = PayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
 			if (PropKit.getBoolean("devMode", false)) {
 				System.out.println(shortResult);
 			}
@@ -145,7 +145,7 @@ public class QrCodeScanPayApi {
 	 */
 	public static AjaxResult scanModeTwoPay(String appid, String sub_appid, String mch_id, String sub_mch_id, String device_info, String body, String detail, String attach, String out_trade_no, String total_fee, String spbill_create_ip, String notify_url, String trade_type, String paternerKey){
 		AjaxResult ajax = new AjaxResult();
-		Map<String, String> params = PayApi.buildUnifiedOrderParasMap(appid, sub_appid, mch_id, sub_mch_id, device_info, body, detail, attach, out_trade_no, total_fee, spbill_create_ip, notify_url, trade_type, paternerKey,null);
+		Map<String, String> params = PaymentKit.buildUnifiedOrderParasMap(appid, sub_appid, mch_id, sub_mch_id, device_info, body, detail, attach, out_trade_no, total_fee, spbill_create_ip, notify_url, trade_type, paternerKey,null);
 		String xmlResult = PayApi.pushOrder(params);
 		if (PropKit.getBoolean("devMode", false)) {
 			System.out.println(xmlResult);
@@ -167,12 +167,6 @@ public class QrCodeScanPayApi {
 		return ajax;
 	}
 	
-	private static String replace(String str,String regex,String... args){
-		int length = args.length;
-		for (int i = 0; i < length; i++) {
-			str=str.replaceFirst(regex, args[i]);
-		}
-		return str;
-	}
+	
 	
 }
