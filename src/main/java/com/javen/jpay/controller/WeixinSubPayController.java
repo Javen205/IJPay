@@ -10,7 +10,9 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.javen.jpay.ext.kit.ZxingKit;
 import com.javen.jpay.vo.AjaxResult;
 import com.javen.jpay.weixin.api.WxPayApi;
+import com.javen.jpay.weixin.api.WxPayApi.TradeType;
 import com.javen.jpay.weixin.api.WxPayApiConfig;
+import com.javen.jpay.weixin.api.WxPayApiConfig.PayModel;
 import com.javen.jpay.weixin.api.WxPayApiConfigKit;
 import com.javen.jpay.weixin.api.WxPayApiController;
 import com.javen.jpay.weixin.utils.PaymentKit;
@@ -21,7 +23,6 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 import com.jfinal.weixin.sdk.kit.IpKit;
-import com.jfinal.weixin.sdk.utils.HttpUtils;
 import com.jfinal.weixin.sdk.utils.JsonUtils;
 
 /**
@@ -43,18 +44,24 @@ public class WeixinSubPayController extends WxPayApiController {
 	public WxPayApiConfig getApiConfig() {
 		WxPayApiConfig apiConfig = WxPayApiConfig.New()
 		.setAppId(appid)
-		.setSubAppId(sub_appid)
+//		.setSubAppId(sub_appid)//可以为空,如果设置了统一下单中sub_openid必须设置
 		.setMchId(mch_id)
 		.setSubMchId(sub_mch_id)
 		.setPaternerKey(paternerKey)
-		.setNotifyUrl(notify_url);
+		.setPayModel(PayModel.SERVICEMODE);
 		return apiConfig;
 	}
 	
-	
-	
-	
 	public void index(){
+		log.info("欢迎使用IJPay,服务商模式下微信支付 - by Javen");
+		renderText("欢迎使用IJPay 服务商模式下微信支付  - by Javen");
+	}
+	
+	
+	/**
+	 * 公众号支付
+	 */
+	public void webPay(){
 		String openId = (String) getSession().getAttribute("openId");
 		String total_fee=getPara("total_fee");
 		if (StrKit.isBlank(total_fee)) {
@@ -96,7 +103,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
-		
+		log.info(WxPayApiConfigKit.getAliPayApiConfig().getMchId());
 		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
 		.setAttach("IJPay 测试  -By Javen")
 		.setBody("IJPay 公众号支付测试")
@@ -104,6 +111,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		.setSpbillCreateIp(ip)
 		.setTotalFee(total_fee)
 		.setTradeType(WxPayApi.TradeType.JSAPI)
+		.setNotifyUrl(notify_url)
 		.build();
 		
 		String xmlResult =  WxPayApi.pushOrder(params);
@@ -136,78 +144,74 @@ public class WeixinSubPayController extends WxPayApiController {
 
 	
 	/**
-	 * 商户刷卡支付
-	 * 文档：https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_10
+	 * 刷卡支付
+	 * 已测试
 	 */
 	public void micropay(){
-		String url="https://api.mch.weixin.qq.com/pay/micropay";
-		String total_fee=getPara("total_fee");
-		String auth_code = getPara("auth_code");
-		if (StrKit.isBlank(total_fee) || StrKit.isBlank(auth_code)) {
-			ajax.addError("参数错误");
-			renderJson(ajax);
-			return;
-		}
-		
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("appid", appid);
-		params.put("sub_appid", sub_appid);
-		params.put("mch_id", mch_id);
-		params.put("sub_mch_id", sub_mch_id);
-		params.put("device_info", "javen205");//终端设备号
-		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-		params.put("body", "刷卡支付测试");
-//		params.put("detail", "json字符串");//非必须
-		params.put("attach", "javen205");//附加参数非必须
-		String out_trade_no=System.currentTimeMillis()+"";
-		params.put("out_trade_no", out_trade_no);
-		params.put("total_fee", total_fee);
-		
-		String ip = IpKit.getRealIp(getRequest());
-		if (StrKit.isBlank(ip)) {
-			ip = "127.0.0.1";
-		}
-		
-		params.put("spbill_create_ip", ip);
-		params.put("auth_code", auth_code);
-		
-		String sign = PaymentKit.createSign(params, paternerKey);
-		params.put("sign", sign);
-		
-		String xmlResult = HttpUtils.post(url, PaymentKit.toXml(params));
-		//同步返回结果
-		System.out.println("xmlResult:"+xmlResult);
-		
-		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
-		String return_code = result.get("return_code");
-		String return_msg = result.get("return_msg");
-		if (StrKit.isBlank(return_code) || !"SUCCESS".equals(return_code)) {
-			System.out.println("提交刷卡支付失败>>"+xmlResult);
-			ajax.addError(return_msg);
-			renderJson(ajax);
-			return;
-		}
-		
-		String result_code = result.get("result_code");
-		if (StrKit.isBlank(result_code) || !"SUCCESS".equals(result_code)) {
-			//支付失败
-			System.out.println("支付失败>>"+xmlResult);
+		try {
+			String total_fee=getPara("total_fee");
+			String auth_code = getPara("auth_code");
+			if (StrKit.isBlank(total_fee) || StrKit.isBlank(auth_code)) {
+				ajax.addError("参数错误");
+				renderJson(ajax);
+				return;
+			}
 			
-			String err_code_des = result.get("err_code_des");
+			log.info(WxPayApiConfigKit.getAliPayApiConfig().getMchId());
+			String ip = IpKit.getRealIp(getRequest());
+			if (StrKit.isBlank(ip)) {
+				ip = "127.0.0.1";
+			}
 			
-			ajax.addError(err_code_des);
+			Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+					.setAttach("IJPay 刷卡支付测试  -By Javen")
+					.setBody("IJPay 刷卡支付测试")
+					.setSpbillCreateIp(ip)
+					.setTotalFee(total_fee)
+					.setOutTradeNo(String.valueOf(System.currentTimeMillis()))
+					.setAuthCode(auth_code)
+					.setTradeType(TradeType.MICROPAY)//必须设置
+					.build();
+			
+			String xmlResult = WxPayApi.micropay(params);
+			//同步返回结果
+			log.info("xmlResult:"+xmlResult);
+			
+			Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
+			String return_code = result.get("return_code");
+			String return_msg = result.get("return_msg");
+			if (!PaymentKit.codeIsOK(return_code)) {
+				log.info("提交刷卡支付失败>>"+xmlResult);
+				ajax.addError(return_msg);
+				renderJson(ajax);
+				return;
+			}
+			
+			String result_code = result.get("result_code");
+			if (!PaymentKit.codeIsOK(result_code)) {
+				//支付失败
+				log.info("支付失败>>"+xmlResult);
+				
+				String err_code_des = result.get("err_code_des");
+				
+				ajax.addError(err_code_des);
+				renderJson(ajax);
+				return;
+			}
+			
+			//支付成功 
+			System.out.println(xmlResult);
+			ajax.success("");
 			renderJson(ajax);
-			return;
+		} catch (Exception e) {
+			ajax.addError("系统异常");
+			renderJson(ajax);
+			e.printStackTrace();
 		}
-		
-		//支付成功 
-		System.out.println(xmlResult);
-		ajax.success("");
-		renderJson(ajax);
 	}
 	/**
 	 * 扫码支付
-	 * 文档：https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_5&index=4
+	 * 已测试
 	 */
 	public void scanCode(){
 		String total_fee=getPara("total_fee");
@@ -216,40 +220,21 @@ public class WeixinSubPayController extends WxPayApiController {
 			renderJson(ajax);
 			return;
 		}
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("appid", appid);
-//		params.put("mch_id", mch_id);
-//		params.put("sub_appid", sub_appid);
-//		params.put("sub_mch_id", sub_mch_id);
-//		params.put("body", "Javen微信支付极速开发");
-//		String out_trade_no=System.currentTimeMillis()+"";
-//		params.put("out_trade_no", out_trade_no);
-//		params.put("total_fee", total_fee);
-//		params.put("attach", "javen test");
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
 		
-//		params.put("spbill_create_ip", ip);
-//		params.put("trade_type", TradeType.NATIVE.name());
-//		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-//		params.put("notify_url", notify_url);
-		
-		
-		
 		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
 				.setAttach("IJPay 测试  -By Javen")
-				.setBody("IJPay 公众号支付测试")
+				.setBody("IJPay 扫码支付测试")
 				.setSpbillCreateIp(ip)
 				.setTotalFee(total_fee)
 				.setOutTradeNo(String.valueOf(System.currentTimeMillis()))
 				.setTradeType(WxPayApi.TradeType.NATIVE)
+				.setNotifyUrl(notify_url)
 				.build();
-
-		String sign = PaymentKit.createSign(params, paternerKey);
-		params.put("sign", sign);
 		
 		String xmlResult = WxPayApi.pushOrder(params);
 		

@@ -7,13 +7,14 @@ import java.util.Map;
 import com.javen.jpay.weixin.api.WxPayApi.TradeType;
 import com.javen.jpay.weixin.utils.PaymentKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.log.Log;
 /**
  * @Email javen205@126.com
  * @author Javen
  * 2017年5月22日
  */
 public class WxPayApiConfig implements Serializable {
-
+	static Log log = Log.getLog(WxPayApiConfig.class);
 	private static final long serialVersionUID = -6447075676732210047L;
 	
 	private String appId;
@@ -31,6 +32,16 @@ public class WxPayApiConfig implements Serializable {
 	private TradeType tradeType;
 	private String openId;
 	private String subOpenId;
+	private String authCode;
+	
+	private PayModel payModel;
+
+	/**
+	 * 分别对应商户模式、服务商模式
+	 */
+	public static enum PayModel {
+		BUSINESSMODEL, SERVICEMODE
+	}
 	
 	
 	private WxPayApiConfig() {
@@ -46,10 +57,16 @@ public class WxPayApiConfig implements Serializable {
 	public Map<String, String> build(){
 		Map<String, String> map =new HashMap<String, String>();
 		
+		if (getPayModel().equals(PayModel.SERVICEMODE)) {
+			log.info("服务商上模式...");
+			map.put("sub_mch_id", getSubMchId());
+		}
+		
 		/**
 		 * openId和sub_openid可以选传其中之一，如果选择传sub_openid,则必须传sub_appid
 		 */
 		if (getTradeType().equals(TradeType.JSAPI)) {
+			log.info("公众号支付...");
 			if (StrKit.notBlank(getSubAppId())) {
 				map.put("sub_appid", subAppId);
 				map.put("sub_openid", getSubOpenId());
@@ -58,6 +75,8 @@ public class WxPayApiConfig implements Serializable {
 			}
 		}
 		
+		
+		
 		map.put("appid", getAppId());
 		map.put("mch_id", getMchId());
 		map.put("nonce_str", getNonceStr());
@@ -65,11 +84,18 @@ public class WxPayApiConfig implements Serializable {
 		map.put("out_trade_no", getOutTradeNo());
 		map.put("total_fee", getTotalFee());
 		map.put("spbill_create_ip", getSpbillCreateIp());
-		map.put("notify_url", getNotifyUrl());
+		
 		map.put("trade_type", getTradeType().name());
 		map.put("out_trade_no", getOutTradeNo());
 		
 		map.put("attach", getAttach());
+		if (getTradeType().equals(TradeType.MICROPAY)) {
+			map.put("auth_code", getAuthCode());
+			map.remove("trade_type");
+		}else {
+			map.put("notify_url", getNotifyUrl());
+		}
+		
 		
 		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
 		
@@ -219,7 +245,7 @@ public class WxPayApiConfig implements Serializable {
 
 	public TradeType getTradeType() {
 		if (tradeType == null)
-			throw new IllegalArgumentException("mchId 未被赋值");
+			throw new IllegalArgumentException("tradeType 未被赋值");
 		return tradeType;
 	}
 
@@ -268,4 +294,32 @@ public class WxPayApiConfig implements Serializable {
 		this.paternerKey = paternerKey;
 		return this;
 	}
+
+	public PayModel getPayModel() {
+		if (payModel == null)
+			payModel = PayModel.BUSINESSMODEL;
+		return payModel;
+	}
+
+	public WxPayApiConfig setPayModel(PayModel payModel) {
+		if (payModel == null)
+			payModel = PayModel.BUSINESSMODEL;
+		this.payModel = payModel;
+		return this;
+	}
+
+	public String getAuthCode() {
+		if (StrKit.isBlank(authCode))
+			throw new IllegalArgumentException("authCode 未被赋值");
+		return authCode;
+	}
+
+	public WxPayApiConfig setAuthCode(String authCode) {
+		if (StrKit.isBlank(paternerKey))
+			throw new IllegalArgumentException("authCode 值不能为空");
+		this.authCode = authCode;
+		return this;
+	}
+	
+	
 }

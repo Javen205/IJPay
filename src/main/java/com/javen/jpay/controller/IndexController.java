@@ -9,8 +9,8 @@ public class IndexController extends Controller {
 	static Log log=Log.getLog(IndexController.class);
 
 	public void index(){
-		log.info("欢迎使用JPay 服务端- by Javen");
-		renderText("欢迎使用JPay 服务端- by Javen");
+		log.info("欢迎使用JPay服务端IJPay - by Javen");
+		renderText("欢迎使用JPay服务端IJPay  - by Javen");
 	}
 
 	// 跳转到授权页面

@@ -209,7 +209,7 @@ function scanCode(){
 	function wxpay(){
 		$.showLoading("正在加载...");
 		var total_fee=$.trim($("#web_money").val());
-		$.post("<%=path%>/wxsubpay",
+		$.post("<%=path%>/wxsubpay/webPay",
 		    {
 		      total_fee:total_fee,
 		    },
