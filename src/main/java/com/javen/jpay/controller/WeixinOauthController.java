@@ -81,8 +81,10 @@ public class WeixinOauthController extends ApiController{
 				//根据state 跳转到不同的页面
 				if (state.equals("2222")) {
 					redirect("http://www.cnblogs.com/zyw-205520/");
-				}else {
-					redirect("/toPay");
+				}else if(state.equals("wxsubpay")){
+					redirect("/toWxSubPay");
+				}else if(state.equals("wxpay")){
+					redirect("/toWxPay");
 				}
 			}
 			

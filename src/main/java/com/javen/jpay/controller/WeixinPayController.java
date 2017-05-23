@@ -1,15 +1,13 @@
 package com.javen.jpay.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.javen.jpay.ext.kit.ZxingKit;
 import com.javen.jpay.vo.AjaxResult;
 import com.javen.jpay.weixin.api.WxPayApi;
 import com.javen.jpay.weixin.api.WxPayApi.TradeType;
@@ -21,6 +19,7 @@ import com.javen.jpay.weixin.utils.IpKit;
 import com.javen.jpay.weixin.utils.PaymentKit;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.JsonKit;
+import com.jfinal.kit.PathKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
@@ -37,7 +36,7 @@ public class WeixinPayController extends WxPayApiController {
 	String appid = prop.get("appId");
 	String mch_id = prop.get("mch_id");
 	String paternerKey = prop.get("paternerKey");
-	String notify_url = prop.get("domain")+"/wxsubpay/pay_notify";
+	String notify_url = prop.get("domain")+"/wxpay/pay_notify";
 	
 	public WxPayApiConfig getApiConfig() {
 		WxPayApiConfig apiConfig = WxPayApiConfig.New()
@@ -54,13 +53,20 @@ public class WeixinPayController extends WxPayApiController {
 	}
 	/**
 	 * 公众号支付
-	 * @TODO 待测试
+	 * @TODO 待测试 o5NJx1dVRilQI6uUVSaBDuLnM3iM
 	 */
 	public void webPay() {
 		
 		// openId，采用 网页授权获取 access_token API：SnsAccessTokenApi获取
-		String openId=getPara("openId");
+		String openId = (String) getSession().getAttribute("openId");
+		
 		String total_fee=getPara("total_fee");
+		
+		if (StrKit.isBlank(openId)) {
+			ajax.addError("openId is null");
+			renderJson(ajax);
+			return;
+		}
 		if (StrKit.isBlank(total_fee)) {
 			ajax.addError("请输入数字金额");
 			renderJson(ajax);
@@ -102,14 +108,7 @@ log.info(xmlResult);
 		// 以下字段在return_code 和result_code都为SUCCESS的时候有返回
 		String prepay_id = result.get("prepay_id");
 		
-		Map<String, String> packageParams = new HashMap<String, String>();
-		packageParams.put("appId", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
-		packageParams.put("timeStamp", System.currentTimeMillis() / 1000 + "");
-		packageParams.put("nonceStr", System.currentTimeMillis() + "");
-		packageParams.put("package", "prepay_id=" + prepay_id);
-		packageParams.put("signType", "MD5");
-		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
-		packageParams.put("paySign", packageSign);
+		Map<String, String> packageParams = PaymentKit.prepayIdCreateSign(prepay_id);
 		
 		String jsonStr = JsonKit.toJson(packageParams);
 		ajax.success(jsonStr);
@@ -124,24 +123,31 @@ log.info(xmlResult);
 	 * 已测试
 	 */
 	public void scanCode1(){
+		String product_id = getPara("productId");
+		if (StrKit.isBlank(product_id)) {
+			ajax.addError("productId is null");
+			renderJson(ajax);
+			return;
+		}
+		WxPayApiConfig config = WxPayApiConfigKit.getAliPayApiConfig();
 		//获取扫码支付（模式一）url
-		String qrCodeUrl=WxPayApi.getCodeUrl(appid, mch_id, "001", WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey(), true);
+		String qrCodeUrl=WxPayApi.getCodeUrl(config.getAppId(), config.getMchId(),product_id, config.getPaternerKey(), true);
 		log.info(qrCodeUrl);
 		//生成二维码保存的路径
-//		String name = "payQRCode.png";
-//		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
-//				PathKit.getWebRootPath()+File.separator+"view"+File.separator+name );
-//		if (encode) {
-//			//在页面上显示
-//			setAttr("payQRCode", name);
-//			render("payQRCode.jsp");
-//		}
-		renderQrCode(qrCodeUrl, 200, 200);
+		String name = "payQRCode1.png";
+		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+				PathKit.getWebRootPath()+File.separator+name );
+		if (encode) {
+			//在页面上显示
+			ajax.success(name);
+			renderJson(ajax);
+		}
+//		renderQrCode(qrCodeUrl, 200, 200);
 	}
 
 	/**
 	 * 扫码支付模式一回调
-	 * @TODO 待测试
+	 * 已测试
 	 */
 	public void wxpay(){
 		try {
@@ -237,8 +243,21 @@ log.info(xmlResult);
 	 */
 	public void scanCode2() {
 		
-		String openId="o_pncsidC-pRRfCP4zj98h6slREw";
-		String total_fee="2";
+//		String openId="o5NJx1dVRilQI6uUVSaBDuLnM3iM";
+		String openId = (String) getSession().getAttribute("openId");
+		
+		String total_fee=getPara("total_fee");
+		
+		if (StrKit.isBlank(openId)) {
+			ajax.addError("openId is null");
+			renderJson(ajax);
+			return;
+		}
+		if (StrKit.isBlank(total_fee)) {
+			ajax.addError("支付金额不能为空");
+			renderJson(ajax);
+			return;
+		}
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
@@ -276,13 +295,16 @@ log.info(xmlResult);
 		//生成预付订单success
 		
 		String qrCodeUrl = result.get("code_url");
-//		String name = "payQRCode2.png";
+		String name = "payQRCode2.png";
 		
-//		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
-//				PathKit.getWebRootPath()+File.separator+name);
-//		if (encode) {
-			renderQrCode(qrCodeUrl, 200, 200);
-//		}
+		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+				PathKit.getWebRootPath()+File.separator+name);
+		if (encode) {
+//			renderQrCode(qrCodeUrl, 200, 200);
+			//在页面上显示
+			ajax.success(name);
+			renderJson(ajax);
+		}
 	}
 
 	/**
@@ -292,6 +314,17 @@ log.info(xmlResult);
 	public void micropay(){
 		String total_fee="1";
 		String auth_code = getPara("auth_code");
+		
+		if (StrKit.isBlank(total_fee)) {
+			ajax.addError("支付金额不能为空");
+			renderJson(ajax);
+			return;
+		}
+		if (StrKit.isBlank(auth_code)) {
+			ajax.addError("auth_code参数错误");
+			renderJson(ajax);
+			return;
+		}
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {

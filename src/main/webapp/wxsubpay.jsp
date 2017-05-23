@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,user-scalable=0">
-<title>Javen微信支付开发指南</title>
+<title>服务商模式-微信支付</title>
 <link rel="stylesheet"
 	href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
 <link rel="stylesheet"
@@ -25,6 +25,7 @@
 			<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
 				<header class='demos-header'>
 				<h1 class="demos-title">微信支付</h1>
+				<p class='demos-sub-title'>IJPay 让支付触手可及，微信扫码支付</p>
 				</header>
 				<div class="bd">
 					<div class="page__bd">
@@ -49,6 +50,7 @@
 			<div id="tab2" class="weui-tab__bd-item">
 				<header class='demos-header'>
 				<h1 class="demos-title">微信支付</h1>
+				<p class='demos-sub-title'>IJPay 让支付触手可及，微信刷卡支付</p>
 				</header>
 				<div class="bd">
 					<div class="page__bd">
@@ -79,6 +81,7 @@
 			<div id="tab3" class="weui-tab__bd-item">
 				<header class='demos-header'>
 				<h1 class="demos-title">微信支付</h1>
+				<p class='demos-sub-title'>IJPay 让支付触手可及，微信公众号支付</p>
 				</header>
 				<div class="bd">
 					<div class="page__bd">
@@ -96,15 +99,18 @@
 						<a href="javascript:wxpay();" class="weui-btn weui-btn_primary">确定支付</a>
 					</div>
 					<div class="weui-btn-area">
-						<a  href="<%=path %>/toOauth" class="weui-btn weui-btn_warn">重新获取openId</a>
+						<a  href="<%=path %>/toOauth?state=wxsubpay" class="weui-btn weui-btn_warn">重新获取openId</a>
 					</div>
 				</div>
 			</div>
 			<div id="tab4" class="weui-tab__bd-item">
 				<header class='demos-header'>
 					<h1 class="demos-title">微信支付</h1>
+					<p class='demos-sub-title'>IJPay 让支付触手可及 -By Javen205</p>
 				</header>
-				<h1 class="demos-title">Javen</h1>
+				<div style="text-align: center;">
+					<img width="200px" height="200px" alt="" src="<%=path %>/static/images/wxpay.png">
+				</div>
 				<div class="weui-msg__extra-area" style="margin-bottom: 100px">
 					<div class="weui-footer">
 						<p class="weui-footer__links">

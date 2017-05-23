@@ -60,7 +60,7 @@ public class WeixinSubPayController extends WxPayApiController {
 	
 	/**
 	 * 公众号支付
-	 * @TODO 待测试
+	 * 已测试 o5NJx1dVRilQI6uUVSaBDuLnM3iM
 	 */
 	public void webPay(){
 		String openId = (String) getSession().getAttribute("openId");
@@ -75,30 +75,6 @@ public class WeixinSubPayController extends WxPayApiController {
 			renderJson(ajax);
 			return;
 		}
-//		
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("appid", appid);
-//		params.put("mch_id", mch_id);
-//		params.put("sub_appid", sub_appid);
-//		params.put("sub_mch_id", sub_mch_id);
-//		params.put("sub_mch_id", sub_mch_id);
-//		params.put("device_info", "WEB");
-//		params.put("body", "Javen微信公众号极速开发");
-//		String out_trade_no=System.currentTimeMillis()+"";
-//		params.put("out_trade_no", out_trade_no);
-//		params.put("total_fee", total_fee);
-//		params.put("attach", "Javen test");
-//		
-//		
-//		
-//		params.put("spbill_create_ip", ip);
-//		params.put("trade_type", TradeType.JSAPI.name());
-//		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-//		params.put("notify_url", notify_url);
-//		params.put("openid", openId);
-//		
-//		String sign = PaymentKit.createSign(params, paternerKey);
-//		params.put("sign", sign);
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
@@ -108,7 +84,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
 		.setAttach("IJPay 公众号支付测试  -By Javen")
 		.setBody("IJPay 公众号支付测试 -By Javen")
-		.setSubOpenId(openId)
+		.setOpenId(openId)
 		.setSpbillCreateIp(ip)
 		.setTotalFee(total_fee)
 		.setTradeType(WxPayApi.TradeType.JSAPI)
@@ -269,10 +245,6 @@ public class WeixinSubPayController extends WxPayApiController {
 			ajax.success(name);
 			renderJson(ajax);
 		}
-		
-//		setAttr("code_url",qrCodeUrl);
-//		render("pc_pay.jsp");
-		
 	}
 	
 	
