@@ -66,46 +66,35 @@ public class WeixinPayController extends WxPayApiController {
 			renderJson(ajax);
 			return;
 		}
-		// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
-		
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("appid", appid);
-		params.put("mch_id", mch_id);
-		params.put("body", "Javen微信公众号极速开发");
-		String out_trade_no=System.currentTimeMillis()+"";
-		params.put("out_trade_no", out_trade_no);
-		int price=((int)(Float.valueOf(total_fee)*100));
-		params.put("total_fee", price+"");
-		params.put("attach", "test");
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
 		
-		params.put("spbill_create_ip", ip);
-		params.put("trade_type", TradeType.JSAPI.name());
-		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-		params.put("notify_url", notify_url);
-		params.put("openid", openId);
-
-		String sign = PaymentKit.createSign(params, paternerKey);
-		params.put("sign", sign);
+		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+				.setAttach("IJPay 公众号支付测试  -By Javen")
+				.setBody("IJPay 公众号支付测试  -By Javen")
+				.setOpenId(openId)
+				.setSpbillCreateIp(ip)
+				.setTotalFee(total_fee)
+				.setTradeType(TradeType.JSAPI)
+				.setNotifyUrl(notify_url)
+				.build();
 		
 		String xmlResult = WxPayApi.pushOrder(params);
-		
-		System.out.println(xmlResult);
+log.info(xmlResult);
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
 		
 		String return_code = result.get("return_code");
 		String return_msg = result.get("return_msg");
-		if (StrKit.isBlank(return_code) || !"SUCCESS".equals(return_code)) {
+		if (!PaymentKit.codeIsOK(return_code)) {
 			ajax.addError(return_msg);
 			renderJson(ajax);
 			return;
 		}
 		String result_code = result.get("result_code");
-		if (StrKit.isBlank(result_code) || !"SUCCESS".equals(result_code)) {
+		if (!PaymentKit.codeIsOK(result_code)) {
 			ajax.addError(return_msg);
 			renderJson(ajax);
 			return;
@@ -114,12 +103,12 @@ public class WeixinPayController extends WxPayApiController {
 		String prepay_id = result.get("prepay_id");
 		
 		Map<String, String> packageParams = new HashMap<String, String>();
-		packageParams.put("appId", appid);
+		packageParams.put("appId", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
 		packageParams.put("timeStamp", System.currentTimeMillis() / 1000 + "");
 		packageParams.put("nonceStr", System.currentTimeMillis() + "");
 		packageParams.put("package", "prepay_id=" + prepay_id);
 		packageParams.put("signType", "MD5");
-		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
 		packageParams.put("paySign", packageSign);
 		
 		String jsonStr = JsonKit.toJson(packageParams);
@@ -136,7 +125,7 @@ public class WeixinPayController extends WxPayApiController {
 	 */
 	public void scanCode1(){
 		//获取扫码支付（模式一）url
-		String qrCodeUrl=WxPayApi.getCodeUrl(appid, mch_id, "001", paternerKey, true);
+		String qrCodeUrl=WxPayApi.getCodeUrl(appid, mch_id, "001", WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey(), true);
 		log.info(qrCodeUrl);
 		//生成二维码保存的路径
 //		String name = "payQRCode.png";
@@ -156,20 +145,8 @@ public class WeixinPayController extends WxPayApiController {
 	 */
 	public void wxpay(){
 		try {
-			HttpServletRequest request = getRequest();
-			 /**
-			 * 获取用户扫描二维码后，微信返回的信息
-			 */
-			InputStream inStream = request.getInputStream();
-			ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-			int len = 0;
-			while ((len = inStream.read(buffer)) != -1) {
-			    outSteam.write(buffer, 0, len);
-			}
-			outSteam.close();
-			inStream.close();
-			String result  = new String(outSteam.toByteArray(),"utf-8");
+		
+			String result  = HttpKit.readData(getRequest());
 			System.out.println("callBack_xml>>>"+result);
 			/**
 			 * 获取返回的信息内容中各个参数的值
@@ -194,36 +171,27 @@ public class WeixinPayController extends WxPayApiController {
 			packageParams.put("nonce_str",nonce_str);
 			packageParams.put("product_id", product_id);
 			
-			String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+			String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
 			// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
-			
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("appid", appid);
-			params.put("mch_id", mch_id);
-			params.put("body", "测试扫码支付");
-			String out_trade_no=Long.toString(System.currentTimeMillis());
-			params.put("out_trade_no", out_trade_no);
-			int price=((int)(Float.valueOf(10)*100));
-			params.put("total_fee", price+"");
-			params.put("attach", out_trade_no);
+
 			
 			String ip = IpKit.getRealIp(getRequest());
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
 			
-			params.put("spbill_create_ip", ip);
-			params.put("trade_type", TradeType.NATIVE.name());
-			params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-			params.put("notify_url", notify_url);
-			params.put("openid", openid);
-
-			String paysign = PaymentKit.createSign(params, paternerKey);
-			params.put("sign", paysign);
+			Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+					.setAttach("IJPay 扫码模式一测试  -By Javen")
+					.setBody("IJPay 扫码模式一测试  -By Javen")
+					.setOpenId(openid)
+					.setSpbillCreateIp(ip)
+					.setTotalFee("100")
+					.setTradeType(TradeType.NATIVE)
+					.setNotifyUrl(notify_url)
+					.build();
 			
 			String xmlResult = WxPayApi.pushOrder(params);
-			
-			System.out.println("prepay_xml>>>"+xmlResult);
+			log.info("prepay_xml>>>"+xmlResult);
 			
 			/**
 	         * 发送信息给微信服务器
@@ -250,18 +218,14 @@ public class WeixinPayController extends WxPayApiController {
 					prepayParams.put("result_code", "FAIL");
 					prepayParams.put("err_code_des", "订单失效");   //result_code为FAIL时，添加该键值对，value值是微信告诉客户的信息
 				}
-				prepaySign = PaymentKit.createSign(prepayParams, paternerKey);
+				prepaySign = PaymentKit.createSign(prepayParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
 				prepayParams.put("sign", prepaySign);
 				String xml = PaymentKit.toXml(prepayParams);
 				log.error(xml);
 				renderText(xml);
 				
 			}
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -419,13 +383,13 @@ log.info(xmlResult);
 		String prepay_id = result.get("prepay_id");
 		//封装调起微信支付的参数 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12
 		Map<String, String> packageParams = new HashMap<String, String>();
-		packageParams.put("appid", appid);
-		packageParams.put("mch_idid", mch_id);
+		packageParams.put("appid", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
+		packageParams.put("mch_id", WxPayApiConfigKit.getAliPayApiConfig().getMchId());
 		packageParams.put("prepayid", prepay_id);
 		packageParams.put("package", "Sign=WXPay");
 		packageParams.put("noncestr", System.currentTimeMillis() + "");
 		packageParams.put("timestamp", System.currentTimeMillis() / 1000 + "");
-		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
 		packageParams.put("sign", packageSign);
 		
 		String jsonStr = JsonKit.toJson(packageParams);
@@ -483,7 +447,7 @@ log.info("最新返回apk的参数:"+jsonStr);
 		// 避免已经成功、关闭、退款的订单被再次更新
 //		Order order = Order.dao.getOrderByTransactionId(transaction_id);
 //		if (order==null) {
-			if(PaymentKit.verifyNotify(params, paternerKey)){
+			if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey())){
 				if (("SUCCESS").equals(result_code)) {
 					//更新订单信息
 					log.warn("更新订单信息:"+attach);

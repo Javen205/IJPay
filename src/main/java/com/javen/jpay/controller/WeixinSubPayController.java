@@ -106,8 +106,8 @@ public class WeixinSubPayController extends WxPayApiController {
 		}
 		log.info(WxPayApiConfigKit.getAliPayApiConfig().getMchId());
 		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
-		.setAttach("IJPay 测试  -By Javen")
-		.setBody("IJPay 公众号支付测试")
+		.setAttach("IJPay 公众号支付测试  -By Javen")
+		.setBody("IJPay 公众号支付测试 -By Javen")
 		.setSubOpenId(openId)
 		.setSpbillCreateIp(ip)
 		.setTotalFee(total_fee)
@@ -324,7 +324,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		
 		// 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
 		// 避免已经成功、关闭、退款的订单被再次更新
-		if(PaymentKit.verifyNotify(params, paternerKey)){
+		if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey())){
 			if (("SUCCESS").equals(result_code)) {
 				//更新订单信息
 				log.warn("更新订单信息:"+attach);
