@@ -15,15 +15,15 @@ import com.javen.jpay.weixin.api.WxPayApiConfig;
 import com.javen.jpay.weixin.api.WxPayApiConfig.PayModel;
 import com.javen.jpay.weixin.api.WxPayApiConfigKit;
 import com.javen.jpay.weixin.api.WxPayApiController;
+import com.javen.jpay.weixin.utils.IpKit;
 import com.javen.jpay.weixin.utils.PaymentKit;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
-import com.jfinal.weixin.sdk.kit.IpKit;
-import com.jfinal.weixin.sdk.utils.JsonUtils;
 
 /**
  * @author Javen
@@ -60,6 +60,7 @@ public class WeixinSubPayController extends WxPayApiController {
 	
 	/**
 	 * 公众号支付
+	 * @TODO 待测试
 	 */
 	public void webPay(){
 		String openId = (String) getSession().getAttribute("openId");
@@ -137,7 +138,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		
 		Map<String, String> packageParams = PaymentKit.prepayIdCreateSign(prepay_id);
 		
-		String jsonStr = JsonUtils.toJson(packageParams);
+		String jsonStr = JsonKit.toJson(packageParams);
 		ajax.success(jsonStr);
 		renderJson(ajax);
 	}

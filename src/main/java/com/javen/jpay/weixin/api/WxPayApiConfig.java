@@ -129,8 +129,6 @@ public class WxPayApiConfig implements Serializable {
 	}
 
 	public String getSubAppId() {
-		if (StrKit.isBlank(subAppId))
-			throw new IllegalArgumentException("subAppId 未被赋值");
 		return subAppId;
 	}
 

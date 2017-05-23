@@ -1,34 +1,44 @@
 package com.javen.jpay.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.javen.jpay.vo.AjaxResult;
-import com.javen.jpay.weixin.api.WxPayApiConfig;
-import com.javen.jpay.weixin.api.WxPayApiConfigKit;
-import com.javen.jpay.weixin.api.WxPayApiConfig.PayModel;
-import com.javen.jpay.weixin.api.WxPayApiController;
-import com.javen.jpay.weixin.utils.PaymentKit;
 import com.javen.jpay.weixin.api.WxPayApi;
 import com.javen.jpay.weixin.api.WxPayApi.TradeType;
+import com.javen.jpay.weixin.api.WxPayApiConfig;
+import com.javen.jpay.weixin.api.WxPayApiConfig.PayModel;
+import com.javen.jpay.weixin.api.WxPayApiConfigKit;
+import com.javen.jpay.weixin.api.WxPayApiController;
+import com.javen.jpay.weixin.utils.IpKit;
+import com.javen.jpay.weixin.utils.PaymentKit;
+import com.jfinal.kit.HttpKit;
+import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
-import com.jfinal.weixin.sdk.kit.IpKit;
 
+/**
+ * @author Javen
+ */
 public class WeixinPayController extends WxPayApiController {
 	static Log log=Log.getLog(WeixinPayController.class);
-
-	private static final Prop prop = PropKit.use("wxpay.properties");
 	private AjaxResult ajax = new AjaxResult();
-	
+	private static final Prop prop = PropKit.use("wxpay.properties");
 	//商户相关资料
 	String appid = prop.get("appId");
 	String mch_id = prop.get("mch_id");
 	String paternerKey = prop.get("paternerKey");
-	String notify_url = prop.get("domain")+"/wxpay/pay_notify";
-	@Override
+	String notify_url = prop.get("domain")+"/wxsubpay/pay_notify";
+	
 	public WxPayApiConfig getApiConfig() {
 		WxPayApiConfig apiConfig = WxPayApiConfig.New()
 				.setAppId(appid)
@@ -37,46 +47,359 @@ public class WeixinPayController extends WxPayApiController {
 				.setPayModel(PayModel.BUSINESSMODEL);
 		return apiConfig;
 	}
+	
+	public void index(){
+		log.info("欢迎使用IJPay,商户模式下微信支付 - by Javen");
+		renderText("欢迎使用IJPay 商户模式下微信支付  - by Javen");
+	}
 	/**
-	 * 微信APP支付
+	 * 公众号支付
+	 * @TODO 待测试
 	 */
-	public void appPay(){
-		//不用设置授权目录域名
-		//统一下单地址 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1#
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("appid", appid);
-//		params.put("mch_id", mch_id);
-//		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
-//		params.put("body", "Javen微信支付测试");
-//		String out_trade_no=System.currentTimeMillis()+"";
-//		params.put("attach", "custom json");
-//		params.put("out_trade_no", out_trade_no);
-//		int price=10000;
-//		params.put("total_fee", price+"");
+	public void webPay() {
+		
+		// openId，采用 网页授权获取 access_token API：SnsAccessTokenApi获取
+		String openId=getPara("openId");
+		String total_fee=getPara("total_fee");
+		if (StrKit.isBlank(total_fee)) {
+			ajax.addError("请输入数字金额");
+			renderJson(ajax);
+			return;
+		}
+		// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("appid", appid);
+		params.put("mch_id", mch_id);
+		params.put("body", "Javen微信公众号极速开发");
+		String out_trade_no=System.currentTimeMillis()+"";
+		params.put("out_trade_no", out_trade_no);
+		int price=((int)(Float.valueOf(total_fee)*100));
+		params.put("total_fee", price+"");
+		params.put("attach", "test");
 		
 		String ip = IpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
 		
-//		params.put("spbill_create_ip", ip);
-//		params.put("notify_url", notify_url);
-//		params.put("trade_type", "APP");
+		params.put("spbill_create_ip", ip);
+		params.put("trade_type", TradeType.JSAPI.name());
+		params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
+		params.put("notify_url", notify_url);
+		params.put("openid", openId);
+
+		String sign = PaymentKit.createSign(params, paternerKey);
+		params.put("sign", sign);
+		
+		String xmlResult = WxPayApi.pushOrder(params);
+		
+		System.out.println(xmlResult);
+		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
+		
+		String return_code = result.get("return_code");
+		String return_msg = result.get("return_msg");
+		if (StrKit.isBlank(return_code) || !"SUCCESS".equals(return_code)) {
+			ajax.addError(return_msg);
+			renderJson(ajax);
+			return;
+		}
+		String result_code = result.get("result_code");
+		if (StrKit.isBlank(result_code) || !"SUCCESS".equals(result_code)) {
+			ajax.addError(return_msg);
+			renderJson(ajax);
+			return;
+		}
+		// 以下字段在return_code 和result_code都为SUCCESS的时候有返回
+		String prepay_id = result.get("prepay_id");
+		
+		Map<String, String> packageParams = new HashMap<String, String>();
+		packageParams.put("appId", appid);
+		packageParams.put("timeStamp", System.currentTimeMillis() / 1000 + "");
+		packageParams.put("nonceStr", System.currentTimeMillis() + "");
+		packageParams.put("package", "prepay_id=" + prepay_id);
+		packageParams.put("signType", "MD5");
+		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+		packageParams.put("paySign", packageSign);
+		
+		String jsonStr = JsonKit.toJson(packageParams);
+		ajax.success(jsonStr);
+		renderJson(ajax);
+	}
+	
+	
+	
+	
+	/**
+	 * 生成支付二维码（模式一）并在页面上显示
+	 * 已测试
+	 */
+	public void scanCode1(){
+		//获取扫码支付（模式一）url
+		String qrCodeUrl=WxPayApi.getCodeUrl(appid, mch_id, "001", paternerKey, true);
+		log.info(qrCodeUrl);
+		//生成二维码保存的路径
+//		String name = "payQRCode.png";
+//		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+//				PathKit.getWebRootPath()+File.separator+"view"+File.separator+name );
+//		if (encode) {
+//			//在页面上显示
+//			setAttr("payQRCode", name);
+//			render("payQRCode.jsp");
+//		}
+		renderQrCode(qrCodeUrl, 200, 200);
+	}
+
+	/**
+	 * 扫码支付模式一回调
+	 * @TODO 待测试
+	 */
+	public void wxpay(){
+		try {
+			HttpServletRequest request = getRequest();
+			 /**
+			 * 获取用户扫描二维码后，微信返回的信息
+			 */
+			InputStream inStream = request.getInputStream();
+			ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while ((len = inStream.read(buffer)) != -1) {
+			    outSteam.write(buffer, 0, len);
+			}
+			outSteam.close();
+			inStream.close();
+			String result  = new String(outSteam.toByteArray(),"utf-8");
+			System.out.println("callBack_xml>>>"+result);
+			/**
+			 * 获取返回的信息内容中各个参数的值
+			 */
+			Map<String, String> map = PaymentKit.xmlToMap(result);
+			for (String key : map.keySet()) {
+				   System.out.println("key= "+ key + " and value= " + map.get(key));
+			}
+			
+			String appid=map.get("appid");
+			String openid = map.get("openid");
+			String mch_id = map.get("mch_id");
+			String is_subscribe = map.get("is_subscribe");
+			String nonce_str = map.get("nonce_str");
+			String product_id = map.get("product_id");
+			String sign = map.get("sign");
+			Map<String, String> packageParams = new HashMap<String, String>();
+			packageParams.put("appid", appid);
+			packageParams.put("openid", openid);
+			packageParams.put("mch_id",mch_id);
+			packageParams.put("is_subscribe",is_subscribe);
+			packageParams.put("nonce_str",nonce_str);
+			packageParams.put("product_id", product_id);
+			
+			String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+			// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
+			
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("appid", appid);
+			params.put("mch_id", mch_id);
+			params.put("body", "测试扫码支付");
+			String out_trade_no=Long.toString(System.currentTimeMillis());
+			params.put("out_trade_no", out_trade_no);
+			int price=((int)(Float.valueOf(10)*100));
+			params.put("total_fee", price+"");
+			params.put("attach", out_trade_no);
+			
+			String ip = IpKit.getRealIp(getRequest());
+			if (StrKit.isBlank(ip)) {
+				ip = "127.0.0.1";
+			}
+			
+			params.put("spbill_create_ip", ip);
+			params.put("trade_type", TradeType.NATIVE.name());
+			params.put("nonce_str", System.currentTimeMillis() / 1000 + "");
+			params.put("notify_url", notify_url);
+			params.put("openid", openid);
+
+			String paysign = PaymentKit.createSign(params, paternerKey);
+			params.put("sign", paysign);
+			
+			String xmlResult = WxPayApi.pushOrder(params);
+			
+			System.out.println("prepay_xml>>>"+xmlResult);
+			
+			/**
+	         * 发送信息给微信服务器
+	         */
+			Map<String, String> payResult = PaymentKit.xmlToMap(xmlResult);
+			
+			String return_code = payResult.get("return_code");
+			String result_code = payResult.get("result_code");
+			
+			if (StrKit.notBlank(return_code) && StrKit.notBlank(result_code) && return_code.equalsIgnoreCase("SUCCESS")&&result_code.equalsIgnoreCase("SUCCESS")) {
+				// 以下字段在return_code 和result_code都为SUCCESS的时候有返回
+				String prepay_id = payResult.get("prepay_id");
+				
+				Map<String, String> prepayParams = new HashMap<String, String>();
+				prepayParams.put("return_code", "SUCCESS");
+				prepayParams.put("appId", appid);
+				prepayParams.put("mch_id", mch_id);
+				prepayParams.put("nonceStr", System.currentTimeMillis() + "");
+				prepayParams.put("prepay_id", prepay_id);
+				String prepaySign = null;
+				if (sign.equals(packageSign)) {
+					prepayParams.put("result_code", "SUCCESS");
+				}else {
+					prepayParams.put("result_code", "FAIL");
+					prepayParams.put("err_code_des", "订单失效");   //result_code为FAIL时，添加该键值对，value值是微信告诉客户的信息
+				}
+				prepaySign = PaymentKit.createSign(prepayParams, paternerKey);
+				prepayParams.put("sign", prepaySign);
+				String xml = PaymentKit.toXml(prepayParams);
+				log.error(xml);
+				renderText(xml);
+				
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 扫码支付模式二
+	 * 已测试
+	 */
+	public void scanCode2() {
+		
+		String openId="o_pncsidC-pRRfCP4zj98h6slREw";
+		String total_fee="2";
+		
+		String ip = IpKit.getRealIp(getRequest());
+		if (StrKit.isBlank(ip)) {
+			ip = "127.0.0.1";
+		}
 		
 		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
-				.setAttach("IJPay App支付测试  -By Javen")
-				.setNonceStr(String.valueOf(System.currentTimeMillis()))
-				.setBody("IJPay App支付测试")
+				.setAttach("IJPay 测试  -By Javen")
+				.setBody("IJPay 扫码支付2测试  -By Javen")
+				.setOpenId(openId)
 				.setSpbillCreateIp(ip)
-				.setTotalFee("100")
-				.setOutTradeNo(String.valueOf(System.currentTimeMillis()))
-				.setTradeType(TradeType.APP)//必须设置
+				.setTotalFee(total_fee)
+				.setTradeType(TradeType.NATIVE)
 				.setNotifyUrl(notify_url)
 				.build();
 		
 		String xmlResult = WxPayApi.pushOrder(params);
 		
-		log.info(xmlResult);
+log.info(xmlResult);
+		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
+		
+		String return_code = result.get("return_code");
+		String return_msg = result.get("return_msg");
+		if (!PaymentKit.codeIsOK(return_code)) {
+			System.out.println(return_msg);
+			renderText(xmlResult);
+			return;
+		}
+		String result_code = result.get("result_code");
+		if (!PaymentKit.codeIsOK(result_code)) {
+			System.out.println(return_msg);
+			renderText(xmlResult);
+			return;
+		}
+		//生成预付订单success
+		
+		String qrCodeUrl = result.get("code_url");
+//		String name = "payQRCode2.png";
+		
+//		Boolean encode = ZxingKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+//				PathKit.getWebRootPath()+File.separator+name);
+//		if (encode) {
+			renderQrCode(qrCodeUrl, 200, 200);
+//		}
+	}
+
+	/**
+	 * 刷卡支付
+	 * 已测试
+	 */
+	public void micropay(){
+		String total_fee="1";
+		String auth_code = getPara("auth_code");
+		
+		String ip = IpKit.getRealIp(getRequest());
+		if (StrKit.isBlank(ip)) {
+			ip = "127.0.0.1";
+		}
+		
+		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+				.setAttach("IJPay 测试  -By Javen")
+				.setBody("IJPay 刷卡支付测试 -By Javen")
+				.setSpbillCreateIp(ip)
+				.setTotalFee(total_fee)
+				.setAuthCode(auth_code)
+				.setTradeType(TradeType.MICROPAY)
+				.setNotifyUrl(notify_url)
+				.build();
+				
+		String xmlResult =  WxPayApi.micropay(params);
+		
+		//同步返回结果
+		log.info("xmlResult:"+xmlResult);
+		
+		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
+		String return_code = result.get("return_code");
+		if (!PaymentKit.codeIsOK(return_code)) {
+			//通讯失败 
+			String err_code = result.get("err_code");
+			//用户支付中，需要输入密码
+			if (err_code.equals("USERPAYING")) {
+				//等待5秒后调用【查询订单API】https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2
+				
+			}
+			renderText("通讯失败>>"+xmlResult);
+			return;
+		}
+		
+		String result_code = result.get("result_code");
+		if (!PaymentKit.codeIsOK(result_code)) {
+			//支付失败
+			renderText("支付失败>>"+xmlResult);
+			return;
+		}
+		
+		//支付成功 
+		
+		renderText(xmlResult);
+	}
+	
+	/**
+	 * 微信APP支付
+	 * 已测试
+	 */
+	public void appPay(){
+		//不用设置授权目录域名
+		//统一下单地址 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1#
+		
+		String ip = IpKit.getRealIp(getRequest());
+		if (StrKit.isBlank(ip)) {
+			ip = "127.0.0.1";
+		}
+		
+		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+				.setAttach("IJPay 测试  -By Javen")
+				.setBody("IJPay App付测试  -By Javen")
+				.setSpbillCreateIp(ip)
+				.setTotalFee("100")
+				.setTradeType(WxPayApi.TradeType.APP)
+				.setNotifyUrl(notify_url)
+				.build();
+				
+		String xmlResult =  WxPayApi.pushOrder(params);
+		
+log.info(xmlResult);
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
 		
 		String return_code = result.get("return_code");
@@ -97,7 +420,7 @@ public class WeixinPayController extends WxPayApiController {
 		//封装调起微信支付的参数 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12
 		Map<String, String> packageParams = new HashMap<String, String>();
 		packageParams.put("appid", appid);
-		packageParams.put("partnerid", mch_id);
+		packageParams.put("mch_idid", mch_id);
 		packageParams.put("prepayid", prepay_id);
 		packageParams.put("package", "Sign=WXPay");
 		packageParams.put("noncestr", System.currentTimeMillis() + "");
@@ -105,9 +428,78 @@ public class WeixinPayController extends WxPayApiController {
 		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
 		packageParams.put("sign", packageSign);
 		
-		ajax.success(packageParams);
-		renderJson(ajax);
+		String jsonStr = JsonKit.toJson(packageParams);
+log.info("最新返回apk的参数:"+jsonStr);
+		renderJson(jsonStr);
 	}
-
 	
+	public void pay_notify() {
+		//获取所有的参数
+		StringBuffer sbf=new StringBuffer();
+				 
+		Enumeration<String>  en=getParaNames();
+		while (en.hasMoreElements()) {
+			Object o= en.nextElement();
+			sbf.append(o.toString()+"="+getPara(o.toString()));
+		}
+		
+		log.error("支付通知参数："+sbf.toString());
+		
+		// 支付结果通用通知文档: https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
+		String xmlMsg = HttpKit.readData(getRequest());
+		System.out.println("支付通知="+xmlMsg);
+		Map<String, String> params = PaymentKit.xmlToMap(xmlMsg);
+		
+		String appid  = params.get("appid");
+		//商户号
+		String mch_id  = params.get("mch_id");
+		String result_code  = params.get("result_code");
+		String openId      = params.get("openid");
+		//交易类型
+		String trade_type      = params.get("trade_type");
+		//付款银行
+		String bank_type      = params.get("bank_type");
+		// 总金额
+		String total_fee     = params.get("total_fee");
+		//现金支付金额
+		String cash_fee     = params.get("cash_fee");
+		// 微信支付订单号
+		String transaction_id      = params.get("transaction_id");
+		// 商户订单号
+		String out_trade_no      = params.get("out_trade_no");
+		// 支付完成时间，格式为yyyyMMddHHmmss
+		String time_end      = params.get("time_end");
+		
+		/////////////////////////////以下是附加参数///////////////////////////////////
+		
+		String attach      = params.get("attach");
+		String fee_type      = params.get("fee_type");
+		String is_subscribe      = params.get("is_subscribe");
+		String err_code      = params.get("err_code");
+		String err_code_des      = params.get("err_code_des");
+		
+		
+		// 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
+		// 避免已经成功、关闭、退款的订单被再次更新
+//		Order order = Order.dao.getOrderByTransactionId(transaction_id);
+//		if (order==null) {
+			if(PaymentKit.verifyNotify(params, paternerKey)){
+				if (("SUCCESS").equals(result_code)) {
+					//更新订单信息
+					log.warn("更新订单信息:"+attach);
+					
+					//发送通知等
+					
+					Map<String, String> xml = new HashMap<String, String>();
+					xml.put("return_code", "SUCCESS");
+					xml.put("return_msg", "OK");
+					renderText(PaymentKit.toXml(xml));
+					return;
+				}
+			}
+//		}
+		renderText("");
+	}
 }
+
+
