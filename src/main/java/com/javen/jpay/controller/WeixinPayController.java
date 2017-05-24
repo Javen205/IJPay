@@ -348,6 +348,7 @@ log.info(xmlResult);
 		
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
 		String return_code = result.get("return_code");
+		String return_msg = result.get("return_msg");
 		if (!PaymentKit.codeIsOK(return_code)) {
 			//通讯失败 
 			String err_code = result.get("err_code");
@@ -356,14 +357,21 @@ log.info(xmlResult);
 				//等待5秒后调用【查询订单API】https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2
 				
 			}
-			renderText("通讯失败>>"+xmlResult);
+			log.info("提交刷卡支付失败>>"+xmlResult);
+			ajax.addError(return_msg);
+			renderJson(ajax);
 			return;
 		}
 		
 		String result_code = result.get("result_code");
 		if (!PaymentKit.codeIsOK(result_code)) {
 			//支付失败
-			renderText("支付失败>>"+xmlResult);
+			//支付失败
+			log.info("支付失败>>"+xmlResult);
+			String err_code_des = result.get("err_code_des");
+			
+			ajax.addError(err_code_des);
+			renderJson(ajax);
 			return;
 		}
 		
