@@ -21,8 +21,14 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
     - [x] 扫码支付模式二
     - [x] APP支付
     - [x] 现金红包
-    - [ ] 企业付款
-    - [ ] 退款接口
+    - [x] 企业付款
+    - [x] 退款接口
+    - [x] 查询退款
+    - [x] 查询订单
+    - [x] 关闭订单
+    - [x] 下载对账单
+    - [x] 转换短链接
+    
 
 
   - 服务商版
@@ -30,7 +36,12 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
     - [x] 公众号支付
     - [x] 扫码支付
     - [x] 现金红包
-    - [ ] 退款接口
+    - [x] 退款接口
+    - [x] 查询退款
+    - [x] 查询订单
+    - [x] 关闭订单
+    - [x] 下载对账单
+    - [x] 转换短链接
 
 
    > 支付宝支付

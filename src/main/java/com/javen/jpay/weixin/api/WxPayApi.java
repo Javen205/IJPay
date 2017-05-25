@@ -36,8 +36,11 @@ public class WxPayApi {
 	//授权码查询openId接口
 	private static final String AUTHCODETOOPENID_URL = "https://api.mch.weixin.qq.com/tools/authcodetoopenid";
 	//刷卡支付
-	private final static String MICROPAY_URL =  "https://api.mch.weixin.qq.com/pay/micropay";
-
+	private static final String MICROPAY_URL =  "https://api.mch.weixin.qq.com/pay/micropay";
+	//企业付款
+	private static final String TRANSFERS_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+	//查询企业付款
+	private static final String GETTRANSFERINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
 	
 	private WxPayApi() {}
 	/**
@@ -169,6 +172,26 @@ public class WxPayApi {
 	 */
 	public static String micropay(Map<String, String> params){
 		return WxPayApi.doPost(MICROPAY_URL, params);
+	}
+	/**
+	 * 企业付款
+	 * @param params 请求参数
+	 * @param certPath 证书文件目录
+	 * @param partnerKey 证书密码
+	 * @return {String}
+	 */
+	public static String transfers(Map<String, String> params, String certPath, String partnerKey){
+		return WxPayApi.doPost(TRANSFERS_URL, params);
+	}
+	/**
+	 * 查询企业付款
+	 * @param params 请求参数
+	 * @param certPath 证书文件目录
+	 * @param partnerKey 证书密码
+	 * @return {String}
+	 */
+	public static String getTransferInfo(Map<String, String> params, String certPath, String partnerKey){
+		return WxPayApi.doPost(GETTRANSFERINFO_URL, params);
 	}
 	
 	
