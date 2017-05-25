@@ -35,14 +35,14 @@ public class WeixinPayController extends WxPayApiController {
 	//商户相关资料
 	String appid = prop.get("appId");
 	String mch_id = prop.get("mch_id");
-	String paternerKey = prop.get("paternerKey");
+	String partnerKey = prop.get("partnerKey");
 	String notify_url = prop.get("domain")+"/wxpay/pay_notify";
 	
 	public WxPayApiConfig getApiConfig() {
 		WxPayApiConfig apiConfig = WxPayApiConfig.New()
 				.setAppId(appid)
 				.setMchId(mch_id)
-				.setPaternerKey(paternerKey)
+				.setPaternerKey(partnerKey)
 				.setPayModel(PayModel.BUSINESSMODEL);
 		return apiConfig;
 	}

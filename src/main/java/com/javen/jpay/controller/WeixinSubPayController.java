@@ -38,7 +38,7 @@ public class WeixinSubPayController extends WxPayApiController {
 	String mch_id = prop.get("mch_id");
 	String sub_mch_id = prop.get("sub_mch_id");
 	String sub_appid = prop.get("sub_appid");
-	String paternerKey = prop.get("paternerKey");
+	String partnerKey = prop.get("partnerKey");
 	String notify_url = prop.get("domain")+"/wxsubpay/pay_notify";
 
 	public WxPayApiConfig getApiConfig() {
@@ -47,7 +47,7 @@ public class WeixinSubPayController extends WxPayApiController {
 //		.setSubAppId(sub_appid)//可以为空,如果设置了统一下单中sub_openid必须设置
 		.setMchId(mch_id)
 		.setSubMchId(sub_mch_id)
-		.setPaternerKey(paternerKey)
+		.setPaternerKey(partnerKey)
 		.setPayModel(PayModel.SERVICEMODE);
 		return apiConfig;
 	}

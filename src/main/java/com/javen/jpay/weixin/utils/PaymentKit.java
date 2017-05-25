@@ -216,11 +216,11 @@ public class PaymentKit {
 	 *            支付密钥
 	 * @return sign
 	 */
-	public static String createSign(Map<String, String> params, String paternerKey) {
+	public static String createSign(Map<String, String> params, String partnerKey) {
 		// 生成签名前先去除sign
 		params.remove("sign");
 		String stringA = packageSign(params, false);
-		String stringSignTemp = stringA + "&key=" + paternerKey;
+		String stringSignTemp = stringA + "&key=" + partnerKey;
 		return HashKit.md5(stringSignTemp).toUpperCase();
 	}
 

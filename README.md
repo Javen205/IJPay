@@ -20,7 +20,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
     - [x] 扫码支付模式一
     - [x] 扫码支付模式二
     - [x] APP支付
-    - [ ] 现金红包
+    - [x] 现金红包
     - [ ] 企业付款
     - [ ] 退款接口
 
@@ -29,7 +29,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
     - [x] 刷卡支付
     - [x] 公众号支付
     - [x] 扫码支付
-    - [ ] 现金红包
+    - [x] 现金红包
     - [ ] 退款接口
 
 
