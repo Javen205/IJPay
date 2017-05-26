@@ -6,9 +6,9 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
 
-- [JPay](https://github.com/Javen205/JPay)、[微信、支付宝App支付-JPay0.0.2发布](http://blog.csdn.net/zyw_java/article/details/70140210) 是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
+- [JPay](https://git.oschina.net/javen205/JPay) 简单而不简洁的Android支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
 
-- IJPay是JPay服务端-实现微信、支付宝系列支付
+- IJPay 让支付触手可及，封装了微信支付、支付宝支付常用的支付方式以及各种常用的接口
 
 ### 功能列表
 
@@ -74,7 +74,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 <img src="http://7j1wfp.com1.z0.glb.clouddn.com/wxsubpay.gif" width = "300" alt="微信商戶下各种支付" align=center />
 
 
-### 微信系列支付
+### 微信参考资料
 
 - [Android版-微信APP支付](http://blog.csdn.net/zyw_java/article/details/54024232)
 - [微信开发之现金红包](http://blog.csdn.net/zyw_java/article/details/54024211)
@@ -82,7 +82,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 - [微信开发之扫码支付](http://blog.csdn.net/zyw_java/article/details/54024162)
 - [微信开发之公众号支付](http://blog.csdn.net/zyw_java/article/details/54023968)
 
-### 支付宝系列支付
+### 支付宝参考资料
 
 - [支付宝支付-PC电脑网站支付](http://blog.csdn.net/zyw_java/article/details/71970972)
 
@@ -101,7 +101,17 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 - [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
 
 
+### 鸣谢
 
+排名不分先后
+
+1. [jfinal](http://git.oschina.net/jfinal/jfinal)
+2. [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
+3. [Layer](http://layer.layui.com/)
+4. [weui](https://github.com/weui/weui)
+5. [jquery-weui](https://github.com/lihongxun945/jquery-weui/)
+6. [zxing](https://github.com/zxing/zxing)
+7. 感谢瑞慈科技提供微信商户平台测试
 
 >如果对你有帮助,请任意打赏支持
 
