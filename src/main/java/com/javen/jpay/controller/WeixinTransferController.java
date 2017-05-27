@@ -12,7 +12,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 
-public class WxTransferController extends Controller {
+public class WeixinTransferController extends Controller {
 	static Log log=Log.getLog(ReadHbController.class);
 	private static final Prop prop = PropKit.use("wxpay.properties");
 	
@@ -30,7 +30,7 @@ log.info(ns);
 		map.put("mchid", mch_id);
 		map.put("nonce_str", ns);
 		map.put("partner_trade_no", ns);
-		map.put("openid", "");
+		map.put("openid", "o5NJx1dVRilQI6uUVSaBDuLnM3iM");
 		map.put("check_name", "FORCE_CHECK");//NO_CHECK
 		map.put("re_user_name", "Javen");
 		map.put("amount", "888");

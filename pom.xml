@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.jpay</groupId>
-	<artifactId>JPayService</artifactId>
+	<groupId>com.javen.jpay</groupId>
+	<artifactId>IJPay</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>MavenDemo Maven Webapp</name>
+	<version>1.0</version>
+	<name>IJPay Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<log4j.version>1.2.17</log4j.version>
 		<beetl.version>2.2.3</beetl.version>
-		<jfinal.version>3.0</jfinal.version>
+		<jfinal.version>3.1</jfinal.version>
 		<weixin.version>1.8</weixin.version>
 		<zxing.version>3.2.1</zxing.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,7 +68,7 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -105,9 +105,15 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>3.8.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
-		<finalName>JPayService</finalName>
+		<finalName>IJPay</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

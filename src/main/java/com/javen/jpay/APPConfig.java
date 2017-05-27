@@ -11,6 +11,7 @@ import com.javen.jpay.controller.WeixinMsgController;
 import com.javen.jpay.controller.WeixinOauthController;
 import com.javen.jpay.controller.WeixinPayController;
 import com.javen.jpay.controller.WeixinSubPayController;
+import com.javen.jpay.controller.WeixinTransferController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -78,6 +79,7 @@ public class APPConfig extends JFinalConfig {
 		me.add("/alipay", AliPayController.class,"/");
 		me.add("/oauth", WeixinOauthController.class);
 		me.add("/readHb", ReadHbController.class);
+		me.add("/transfer", WeixinTransferController.class);
 	}
 
 	/**

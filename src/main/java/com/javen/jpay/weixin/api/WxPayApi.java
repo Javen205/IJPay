@@ -181,7 +181,7 @@ public class WxPayApi {
 	 * @return {String}
 	 */
 	public static String transfers(Map<String, String> params, String certPath, String partnerKey){
-		return WxPayApi.doPost(TRANSFERS_URL, params);
+		return WxPayApi.doPostSSL(TRANSFERS_URL, params,certPath,partnerKey);
 	}
 	/**
 	 * 查询企业付款
