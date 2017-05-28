@@ -6,12 +6,12 @@ import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.javen.jpay.controller.AliPayController;
 import com.javen.jpay.controller.IndexController;
-import com.javen.jpay.controller.ReadHbController;
+import com.javen.jpay.controller.WeixinSubRTController;
 import com.javen.jpay.controller.WeixinMsgController;
 import com.javen.jpay.controller.WeixinOauthController;
 import com.javen.jpay.controller.WeixinPayController;
 import com.javen.jpay.controller.WeixinSubPayController;
-import com.javen.jpay.controller.WeixinTransferController;
+import com.javen.jpay.controller.WeixinRTController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -78,8 +78,8 @@ public class APPConfig extends JFinalConfig {
 		me.add("/wxsubpay", WeixinSubPayController.class,"/");
 		me.add("/alipay", AliPayController.class,"/");
 		me.add("/oauth", WeixinOauthController.class);
-		me.add("/readHb", ReadHbController.class);
-		me.add("/transfer", WeixinTransferController.class);
+		me.add("/wxsubrt", WeixinSubRTController.class);
+		me.add("/wxrt", WeixinRTController.class);
 	}
 
 	/**

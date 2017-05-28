@@ -39,21 +39,21 @@ public class RedHbApi {
 	 * 根据商户订单号查询信息
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
-	 * @param partnerKey 证书密码
+	 * @param certPassword 证书密码
 	 * @return {String}
 	 */
-	public static String getHbInfo(Map<String, String> params, String certPath, String partnerKey) {
-		return HttpUtils.postSSL(getHbInfo, PaymentKit.toXml(params), certPath, partnerKey);
+	public static String getHbInfo(Map<String, String> params, String certPath, String certPassword) {
+		return HttpUtils.postSSL(getHbInfo, PaymentKit.toXml(params), certPath, certPassword);
 	}
 	
 	/**
 	 * 发送裂变红包
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
-	 * @param partnerKey 证书密码
+	 * @param certPassword 证书密码
 	 * @return {String}
 	 */
-	public static String sendGroupRedPack(Map<String, String> params, String certPath, String partnerKey) {
-		return HttpUtils.postSSL(sendGroupRedPackUrl, PaymentKit.toXml(params), certPath, partnerKey);
+	public static String sendGroupRedPack(Map<String, String> params, String certPath, String certPassword) {
+		return HttpUtils.postSSL(sendGroupRedPackUrl, PaymentKit.toXml(params), certPath, certPassword);
 	}
 }

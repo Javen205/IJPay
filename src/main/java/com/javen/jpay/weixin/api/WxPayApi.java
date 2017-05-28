@@ -177,21 +177,21 @@ public class WxPayApi {
 	 * 企业付款
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
-	 * @param partnerKey 证书密码
+	 * @param certPassword 证书密码
 	 * @return {String}
 	 */
-	public static String transfers(Map<String, String> params, String certPath, String partnerKey){
-		return WxPayApi.doPostSSL(TRANSFERS_URL, params,certPath,partnerKey);
+	public static String transfers(Map<String, String> params, String certPath, String certPassword){
+		return WxPayApi.doPostSSL(TRANSFERS_URL, params,certPath,certPassword);
 	}
 	/**
 	 * 查询企业付款
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
-	 * @param partnerKey 证书密码
+	 * @param certPassword 证书密码
 	 * @return {String}
 	 */
-	public static String getTransferInfo(Map<String, String> params, String certPath, String partnerKey){
-		return WxPayApi.doPost(GETTRANSFERINFO_URL, params);
+	public static String getTransferInfo(Map<String, String> params, String certPath, String certPassword){
+		return WxPayApi.doPostSSL(GETTRANSFERINFO_URL, params, certPath, certPassword);
 	}
 	
 	
@@ -200,11 +200,11 @@ public class WxPayApi {
 	 * @param appid
 	 * @param mch_id
 	 * @param product_id
-	 * @param paternerKey
+	 * @param partnerKey
 	 * @param isToShortUrl 是否转化为短连接
 	 * @return
 	 */
-	public static String getCodeUrl(String appid, String mch_id, String product_id, String paternerKey, boolean isToShortUrl){
+	public static String getCodeUrl(String appid, String mch_id, String product_id, String partnerKey, boolean isToShortUrl){
 		String url="weixin://wxpay/bizpayurl?sign=XXXXX&appid=XXXXX&mch_id=XXXXX&product_id=XXXXX&time_stamp=XXXXX&nonce_str=XXXXX";
 		String timeStamp=Long.toString(System.currentTimeMillis() / 1000);
 		String nonceStr=Long.toString(System.currentTimeMillis());
@@ -214,10 +214,10 @@ public class WxPayApi {
 		packageParams.put("product_id",product_id);
 		packageParams.put("time_stamp", timeStamp);
 		packageParams.put("nonce_str", nonceStr);
-		String packageSign = PaymentKit.createSign(packageParams, paternerKey);
+		String packageSign = PaymentKit.createSign(packageParams, partnerKey);
 		String qrCodeUrl=PaymentKit.replace(url, "XXXXX", packageSign,appid,mch_id,product_id,timeStamp,nonceStr);
 		if (isToShortUrl) {
-			String shortResult = WxPayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, paternerKey));
+			String shortResult = WxPayApi.toShortUrl(PaymentKit.buildShortUrlParasMap(appid, null, mch_id, null, qrCodeUrl, partnerKey));
 			if (PropKit.getBoolean("devMode", false)) {
 				log.info(shortResult);
 			}
