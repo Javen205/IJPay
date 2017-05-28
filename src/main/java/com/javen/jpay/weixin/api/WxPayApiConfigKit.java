@@ -15,10 +15,10 @@ public class WxPayApiConfigKit {
 		tl.remove();
 	}
 	
-	public static WxPayApiConfig getAliPayApiConfig() {
+	public static WxPayApiConfig getWxPayApiConfig() {
 		WxPayApiConfig result = tl.get();
 		if (result == null)
-			throw new IllegalStateException("需要事先使用 WxPayApiConfigKit.setThreadLocalWxPayApiConfig(wxPayApiConfig) 将 wxPayApiConfig对象存入，才可以调用 WxPayApiConfigKit.getAliPayApiConfig() 方法");
+			throw new IllegalStateException("需要事先使用 WxPayApiConfigKit.setThreadLocalWxPayApiConfig(wxPayApiConfig) 将 wxPayApiConfig对象存入，才可以调用 WxPayApiConfigKit.getWxPayApiConfig() 方法");
 		return result;
 	}
 }

@@ -6,6 +6,7 @@ import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.javen.jpay.controller.AliPayController;
 import com.javen.jpay.controller.IndexController;
+import com.javen.jpay.controller.OneQrPayController;
 import com.javen.jpay.controller.WeixinSubRTController;
 import com.javen.jpay.controller.WeixinMsgController;
 import com.javen.jpay.controller.WeixinOauthController;
@@ -80,6 +81,7 @@ public class APPConfig extends JFinalConfig {
 		me.add("/oauth", WeixinOauthController.class);
 		me.add("/wxsubrt", WeixinSubRTController.class);
 		me.add("/wxrt", WeixinRTController.class);
+		me.add("/oneqrpay", OneQrPayController.class,"/");
 	}
 
 	/**

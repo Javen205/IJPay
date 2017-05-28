@@ -78,7 +78,7 @@ public class WeixinPayController extends WxPayApiController {
 			ip = "127.0.0.1";
 		}
 		
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 				.setAttach("IJPay 公众号支付测试  -By Javen")
 				.setBody("IJPay 公众号支付测试  -By Javen")
 				.setOpenId(openId)
@@ -129,7 +129,7 @@ log.info(xmlResult);
 			renderJson(ajax);
 			return;
 		}
-		WxPayApiConfig config = WxPayApiConfigKit.getAliPayApiConfig();
+		WxPayApiConfig config = WxPayApiConfigKit.getWxPayApiConfig();
 		//获取扫码支付（模式一）url
 		String qrCodeUrl=WxPayApi.getCodeUrl(config.getAppId(), config.getMchId(),product_id, config.getPaternerKey(), true);
 		log.info(qrCodeUrl);
@@ -177,7 +177,7 @@ log.info(xmlResult);
 			packageParams.put("nonce_str",nonce_str);
 			packageParams.put("product_id", product_id);
 			
-			String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
+			String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
 			// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
 
 			
@@ -186,7 +186,7 @@ log.info(xmlResult);
 				ip = "127.0.0.1";
 			}
 			
-			Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+			Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 					.setAttach("IJPay 扫码模式一测试  -By Javen")
 					.setBody("IJPay 扫码模式一测试  -By Javen")
 					.setOpenId(openid)
@@ -224,7 +224,7 @@ log.info(xmlResult);
 					prepayParams.put("result_code", "FAIL");
 					prepayParams.put("err_code_des", "订单失效");   //result_code为FAIL时，添加该键值对，value值是微信告诉客户的信息
 				}
-				prepaySign = PaymentKit.createSign(prepayParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
+				prepaySign = PaymentKit.createSign(prepayParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
 				prepayParams.put("sign", prepaySign);
 				String xml = PaymentKit.toXml(prepayParams);
 				log.error(xml);
@@ -264,7 +264,7 @@ log.info(xmlResult);
 			ip = "127.0.0.1";
 		}
 		
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 				.setAttach("IJPay 测试  -By Javen")
 				.setBody("IJPay 扫码支付2测试  -By Javen")
 				.setOpenId(openId)
@@ -331,7 +331,7 @@ log.info(xmlResult);
 			ip = "127.0.0.1";
 		}
 		
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 				.setAttach("IJPay 测试  -By Javen")
 				.setBody("IJPay 刷卡支付测试 -By Javen")
 				.setSpbillCreateIp(ip)
@@ -393,7 +393,7 @@ log.info(xmlResult);
 			ip = "127.0.0.1";
 		}
 		
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 				.setAttach("IJPay 测试  -By Javen")
 				.setBody("IJPay App付测试  -By Javen")
 				.setSpbillCreateIp(ip)
@@ -424,13 +424,13 @@ log.info(xmlResult);
 		String prepay_id = result.get("prepay_id");
 		//封装调起微信支付的参数 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12
 		Map<String, String> packageParams = new HashMap<String, String>();
-		packageParams.put("appid", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
-		packageParams.put("mch_id", WxPayApiConfigKit.getAliPayApiConfig().getMchId());
+		packageParams.put("appid", WxPayApiConfigKit.getWxPayApiConfig().getAppId());
+		packageParams.put("mch_id", WxPayApiConfigKit.getWxPayApiConfig().getMchId());
 		packageParams.put("prepayid", prepay_id);
 		packageParams.put("package", "Sign=WXPay");
 		packageParams.put("noncestr", System.currentTimeMillis() + "");
 		packageParams.put("timestamp", System.currentTimeMillis() / 1000 + "");
-		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
+		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
 		packageParams.put("sign", packageSign);
 		
 		String jsonStr = JsonKit.toJson(packageParams);
@@ -488,7 +488,7 @@ log.info("最新返回apk的参数:"+jsonStr);
 		// 避免已经成功、关闭、退款的订单被再次更新
 //		Order order = Order.dao.getOrderByTransactionId(transaction_id);
 //		if (order==null) {
-			if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey())){
+			if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey())){
 				if (("SUCCESS").equals(result_code)) {
 					//更新订单信息
 					log.warn("更新订单信息:"+attach);

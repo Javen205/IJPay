@@ -80,8 +80,8 @@ public class WeixinSubPayController extends WxPayApiController {
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
-		log.info(WxPayApiConfigKit.getAliPayApiConfig().getMchId());
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		log.info(WxPayApiConfigKit.getWxPayApiConfig().getMchId());
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 		.setAttach("IJPay 公众号支付测试  -By Javen")
 		.setBody("IJPay 公众号支付测试 -By Javen")
 		.setOpenId(openId)
@@ -134,13 +134,13 @@ public class WeixinSubPayController extends WxPayApiController {
 				return;
 			}
 			
-			log.info(WxPayApiConfigKit.getAliPayApiConfig().getMchId());
+			log.info(WxPayApiConfigKit.getWxPayApiConfig().getMchId());
 			String ip = IpKit.getRealIp(getRequest());
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
 			
-			Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+			Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 					.setAttach("IJPay 刷卡支付测试  -By Javen")
 					.setBody("IJPay 刷卡支付测试")
 					.setSpbillCreateIp(ip)
@@ -203,7 +203,7 @@ public class WeixinSubPayController extends WxPayApiController {
 			ip = "127.0.0.1";
 		}
 		
-		Map<String, String> params = WxPayApiConfigKit.getAliPayApiConfig()
+		Map<String, String> params = WxPayApiConfigKit.getWxPayApiConfig()
 				.setAttach("IJPay 测试  -By Javen")
 				.setBody("IJPay 扫码支付测试")
 				.setSpbillCreateIp(ip)
@@ -296,7 +296,7 @@ public class WeixinSubPayController extends WxPayApiController {
 		
 		// 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
 		// 避免已经成功、关闭、退款的订单被再次更新
-		if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey())){
+		if(PaymentKit.verifyNotify(params, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey())){
 			if (("SUCCESS").equals(result_code)) {
 				//更新订单信息
 				log.warn("更新订单信息:"+attach);

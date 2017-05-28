@@ -18,7 +18,7 @@ public class AliPayApiConfigKit {
 	public static AliPayApiConfig getAliPayApiConfig() {
 		AliPayApiConfig result = tl.get();
 		if (result == null)
-			throw new IllegalStateException("需要事先使用 AliPayApiConfig.setThreadLocalApiConfig(aliPayApiConfig) 将 aliPayApiConfig对象存入，才可以调用 AliPayApiConfig.getAliPayApiConfig() 方法");
+			throw new IllegalStateException("需要事先使用 AliPayApiConfigKit.setThreadLocalAliPayApiConfig(aliPayApiConfig) 将 aliPayApiConfig对象存入，才可以调用 AliPayApiConfigKit.getAliPayApiConfig() 方法");
 		return result;
 	}
 }

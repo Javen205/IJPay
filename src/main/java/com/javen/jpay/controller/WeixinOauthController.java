@@ -85,6 +85,8 @@ public class WeixinOauthController extends ApiController{
 					redirect("/toWxSubPay");
 				}else if(state.equals("wxpay")){
 					redirect("/toWxPay");
+				}else{
+					redirect("/oneqrpay/toPage?partnerId="+state);
 				}
 			}
 			

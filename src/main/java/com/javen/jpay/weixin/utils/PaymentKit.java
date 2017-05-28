@@ -245,12 +245,12 @@ public class PaymentKit {
 	 */
 	public static Map<String, String> prepayIdCreateSign(String prepay_id) {
 		Map<String, String> packageParams = new HashMap<String, String>();
-		packageParams.put("appId", WxPayApiConfigKit.getAliPayApiConfig().getAppId());
+		packageParams.put("appId", WxPayApiConfigKit.getWxPayApiConfig().getAppId());
 		packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
 		packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
 		packageParams.put("package", "prepay_id=" + prepay_id);
 		packageParams.put("signType", "MD5");
-		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getAliPayApiConfig().getPaternerKey());
+		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
 		packageParams.put("paySign", packageSign);
 		return packageParams;
 	}

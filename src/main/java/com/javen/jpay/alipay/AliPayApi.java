@@ -102,15 +102,18 @@ public class AliPayApi {
 	 * @throws IOException
 	 */
 	public static void wapPay(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
-		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();// 创建API对应的request
-		alipayRequest.setReturnUrl(returnUrl);
-		alipayRequest.setNotifyUrl(notifyUrl);// 在公共参数中设置回跳和通知地址
-		alipayRequest.setBizModel(model);// 填充业务参数
-		String form = AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().pageExecute(alipayRequest).getBody(); // 调用SDK生成表单
+		String form = wapPayToString(response, model, returnUrl, notifyUrl);
 		HttpServletResponse httpResponse = response;
 		httpResponse.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
 		httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
 		httpResponse.getWriter().flush();
+	}
+	public static String wapPayToString(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
+		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();// 创建API对应的request
+		alipayRequest.setReturnUrl(returnUrl);
+		alipayRequest.setNotifyUrl(notifyUrl);// 在公共参数中设置回跳和通知地址
+		alipayRequest.setBizModel(model);// 填充业务参数
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().pageExecute(alipayRequest).getBody(); // 调用SDK生成表单
 	}
 
 	/**
