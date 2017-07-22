@@ -6,9 +6,17 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
 
-- [JPay](https://git.oschina.net/javen205/JPay) 简单而不简洁的Android支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
+- [JPay](https://git.oschina.net/javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
 
 - IJPay 让支付触手可及，封装了微信支付、支付宝支付常用的支付方式以及各种常用的接口
+
+
+### 效果图
+
+
+| 微信商户下各种支付演示Demo              | 微信服务商户下各种支付演示Demo     |
+|:------------------------------:|:---------------------------------:|
+|![](doc/img/wxpay.gif) | ![](doc/img/wxsubpay.gif) |
 
 ### 功能列表
 
@@ -68,10 +76,6 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 待接入
 
 
-### 效果图
-
-<img src="http://7j1wfp.com1.z0.glb.clouddn.com/wxpay.gif" width = "300" alt="微信商戶下各种支付" align=center />
-<img src="http://7j1wfp.com1.z0.glb.clouddn.com/wxsubpay.gif" width = "300" alt="微信商戶下各种支付" align=center />
 
 
 ### 微信参考资料

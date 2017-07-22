@@ -1,19 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.javen.jpay</groupId>
+	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>IJPay Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+	<name>IJPay</name>
+	<url>https://jitpack.io/#javen205/IJPay/0.1</url>
 
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<log4j.version>1.2.17</log4j.version>
-		<beetl.version>2.2.3</beetl.version>
-		<jfinal.version>3.1</jfinal.version>
-		<weixin.version>1.8</weixin.version>
 		<zxing.version>3.2.1</zxing.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -28,69 +26,28 @@
 		</dependency>
 		<dependency>
 			<groupId>com.jfinal</groupId>
-			<artifactId>jfinal</artifactId>
-			<version>${jfinal.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jfinal</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>8.1.8</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jsp</artifactId>
-			<version>8.1.8.v20121106</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jfinal-weixin</artifactId>
-			<version>${weixin.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.26</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.37</version>
-		</dependency>
-		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.6</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-
 		<!-- 开源多维码生成工具 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>${zxing.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
-		</dependency>
-		<!-- JSTL标签类 -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -101,9 +58,16 @@
 			<systemPath>${project.basedir}/libs/alipay-sdk-java20170411150054.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<!-- okhttp2 -->
+		<dependency>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>2.7.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
@@ -111,47 +75,21 @@
 			<version>3.8.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.squareup.okio</groupId>
+			<artifactId>okio</artifactId>
+			<version>1.11.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>IJPay</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/resources/${profiles.active}</directory>
-			</resource>
-		</resources>
 		<plugins>
-			<!-- Idea 添加此插件以便启动jetty -->
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.10.v20160621</version>
-				<configuration>
-					<!-- http端口，默认8080，可修改 -->
-					<httpConnector>
-						<port>8080</port>
-					</httpConnector>
-					<stopPort>9966</stopPort>
-					<stopKey>stop</stopKey>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<webApp>
-						<contextPath>/</contextPath>
-					</webApp>
-					<!-- 适应测试阶段的jetty，日志写入目录，tomcat写入tomcat/logs下 -->
-					<systemProperties>
-						<systemProperty>
-							<name>catalina.base</name>
-							<value>.</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.2</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
@@ -160,60 +98,43 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>${project.basedir}/libs</directory>
-							<targetPath>WEB-INF/lib</targetPath>
-							<filtering>false</filtering>
-							<includes>
-								<include>**/*.jar</include>
-							</includes>
-						</resource>
-					</webResources>
-				</configuration>
-				<version>2.1.1</version>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 
-	<profiles>
-		<!-- 默认激活 dev 开发环境 -->
-		<!-- production使用 mvn xxx -Pproduction -->
-		<profile>
-			<!-- 本地开发环境 -->
-			<id>development</id>
-			<properties>
-				<profiles.active>dev</profiles.active>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<profile>
-			<!-- 生产环境 -->
-			<id>production</id>
-			<properties>
-				<profiles.active>production</profiles.active>
-			</properties>
-		</profile>
-	</profiles>
 
-	<!-- 使用aliyun镜像 -->
+	<!-- 镜像配置 -->
 	<repositories>
 		<repository>
 			<id>aliyun</id>
 			<name>aliyun</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 </project>

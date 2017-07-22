@@ -9,7 +9,7 @@
 		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>configClass</param-name>
-			<param-value>com.javen.jpay.APPConfig</param-value>
+			<param-value>com.javen.jpay.demo.APPConfig</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
