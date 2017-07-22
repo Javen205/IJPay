@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<packaging>war</packaging>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
