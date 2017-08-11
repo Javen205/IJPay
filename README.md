@@ -1,10 +1,17 @@
 # IJPay
 
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![](https://jitpack.io/v/javen205/IJPay.svg)](https://jitpack.io/#javen205/IJPay)
 [![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
+
+GitHub Demo：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+
+
+
 
 - [JPay](https://git.oschina.net/javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
 
@@ -13,10 +20,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 
 ### 效果图
 
-
-| 微信商户下各种支付演示Demo              | 微信服务商户下各种支付演示Demo     |
-|:------------------------------:|:---------------------------------:|
-|![](doc/img/wxpay.gif) | ![](doc/img/wxsubpay.gif) |
+请参考 Demo [https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
 
 ### 功能列表
 
@@ -115,7 +119,7 @@ OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen20
 4. [weui](https://github.com/weui/weui)
 5. [jquery-weui](https://github.com/lihongxun945/jquery-weui/)
 6. [zxing](https://github.com/zxing/zxing)
-7. 感谢瑞慈科技提供微信商户平台测试
+7. 感谢xx科技提供微信商户平台测试
 
 >如果对你有帮助,请任意打赏支持
 
