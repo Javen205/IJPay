@@ -39,6 +39,21 @@ public class WxPayApi {
 	//查询企业付款
 	private static final String GETTRANSFERINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
 	
+	//获取沙箱秘钥
+	private static final String GETSINGKEY= "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
+	//统一下单接口
+	private static final String UNIFIEDORDER_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder";
+	//刷卡支付
+	private static final String MICROPAY_SANDBOXNEW_RUL =  "https://api.mch.weixin.qq.com/sandboxnew/pay/micropay";
+	//订单查询
+	private static final String ORDERQUERY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/orderquery";
+	//申请退款
+	private static final String REFUND_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/secapi/pay/refund";
+	//查询退款
+	private static final String REFUNDQUERY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/refundquery";
+	//下载对账单
+	private static final String DOWNLOADBILLY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
+
 	private WxPayApi() {}
 	/**
 	 * 交易类型枚举
@@ -51,14 +66,33 @@ public class WxPayApi {
 		JSAPI, NATIVE, APP, WAP , MICROPAY
 	}
 	
+	
+	/**
+	 * 获取验签秘钥API
+	 * @param mch_id 商户号
+	 * @param paternerKey Api 密钥
+	 * @return
+	 */
+	public static String getsignkey(String mch_id,String partnerKey){
+		Map<String, String> map =new HashMap<String, String>();
+		String nonce_str = String.valueOf(System.currentTimeMillis());
+		map.put("mch_id", mch_id);
+		map.put("nonce_str", nonce_str);
+		map.put("sign", PaymentKit.createSign(map, partnerKey));
+		return doPost(GETSINGKEY, map);
+	}
+	
 	/**
 	 * 统一下单
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=9_1
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params
 	 * @return
 	 */
-	public static String pushOrder(Map<String, String> params){
+	public static String pushOrder(boolean isSandbox,Map<String, String> params){
+		if(isSandbox)
+			return doPost(UNIFIEDORDER_SANDBOXNEW_URL, params);
 		return doPost(UNIFIEDORDER_URL, params);
 	}
 	
@@ -66,10 +100,13 @@ public class WxPayApi {
 	 * 订单查询
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_2
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
 	 * @return
 	 */
-	public static String orderQuery(Map<String, String> params){
+	public static String orderQuery(boolean isSandbox,Map<String, String> params){
+		if (isSandbox)
+			return doPost(ORDERQUERY_SANDBOXNEW_URL, params);
 		return doPost(ORDERQUERY_URL, params);
 	}
 	/**
@@ -99,32 +136,41 @@ public class WxPayApi {
 	 * 申请退款
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_4
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_4
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
 	 * @param certPass 证书密码
 	 * @return
 	 */
-	public static String orderRefund(Map<String, String> params, String certPath, String certPass){
+	public static String orderRefund(boolean isSandbox, Map<String, String> params, String certPath, String certPass){
+		if (isSandbox)
+			return doPostSSL(REFUND_SANDBOXNEW_URL,params , certPath, certPass);
 		return doPostSSL(REFUND_URL,params , certPath, certPass);
 	}
 	/**
 	 * 查询退款
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_5
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_5
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
 	 * @return
 	 */
-	public static String orderRefundQuery(Map<String, String> params){
+	public static String orderRefundQuery(boolean isSandbox, Map<String, String> params){
+		if(isSandbox)
+			return doPost(REFUNDQUERY_SANDBOXNEW_URL,params);
 		return doPost(REFUNDQUERY_URL,params);
 	}
 	/**
 	 * 下载对账单
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_6
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_6
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
 	 * @return
 	 */
-	public static String downloadBill(Map<String, String> params){
+	public static String downloadBill(boolean isSandbox, Map<String, String> params){
+		if (isSandbox) 
+			return doPost(DOWNLOADBILLY_SANDBOXNEW_URL,params);
 		return doPost(DOWNLOADBILLY_URL,params);
 	}
 	
@@ -163,11 +209,13 @@ public class WxPayApi {
 	 * 刷卡支付
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_10&index=1
 	 * 商户模式接入文档: https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
-	 *
+	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
 	 * @return
 	 */
-	public static String micropay(Map<String, String> params){
+	public static String micropay(boolean isSandbox, Map<String, String> params){
+		if (isSandbox) 
+			return WxPayApi.doPost(MICROPAY_SANDBOXNEW_RUL, params);
 		return WxPayApi.doPost(MICROPAY_URL, params);
 	}
 	/**

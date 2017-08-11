@@ -23,6 +23,7 @@ public class WxPayApiConfig implements Serializable {
 	private String nonceStr;
 	private String body;
 	private String attach;
+	private String transactionId;
 	private String outTradeNo;
 	private String totalFee;
 	private String spbillCreateIp;
@@ -31,6 +32,7 @@ public class WxPayApiConfig implements Serializable {
 	private String openId;
 	private String subOpenId;
 	private String authCode;
+	
 	
 	private PayModel payModel;
 
@@ -99,6 +101,34 @@ public class WxPayApiConfig implements Serializable {
 		
 		return map;
 	}
+	/**
+	 * 构建查询订单参数
+	 * @return
+	 */
+	public Map<String, String> orderQueryBuild(){
+		Map<String, String> map = new HashMap<String, String>();
+		if (getPayModel().equals(PayModel.SERVICEMODE)) {
+			System.out.println("服务商上模式...");
+			map.put("sub_mch_id", getSubMchId());
+			map.put("sub_appid", getSubAppId());
+		}
+		
+		map.put("appid", getAppId());
+		map.put("mch_id", getMchId());
+		
+		if (StrKit.notBlank(getTransactionId())) {
+			map.put("transaction_id", getTransactionId());
+		}else {
+			if (StrKit.isBlank(getOutTradeNo())) {
+				throw new IllegalArgumentException("out_trade_no,transaction_id 不能同时为空");
+			}
+			map.put("out_trade_no", getOutTradeNo());
+		}
+		map.put("nonce_str", String.valueOf(System.currentTimeMillis()));
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
+		return map;
+	}
+	
 
 	public String getAppId() {
 		if (StrKit.isBlank(appId))
@@ -189,13 +219,11 @@ public class WxPayApiConfig implements Serializable {
 
 	public String getOutTradeNo() {
 		if (StrKit.isBlank(outTradeNo))
-			outTradeNo = String.valueOf(System.currentTimeMillis());
+			throw new IllegalArgumentException("outTradeNo 未被赋值");
 		return outTradeNo;
 	}
 
 	public WxPayApiConfig setOutTradeNo(String outTradeNo) {
-		if (StrKit.isBlank(outTradeNo))
-			throw new IllegalArgumentException("outTradeNo 值不能为空");
 		this.outTradeNo = outTradeNo;
 		return this;
 	}
@@ -314,6 +342,17 @@ public class WxPayApiConfig implements Serializable {
 		if (StrKit.isBlank(paternerKey))
 			throw new IllegalArgumentException("authCode 值不能为空");
 		this.authCode = authCode;
+		return this;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public WxPayApiConfig setTransactionId(String transactionId) {
+		if (StrKit.isBlank(transactionId))
+			throw new IllegalArgumentException("transactionId 值不能为空");
+		this.transactionId = transactionId;
 		return this;
 	}
 	
