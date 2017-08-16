@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
-	<url>https://jitpack.io/#javen205/IJPay/0.1</url>
+	<url>https://jitpack.io/#javen205/IJPay/0.4</url>
 
 	<properties>
 		<jdk.version>1.7</jdk.version>
