@@ -310,6 +310,7 @@ public final class HttpUtils {
 				
 				sslContext.init(kms, null, new SecureRandom());
 				
+				@SuppressWarnings("deprecation")
 				okhttp3.OkHttpClient httpsClient = new okhttp3.OkHttpClient()
 						.newBuilder()
 						.connectTimeout(10, TimeUnit.SECONDS)

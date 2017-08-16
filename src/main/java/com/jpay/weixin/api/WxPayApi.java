@@ -3,8 +3,8 @@ package com.jpay.weixin.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jpay.ext.kit.PaymentKit;
 import com.jpay.util.HttpUtils;
-import com.jpay.util.PaymentKit;
 /**
  * 
  * @author Javen
@@ -57,13 +57,15 @@ public class WxPayApi {
 	private WxPayApi() {}
 	/**
 	 * 交易类型枚举
-	 * @author Javen
-	 * 2017年4月15日
-	 * JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
-	 * MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
+	 * 统一下单接口trade_type的传参可参考这里
+	 * JSAPI--公众号支付、小程序支付
+	 * NATIVE--原生扫码支付
+	 * APP--APP支付
+	 * MWEB--WAP支付
+	 * MICROPAY--刷卡支付,刷卡支付有单独的支付接口，不调用统一下单接口
 	 */
 	public static enum TradeType {
-		JSAPI, NATIVE, APP, WAP , MICROPAY
+		JSAPI,NATIVE,APP,WAP,MICROPAY,MWEB
 	}
 	
 	

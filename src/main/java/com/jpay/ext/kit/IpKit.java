@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package com.jpay.util;
+package com.jpay.ext.kit;
 
 import javax.servlet.http.HttpServletRequest;
 

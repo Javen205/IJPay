@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jpay.ext.kit.PaymentKit;
 import com.jpay.ext.kit.StrKit;
-import com.jpay.util.PaymentKit;
 import com.jpay.weixin.api.WxPayApi.TradeType;
 /**
  * @Email javen205@126.com

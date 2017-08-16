@@ -54,7 +54,7 @@
 			<artifactId>alipay-sdk-java</artifactId>
 			<version>java20170411150054</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/alipay-sdk-java20170411150054.jar</systemPath>
+			<systemPath>${project.basedir}/libs/alipay-sdk-java20170725114550.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

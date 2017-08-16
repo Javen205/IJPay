@@ -1,4 +1,4 @@
-package com.jpay.util;
+package com.jpay.ext.kit;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,8 +24,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
-
-import com.jpay.ext.kit.StrKit;
 
 /**
  * HttpKit

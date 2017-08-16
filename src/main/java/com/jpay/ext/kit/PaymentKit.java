@@ -1,4 +1,4 @@
-package com.jpay.util;
+package com.jpay.ext.kit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import com.jpay.ext.kit.HashKit;
-import com.jpay.ext.kit.StrKit;
+import com.jpay.util.Charsets;
+import com.jpay.util.XmlHelper;
 import com.jpay.weixin.api.WxPayApiConfigKit;
 
 /**

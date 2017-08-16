@@ -4,7 +4,7 @@ package com.jpay.weixin.api.hb;
 import java.util.Map;
 
 import com.jpay.util.HttpUtils;
-import com.jpay.util.PaymentKit;
+import com.jpay.ext.kit.PaymentKit;
 
 /**
  * 微信红包
