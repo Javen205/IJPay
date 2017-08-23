@@ -32,6 +32,7 @@ public class WxPayApiConfig implements Serializable {
 	private String openId;
 	private String subOpenId;
 	private String authCode;
+	private String sceneInfo;
 	
 	
 	private PayModel payModel;
@@ -74,7 +75,15 @@ public class WxPayApiConfig implements Serializable {
 				map.put("openid", getOpenId());
 			}
 		}
-		
+		/**
+		 * H5支付必填scene_info
+		 */
+		if (getTradeType().equals(TradeType.MWEB)) {
+			if (StrKit.isBlank(getSceneInfo())) {
+				throw new IllegalArgumentException("微信H5支付 scene_info 不能同时为空");
+			}
+			map.put("scene_info", getSceneInfo());
+		}
 		
 		
 		map.put("appid", getAppId());
@@ -355,6 +364,13 @@ public class WxPayApiConfig implements Serializable {
 		this.transactionId = transactionId;
 		return this;
 	}
-	
-	
+
+	public String getSceneInfo() {
+		return sceneInfo;
+	}
+
+	public WxPayApiConfig setSceneInfo(String sceneInfo) {
+		this.sceneInfo = sceneInfo;
+		return this;
+	}
 }
