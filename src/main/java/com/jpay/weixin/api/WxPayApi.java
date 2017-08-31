@@ -72,8 +72,8 @@ public class WxPayApi {
 	/**
 	 * 获取验签秘钥API
 	 * @param mch_id 商户号
-	 * @param paternerKey Api 密钥
-	 * @return
+	 * @param partnerKey 密钥
+	 * @return {String}
 	 */
 	public static String getsignkey(String mch_id,String partnerKey){
 		Map<String, String> map =new HashMap<String, String>();
@@ -90,7 +90,7 @@ public class WxPayApi {
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1
 	 * @param isSandbox 是否是沙盒环境
 	 * @param params
-	 * @return
+	 * @return {String}
 	 */
 	public static String pushOrder(boolean isSandbox,Map<String, String> params){
 		if(isSandbox)
@@ -103,8 +103,8 @@ public class WxPayApi {
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_2
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2
 	 * @param isSandbox 是否是沙盒环境
-	 * @param params 请求参数
-	 * @return
+	 * @param params 请求参数 
+	 * @return {String}
 	 */
 	public static String orderQuery(boolean isSandbox,Map<String, String> params){
 		if (isSandbox)
@@ -116,7 +116,7 @@ public class WxPayApi {
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3
 	 * @param params
-	 * @return
+	 * @return {String}
 	 */
 	public static String closeOrder(Map<String, String> params){
 		return doPost(CLOSEORDER_URL, params);
@@ -129,7 +129,7 @@ public class WxPayApi {
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
 	 * @param certPass 证书密码
-	 * @return
+	 * @return {String}
 	 */
 	public static String orderReverse(Map<String, String> params, String certPath, String certPass){
 		return doPostSSL(REVERSE_URL,params , certPath, certPass);
@@ -142,7 +142,7 @@ public class WxPayApi {
 	 * @param params 请求参数
 	 * @param certPath 证书文件目录
 	 * @param certPass 证书密码
-	 * @return
+	 * @return {String}
 	 */
 	public static String orderRefund(boolean isSandbox, Map<String, String> params, String certPath, String certPass){
 		if (isSandbox)
@@ -155,7 +155,7 @@ public class WxPayApi {
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_5
 	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String orderRefundQuery(boolean isSandbox, Map<String, String> params){
 		if(isSandbox)
@@ -168,7 +168,7 @@ public class WxPayApi {
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_6
 	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String downloadBill(boolean isSandbox, Map<String, String> params){
 		if (isSandbox) 
@@ -181,7 +181,7 @@ public class WxPayApi {
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_14&index=7
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_14&index=7
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String orderReport(Map<String, String> params){
 		return doPost(REPORT_URL,params);
@@ -191,7 +191,7 @@ public class WxPayApi {
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_9&index=8
 	 * 商户模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_9&index=8
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String toShortUrl(Map<String, String> params){
 		return doPost(SHORT_URL,params);
@@ -201,7 +201,7 @@ public class WxPayApi {
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_12&index=9
 	 * 商户模式接入文档: https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String authCodeToOpenid(Map<String, String> params){
 		return doPost(AUTHCODETOOPENID_URL,params);
@@ -213,7 +213,7 @@ public class WxPayApi {
 	 * 商户模式接入文档: https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
 	 * @param isSandbox 是否是沙盒环境
 	 * @param params 请求参数
-	 * @return
+	 * @return {String}
 	 */
 	public static String micropay(boolean isSandbox, Map<String, String> params){
 		if (isSandbox) 
@@ -249,7 +249,7 @@ public class WxPayApi {
 	 * @param product_id
 	 * @param partnerKey
 	 * @param isToShortUrl 是否转化为短连接
-	 * @return
+	 * @return {String}
 	 */
 	public static String getCodeUrl(String appid, String mch_id, String product_id, String partnerKey, boolean isToShortUrl){
 		String url="weixin://wxpay/bizpayurl?sign=XXXXX&appid=XXXXX&mch_id=XXXXX&product_id=XXXXX&time_stamp=XXXXX&nonce_str=XXXXX";

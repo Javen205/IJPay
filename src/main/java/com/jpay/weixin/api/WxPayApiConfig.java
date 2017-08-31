@@ -8,7 +8,6 @@ import com.jpay.ext.kit.PaymentKit;
 import com.jpay.ext.kit.StrKit;
 import com.jpay.weixin.api.WxPayApi.TradeType;
 /**
- * @Email javen205@126.com
  * @author Javen
  * 2017年5月22日
  */
@@ -52,7 +51,7 @@ public class WxPayApiConfig implements Serializable {
 		return new WxPayApiConfig();
 	}
 	/**
-	 *构建请求参数
+	 * 构建请求参数
 	 * @return Map<String, String>
 	 */
 	public Map<String, String> build(){
@@ -112,7 +111,7 @@ public class WxPayApiConfig implements Serializable {
 	}
 	/**
 	 * 构建查询订单参数
-	 * @return
+	 * @return <Map<String, String>>
 	 */
 	public Map<String, String> orderQueryBuild(){
 		Map<String, String> map = new HashMap<String, String>();

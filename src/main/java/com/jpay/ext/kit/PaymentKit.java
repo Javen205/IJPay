@@ -33,7 +33,7 @@ public class PaymentKit {
 	 * @param spbill_create_ip
 	 * @param auth_code
 	 * @param paternerKey 
-	 * @return
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> buildParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id, String device_info, String body, String detail, String attach, String out_trade_no, String total_fee, String spbill_create_ip, String auth_code, String paternerKey){
 		Map<String, String> queryParas =  new HashMap<String, String>();
@@ -66,7 +66,7 @@ public class PaymentKit {
 	 * @param transaction_id
 	 * @param out_trade_no
 	 * @param paternerKey
-	 * @return
+	 * @return <Map<String, String>> 
 	 */
 	public static Map<String, String> buildParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id, String transaction_id, String out_trade_no, String paternerKey){
 		Map<String, String> params =  new HashMap<String, String>();
@@ -98,7 +98,7 @@ public class PaymentKit {
 	 * @param notify_url
 	 * @param trade_type
 	 * @param product_id  扫码支付必传
-	 * @return
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> buildUnifiedOrderParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id, String device_info, String body, String detail, String attach, String out_trade_no, String total_fee, String spbill_create_ip, String notify_url, String trade_type, String paternerKey, String product_id){
 		Map<String, String> params =  new HashMap<String, String>();
@@ -127,7 +127,7 @@ public class PaymentKit {
 	 * @param sub_mch_id
 	 * @param long_url
 	 * @param paternerKey
-	 * @return
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> buildShortUrlParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id, String long_url, String paternerKey){
 		Map<String, String> params =  new HashMap<String, String>();
@@ -150,7 +150,7 @@ public class PaymentKit {
 	 *            参数
 	 * @param urlEncoder
 	 *            是否urlEncoder
-	 * @return String
+	 * @return {String}
 	 */
 	public static String packageSign(Map<String, String> params, boolean urlEncoder) {
 		// 先将参数以其参数名的字典序升序进行排序
@@ -196,7 +196,7 @@ public class PaymentKit {
 	 * 构建签名之后的参数
 	 * @param params
 	 * @param paternerKey
-	 * @return Map
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> buildSignAfterParasMap(Map<String, String> params, String paternerKey) {
 		params.put("nonce_str", String.valueOf(System.currentTimeMillis()));
@@ -210,9 +210,10 @@ public class PaymentKit {
 	 * 
 	 * @param params
 	 *            参数
-	 * @param paternerKey
+	 * @param partnerKey
 	 *            支付密钥
-	 * @return sign
+	 * @return {String}
+	 * 
 	 */
 	public static String createSign(Map<String, String> params, String partnerKey) {
 		// 生成签名前先去除sign
@@ -239,7 +240,7 @@ public class PaymentKit {
 	/**
 	 * 预付订单再次签名
 	 * @param prepay_id
-	 * @return Map
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> prepayIdCreateSign(String prepay_id) {
 		Map<String, String> packageParams = new HashMap<String, String>();
@@ -256,8 +257,8 @@ public class PaymentKit {
 	
 	/**
 	 * 判断接口返回的code是否是SUCCESS
-	 * @param return_code、result_code
-	 * @return
+	 * @param return_code
+	 * @return {boolean}
 	 */
 	public static boolean codeIsOK(String return_code) {
 		return StrKit.notBlank(return_code) && "SUCCESS".equals(return_code);
@@ -269,7 +270,7 @@ public class PaymentKit {
 	 * 
 	 * @param params
 	 *            参数
-	 * @return String
+	 * @return {String}
 	 */
 	public static String toXml(Map<String, String> params) {
 		StringBuilder xml = new StringBuilder();
@@ -293,7 +294,7 @@ public class PaymentKit {
 	 * 
 	 * @param xmlStr
 	 *            xml字符串
-	 * @return map集合
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> xmlToMap(String xmlStr) {
 		XmlHelper xmlHelper = XmlHelper.of(xmlStr);
@@ -304,7 +305,7 @@ public class PaymentKit {
 	 * @param str
 	 * @param regex
 	 * @param args
-	 * @return
+	 * @return {String}
 	 */
 	public static String replace(String str,String regex,String... args){
 		int length = args.length;

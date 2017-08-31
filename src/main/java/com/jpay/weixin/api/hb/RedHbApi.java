@@ -11,7 +11,6 @@ import com.jpay.ext.kit.PaymentKit;
  * 1、服务商版必须传sub_mch_id、msgappid
  * 2、红包金额大于200时scene_id必传
  * 3、查询红包接口参数一样的
- * @Email javen205@126.com
  * @author Javen
  */
 public class RedHbApi {

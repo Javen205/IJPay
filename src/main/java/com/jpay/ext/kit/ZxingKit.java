@@ -45,9 +45,9 @@ public class ZxingKit {
 	 *            边框间距px
 	 * @param saveImgFilePath
 	 *            存储图片的完整位置，包含文件名
-	 * @return
+	 * @return {boolean}
 	 */
-	public static Boolean encode(String contents, BarcodeFormat barcodeFormat, Integer margin,
+	public static boolean encode(String contents, BarcodeFormat barcodeFormat, Integer margin,
 			ErrorCorrectionLevel errorLevel, String format, int width, int height, String saveImgFilePath) {
 		Boolean bool = false;
 		BufferedImage bufImg;
@@ -71,7 +71,7 @@ public class ZxingKit {
 	/**
 	 * @param srcImgFilePath
 	 *            要解码的图片地址
-	 * @return
+	 * @return {Result}
 	 */
 	@SuppressWarnings("finally")
 	public static Result decode(String srcImgFilePath) {
@@ -106,10 +106,10 @@ public class ZxingKit {
 	 *            图片格式，可选[png,jpg,bmp]
 	 * @param saveImgFilePath
 	 *            存储图片的完整位置，包含文件名
-	 * @return
+	 * @return {boolean}
 	 */
 	@SuppressWarnings("finally")
-	public static Boolean writeToFile(BufferedImage bufImg, String format, String saveImgFilePath) {
+	public static boolean writeToFile(BufferedImage bufImg, String format, String saveImgFilePath) {
 		Boolean bool = false;
 		try {
 			bool = ImageIO.write(bufImg, format, new File(saveImgFilePath));

@@ -29,7 +29,8 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
 	/**
 	 * 获取UUID，去掉`-`的
-	 * @return uuid
+	 * @return {String}
+	 * 
 	 */
 	public static String getUUID () {
 		return UUID.randomUUID().toString().replace("-", "");
@@ -38,7 +39,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
 	/**
 	 * 要求外部订单号必须唯一。
-	 * @return
+	 * @return {String}
 	 */
 	public  static String getOutTradeNo() {
 		SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
@@ -55,7 +56,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 
 	 * @param s		需要转换的字符串
 	 * @param map	转换所需的键值对集合
-	 * @return		转换后的字符串
+	 * @return		{String}转换后的字符串
 	 */
 	public static String format(String s, Map<String, String> map) {
 		StringBuilder sb = new StringBuilder((int)(s.length() * 1.5));
@@ -81,7 +82,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 
 	 * @param s 
 	 * @param args
-	 * @return 转换后的字符串
+	 * @return {String}转换后的字符串
 	 */
 	public static String format(String s, Object... args) {
 		return MessageFormat.format(s, args);
@@ -92,7 +93,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @param str
 	 * @param regex
 	 * @param args
-	 * @return
+	 * @return {String}
 	 */
 	public static String replace(String str,String regex,String... args){
 		int length = args.length;
@@ -105,7 +106,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 转义HTML用于安全过滤
 	 * @param html
-	 * @return
+	 * @return {String}
 	 */
 	public static String escapeHtml(String html) {
 		return StringEscapeUtils.escapeHtml4(html);
@@ -137,7 +138,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 随机数生成
 	 * @param count
-	 * @return
+	 * @return {String}
 	 */
 	public static String random(int count, RandomType randomType) {
 		if (count == 0) return "";

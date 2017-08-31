@@ -9,7 +9,7 @@ public class ParamsUtils {
 	 * 
 	 * @param param
 	 *            aa=11&bb=22&cc=33
-	 * @return
+	 * @return <Map<String, String>>
 	 */
 	public static Map<String, String> getUrlParams(String param) {
 		Map<String, String> map = new HashMap<String, String>(0);
@@ -30,7 +30,7 @@ public class ParamsUtils {
 	 * 将map转换成url
 	 * 
 	 * @param map
-	 * @return
+	 * @return {String}
 	 */
 	public static String getUrlParamsByMap(Map<String, Object> map) {
 		if (map == null) {

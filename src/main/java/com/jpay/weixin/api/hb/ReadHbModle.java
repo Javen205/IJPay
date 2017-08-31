@@ -7,7 +7,6 @@ import com.jpay.ext.kit.StrKit;
 import com.jpay.ext.kit.PaymentKit;
 import com.jpay.weixin.api.WxPayApiConfig.PayModel;
 /**
- * @Email javen205@126.com
  * @author Javen
  */
 public class ReadHbModle {

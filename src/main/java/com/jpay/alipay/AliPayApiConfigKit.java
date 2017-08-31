@@ -1,6 +1,5 @@
 package com.jpay.alipay;
 /**
- * @Email javen205@126.com
  * @author Javen
  * 2017年5月20日
  */

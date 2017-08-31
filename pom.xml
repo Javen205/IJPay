@@ -6,7 +6,36 @@
 	<version>0.4</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
-	<url>https://jitpack.io/#javen205/IJPay/0.4</url>
+	<description>Easy Pay Library</description>
+	<url>https://github.com/Javen205/IJPay</url>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:javen205/IJPay</connection>
+		<developerConnection>scm:git:git@github.com:javen205/IJPay</developerConnection>
+		<url>scm:git:git@github.com:javen205/IJPay</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Javen</name>
+			<email>javendev@126.com</email>
+			<organization>github</organization>
+			<organizationUrl>https://javen205.github.io/</organizationUrl>
+		</developer>
+	</developers>
 
 	<properties>
 		<jdk.version>1.7</jdk.version>
@@ -52,7 +81,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
-			<version>java20170411150054</version>
+			<version>java20170725114550</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/alipay-sdk-java20170725114550.jar</systemPath>
 		</dependency>
@@ -60,6 +89,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- okhttp2 -->
 		<dependency>
@@ -98,11 +128,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -110,6 +141,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -118,22 +150,53 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<!-- 解决 java8 下发布到 maven 中心库时，生成 doc 的异常 -->
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputDirectory>${basedir}</outputDirectory>
+					<reportOutputDirectory>${basedir}</reportOutputDirectory>
+				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>release</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nexus-release</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>nexus-release</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 
-	<!-- 镜像配置 -->
+	<!-- 使用aliyun maven -->
 	<repositories>
 		<repository>
 			<id>aliyun</id>
 			<name>aliyun</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
 	</repositories>
+
 </project>

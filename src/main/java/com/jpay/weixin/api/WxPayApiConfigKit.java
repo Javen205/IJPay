@@ -1,6 +1,5 @@
 package com.jpay.weixin.api;
 /**
- * @Email javen205@126.com
  * @author Javen
  * 2017年5月22日
  */

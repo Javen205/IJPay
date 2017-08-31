@@ -6,21 +6,22 @@
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
-OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
-
-GitHub Demo：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 
 
-
-- [JPay](https://git.oschina.net/javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
+- [JPay](https://gitee.com/Javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
 
 - IJPay 让支付触手可及，封装了微信支付、支付宝支付常用的支付方式以及各种常用的接口
 
 
 ### 效果图
 
-请参考 Demo [https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+请参考 
+
+GitHub Demo：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+
+Gitee Demo：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
 
 ### 功能列表
 
@@ -97,15 +98,10 @@ GitHub Demo：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen2
 - [支付宝支付-支付宝常用的12个接口封装、异步通知](http://blog.csdn.net/zyw_java/article/details/71844328)
 
 - [支付宝支付-提现到个人支付宝](http://blog.csdn.net/zyw_java/article/details/71598711)
-
 - [支付宝支付-扫码支付](http://blog.csdn.net/zyw_java/article/details/71437269)
-
 - [支付宝支付-刷卡支付(条码支付)](http://blog.csdn.net/zyw_java/article/details/71372789)
-
 - [支付宝Wap支付你了解多少？](http://blog.csdn.net/zyw_java/article/details/54024253)
-
 - [Android版-支付宝APP支付](http://blog.csdn.net/zyw_java/article/details/54024238)
-
 - [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
 
 

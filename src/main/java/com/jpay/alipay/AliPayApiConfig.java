@@ -6,7 +6,6 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.jpay.ext.kit.StrKit;
 /**
- * @Email javen205@126.com
  * @author Javen
  * 2017年5月20日
  */
