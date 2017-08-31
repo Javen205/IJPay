@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![](https://jitpack.io/v/Javen205/IJPay.svg)](https://jitpack.io/#Javen205/IJPay)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
 [![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
