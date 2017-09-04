@@ -61,7 +61,6 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 
   > 支付宝支付
-   	 
   	- [x] 电脑网站支付
   	- [x] 手机网站支付
   	- [x] APP支付
