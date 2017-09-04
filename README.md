@@ -1,7 +1,6 @@
 # IJPay
 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![](https://jitpack.io/v/Javen205/IJPay.svg)](https://jitpack.io/#Javen205/IJPay)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
 [![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
 
@@ -18,17 +17,19 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 ### 效果图
 
-请参考 
+**请参考Demo，目前IJPay Demo 提供两个版本 JFinal版本以及Spring Boot版本**
 
-GitHub Demo：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
 
-Gitee Demo：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
+Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
+
 
 ### 功能列表
 
   > 微信支付
 
   - 普通商户版
+  	- [x] 微信H5支付
     - [x] 刷卡支付
     - [x] 公众号支付
     - [x] 扫码支付模式一
@@ -46,6 +47,7 @@ Gitee Demo：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/
 
 
   - 服务商版
+  	- [x] 微信H5支付
     - [x] 刷卡支付
     - [x] 公众号支付
     - [x] 扫码支付
@@ -59,23 +61,21 @@ Gitee Demo：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/
 
 
    > 支付宝支付
-
-
-   - [x] 电脑网站支付
-   - [x] 手机网站支付
-   - [x] APP支付
-   - [x] 条码支付(刷卡支付)
-   - [x] 声波支付
-   - [x] 扫码支付
-   - [x] 交易查询接口
-   - [x] 交易撤销接口
-   - [x] 交易退款接口
-   - [x] 退款查询接口
-   - [x] 单笔转账到支付宝账户接口
-   - [x] 查询转账订单接口
-   - [x] 查询对账单下载地址接口
-   - [x] 交易结算接口
-   - [x] 交易保障接口
+    - [x] 电脑网站支付
+    - [x] 手机网站支付
+    - [x] APP支付
+    - [x] 条码支付(刷卡支付)
+    - [x] 声波支付
+    - [x] 扫码支付
+    - [x] 交易查询接口
+    - [x] 交易撤销接口
+    - [x] 交易退款接口
+    - [x] 退款查询接口
+    - [x] 单笔转账到支付宝账户接口
+    - [x] 查询转账订单接口
+    - [x] 查询对账单下载地址接口
+    - [x] 交易结算接口
+    - [x] 交易保障接口
 
    > 银联支付
 
