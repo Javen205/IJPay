@@ -1,8 +1,8 @@
 # IJPay
 
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License][licensesvg]][license]
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
-[![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
+
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
@@ -106,6 +106,22 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 - [Android版-支付宝APP支付](http://blog.csdn.net/zyw_java/article/details/54024238)
 - [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
 
+
+### 联系方式
+
+[![QQ0Group][qq0groupsvg]][qq0group]
+
+Email:javendev@126.com
+
+
+[qq0groupsvg]: https://img.shields.io/badge/QQ群-148540125-fba7f9.svg
+[qq0group]: http://qm.qq.com/cgi-bin/qm/qr?k=7Vs725Nh0KVAsGFCodeGyMQTLYuEHeXy
+
+
+[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
+[license]: https://www.apache.org/licenses/LICENSE-2.0
+
+### 最后如果该库对你有帮助不妨对右上角点点 Star 对我支持 ， 感谢万分 ! 当然我更喜欢你 Fork PR 成为项目贡献者 . [IJPay](https://github.com/Javen205/IJPay)  
 
 ### 鸣谢
 
