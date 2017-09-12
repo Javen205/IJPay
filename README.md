@@ -121,7 +121,6 @@ Email:javendev@126.com
 [licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
 [license]: https://www.apache.org/licenses/LICENSE-2.0
 
-### 最后如果该库对你有帮助不妨对右上角点点 Star 对我支持 ， 感谢万分 ! 当然我更喜欢你 Fork PR 成为项目贡献者 . [IJPay](https://github.com/Javen205/IJPay)  
 
 ### 鸣谢
 
@@ -133,7 +132,10 @@ Email:javendev@126.com
 4. [weui](https://github.com/weui/weui)
 5. [jquery-weui](https://github.com/lihongxun945/jquery-weui/)
 6. [zxing](https://github.com/zxing/zxing)
-7. 感谢xx科技提供微信商户平台测试
+7. 感谢第三方公司提供微信商户平台测试
+
+### 最后如果该库对你有帮助不妨右上角点点Star支持一下，当然我更喜欢你 Fork PR 成为项目贡献者 . [IJPay](https://github.com/Javen205/IJPay)  
+
 
 >如果对你有帮助,请任意打赏支持
 
