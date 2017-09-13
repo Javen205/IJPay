@@ -126,16 +126,18 @@ Email:javendev@126.com
 
 排名不分先后
 
-1. [jfinal](http://git.oschina.net/jfinal/jfinal)
-2. [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
-3. [Layer](http://layer.layui.com/)
-4. [weui](https://github.com/weui/weui)
-5. [jquery-weui](https://github.com/lihongxun945/jquery-weui/)
-6. [zxing](https://github.com/zxing/zxing)
-7. 感谢第三方公司提供微信商户平台测试
+- [jfinal](http://git.oschina.net/jfinal/jfinal)
+- [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
+- [Layer](http://layer.layui.com/)
+- [weui](https://github.com/weui/weui)
+- [wepayui](https://github.com/wepayui/wepayui)
+- [jquery-weui](https://github.com/lihongxun945/jquery-weui)
+- [zxing](https://github.com/zxing/zxing)
+- 感谢第三方公司提供微信商户平台测试
 
-### 最后如果该库对你有帮助不妨右上角点点Star支持一下，当然我更喜欢你 Fork PR 成为项目贡献者 . [IJPay](https://github.com/Javen205/IJPay)  
+### 贡献代码
 
+最后如果该库对你有帮助不妨右上角点点Star支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
 
 >如果对你有帮助,请任意打赏支持
 

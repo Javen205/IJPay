@@ -2,7 +2,6 @@ package com.jpay.vo;
 
 public class AjaxResult {
 
-	// 标记成功失败，默认0：成功，1：失败、用于alert，2：失败、用于confirm
 	private int code = 0;
 
 	// 返回的中文消息
