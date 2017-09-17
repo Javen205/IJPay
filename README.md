@@ -8,6 +8,9 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
 
 
+
+**特别说明：** 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
+
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
