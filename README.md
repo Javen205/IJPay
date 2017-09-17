@@ -2,9 +2,9 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/issues)
 [![License][licensesvg]][license]
-[![GitHub release](https://img.shields.io/github/release/Javen205/IJPay.svg?style=plastic)](https://github.com/Javen205/IJPay/release)
-[![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg?style=plastic)](https://github.com/Javen205/IJPay/releases/latest)
-[![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg?style=plastic)](http://blog.csdn.net/zyw_java)
+[![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg)](https://github.com/Javen205/IJPay/releases/latest)
+[![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg)](http://blog.csdn.net/zyw_java)
+[![GitHub release](https://img.shields.io/github/release/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/release)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
 
 
