@@ -120,9 +120,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 ### 联系方式
 
 [![QQ0Group][qq0groupsvg]][qq0group]
-
-[![Email](https://img.shields.io/badge/Email-javendev%40126.com-yellowgreen.svg)
-
+[![Email](https://img.shields.io/badge/Email-javendev%40126.com-yellowgreen.svg)](http://blog.csdn.net/zyw_java)
 
 [qq0groupsvg]: https://img.shields.io/badge/QQ群-148540125-fba7f9.svg
 [qq0group]: http://shang.qq.com/wpa/qunwpa?idkey=5005dbbee62dac64b34fedc9ff73511762da5d02642a1ef526522fb2e07852dd
