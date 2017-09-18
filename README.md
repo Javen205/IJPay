@@ -121,11 +121,12 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 [![QQ0Group][qq0groupsvg]][qq0group]
 
-Email:javendev@126.com
+[![Email](https://img.shields.io/badge/Email-javendev%40126.com-yellowgreen.svg)
 
 
 [qq0groupsvg]: https://img.shields.io/badge/QQ群-148540125-fba7f9.svg
-[qq0group]: http://qm.qq.com/cgi-bin/qm/qr?k=7Vs725Nh0KVAsGFCodeGyMQTLYuEHeXy
+[qq0group]: http://shang.qq.com/wpa/qunwpa?idkey=5005dbbee62dac64b34fedc9ff73511762da5d02642a1ef526522fb2e07852dd
+
 
 
 [licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
