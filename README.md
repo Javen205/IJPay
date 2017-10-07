@@ -90,7 +90,14 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
    > 银联支付
 
-待接入
+  	- [x] 网关支付
+    - [x] 手机控件支付
+    - [x] 手机WAP支付
+    - [x] B2B产品支付
+    - [x] 缴费产品
+    - [x] 查询订单
+    - [x] 撤销订单
+    - [x] 下载对账单
 
 
 

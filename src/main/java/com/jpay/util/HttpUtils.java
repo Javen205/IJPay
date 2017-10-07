@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -38,6 +40,9 @@ public final class HttpUtils {
 	public static String post(String url, String data) {
 		return delegate.post(url, data);
 	}
+	public static String post(String url, Map<String, String> queryParas) {
+		return delegate.post(url, queryParas);
+	}
 	
 	public static String postSSL(String url, String data, String certPath, String certPass) {
 		return delegate.postSSL(url, data, certPath, certPass);
@@ -61,6 +66,7 @@ public final class HttpUtils {
 		String get(String url, Map<String, String> queryParas);
 		
 		String post(String url, String data);
+		String post(String url, Map<String, String> queryParas);
 		String postSSL(String url, String data, String certPath, String certPass);
 		
 		InputStream download(String url, String params);
@@ -135,6 +141,8 @@ public final class HttpUtils {
 			return exec(request);
 		}
 		
+		
+		
 		@Override
 		public String post(String url, String params) {
 			com.squareup.okhttp.RequestBody body = com.squareup.okhttp.RequestBody.create(CONTENT_TYPE_FORM, params);
@@ -142,6 +150,20 @@ public final class HttpUtils {
 				.url(url)
 				.post(body)
 				.build();
+			return exec(request);
+		}
+		
+		
+		@Override
+		public String post(String url, Map<String, String> queryParas) {
+			com.squareup.okhttp.FormEncodingBuilder builder = new com.squareup.okhttp.FormEncodingBuilder(); 
+			for (Entry<String, String> entry : queryParas.entrySet()) {
+				builder.add(entry.getKey(), entry.getValue());
+			}
+			com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+					.url(url)
+					.post(builder.build())
+					.build();
 			return exec(request);
 		}
 		
@@ -228,6 +250,8 @@ public final class HttpUtils {
 			
 			return exec(request);
 		}
+
+		
 		
 	}
 	
@@ -373,6 +397,22 @@ public final class HttpUtils {
 					.post(requestBody)
 					.build();
 			
+			return exec(request);
+		}
+
+		@Override
+		public String post(String url, Map<String, String> params) {
+			okhttp3.FormBody.Builder builder = new okhttp3.FormBody.Builder();
+			 if(params == null){
+				 params = new HashMap<String, String>();
+			 }
+			 if(params != null){
+				 Set<Map.Entry<String,String>> entries = params.entrySet();
+				 for(Map.Entry<String,String> entry:entries){
+					  builder.add(entry.getKey(),entry.getValue());
+				 }
+			 }
+			okhttp3.Request request = new okhttp3.Request.Builder().url(url).post(builder.build()).build();
 			return exec(request);
 		}
 		
