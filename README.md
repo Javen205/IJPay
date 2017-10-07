@@ -39,7 +39,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
   > 微信支付
 
   - 普通商户版
-  	- [x] 微信H5支付
+    - [x] 微信H5支付
     - [x] 刷卡支付
     - [x] 公众号支付
     - [x] 扫码支付模式一
@@ -57,7 +57,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 
   - 服务商版
-  	- [x] 微信H5支付
+    - [x] 微信H5支付
     - [x] 刷卡支付
     - [x] 公众号支付
     - [x] 扫码支付
@@ -68,11 +68,13 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
     - [x] 关闭订单
     - [x] 下载对账单
     - [x] 转换短链接
+    
+    
+  > 支付宝支付
 
-
-  > 支付宝支付
-
-  	- [x] 电脑网站支付
+  - 功能列表
+  
+    - [x] 电脑网站支付
     - [x] 手机WAP支付
     - [x] APP支付
     - [x] 条码支付(刷卡支付)
@@ -88,8 +90,10 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 
    > 银联支付
-
-  	- [x] 网关支付
+   
+  - 功能列表   
+  
+    - [x] 网关支付
     - [x] 手机控件支付
     - [x] 手机WAP支付
     - [ ] 无跳转支付
@@ -97,7 +101,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
     - [x] 查询订单
     - [x] 撤销订单
     - [x] 下载对账单
-	- [ ] 缴费
+    - [ ] 缴费
     - [ ] 代收
     - [ ] 订购
     - [ ] 银联钱包
