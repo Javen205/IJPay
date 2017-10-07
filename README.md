@@ -96,16 +96,11 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
     - [x] 网关支付
     - [x] 手机控件支付
     - [x] 手机WAP支付
-    - [ ] 无跳转支付
     - [x] B2B支付
     - [x] 查询订单
     - [x] 撤销订单
     - [x] 下载对账单
-    - [ ] 缴费
-    - [ ] 代收
-    - [ ] 订购
-    - [ ] 银联钱包
-    - [ ] ApplePay
+
 
 
 ### 微信参考资料
