@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.jpay.ext.kit.HttpKit;
 import com.jpay.util.HttpUtils;
 
 /**
@@ -117,5 +118,59 @@ public class UnionPayApi {
 	 */
 	public static Map<String, String> AppConsumeByMap(Map<String, String> reqData) {
 		return SDKUtil.convertResultStringToMap(AppConsume(reqData));
+	}
+
+	/**
+	 * 网关缴费
+	 * 
+	 * @param resp
+	 *            HttpServletResponse
+	 * @param reqData
+	 *            请求参数
+	 * @throws IOException
+	 */
+	public static void jfFrontConsume(HttpServletResponse resp, Map<String, String> reqData) throws IOException {
+		String html = AcpService.createAutoFormHtml(SDKConfig.getConfig().getJfFrontRequestUrl(), reqData, "UTF-8");
+		resp.getWriter().write(html);
+	}
+
+	/**
+	 * APP缴费
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String jfAppTrans(Map<String, String> reqData) {
+		return HttpUtils.post(SDKConfig.getConfig().getAppRequestUrl(), reqData);
+	}
+
+	/**
+	 * APP缴费
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return Map<String, String>
+	 */
+	public static Map<String, String> jfAppTransByMap(Map<String, String> reqData) {
+		return SDKUtil.convertResultStringToMap(jfAppTrans(reqData));
+	}
+
+	/**
+	 * 获取地区列表
+	 * 
+	 * @return {String}
+	 */
+	public static String getAllAreas() {
+		return HttpKit.get("https://gateway.95516.com/jiaofei/config/s/areas");
+	}
+
+	/**
+	 * 获取业务目录
+	 * 
+	 * @return {String}
+	 */
+	public static String getAllCategories() {
+		return HttpKit.get("https://gateway.95516.com/jiaofei/config/s/categories/00");
 	}
 }
