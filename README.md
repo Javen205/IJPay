@@ -77,5 +77,5 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 |    微信打赏     |     支付宝打赏     |
 | :--------------------: | :-----------------------: |
-| ![](assets/img/wxpay.png) | ![](assets/img/apay.jpg) |
+| ![](assets/img/wxpay.png) | ![](assets/img/apay.png) |
 
