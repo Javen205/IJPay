@@ -98,8 +98,8 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
     [x] 查询订单
     [x] 撤销订单
     [x] 下载对账单
-    [x] 缴费
   	[ ] 无跳转支付
+    [ ] 缴费
     [ ] 代收
     [ ] 订购
     [ ] 银联钱包
