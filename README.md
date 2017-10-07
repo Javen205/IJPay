@@ -35,99 +35,11 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 
 ### 功能列表
-
-  > 微信支付
-
-  - 普通商户版
-  	- [x] 微信H5支付
-    - [x] 刷卡支付
-    - [x] 公众号支付
-    - [x] 扫码支付模式一
-    - [x] 扫码支付模式二
-    - [x] APP支付
-    - [x] 现金红包
-    - [x] 企业付款
-    - [x] 退款接口
-    - [x] 查询退款
-    - [x] 查询订单
-    - [x] 关闭订单
-    - [x] 下载对账单
-    - [x] 转换短链接
-    
-
-
-  - 服务商版
-  	[x] 微信H5支付
-    [x] 刷卡支付
-    [x] 公众号支付
-    [x] 扫码支付
-    [x] 现金红包
-    [x] 退款接口
-    [x] 查询退款
-    [x] 查询订单
-    [x] 关闭订单
-    [x] 下载对账单
-    [x] 转换短链接
-
-
-  > 支付宝支付
-  
-  	[x] 电脑网站支付
-  	[x] 手机网站支付
-  	[x] APP支付
-  	[x] 条码支付(刷卡支付)
-  	[x] 声波支付
-  	[x] 扫码支付
-  	[x] 交易查询接口
-  	[x] 交易撤销接口
-  	[x] 交易退款接口
-  	[x] 退款查询接口
-  	[x] 单笔转账到支付宝账户接口
-  	[x] 查询转账订单接口
-  	[x] 查询对账单下载地址接口
-  	[x] 交易结算接口
-  	[x] 交易保障接口
-
-   > 银联支付
-
-  	[x] 网关支付
-    [x] 手机控件支付
-    [x] 手机WAP支付
-    [x] B2B产品支付
-    [x] 缴费产品
-    [x] 查询订单
-    [x] 撤销订单
-    [x] 下载对账单
-  	[ ] 无跳转支付
-    [ ] 缴费
-    [ ] 代收
-    [ ] 订购
-    [ ] 银联钱包
-    [ ] ApplePay
-
-
-
-
 ### 微信参考资料
-
-- [Android版-微信APP支付](http://blog.csdn.net/zyw_java/article/details/54024232)
-- [微信开发之现金红包](http://blog.csdn.net/zyw_java/article/details/54024211)
-- [微信开发之刷卡支付](http://blog.csdn.net/zyw_java/article/details/54024198)
-- [微信开发之扫码支付](http://blog.csdn.net/zyw_java/article/details/54024162)
-- [微信开发之公众号支付](http://blog.csdn.net/zyw_java/article/details/54023968)
-
 ### 支付宝参考资料
+### 银联参考资料
 
-- [支付宝支付-PC电脑网站支付](http://blog.csdn.net/zyw_java/article/details/71970972)
-
-- [支付宝支付-支付宝常用的12个接口封装、异步通知](http://blog.csdn.net/zyw_java/article/details/71844328)
-
-- [支付宝支付-提现到个人支付宝](http://blog.csdn.net/zyw_java/article/details/71598711)
-- [支付宝支付-扫码支付](http://blog.csdn.net/zyw_java/article/details/71437269)
-- [支付宝支付-刷卡支付(条码支付)](http://blog.csdn.net/zyw_java/article/details/71372789)
-- [支付宝Wap支付你了解多少？](http://blog.csdn.net/zyw_java/article/details/54024253)
-- [Android版-支付宝APP支付](http://blog.csdn.net/zyw_java/article/details/54024238)
-- [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
+[都可以参考WIKI](https://github.com/Javen205/IJPay/wiki)
 
 
 ### 联系方式
@@ -159,7 +71,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 ### 贡献代码
 
-最后如果该库对你有帮助不妨右上角点点Star支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
+最后如果该库对你有帮助不妨右上角点点Star或者任意打赏支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
 
 >如果对你有帮助,请任意打赏支持
 
