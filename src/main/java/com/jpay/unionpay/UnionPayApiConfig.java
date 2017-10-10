@@ -52,6 +52,8 @@ public class UnionPayApiConfig {
 		private String origQryId;
 		private String settleDate;
 		private String fileType;
+		private String bussCode;
+		private String billQueryInfo;
 
 		public Map<String, String> createMap() {
 			Map<String, String> map = new HashMap<String, String>();
@@ -135,6 +137,8 @@ public class UnionPayApiConfig {
 			map.put("origQryId", origQryId);
 			map.put("settleDate", settleDate);
 			map.put("fileType", fileType);
+			map.put("bussCode", bussCode);
+			map.put("billQueryInfo", billQueryInfo);
 			// 报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
 			Map<String, String> signMap = AcpService.sign(map, encoding);
 			return signMap;
@@ -269,6 +273,18 @@ public class UnionPayApiConfig {
 			this.fileType = fileType;
 			return this;
 		}
+
+		public Builder setBussCode(String bussCode) {
+			this.bussCode = bussCode;
+			return this;
+		}
+
+		public Builder setBillQueryInfo(String billQueryInfo) {
+			this.billQueryInfo = billQueryInfo;
+			return this;
+		}
+		
+		
 	}
 
 }
