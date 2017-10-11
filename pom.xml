@@ -38,7 +38,7 @@
 	</developers>
 
 	<properties>
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<log4j.version>1.2.17</log4j.version>
 		<zxing.version>3.2.1</zxing.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
