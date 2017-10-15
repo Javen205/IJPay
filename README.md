@@ -24,6 +24,7 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 ### 有文档但有视频
 
 [接入说明请查看WIKI](https://github.com/Javen205/IJPay/wiki)
+
 [IJPay视频地址](http://blog.csdn.net/zyw_java/article/details/72571535)
 
 ### 效果图
@@ -40,7 +41,8 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 ### 支付宝参考资料
 ### 银联参考资料
 银联测试证书在assets目录中
-[可以参考资料请查看WIKI](https://github.com/Javen205/IJPay/wiki)
+
+[参考资料请查看WIKI](https://github.com/Javen205/IJPay/wiki)
 
 
 ### 联系方式
