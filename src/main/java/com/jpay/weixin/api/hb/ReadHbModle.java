@@ -42,6 +42,10 @@ public class ReadHbModle {
 		ALL_RAND
 	}
 
+	/**
+	 * 红包参数 构建类对象时必须要指定红包类型
+	 *  NORMAL：普通红包  DIVIDE：分裂红包
+	 */
 	public enum HbType {
 		NORMAL, DIVIDE
 	}
@@ -55,7 +59,7 @@ public class ReadHbModle {
 
 	public Map<String, String> build() {
 		Map<String, String> map = new HashMap<String, String>();
-
+	
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
 			map.put("sub_mch_id", getSubMchId());
 			map.put("msgappid", getMsgAppId());
