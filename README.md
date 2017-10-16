@@ -65,10 +65,6 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 - [jfinal](http://git.oschina.net/jfinal/jfinal)
 - [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
-- [Layer](http://layer.layui.com/)
-- [weui](https://github.com/weui/weui)
-- [wepayui](https://github.com/wepayui/wepayui)
-- [jquery-weui](https://github.com/lihongxun945/jquery-weui)
 - [zxing](https://github.com/zxing/zxing)
 - 感谢第三方公司提供微信商户平台测试
 
