@@ -39,6 +39,7 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @return {String}
 	 */
+	@Deprecated
 	public static String refund(Map<String, String> reqData) {
 		return HttpUtils.post(SDKConfig.getConfig().getBackRequestUrl(), reqData);
 	}
@@ -50,9 +51,34 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @return {Map<String, String>}
 	 */
+	@Deprecated
 	public static Map<String, String> refundByMap(Map<String, String> reqData) {
 		return SDKUtil.convertResultStringToMap(refund(reqData));
 	}
+	
+	
+	/**
+	 * 后台交易
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String backRequest(Map<String, String> reqData) {
+		return HttpUtils.post(SDKConfig.getConfig().getBackRequestUrl(), reqData);
+	}
+
+	/**
+	 * 后台交易
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return {Map<String, String>}
+	 */
+	public static Map<String, String> backRequestByMap(Map<String, String> reqData) {
+		return SDKUtil.convertResultStringToMap(backRequest(reqData));
+	}
+
 
 	/**
 	 * 单订单查询

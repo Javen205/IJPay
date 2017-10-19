@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.6</version>
+	<version>0.6.1</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
