@@ -54,6 +54,11 @@ public class UnionPayApiConfig {
 		private String fileType;
 		private String bussCode;
 		private String billQueryInfo;
+		private String qrNo;
+		private String termId;
+		private String accType;
+		private String encryptCertId;
+		private String customerInfo;
 
 		public Map<String, String> createMap() {
 			Map<String, String> map = new HashMap<String, String>();
@@ -139,10 +144,20 @@ public class UnionPayApiConfig {
 			map.put("fileType", fileType);
 			map.put("bussCode", bussCode);
 			map.put("billQueryInfo", billQueryInfo);
-			// 报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
-			Map<String, String> signMap = AcpService.sign(map, encoding);
-			return signMap;
+			map.put("qrNo", qrNo);
+			map.put("termId", termId);
+			map.put("accType", accType);
+			map.put("encryptCertId", encryptCertId);
+			map.put("customerInfo", customerInfo);
+			
+			return setSignMap(map);
 		}
+		
+		public Map<String, String> setSignMap(Map<String, String> map) {
+			// 报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
+			return AcpService.sign(map, encoding);
+		}
+		
 
 		public Builder setVersion(String version) {
 			this.version = version;
@@ -281,6 +296,31 @@ public class UnionPayApiConfig {
 
 		public Builder setBillQueryInfo(String billQueryInfo) {
 			this.billQueryInfo = billQueryInfo;
+			return this;
+		}
+
+		public Builder setQrNo(String qrNo) {
+			this.qrNo = qrNo;
+			return this;
+		}
+
+		public Builder setTermId(String termId) {
+			this.termId = termId;
+			return this;
+		}
+
+		public Builder setAccType(String accType) {
+			this.accType = accType;
+			return this;
+		}
+
+		public Builder setEncryptCertId(String encryptCertId) {
+			this.encryptCertId = encryptCertId;
+			return this;
+		}
+
+		public Builder setCustomerInfo(String customerInfo) {
+			this.customerInfo = customerInfo;
 			return this;
 		}
 		

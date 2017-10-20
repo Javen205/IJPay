@@ -27,7 +27,21 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @throws IOException
 	 */
+	@Deprecated
 	public static void frontConsume(HttpServletResponse resp, Map<String, String> reqData) throws IOException {
+		String html = AcpService.createAutoFormHtml(SDKConfig.getConfig().getFrontRequestUrl(), reqData, "UTF-8");
+		resp.getWriter().write(html);
+	}
+	/**
+	 * 前端请求
+	 * 
+	 * @param resp
+	 *            HttpServletResponse
+	 * @param reqData
+	 *            请求参数
+	 * @throws IOException
+	 */
+	public static void frontRequest(HttpServletResponse resp, Map<String, String> reqData) throws IOException {
 		String html = AcpService.createAutoFormHtml(SDKConfig.getConfig().getFrontRequestUrl(), reqData, "UTF-8");
 		resp.getWriter().write(html);
 	}
@@ -39,6 +53,7 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @return {String}
 	 */
+	@Deprecated
 	public static String refund(Map<String, String> reqData) {
 		return HttpUtils.post(SDKConfig.getConfig().getBackRequestUrl(), reqData);
 	}
@@ -50,12 +65,37 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @return {Map<String, String>}
 	 */
+	@Deprecated
 	public static Map<String, String> refundByMap(Map<String, String> reqData) {
 		return SDKUtil.convertResultStringToMap(refund(reqData));
 	}
+	
+	
+	/**
+	 * 后台请求返回String
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String backRequest(Map<String, String> reqData) {
+		return HttpUtils.post(SDKConfig.getConfig().getBackRequestUrl(), reqData);
+	}
 
 	/**
-	 * 单订单查询
+	 * 后台请求返回Map
+	 * 
+	 * @param reqData
+	 *            请求参数
+	 * @return {Map<String, String>}
+	 */
+	public static Map<String, String> backRequestByMap(Map<String, String> reqData) {
+		return SDKUtil.convertResultStringToMap(backRequest(reqData));
+	}
+
+
+	/**
+	 * 单订单查询返回String
 	 * 
 	 * @param reqData
 	 *            请求参数
@@ -66,7 +106,7 @@ public class UnionPayApi {
 	}
 
 	/**
-	 * 单订单查询
+	 * 单订单查询返回Map
 	 * 
 	 * @param reqData
 	 *            请求参数
