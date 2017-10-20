@@ -27,7 +27,21 @@ public class UnionPayApi {
 	 *            请求参数
 	 * @throws IOException
 	 */
+	@Deprecated
 	public static void frontConsume(HttpServletResponse resp, Map<String, String> reqData) throws IOException {
+		String html = AcpService.createAutoFormHtml(SDKConfig.getConfig().getFrontRequestUrl(), reqData, "UTF-8");
+		resp.getWriter().write(html);
+	}
+	/**
+	 * 前端请求
+	 * 
+	 * @param resp
+	 *            HttpServletResponse
+	 * @param reqData
+	 *            请求参数
+	 * @throws IOException
+	 */
+	public static void frontRequest(HttpServletResponse resp, Map<String, String> reqData) throws IOException {
 		String html = AcpService.createAutoFormHtml(SDKConfig.getConfig().getFrontRequestUrl(), reqData, "UTF-8");
 		resp.getWriter().write(html);
 	}
@@ -58,7 +72,7 @@ public class UnionPayApi {
 	
 	
 	/**
-	 * 后台交易
+	 * 后台请求返回String
 	 * 
 	 * @param reqData
 	 *            请求参数
@@ -69,7 +83,7 @@ public class UnionPayApi {
 	}
 
 	/**
-	 * 后台交易
+	 * 后台请求返回Map
 	 * 
 	 * @param reqData
 	 *            请求参数
@@ -81,7 +95,7 @@ public class UnionPayApi {
 
 
 	/**
-	 * 单订单查询
+	 * 单订单查询返回String
 	 * 
 	 * @param reqData
 	 *            请求参数
@@ -92,7 +106,7 @@ public class UnionPayApi {
 	}
 
 	/**
-	 * 单订单查询
+	 * 单订单查询返回Map
 	 * 
 	 * @param reqData
 	 *            请求参数
