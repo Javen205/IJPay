@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.6.1</version>
+	<version>0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
@@ -81,9 +81,9 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
-			<version>alipay-sdk-java20170829142630</version>
+			<version>java20171012102412</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/alipay-sdk-java20170829142630.jar</systemPath>
+			<systemPath>${project.basedir}/libs/alipay-sdk-java20171012102412.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.unionpay</groupId>
