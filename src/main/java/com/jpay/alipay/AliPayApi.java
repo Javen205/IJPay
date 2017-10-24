@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
+import com.alipay.api.domain.AlipayFundAuthOperationCancelModel;
+import com.alipay.api.domain.AlipayFundAuthOperationDetailQueryModel;
+import com.alipay.api.domain.AlipayFundAuthOrderFreezeModel;
+import com.alipay.api.domain.AlipayFundAuthOrderUnfreezeModel;
+import com.alipay.api.domain.AlipayFundAuthOrderVoucherCreateModel;
 import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
 import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
@@ -25,6 +30,11 @@ import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.request.AlipayDataDataserviceBillDownloadurlQueryRequest;
+import com.alipay.api.request.AlipayFundAuthOperationCancelRequest;
+import com.alipay.api.request.AlipayFundAuthOperationDetailQueryRequest;
+import com.alipay.api.request.AlipayFundAuthOrderFreezeRequest;
+import com.alipay.api.request.AlipayFundAuthOrderUnfreezeRequest;
+import com.alipay.api.request.AlipayFundAuthOrderVoucherCreateRequest;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
@@ -40,6 +50,11 @@ import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.alipay.api.response.AlipayDataDataserviceBillDownloadurlQueryResponse;
+import com.alipay.api.response.AlipayFundAuthOperationCancelResponse;
+import com.alipay.api.response.AlipayFundAuthOperationDetailQueryResponse;
+import com.alipay.api.response.AlipayFundAuthOrderFreezeResponse;
+import com.alipay.api.response.AlipayFundAuthOrderUnfreezeResponse;
+import com.alipay.api.response.AlipayFundAuthOrderVoucherCreateResponse;
 import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
@@ -451,7 +466,121 @@ public class AliPayApi {
 	    httpResponse.getWriter().flush();
 	    httpResponse.getWriter().close();
 	}
+	/**
+	 * 资金预授权冻结接口
+	 * https://docs.open.alipay.com/318/106384/
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String authOrderFreeze(AlipayFundAuthOrderFreezeModel model) throws AlipayApiException{
+		AlipayFundAuthOrderFreezeResponse response = authOrderFreezeToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 资金预授权冻结接口
+	 * @param model
+	 * @return {AlipayFundAuthOrderFreezeResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundAuthOrderFreezeResponse authOrderFreezeToResponse(AlipayFundAuthOrderFreezeModel model) throws AlipayApiException{
+		AlipayFundAuthOrderFreezeRequest request = new AlipayFundAuthOrderFreezeRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
 	
+	/**
+	 * 资金授权解冻接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String authOrderUnfreeze(AlipayFundAuthOrderUnfreezeModel model) throws AlipayApiException{
+		AlipayFundAuthOrderUnfreezeResponse response = authOrderUnfreezeToResponse(model);
+		return response.getBody();
+	}
+	
+	/**
+	 * 资金授权解冻接口
+	 * @param model
+	 * @return {AlipayFundAuthOrderUnfreezeResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundAuthOrderUnfreezeResponse authOrderUnfreezeToResponse(AlipayFundAuthOrderUnfreezeModel model) throws AlipayApiException{
+		AlipayFundAuthOrderUnfreezeRequest request = new AlipayFundAuthOrderUnfreezeRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	
+	/**
+	 * 资金授权发码接口
+	 * https://docs.open.alipay.com/318/106384/
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String authOrderVoucherCreate(AlipayFundAuthOrderVoucherCreateModel model) throws AlipayApiException{
+		AlipayFundAuthOrderVoucherCreateResponse response = authOrderVoucherCreateToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 资金预授权冻结接口
+	 * @param model
+	 * @return {AlipayFundAuthOrderVoucherCreateResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundAuthOrderVoucherCreateResponse authOrderVoucherCreateToResponse(AlipayFundAuthOrderVoucherCreateModel model) throws AlipayApiException{
+		AlipayFundAuthOrderVoucherCreateRequest request = new AlipayFundAuthOrderVoucherCreateRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	
+	/**
+	 * 资金授权撤销接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String authOperationCancel(AlipayFundAuthOperationCancelModel model) throws AlipayApiException{
+		AlipayFundAuthOperationCancelResponse response = authOperationCancelToResponse(model);
+		return response.getBody();
+	}
+	
+	/**
+	 * 资金授权撤销接口
+	 * @param model
+	 * @return {AlipayFundAuthOperationCancelResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundAuthOperationCancelResponse authOperationCancelToResponse(AlipayFundAuthOperationCancelModel model) throws AlipayApiException{
+		AlipayFundAuthOperationCancelRequest request = new AlipayFundAuthOperationCancelRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	
+	
+	/**
+	 * 资金授权操作查询接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String authOperationDetailQuery(AlipayFundAuthOperationDetailQueryModel model) throws AlipayApiException{
+		AlipayFundAuthOperationDetailQueryResponse response = authOperationDetailQueryToResponse(model);
+		return response.getBody();
+	}
+	
+	/**
+	 * 资金授权操作查询接口
+	 * @param model
+	 * @return {AlipayFundAuthOperationDetailQueryResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundAuthOperationDetailQueryResponse authOperationDetailQueryToResponse(AlipayFundAuthOperationDetailQueryModel model) throws AlipayApiException{
+		AlipayFundAuthOperationDetailQueryRequest request = new AlipayFundAuthOperationDetailQueryRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
 	
 	/**
 	 * 将异步通知的参数转化为Map
