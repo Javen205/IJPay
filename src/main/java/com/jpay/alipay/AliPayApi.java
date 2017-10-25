@@ -16,6 +16,12 @@ import com.alipay.api.domain.AlipayFundAuthOperationDetailQueryModel;
 import com.alipay.api.domain.AlipayFundAuthOrderFreezeModel;
 import com.alipay.api.domain.AlipayFundAuthOrderUnfreezeModel;
 import com.alipay.api.domain.AlipayFundAuthOrderVoucherCreateModel;
+import com.alipay.api.domain.AlipayFundCouponOperationQueryModel;
+import com.alipay.api.domain.AlipayFundCouponOrderAgreementPayModel;
+import com.alipay.api.domain.AlipayFundCouponOrderAppPayModel;
+import com.alipay.api.domain.AlipayFundCouponOrderDisburseModel;
+import com.alipay.api.domain.AlipayFundCouponOrderPagePayModel;
+import com.alipay.api.domain.AlipayFundCouponOrderRefundModel;
 import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
 import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
@@ -35,6 +41,12 @@ import com.alipay.api.request.AlipayFundAuthOperationDetailQueryRequest;
 import com.alipay.api.request.AlipayFundAuthOrderFreezeRequest;
 import com.alipay.api.request.AlipayFundAuthOrderUnfreezeRequest;
 import com.alipay.api.request.AlipayFundAuthOrderVoucherCreateRequest;
+import com.alipay.api.request.AlipayFundCouponOperationQueryRequest;
+import com.alipay.api.request.AlipayFundCouponOrderAgreementPayRequest;
+import com.alipay.api.request.AlipayFundCouponOrderAppPayRequest;
+import com.alipay.api.request.AlipayFundCouponOrderDisburseRequest;
+import com.alipay.api.request.AlipayFundCouponOrderPagePayRequest;
+import com.alipay.api.request.AlipayFundCouponOrderRefundRequest;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
@@ -55,6 +67,12 @@ import com.alipay.api.response.AlipayFundAuthOperationDetailQueryResponse;
 import com.alipay.api.response.AlipayFundAuthOrderFreezeResponse;
 import com.alipay.api.response.AlipayFundAuthOrderUnfreezeResponse;
 import com.alipay.api.response.AlipayFundAuthOrderVoucherCreateResponse;
+import com.alipay.api.response.AlipayFundCouponOperationQueryResponse;
+import com.alipay.api.response.AlipayFundCouponOrderAgreementPayResponse;
+import com.alipay.api.response.AlipayFundCouponOrderAppPayResponse;
+import com.alipay.api.response.AlipayFundCouponOrderDisburseResponse;
+import com.alipay.api.response.AlipayFundCouponOrderPagePayResponse;
+import com.alipay.api.response.AlipayFundCouponOrderRefundResponse;
 import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
@@ -578,6 +596,133 @@ public class AliPayApi {
 	 */
 	public static AlipayFundAuthOperationDetailQueryResponse authOperationDetailQueryToResponse(AlipayFundAuthOperationDetailQueryModel model) throws AlipayApiException{
 		AlipayFundAuthOperationDetailQueryRequest request = new AlipayFundAuthOperationDetailQueryRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 红包无线支付接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOrderAppPay(AlipayFundCouponOrderAppPayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderAppPayResponse response = fundCouponOrderAppPayToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包无线支付接口
+	 * @param model
+	 * @return {AlipayFundCouponOrderAppPayResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOrderAppPayResponse fundCouponOrderAppPayToResponse(AlipayFundCouponOrderAppPayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderAppPayRequest request = new AlipayFundCouponOrderAppPayRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	
+	/**
+	 * 红包页面支付接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOrderPagePay(AlipayFundCouponOrderPagePayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderPagePayResponse response = fundCouponOrderPagePayToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包页面支付接口
+	 * @param model
+	 * @return {AlipayFundCouponOrderPagePayResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOrderPagePayResponse fundCouponOrderPagePayToResponse(AlipayFundCouponOrderPagePayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderPagePayRequest request = new AlipayFundCouponOrderPagePayRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 红包协议支付接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOrderAgreementPay(AlipayFundCouponOrderAgreementPayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderAgreementPayResponse response = fundCouponOrderAgreementPayToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包协议支付接口
+	 * @param model
+	 * @return {AlipayFundCouponOrderAgreementPayResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOrderAgreementPayResponse fundCouponOrderAgreementPayToResponse(AlipayFundCouponOrderAgreementPayModel model) throws AlipayApiException{
+		AlipayFundCouponOrderAgreementPayRequest request = new AlipayFundCouponOrderAgreementPayRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 红包打款接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOrderDisburse(AlipayFundCouponOrderDisburseModel model) throws AlipayApiException{
+		AlipayFundCouponOrderDisburseResponse response = fundCouponOrderDisburseToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包打款接口
+	 * @param model
+	 * @return {AlipayFundCouponOrderDisburseResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOrderDisburseResponse fundCouponOrderDisburseToResponse(AlipayFundCouponOrderDisburseModel model) throws AlipayApiException{
+		AlipayFundCouponOrderDisburseRequest request = new AlipayFundCouponOrderDisburseRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 红包退回接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOrderRefund(AlipayFundCouponOrderRefundModel model) throws AlipayApiException{
+		AlipayFundCouponOrderRefundResponse response = fundCouponOrderRefundToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包退回接口
+	 * @param model
+	 * @return {AlipayFundCouponOrderRefundResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOrderRefundResponse fundCouponOrderRefundToResponse(AlipayFundCouponOrderRefundModel model) throws AlipayApiException{
+		AlipayFundCouponOrderRefundRequest request = new AlipayFundCouponOrderRefundRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 红包退回接口
+	 * @param model
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 */
+	public static String fundCouponOperationQuery(AlipayFundCouponOperationQueryModel model) throws AlipayApiException{
+		AlipayFundCouponOperationQueryResponse response = fundCouponOperationQueryToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 红包退回接口
+	 * @param model
+	 * @return {AlipayFundCouponOperationQueryResponse}
+	 * @throws {AlipayApiException}
+	 */
+	public static AlipayFundCouponOperationQueryResponse fundCouponOperationQueryToResponse(AlipayFundCouponOperationQueryModel model) throws AlipayApiException{
+		AlipayFundCouponOperationQueryRequest request = new AlipayFundCouponOperationQueryRequest();
 		request.setBizModel(model);
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
 	}
