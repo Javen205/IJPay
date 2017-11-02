@@ -11,6 +11,9 @@
 
 **特别说明：** 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 
+**微信群在线交流活动** [点击这里查看详情](https://github.com/Javen205/IJPay/wiki)
+
+
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
