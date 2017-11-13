@@ -98,8 +98,8 @@ public class AliPayApi {
 	 * @return {String}
 	 * @throws {AlipayApiException}
 	 */
-	public static String startAppPayStr(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
-		AlipayTradeAppPayResponse response = appPay(model,notifyUrl);
+	public static String startAppPay(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
+		AlipayTradeAppPayResponse response = appPayToResponse(model,notifyUrl);
 		return response.getBody();
 	}
 	
@@ -111,7 +111,7 @@ public class AliPayApi {
 	 * @return {AlipayTradeAppPayResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeAppPayResponse appPay(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
+	public static AlipayTradeAppPayResponse appPayToResponse(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
 		//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
 		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 		//SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
@@ -120,6 +120,19 @@ public class AliPayApi {
 		//这里和普通的接口调用不同，使用的是sdkExecute
         AlipayTradeAppPayResponse response = AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().sdkExecute(request);
 		return response;
+	}
+	
+	/**
+	 * APP支付
+	 * https://doc.open.alipay.com/docs/doc.htm?treeId=54&articleId=106370&docType=1
+	 * @param model
+	 * @param notifyUrl
+	 * @return {AlipayTradeAppPayResponse}
+	 * @throws {AlipayApiException}
+	 */
+	@Deprecated
+	public static AlipayTradeAppPayResponse appPay(AlipayTradeAppPayModel model, String notifyUrl) throws AlipayApiException{
+		return appPayToResponse(model, notifyUrl);
 	}
 
 	/**
@@ -133,7 +146,7 @@ public class AliPayApi {
 	 * @throws IOException
 	 */
 	public static void wapPay(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
-		String form = wapPayToString(response, model, returnUrl, notifyUrl);
+		String form = wapPayStr(response, model, returnUrl, notifyUrl);
 		HttpServletResponse httpResponse = response;
 		httpResponse.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
 		httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
@@ -149,12 +162,27 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 * @throws IOException
 	 */
-	public static String wapPayToString(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
+	public static String wapPayStr(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
 		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();// 创建API对应的request
 		alipayRequest.setReturnUrl(returnUrl);
 		alipayRequest.setNotifyUrl(notifyUrl);// 在公共参数中设置回跳和通知地址
 		alipayRequest.setBizModel(model);// 填充业务参数
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().pageExecute(alipayRequest).getBody(); // 调用SDK生成表单
+	}
+	
+	/**
+	 * WAP支付
+	 * @param response
+	 * @param model
+	 * @param returnUrl
+	 * @param notifyUrl
+	 * @return {String}
+	 * @throws {AlipayApiException}
+	 * @throws IOException
+	 */
+	@Deprecated
+	public static String wapPayToString(HttpServletResponse response,AlipayTradeWapPayModel model,String returnUrl,String notifyUrl) throws AlipayApiException, IOException {
+		return wapPayStr(response, model, returnUrl, notifyUrl);				
 	}
 
 	/**
@@ -281,7 +309,7 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 */
 	public static boolean isTradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
-		AlipayTradeQueryResponse response = tradeQuery(model);
+		AlipayTradeQueryResponse response = tradeQueryToResponse(model);
 		if(response.isSuccess()){
 			return true;
 		}
@@ -293,10 +321,20 @@ public class AliPayApi {
 	 * @return {AlipayTradeQueryResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeQueryResponse  tradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
+	public static AlipayTradeQueryResponse  tradeQueryToResponse(AlipayTradeQueryModel model) throws AlipayApiException{
 		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
 		request.setBizModel(model);
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 交易查询接口
+	 * @param model
+	 * @return {AlipayTradeQueryResponse}
+	 * @throws {AlipayApiException}
+	 */
+	@Deprecated
+	public static AlipayTradeQueryResponse  tradeQuery(AlipayTradeQueryModel model) throws AlipayApiException{
+		return tradeQueryToResponse(model);
 	}
 	
 	
@@ -308,7 +346,7 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 */
 	public static boolean isTradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
-		AlipayTradeCancelResponse response = tradeCancel(model);
+		AlipayTradeCancelResponse response = tradeCancelToResponse(model);
 		if(response.isSuccess()){
 			return true;
 		}
@@ -320,11 +358,21 @@ public class AliPayApi {
 	 * @return {AlipayTradeCancelResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeCancelResponse tradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
+	public static AlipayTradeCancelResponse tradeCancelToResponse(AlipayTradeCancelModel model) throws AlipayApiException{
 		AlipayTradeCancelRequest request = new AlipayTradeCancelRequest();
 		request.setBizModel(model);
 		AlipayTradeCancelResponse response = AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
 		return response;
+	}
+	/**
+	 * 交易撤销接口
+	 * @param model
+	 * @return {AlipayTradeCancelResponse}
+	 * @throws {AlipayApiException}
+	 */
+	@Deprecated
+	public static AlipayTradeCancelResponse tradeCancel(AlipayTradeCancelModel model) throws AlipayApiException{
+		return tradeCancelToResponse(model);
 	}
 	/**
 	 * 关闭订单
@@ -334,7 +382,7 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 */
 	public static boolean isTradeClose(AlipayTradeCloseModel model) throws AlipayApiException{
-		AlipayTradeCloseResponse response = tradeClose(model);
+		AlipayTradeCloseResponse response = tradeCloseToResponse(model);
 		if(response.isSuccess()){
 			return true;
 		}
@@ -346,10 +394,21 @@ public class AliPayApi {
 	 * @return {AlipayTradeCloseResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeCloseResponse tradeClose(AlipayTradeCloseModel model) throws AlipayApiException{
+	public static AlipayTradeCloseResponse tradeCloseToResponse(AlipayTradeCloseModel model) throws AlipayApiException{
 		AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
 		request.setBizModel(model);
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+		
+	}
+	/**
+	 * 关闭订单
+	 * @param model
+	 * @return {AlipayTradeCloseResponse}
+	 * @throws {AlipayApiException}
+	 */
+	@Deprecated
+	public static AlipayTradeCloseResponse tradeClose(AlipayTradeCloseModel model) throws AlipayApiException{
+		return tradeCloseToResponse(model);
 		
 	}
 	/**
@@ -360,7 +419,7 @@ public class AliPayApi {
 	 * @return {AlipayTradeCreateResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeCreateResponse tradeCreate(AlipayTradeCreateModel model, String notifyUrl) throws AlipayApiException{
+	public static AlipayTradeCreateResponse tradeCreateToResponse(AlipayTradeCreateModel model, String notifyUrl) throws AlipayApiException{
 		AlipayTradeCreateRequest request = new AlipayTradeCreateRequest();
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);
@@ -446,7 +505,7 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 */
 	public static boolean isTradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
-		AlipayTradeOrderSettleResponse  response  = tradeOrderSettle(model);
+		AlipayTradeOrderSettleResponse  response  = tradeOrderSettleToResponse(model);
 		if(response.isSuccess()){
 			return true;
 		}
@@ -458,10 +517,20 @@ public class AliPayApi {
 	 * @return {AlipayTradeOrderSettleResponse}
 	 * @throws {AlipayApiException}
 	 */
-	public static AlipayTradeOrderSettleResponse tradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
+	public static AlipayTradeOrderSettleResponse tradeOrderSettleToResponse(AlipayTradeOrderSettleModel model) throws AlipayApiException{
 		AlipayTradeOrderSettleRequest request = new AlipayTradeOrderSettleRequest();
 		request.setBizModel(model);
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 交易结算接口
+	 * @param model
+	 * @return {AlipayTradeOrderSettleResponse}
+	 * @throws {AlipayApiException}
+	 */
+	@Deprecated
+	public static AlipayTradeOrderSettleResponse tradeOrderSettle(AlipayTradeOrderSettleModel model) throws AlipayApiException{
+		return tradeOrderSettleToResponse(model);
 	}
 	
 	/**

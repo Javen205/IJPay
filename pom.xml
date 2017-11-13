@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.7</version>
+	<version>0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
@@ -38,7 +38,7 @@
 	</developers>
 
 	<properties>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.6</jdk.version>
 		<log4j.version>1.2.17</log4j.version>
 		<zxing.version>3.2.1</zxing.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
