@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.8-SNAPSHOT</version>
+	<version>0.8</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
@@ -147,42 +147,46 @@
 	<build>
 		<finalName>IJPay</finalName>
 		<plugins>
-
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
+						<id>default-jar</id>
+						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>a_little_config.txt</exclude>
+						<exclude>a_little_config_pro.txt</exclude>
+						<exclude>ehcache.xml</exclude>
+						<exclude>log4j.properties</exclude>
+						<exclude>com/jfinal/weixin/demo</exclude>
+						<exclude>com/jfinal/weixin/demo/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
 				<configuration>
 					<!-- 解决 java8 下发布到 maven 中心库时，生成 doc 的异常 -->
 					<additionalparam>-Xdoclint:none</additionalparam>
@@ -191,25 +195,31 @@
 					<reportOutputDirectory>${basedir}</reportOutputDirectory>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> 
 		</plugins>
 	</build>
 
 	<profiles>
+		<!-- mvn clean javadoc:jar source:jar deploy -P release -Dgpg.passphrase=xxxx -->
 		<profile>
 			<id>release</id>
+			<build>
+				<plugins>
+					<!-- GPG -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 			<distributionManagement>
 				<snapshotRepository>
 					<id>nexus-release</id>
