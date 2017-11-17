@@ -1,5 +1,7 @@
 # IJPay
 
+![](assets/img/IJPay-t.png)
+
 [![GitHub issues](https://img.shields.io/github/issues/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/issues)
 [![License][licensesvg]][license]
 [![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg)](https://github.com/Javen205/IJPay/releases/latest)
@@ -59,6 +61,11 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 [licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
 [license]: https://www.apache.org/licenses/LICENSE-2.0
 
+
+
+### 赞助广告
+
+赞助广告 [云生态狂欢节,全场**2**折 起](https://www.chanmir.com/?u=897DBB) **优惠劵：A9036A**
 
 ### 鸣谢
 
