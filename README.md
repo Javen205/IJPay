@@ -1,12 +1,13 @@
 # IJPay
 
+![](assets/img/IJPay-t.png)
+
 [![GitHub issues](https://img.shields.io/github/issues/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/issues)
 [![License][licensesvg]][license]
 [![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg)](https://github.com/Javen205/IJPay/releases/latest)
 [![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg)](http://blog.csdn.net/zyw_java)
 [![GitHub release](https://img.shields.io/github/release/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/release)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
-
 
 
 **特别说明：** 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
@@ -17,7 +18,6 @@
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
-
 
 
 - [JPay](https://gitee.com/Javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
@@ -62,16 +62,17 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 [license]: https://www.apache.org/licenses/LICENSE-2.0
 
 
+
+### 赞助广告
+
+赞助广告 [云生态狂欢节,全场**2**折 起](https://www.chanmir.com/?u=897DBB) **优惠劵：A9036A**
+
 ### 鸣谢
 
 排名不分先后
 
 - [jfinal](http://git.oschina.net/jfinal/jfinal)
 - [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
-- [Layer](http://layer.layui.com/)
-- [weui](https://github.com/weui/weui)
-- [wepayui](https://github.com/wepayui/wepayui)
-- [jquery-weui](https://github.com/lihongxun945/jquery-weui)
 - [zxing](https://github.com/zxing/zxing)
 - 感谢第三方公司提供微信商户平台测试
 
