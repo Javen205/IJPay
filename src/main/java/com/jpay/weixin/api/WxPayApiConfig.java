@@ -1,19 +1,21 @@
 package com.jpay.weixin.api;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.jpay.ext.kit.PaymentKit;
 import com.jpay.ext.kit.StrKit;
 import com.jpay.weixin.api.WxPayApi.TradeType;
+
 /**
- * @author Javen
- * 2017年5月22日
+ * @author Javen 2017年5月22日
  */
 public class WxPayApiConfig implements Serializable {
 	private static final long serialVersionUID = -6447075676732210047L;
-	
+
 	private String appId;
 	private String mchId;
 	private String subAppId;
@@ -32,8 +34,19 @@ public class WxPayApiConfig implements Serializable {
 	private String subOpenId;
 	private String authCode;
 	private String sceneInfo;
+
+	private String planId;
+	private String contractCode;
+	private String requestSerial;
+	private String contractDisplayAccount;
+	private String version;
+	private String timestamp;
+	private String returnApp;
+	private String returnWeb;
 	
-	
+	private String contractNotifyUrl;
+	private String contractId;
+
 	private PayModel payModel;
 
 	/**
@@ -42,26 +55,27 @@ public class WxPayApiConfig implements Serializable {
 	public static enum PayModel {
 		BUSINESSMODEL, SERVICEMODE
 	}
-	
-	
+
 	private WxPayApiConfig() {
 	}
 
 	public static WxPayApiConfig New() {
 		return new WxPayApiConfig();
 	}
+
 	/**
 	 * 构建请求参数
+	 * 
 	 * @return Map<String, String>
 	 */
-	public Map<String, String> build(){
-		Map<String, String> map =new HashMap<String, String>();
-		
+	public Map<String, String> build() {
+		Map<String, String> map = new HashMap<String, String>();
+
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
 			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
 		}
-		
+
 		/**
 		 * openId和sub_openid可以选传其中之一，如果选择传sub_openid,则必须传sub_appid
 		 */
@@ -70,7 +84,7 @@ public class WxPayApiConfig implements Serializable {
 			if (StrKit.notBlank(getSubAppId())) {
 				map.put("sub_appid", subAppId);
 				map.put("sub_openid", getSubOpenId());
-			}else {
+			} else {
 				map.put("openid", getOpenId());
 			}
 		}
@@ -83,8 +97,7 @@ public class WxPayApiConfig implements Serializable {
 			}
 			map.put("scene_info", getSceneInfo());
 		}
-		
-		
+
 		map.put("appid", getAppId());
 		map.put("mch_id", getMchId());
 		map.put("nonce_str", getNonceStr());
@@ -92,41 +105,42 @@ public class WxPayApiConfig implements Serializable {
 		map.put("out_trade_no", getOutTradeNo());
 		map.put("total_fee", getTotalFee());
 		map.put("spbill_create_ip", getSpbillCreateIp());
-		
+
 		map.put("trade_type", getTradeType().name());
 		map.put("out_trade_no", getOutTradeNo());
-		
+
 		map.put("attach", getAttach());
 		if (getTradeType().equals(TradeType.MICROPAY)) {
 			map.put("auth_code", getAuthCode());
 			map.remove("trade_type");
-		}else {
+		} else {
 			map.put("notify_url", getNotifyUrl());
 		}
-		
-		
+
 		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
-		
+
 		return map;
 	}
+
 	/**
 	 * 构建查询订单参数
+	 * 
 	 * @return <Map<String, String>>
 	 */
-	public Map<String, String> orderQueryBuild(){
+	public Map<String, String> orderQueryBuild() {
 		Map<String, String> map = new HashMap<String, String>();
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
 			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
 			map.put("sub_appid", getSubAppId());
 		}
-		
+
 		map.put("appid", getAppId());
 		map.put("mch_id", getMchId());
-		
+
 		if (StrKit.notBlank(getTransactionId())) {
 			map.put("transaction_id", getTransactionId());
-		}else {
+		} else {
 			if (StrKit.isBlank(getOutTradeNo())) {
 				throw new IllegalArgumentException("out_trade_no,transaction_id 不能同时为空");
 			}
@@ -136,6 +150,111 @@ public class WxPayApiConfig implements Serializable {
 		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
 		return map;
 	}
+
+	/**
+	 * 构建申请签约Map
+	 * 
+	 * @return 申请签约Map
+	 * @throws UnsupportedEncodingException 
+	 */
+	public Map<String, String> entrustwebBuild() throws UnsupportedEncodingException {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("appid", getAppId());
+		map.put("mch_id", getMchId());
+		map.put("plan_id", getPlanId());
+		map.put("contract_code", getContractCode());
+		map.put("request_serial", getRequestSerial());
+		map.put("contract_display_account", getContractDisplayAccount());
+		map.put("notify_url", getNotifyUrl());
+		map.put("version", getVersion());
+		map.put("timestamp", getTimestamp());
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
+
+		for (Entry<String, String> param : map.entrySet()) {
+			String key = param.getKey();
+			String value = param.getValue();
+			value = PaymentKit.urlEncode(value);
+			map.put(key, value);
+		}
+
+		return map;
+	}
+	
+	/**
+	 * 构建支付中签约Map
+	 * @return 支付中签约Map
+	 */
+	public Map<String, String> contractorderBuild() {
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("appid", getAppId());
+		map.put("mch_id", getMchId());
+		map.put("contract_appid", getAppId());
+		map.put("contract_mchid", getMchId());
+		map.put("out_trade_no", getOutTradeNo());
+		map.put("nonce_str", getNonceStr());
+		map.put("body", getBody());
+		map.put("attach", getAttach());
+		map.put("notify_url", getNotifyUrl());
+		map.put("total_fee", getTotalFee());
+		map.put("spbill_create_ip", getSpbillCreateIp());
+		map.put("trade_type", getTradeType().name());
+		if (getTradeType().equals(TradeType.JSAPI)) {
+			map.put("openid", getOpenId());
+		}
+		map.put("plan_id", getPlanId());
+		map.put("contract_code", getContractCode());
+		map.put("request_serial", getRequestSerial());
+		map.put("contract_display_account", getContractDisplayAccount());
+		map.put("contract_notify_url", getContractNotifyUrl());
+
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
+
+		return map;
+	}
+	
+	/**
+	 * 构建查询签约关系的Map
+	 * @return 查询签约关系的Map
+	 */
+	public Map<String, String> querycontractBuild() {
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("appid", getAppId());
+		map.put("mch_id", getMchId());
+		
+		if (StrKit.notBlank(getPlanId())) {
+			map.put("plan_id", getPlanId());
+			map.put("contract_code", getContractCode());
+		}else {
+			map.put("contract_id", getContractId());
+		}
+		map.put("version", getVersion());
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
+
+		return map;
+	}
+	/**
+	 * 构建申请扣款的Map
+	 * @return 申请扣款的Map
+	 */
+	public Map<String, String> pappayapplyBuild() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("appid", getAppId());
+		map.put("mch_id", getMchId());
+		map.put("nonce_str", getNonceStr());
+		map.put("body", getBody());
+		map.put("attach", getAttach());
+		map.put("out_trade_no", getOutTradeNo());
+		map.put("total_fee", getTotalFee());
+		map.put("spbill_create_ip", getSpbillCreateIp());
+		map.put("notify_url", getNotifyUrl());
+		map.put("trade_type", getTradeType().name());
+		map.put("contract_id", getContractId());
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
+		return map;
+	}
+	
 	
 
 	public String getAppId() {
@@ -372,4 +491,127 @@ public class WxPayApiConfig implements Serializable {
 		this.sceneInfo = sceneInfo;
 		return this;
 	}
+
+	public String getPlanId() {
+		if (StrKit.isBlank(planId))
+			throw new IllegalArgumentException("planId 未被赋值");
+		return planId;
+	}
+
+	public WxPayApiConfig setPlanId(String planId) {
+		if (StrKit.isBlank(planId))
+			throw new IllegalArgumentException("planId 值不能为空");
+		this.planId = planId;
+		return this;
+	}
+
+	public String getContractCode() {
+		if (StrKit.isBlank(contractCode))
+			throw new IllegalArgumentException("contractCode 未被赋值");
+		return contractCode;
+	}
+
+	public WxPayApiConfig setContractCode(String contractCode) {
+		if (StrKit.isBlank(contractCode))
+			throw new IllegalArgumentException("contractCode 值不能为空");
+		this.contractCode = contractCode;
+		return this;
+	}
+
+	public String getRequestSerial() {
+		if (StrKit.isBlank(requestSerial))
+			throw new IllegalArgumentException("requestSerial 未被赋值");
+		return requestSerial;
+	}
+
+	public WxPayApiConfig setRequestSerial(String requestSerial) {
+		if (StrKit.isBlank(requestSerial))
+			throw new IllegalArgumentException("requestSerial 值不能为空");
+		this.requestSerial = requestSerial;
+		return this;
+	}
+
+	public String getContractDisplayAccount() {
+		if (StrKit.isBlank(contractDisplayAccount))
+			throw new IllegalArgumentException("contractDisplayAccount 未被赋值");
+		return contractDisplayAccount;
+	}
+
+	public WxPayApiConfig setContractDisplayAccount(String contractDisplayAccount) {
+		if (StrKit.isBlank(contractDisplayAccount))
+			throw new IllegalArgumentException("contractDisplayAccount 值不能为空");
+		this.contractDisplayAccount = contractDisplayAccount;
+		return this;
+	}
+
+	public String getVersion() {
+		if (StrKit.isBlank(version))
+			version = "1.0";
+		return version;
+	}
+
+	public WxPayApiConfig setVersion(String version) {
+		if (StrKit.isBlank(version))
+			throw new IllegalArgumentException("version 值不能为空");
+		this.version = version;
+		return this;
+	}
+
+	public String getTimestamp() {
+		if (StrKit.isBlank(timestamp)) {
+			timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+		}
+		return timestamp;
+	}
+
+	public WxPayApiConfig setTimestamp(String timestamp) {
+		if (StrKit.isBlank(timestamp))
+			throw new IllegalArgumentException("timestamp 值不能为空");
+		if (timestamp.length() != 10)
+			throw new IllegalArgumentException("timestamp 值必须为10位");
+		this.timestamp = timestamp;
+		return this;
+	}
+
+	public String getReturnApp() {
+		return returnApp;
+	}
+
+	public WxPayApiConfig setReturnApp(String returnApp) {
+		this.returnApp = returnApp;
+		return this;
+	}
+
+	public String getReturnWeb() {
+		return returnWeb;
+	}
+
+	public WxPayApiConfig setReturnWeb(String returnWeb) {
+		this.returnWeb = returnWeb;
+		return this;
+	}
+
+	public String getContractNotifyUrl() {
+		if (StrKit.isBlank(contractNotifyUrl))
+			throw new IllegalArgumentException("contractNotifyUrl 未被赋值");
+		return contractNotifyUrl;
+	}
+
+	public WxPayApiConfig setContractNotifyUrl(String contractNotifyUrl) {
+		this.contractNotifyUrl = contractNotifyUrl;
+		return this;
+	}
+
+	public String getContractId() {
+		if (StrKit.isBlank(contractId))
+			throw new IllegalArgumentException("contractId 未被赋值");
+		return contractId;
+	}
+
+	public WxPayApiConfig setContractId(String contractId) {
+		this.contractId = contractId;
+		return this;
+	}
+	
+	
 }
