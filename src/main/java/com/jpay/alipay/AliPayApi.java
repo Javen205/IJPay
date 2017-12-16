@@ -1,6 +1,8 @@
 package com.jpay.alipay;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,6 +26,8 @@ import com.alipay.api.domain.AlipayFundCouponOrderPagePayModel;
 import com.alipay.api.domain.AlipayFundCouponOrderRefundModel;
 import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
 import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
+import com.alipay.api.domain.AlipayOpenAuthTokenAppModel;
+import com.alipay.api.domain.AlipayOpenAuthTokenAppQueryModel;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.domain.AlipayTradeCancelModel;
 import com.alipay.api.domain.AlipayTradeCloseModel;
@@ -49,6 +53,8 @@ import com.alipay.api.request.AlipayFundCouponOrderPagePayRequest;
 import com.alipay.api.request.AlipayFundCouponOrderRefundRequest;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
+import com.alipay.api.request.AlipayOpenAuthTokenAppQueryRequest;
+import com.alipay.api.request.AlipayOpenAuthTokenAppRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeCancelRequest;
 import com.alipay.api.request.AlipayTradeCloseRequest;
@@ -75,6 +81,8 @@ import com.alipay.api.response.AlipayFundCouponOrderPagePayResponse;
 import com.alipay.api.response.AlipayFundCouponOrderRefundResponse;
 import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
+import com.alipay.api.response.AlipayOpenAuthTokenAppQueryResponse;
+import com.alipay.api.response.AlipayOpenAuthTokenAppResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeCancelResponse;
 import com.alipay.api.response.AlipayTradeCloseResponse;
@@ -198,6 +206,7 @@ public class AliPayApi {
 		return response.getBody();
 	}
 	/**
+	 * 交易支付接口
 	 * 条形码支付、声波支付
 	 * @param model
 	 * @param notifyUrl
@@ -214,6 +223,7 @@ public class AliPayApi {
 	
 	
 	/**
+	 * 统一收单线下交易预创建
 	 * 扫码支付
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.i0UVZn&treeId=193&articleId=105170&docType=1#s4
 	 * @param model
@@ -794,6 +804,62 @@ public class AliPayApi {
 		AlipayFundCouponOperationQueryRequest request = new AlipayFundCouponOperationQueryRequest();
 		request.setBizModel(model);
 		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 应用授权URL拼装
+	 * @param appId
+	 * @param redirectUri
+	 * @return 应用授权URL
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String getOauth2Url(String appId,String redirectUri) throws UnsupportedEncodingException{
+		return new StringBuffer().append("https://openauth.alipay.com/oauth2/appToAppAuth.htm?app_id=")
+				.append(appId)
+				.append("&redirect_uri=")
+				.append(URLEncoder.encode(redirectUri, "UTF-8"))
+				.toString();
+	}
+	/**
+	 * 使用app_auth_code换取app_auth_token
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayOpenAuthTokenAppResponse openAuthTokenAppToResponse(AlipayOpenAuthTokenAppModel model) throws AlipayApiException {
+		AlipayOpenAuthTokenAppRequest request = new AlipayOpenAuthTokenAppRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 使用app_auth_code换取app_auth_token
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String openAuthTokenApp(AlipayOpenAuthTokenAppModel model) throws AlipayApiException {
+		AlipayOpenAuthTokenAppResponse response = openAuthTokenAppToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 查询授权信息
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayOpenAuthTokenAppQueryResponse openAuthTokenAppQueryToResponse(AlipayOpenAuthTokenAppQueryModel model) throws AlipayApiException {
+		AlipayOpenAuthTokenAppQueryRequest request = new AlipayOpenAuthTokenAppQueryRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 查询授权信息
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String openAuthTokenAppQuery(AlipayOpenAuthTokenAppQueryModel model) throws AlipayApiException {
+		AlipayOpenAuthTokenAppQueryResponse response = openAuthTokenAppQueryToResponse(model);
+		return response.getBody();
 	}
 	
 	/**
