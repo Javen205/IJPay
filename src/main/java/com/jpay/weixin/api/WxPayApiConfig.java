@@ -74,6 +74,10 @@ public class WxPayApiConfig implements Serializable {
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
 			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
+			if (StrKit.notBlank(getSubAppId())) {
+				map.put("sub_appid", subAppId);
+			}
+			
 		}
 
 		/**
