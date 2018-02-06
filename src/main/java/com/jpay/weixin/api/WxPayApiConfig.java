@@ -43,7 +43,7 @@ public class WxPayApiConfig implements Serializable {
 	private String timestamp;
 	private String returnApp;
 	private String returnWeb;
-	
+
 	private String contractNotifyUrl;
 	private String contractId;
 
@@ -74,6 +74,9 @@ public class WxPayApiConfig implements Serializable {
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
 			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
+			if (StrKit.notBlank(getSubAppId())) {
+				map.put("sub_appid", subAppId);
+			}
 		}
 
 		/**
@@ -155,7 +158,7 @@ public class WxPayApiConfig implements Serializable {
 	 * 构建申请签约Map
 	 * 
 	 * @return 申请签约Map
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	public Map<String, String> entrustwebBuild() throws UnsupportedEncodingException {
 		Map<String, String> map = new HashMap<String, String>();
@@ -179,9 +182,10 @@ public class WxPayApiConfig implements Serializable {
 
 		return map;
 	}
-	
+
 	/**
 	 * 构建支付中签约Map
+	 * 
 	 * @return 支付中签约Map
 	 */
 	public Map<String, String> contractorderBuild() {
@@ -212,9 +216,10 @@ public class WxPayApiConfig implements Serializable {
 
 		return map;
 	}
-	
+
 	/**
 	 * 构建查询签约关系的Map
+	 * 
 	 * @return 查询签约关系的Map
 	 */
 	public Map<String, String> querycontractBuild() {
@@ -222,11 +227,11 @@ public class WxPayApiConfig implements Serializable {
 
 		map.put("appid", getAppId());
 		map.put("mch_id", getMchId());
-		
+
 		if (StrKit.notBlank(getPlanId())) {
 			map.put("plan_id", getPlanId());
 			map.put("contract_code", getContractCode());
-		}else {
+		} else {
 			map.put("contract_id", getContractId());
 		}
 		map.put("version", getVersion());
@@ -234,8 +239,10 @@ public class WxPayApiConfig implements Serializable {
 
 		return map;
 	}
+
 	/**
 	 * 构建申请扣款的Map
+	 * 
 	 * @return 申请扣款的Map
 	 */
 	public Map<String, String> pappayapplyBuild() {
@@ -254,8 +261,6 @@ public class WxPayApiConfig implements Serializable {
 		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
 		return map;
 	}
-	
-	
 
 	public String getAppId() {
 		if (StrKit.isBlank(appId))
@@ -612,6 +617,5 @@ public class WxPayApiConfig implements Serializable {
 		this.contractId = contractId;
 		return this;
 	}
-	
-	
+
 }
