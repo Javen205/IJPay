@@ -37,6 +37,12 @@ public class WxPayApi {
 	private static final String TRANSFERS_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 	// 查询企业付款
 	private static final String GETTRANSFERINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
+	// 企业付款到银行
+	private static final String PAY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank";
+	// 查询企业付款
+	private static final String QUERY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/query_bank";
+	//获取RSA加密公钥
+	private static final String GETPUBLICKEY_URL = "https://fraud.mch.weixin.qq.com/risk/getpublickey";
 	// 申请签约
 	private static final String ENTRUSTWEB_URL = "https://api.mch.weixin.qq.com/papay/entrustweb";
 	// 支付中签约接口
@@ -272,8 +278,7 @@ public class WxPayApi {
 	}
 
 	/**
-	 * 企业付款
-	 * 
+	 * 企业付款到零钱
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -287,8 +292,7 @@ public class WxPayApi {
 	}
 
 	/**
-	 * 查询企业付款
-	 * 
+	 * 查询企业付款到零钱
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -299,6 +303,47 @@ public class WxPayApi {
 	 */
 	public static String getTransferInfo(Map<String, String> params, String certPath, String certPassword) {
 		return WxPayApi.doPostSSL(GETTRANSFERINFO_URL, params, certPath, certPassword);
+	}
+	
+	/**
+	 * 企业付款到银行
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPassword
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String payBank(Map<String, String> params, String certPath, String certPassword) {
+		return WxPayApi.doPostSSL(PAY_BANK_URL, params, certPath, certPassword);
+	}
+	
+	/**
+	 * 查询企业付款到银行
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPassword
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String queryBank(Map<String, String> params, String certPath, String certPassword) {
+		return WxPayApi.doPostSSL(QUERY_BANK_URL, params, certPath, certPassword);
+	}
+	/**
+	 * 获取RSA加密公钥
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPassword
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String getPublicKey(Map<String, String> params, String certPath, String certPassword) {
+		return WxPayApi.doPostSSL(GETPUBLICKEY_URL, params, certPath, certPassword);
 	}
 
 	/**
