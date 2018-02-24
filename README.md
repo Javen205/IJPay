@@ -20,15 +20,14 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 
-- [JPay](https://gitee.com/Javen205/JPay) 简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
+- IJPay是[JPay](https://github.com/Javen205/JPay)后台接口SDK不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
+- [JPay](https://github.com/Javen205/JPay) 是简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
+- IOS支付SDK，敬请关注。
 
-- IJPay 让支付触手可及，封装了微信支付、支付宝支付常用的支付方式以及各种常用的接口
+### 接入文档
 
-### 有文档有视频
+[GitBook 欢迎关注，如有疑问请发issues](https://www.gitbook.com/book/javen205/ijpay)
 
-[接入说明请查看WIKI](https://github.com/Javen205/IJPay/wiki)
-
-[IJPay视频地址](http://blog.csdn.net/zyw_java/article/details/72571535)
 
 ### 效果图
 
@@ -38,14 +37,6 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 
 Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
 
-
-### 功能列表
-### 微信参考资料
-### 支付宝参考资料
-### 银联参考资料
-银联测试证书在assets目录中
-
-[参考资料请查看WIKI](https://github.com/Javen205/IJPay/wiki)
 
 
 ### 联系方式
@@ -61,11 +52,6 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 [licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
 [license]: https://www.apache.org/licenses/LICENSE-2.0
 
-
-
-### 赞助广告
-
-赞助广告 [云生态狂欢节,全场**2**折 起](https://www.chanmir.com/?u=897DBB) **优惠劵：A9036A**
 
 ### 鸣谢
 
