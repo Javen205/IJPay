@@ -46,7 +46,7 @@
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
 		<squareup.okhttp.version>2.7.5</squareup.okhttp.version>
-		<squareup.okhttp3.version>3.8.0</squareup.okhttp3.version>
+		<squareup.okhttp3.version>3.9.1</squareup.okhttp3.version>
 		<squareup.okio.version>1.11.0</squareup.okio.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -124,16 +124,19 @@
 			<groupId>com.squareup.okhttp</groupId>
 			<artifactId>okhttp</artifactId>
 			<version>${squareup.okhttp.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
 			<version>${squareup.okhttp3.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okio</groupId>
 			<artifactId>okio</artifactId>
 			<version>${squareup.okio.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
