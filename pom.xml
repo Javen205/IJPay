@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>0.9</version>
+	<version>1.1.2</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
@@ -39,29 +39,24 @@
 
 	<properties>
 		<jdk.version>1.6</jdk.version>
-		<log4j.version>1.2.17</log4j.version>
 		<zxing.version>3.2.1</zxing.version>
+		<fastjson.version>1.2.6</fastjson.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<log4j.version>1.2.17</log4j.version>
+		<slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
+		<squareup.okhttp.version>2.7.5</squareup.okhttp.version>
+		<squareup.okhttp3.version>3.9.1</squareup.okhttp3.version>
+		<squareup.okio.version>1.11.0</squareup.okio.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>8.1.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.6</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- 开源多维码生成工具 -->
@@ -69,15 +64,24 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>${zxing.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
-			<scope>provided</scope>
 		</dependency>
-
+		<!-- 开源多维码生成工具 -->
+		<!-- 支付宝必须 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
@@ -85,6 +89,8 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/alipay-sdk-java20171012102412.jar</systemPath>
 		</dependency>
+		<!-- 支付宝必须 -->
+		<!-- 银联必须 -->
 		<dependency>
 			<groupId>com.unionpay</groupId>
 			<artifactId>unionpay-sdk-java</artifactId>
@@ -93,56 +99,45 @@
 			<systemPath>${project.basedir}/libs/bcprov-jdk15on-1.54.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-			<scope>provided</scope>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
 		</dependency>
-		<!-- okhttp2 -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-log4j12.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j12.version}</version>
+		</dependency>
+		<!-- 银联必须 -->
+		<!-- okhttp -->
 		<dependency>
 			<groupId>com.squareup.okhttp</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>2.7.5</version>
+			<version>${squareup.okhttp.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>3.8.0</version>
+			<version>${squareup.okhttp3.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okio</groupId>
 			<artifactId>okio</artifactId>
-			<version>1.11.0</version>
+			<version>${squareup.okio.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.25</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<scope>provided</scope>
-		</dependency>
-
 	</dependencies>
 	<build>
 		<finalName>IJPay</finalName>
@@ -163,16 +158,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<excludes>
-						<exclude>a_little_config.txt</exclude>
-						<exclude>a_little_config_pro.txt</exclude>
-						<exclude>ehcache.xml</exclude>
-						<exclude>log4j.properties</exclude>
-						<exclude>com/jfinal/weixin/demo</exclude>
-						<exclude>com/jfinal/weixin/demo/*</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

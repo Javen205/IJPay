@@ -86,7 +86,10 @@ public final class HttpUtils {
 		// com.squareup.okhttp.OkHttpClient?
 		else if (ClassUtils.isPresent("com.squareup.okhttp.OkHttpClient", HttpUtils.class.getClassLoader())) {
 			delegateToUse = new OkHttpDelegate();
-		}
+		}//com.jpay.ext.kit.HttpKit?
+        else if (ClassUtils.isPresent("com.jpay.ext.kit.HttpKit", HttpUtils.class.getClassLoader())) {
+            delegateToUse = new HttpKitDelegate();
+        }
 		delegate = delegateToUse;
 	}
 	
@@ -417,4 +420,54 @@ public final class HttpUtils {
 		}
 		
 	}
+	
+	 /**
+     * HttpKit代理
+     */
+    private static class HttpKitDelegate implements HttpDelegate {
+
+        @Override
+        public String get(String url) {
+            return com.jpay.ext.kit.HttpKit.get(url);
+        }
+
+        @Override
+        public String get(String url, Map<String, String> queryParas) {
+            return com.jpay.ext.kit.HttpKit.get(url, queryParas);
+        }
+
+        @Override
+        public String post(String url, String data) {
+            return com.jpay.ext.kit.HttpKit.post(url, data);
+        }
+        @Override
+		public String post(String url, Map<String, String> queryParas) {
+			return com.jpay.ext.kit.HttpKit.post(url, queryParas, "null");
+		}
+
+        @Override
+        public String postSSL(String url, String data, String certPath, String certPass) {
+            return HttpKitExt.postSSL(url, data, certPath, certPass);
+        }
+
+
+        @Override
+        public InputStream download(String url, String params) {
+            try {
+                return HttpKitExt.downloadMaterial(url, params);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public String upload(String url, File file, String params) {
+            try {
+                return HttpKitExt.uploadMedia(url, file, params);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }
