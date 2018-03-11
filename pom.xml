@@ -70,16 +70,16 @@
 			<version>1.2.6</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
 			<version>java20171012102412</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/alipay-sdk-java20171012102412.jar</systemPath>
+			<systemPath>${project.basedir}/libs/alipay-sdk-java20180309170622.jar</systemPath>
 		</dependency>
 		<!-- 支付宝必须 -->
 		<!-- 银联必须 -->
@@ -109,6 +109,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
 		</dependency>
 		<!-- 银联必须 -->
 		<!-- okhttp -->
