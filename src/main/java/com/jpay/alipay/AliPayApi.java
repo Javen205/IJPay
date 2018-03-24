@@ -3,6 +3,7 @@ package com.jpay.alipay;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.domain.AlipayCommerceCityfacilitatorStationQueryModel;
+import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherBatchqueryModel;
+import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherGenerateModel;
+import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherRefundModel;
 import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
 import com.alipay.api.domain.AlipayFundAuthOperationCancelModel;
 import com.alipay.api.domain.AlipayFundAuthOperationDetailQueryModel;
@@ -39,6 +44,10 @@ import com.alipay.api.domain.AlipayTradePrecreateModel;
 import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.alipay.api.request.AlipayCommerceCityfacilitatorStationQueryRequest;
+import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherBatchqueryRequest;
+import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherGenerateRequest;
+import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherRefundRequest;
 import com.alipay.api.request.AlipayDataDataserviceBillDownloadurlQueryRequest;
 import com.alipay.api.request.AlipayFundAuthOperationCancelRequest;
 import com.alipay.api.request.AlipayFundAuthOperationDetailQueryRequest;
@@ -67,6 +76,10 @@ import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.response.AlipayCommerceCityfacilitatorStationQueryResponse;
+import com.alipay.api.response.AlipayCommerceCityfacilitatorVoucherBatchqueryResponse;
+import com.alipay.api.response.AlipayCommerceCityfacilitatorVoucherGenerateResponse;
+import com.alipay.api.response.AlipayCommerceCityfacilitatorVoucherRefundResponse;
 import com.alipay.api.response.AlipayDataDataserviceBillDownloadurlQueryResponse;
 import com.alipay.api.response.AlipayFundAuthOperationCancelResponse;
 import com.alipay.api.response.AlipayFundAuthOperationDetailQueryResponse;
@@ -93,6 +106,7 @@ import com.alipay.api.response.AlipayTradePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
+import com.jpay.ext.kit.DateKit;
 /**
  * @author Javen
  * 2017年5月20日
@@ -861,7 +875,105 @@ public class AliPayApi {
 		AlipayOpenAuthTokenAppQueryResponse response = openAuthTokenAppQueryToResponse(model);
 		return response.getBody();
 	}
+	/**
+	 * 地铁购票发码
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayCommerceCityfacilitatorVoucherGenerateResponse voucherGenerateToResponse(AlipayCommerceCityfacilitatorVoucherGenerateModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherGenerateRequest request = new AlipayCommerceCityfacilitatorVoucherGenerateRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 地铁购票发码
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String voucherGenerate(AlipayCommerceCityfacilitatorVoucherGenerateModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherGenerateResponse response = voucherGenerateToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 地铁购票发码退款
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayCommerceCityfacilitatorVoucherRefundResponse metroRefundToResponse(AlipayCommerceCityfacilitatorVoucherRefundModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherRefundRequest request = new AlipayCommerceCityfacilitatorVoucherRefundRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 地铁购票发码退款
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String metroRefund(AlipayCommerceCityfacilitatorVoucherRefundModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherRefundResponse response = metroRefundToResponse(model);
+		return response.getBody();
+	}
 	
+	/**
+	 * 地铁车站数据查询
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayCommerceCityfacilitatorStationQueryResponse stationQueryToResponse(AlipayCommerceCityfacilitatorStationQueryModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorStationQueryRequest request = new AlipayCommerceCityfacilitatorStationQueryRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 地铁车站数据查询
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String stationQuery(AlipayCommerceCityfacilitatorStationQueryModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorStationQueryResponse response = stationQueryToResponse(model);
+		return response.getBody();
+	}
+	/**
+	 * 核销码批量查询
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayCommerceCityfacilitatorVoucherBatchqueryResponse voucherBatchqueryToResponse(AlipayCommerceCityfacilitatorVoucherBatchqueryModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherBatchqueryRequest request = new AlipayCommerceCityfacilitatorVoucherBatchqueryRequest();
+		request.setBizModel(model);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+	}
+	/**
+	 * 核销码批量查询
+	 * @param model
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static String voucherBatchquery(AlipayCommerceCityfacilitatorVoucherBatchqueryModel model) throws AlipayApiException {
+		AlipayCommerceCityfacilitatorVoucherBatchqueryResponse response = voucherBatchqueryToResponse(model);
+		return response.getBody();
+	}
+	
+	
+	/**
+     * 支付宝提供给商户的服务接入网关URL(新)
+     */
+    private static final String ALIPAY_GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
+	
+	public static void batchTrans(Map<String, String> params, String private_key, String sign_type, HttpServletResponse response) throws IOException {
+		params.put("service", "batch_trans_notify");
+		params.put("_input_charset", "UTF-8");
+		params.put("pay_date", DateKit.toStr(new Date(), DateKit.YYYYMMDD));
+		Map<String, String> param = AlipayCore.buildRequestPara(params,private_key,sign_type);
+		response.sendRedirect(ALIPAY_GATEWAY_NEW.concat(AlipayCore.createLinkString(param)));
+	}
 	/**
 	 * 将异步通知的参数转化为Map
 	 * @param request

@@ -12,6 +12,7 @@ public class DateKit {
 	public static String datePattern = "yyyy-MM-dd";
 	public static String timeStampPattern = "yyyy-MM-dd HH:mm:ss";
 	public static String UnionTimeStampPattern = "YYYYMMddHHmmss";
+	public static String YYYYMMDD = "YYYYMMDD";
 	public static String UnionDateStampPattern = "MMdd";
 
 	public static void setDatePattern(String datePattern) {
