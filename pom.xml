@@ -1,208 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.jpay</groupId>
-	<artifactId>JPayService</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>MavenDemo Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<groupId>com.github.javen205</groupId>
+	<artifactId>IJPay</artifactId>
+	<version>1.1.3</version>
+	<packaging>jar</packaging>
+	<name>IJPay</name>
+	<description>Easy Pay Library</description>
+	<url>https://github.com/Javen205/IJPay</url>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:javen205/IJPay</connection>
+		<developerConnection>scm:git:git@github.com:javen205/IJPay</developerConnection>
+		<url>scm:git:git@github.com:javen205/IJPay</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Javen</name>
+			<email>javendev@126.com</email>
+			<organization>github</organization>
+			<organizationUrl>https://javen205.github.io/</organizationUrl>
+		</developer>
+	</developers>
 
 	<properties>
-		<jdk.version>1.8</jdk.version>
-		<log4j.version>1.2.17</log4j.version>
-		<beetl.version>2.2.3</beetl.version>
-		<jfinal.version>3.0</jfinal.version>
-		<weixin.version>1.8</weixin.version>
-		<zxing.version>3.2.1</zxing.version>
+		<jdk.version>1.6</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jfinal</artifactId>
-			<version>${jfinal.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>8.1.8</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- 开源多维码生成工具 -->
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jsp</artifactId>
-			<version>8.1.8.v20121106</version>
-			<scope>provided</scope>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jfinal-weixin</artifactId>
-			<version>${weixin.version}</version>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.2.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.26</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.37</version>
-		</dependency>
+		<!-- 开源多维码生成工具 -->
+		<!-- 支付宝必须 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.6</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>java20171012102412</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/alipay-sdk-java20180309170622.jar</systemPath>
+		</dependency>
+		<!-- 支付宝必须 -->
+		<!-- 银联必须 -->
+		<dependency>
+			<groupId>com.unionpay</groupId>
+			<artifactId>unionpay-sdk-java</artifactId>
+			<version>1.54</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/bcprov-jdk15on-1.54.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+			<version>1.2.17</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-
-		<!-- 开源多维码生成工具 -->
+		<!-- 银联必须 -->
+		<!-- okhttp -->
 		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>${zxing.version}</version>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>2.7.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>${zxing.version}</version>
-		</dependency>
-		<!-- JSTL标签类 -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>alipay-sdk-java</artifactId>
-			<version>java20170411150054</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/alipay-sdk-java20170411150054.jar</systemPath>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>3.9.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
+			<groupId>com.squareup.okio</groupId>
+			<artifactId>okio</artifactId>
+			<version>1.11.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>JPayService</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/resources/${profiles.active}</directory>
-			</resource>
-		</resources>
+		<finalName>IJPay</finalName>
 		<plugins>
-			<!-- Idea 添加此插件以便启动jetty -->
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.10.v20160621</version>
-				<configuration>
-					<!-- http端口，默认8080，可修改 -->
-					<httpConnector>
-						<port>8080</port>
-					</httpConnector>
-					<stopPort>9966</stopPort>
-					<stopKey>stop</stopKey>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<webApp>
-						<contextPath>/</contextPath>
-					</webApp>
-					<!-- 适应测试阶段的jetty，日志写入目录，tomcat写入tomcat/logs下 -->
-					<systemProperties>
-						<systemProperty>
-							<name>catalina.base</name>
-							<value>.</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.6.1</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<configuration>
+					<!-- 解决 java8 下发布到 maven 中心库时，生成 doc 的异常 -->
+					<additionalparam>-Xdoclint:none</additionalparam>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputDirectory>${basedir}</outputDirectory>
+					<reportOutputDirectory>${basedir}</reportOutputDirectory>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>${project.basedir}/libs</directory>
-							<targetPath>WEB-INF/lib</targetPath>
-							<filtering>false</filtering>
-							<includes>
-								<include>**/*.jar</include>
-							</includes>
-						</resource>
-					</webResources>
-				</configuration>
-				<version>2.1.1</version>
 			</plugin>
 		</plugins>
 	</build>
 
 	<profiles>
-		<!-- 默认激活 dev 开发环境 -->
-		<!-- production使用 mvn xxx -Pproduction -->
+		<!-- mvn clean javadoc:jar source:jar deploy -P release -Dgpg.passphrase=xxxx -->
 		<profile>
-			<!-- 本地开发环境 -->
-			<id>development</id>
-			<properties>
-				<profiles.active>dev</profiles.active>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<profile>
-			<!-- 生产环境 -->
-			<id>production</id>
-			<properties>
-				<profiles.active>production</profiles.active>
-			</properties>
+			<id>release</id>
+			<build>
+				<plugins>
+					<!-- GPG -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nexus-release</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>nexus-release</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
 		</profile>
 	</profiles>
 
-	<!-- 使用aliyun镜像 -->
+	<!-- 使用aliyun maven -->
 	<repositories>
 		<repository>
 			<id>aliyun</id>
@@ -210,4 +223,5 @@
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
+
 </project>

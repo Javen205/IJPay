@@ -1,45 +1,75 @@
 # IJPay
 
-[![QQ](http://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=47koFFR)
+![](assets/img/IJPay-t.png)
+
+[![Gitee star](https://gitee.com/javen205/IJPay/badge/star.svg?theme=white)](https://gitee.com/javen205/IJPay/stargazers)
+[![Github start](https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars)](https://github.com/Javen205/IJPay)
+[![Github issues](https://img.shields.io/github/issues/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/issues)
+[![License][licensesvg]][license]
+[![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg)](https://github.com/Javen205/IJPay/releases/latest)
+[![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg)](http://blog.csdn.net/zyw_java)
+[![GitHub release](https://img.shields.io/github/release/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/release)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
+
+
+**特别说明：** 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
+
+**微信群在线交流活动** [点击这里查看详情](https://github.com/Javen205/IJPay/wiki)
+
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
-OSchina：[http://git.oschina.net/javen205/IJPay](http://git.oschina.net/javen205/IJPay)
-
-- [JPay](https://github.com/Javen205/JPay)、[微信、支付宝App支付-JPay0.0.2发布](http://blog.csdn.net/zyw_java/article/details/70140210) 是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调
-
-- IJPay是JPay服务端-实现微信、支付宝系列支付
+Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 
+- IJPay是[JPay](https://github.com/Javen205/JPay)后台接口SDK不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
+- [JPay](https://github.com/Javen205/JPay) 是简易而不简单的Android 支付SDK，JPay是对微信App支付、支付宝App支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
+- IOS支付SDK，敬请关注。
+
+### 接入文档
+
+[GitBook 欢迎关注，如有疑问请发issues](https://www.gitbook.com/book/javen205/ijpay/details)
 
 
-微信服务商模式下 **微信扫码支付**、**微信刷卡支付**、**微信公众号支付支付**
+### 效果图
 
-<img src="http://i4.buimg.com/4851/557cb6cd0d1ea9ba.gif" width = "300" alt="欢迎加入微信圈子" align=center />
+**请参考Demo，目前IJPay Demo 提供两个版本 JFinal版本以及Spring Boot版本**
+
+GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
+
+Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
+
+**使用Demo之前请熟读以下文章**
+
+[配置应用环境](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-config.html)
+
+[IJPay 支付宝初始化](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-init.html)
+
+### 联系方式
+
+[IJPay交流圈-需要支援点击这里](https://javen205.gitbooks.io/ijpay/content/contact.html)
+
+[qq0groupsvg]: https://img.shields.io/badge/QQ群-148540125-fba7f9.svg
+[qq0group]: http://shang.qq.com/wpa/qunwpa?idkey=5005dbbee62dac64b34fedc9ff73511762da5d02642a1ef526522fb2e07852dd
 
 
-##### 微信系列支付
 
-- [Android版-微信APP支付](http://blog.csdn.net/zyw_java/article/details/54024232)
-- [微信开发之现金红包](http://blog.csdn.net/zyw_java/article/details/54024211)
-- [微信开发之刷卡支付](http://blog.csdn.net/zyw_java/article/details/54024198)
-- [微信开发之扫码支付](http://blog.csdn.net/zyw_java/article/details/54024162)
-- [微信开发之公众号支付](http://blog.csdn.net/zyw_java/article/details/54023968)
+[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
+[license]: https://www.apache.org/licenses/LICENSE-2.0
 
-##### 支付宝系列支付
 
-- [支付宝支付-PC电脑网站支付](http://blog.csdn.net/zyw_java/article/details/71970972)
 
-- [支付宝支付-支付宝常用的12个接口封装、异步通知](http://blog.csdn.net/zyw_java/article/details/71844328)
 
-- [支付宝支付-提现到个人支付宝](http://blog.csdn.net/zyw_java/article/details/71598711)
+### 贡献代码
 
-- [支付宝支付-扫码支付](http://blog.csdn.net/zyw_java/article/details/71437269)
+最后如果该库对你有帮助不妨右上角点点Star或者任意打赏支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
 
-- [支付宝支付-刷卡支付(条码支付)](http://blog.csdn.net/zyw_java/article/details/71372789)
 
-- [支付宝Wap支付你了解多少？](http://blog.csdn.net/zyw_java/article/details/54024253)
+### 鸣谢
 
-- [Android版-支付宝APP支付](http://blog.csdn.net/zyw_java/article/details/54024238)
+排名不分先后
 
-- [一张二维码集成微信、支付宝支付](http://blog.csdn.net/zyw_java/article/details/54630880)
+- [jfinal](http://git.oschina.net/jfinal/jfinal)
+- [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
+- [zxing](https://github.com/zxing/zxing)
+- 感谢第三方公司提供微信商户平台测试
