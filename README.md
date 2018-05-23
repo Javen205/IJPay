@@ -4,7 +4,6 @@
 
 [![Gitee star](https://gitee.com/javen205/IJPay/badge/star.svg?theme=white)](https://gitee.com/javen205/IJPay/stargazers)
 [![Github start](https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars)](https://github.com/Javen205/IJPay)
-[![Github issues](https://img.shields.io/github/issues/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/issues)
 [![License][licensesvg]][license]
 [![Github downloads](https://img.shields.io/github/downloads/Javen205/IJPay/total.svg)](https://github.com/Javen205/IJPay/releases/latest)
 [![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg)](http://blog.csdn.net/zyw_java)
@@ -28,7 +27,7 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 ### 接入文档
 
-[GitBook 欢迎关注，如有疑问请发issues](https://www.gitbook.com/book/javen205/ijpay/details)
+[GitBook 接入文档欢迎订阅，如有疑问请发issues](https://www.gitbook.com/book/javen205/ijpay/details)
 
 
 ### 效果图
@@ -47,7 +46,7 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 
 ### 联系方式
 
-[IJPay交流圈-需要支援点击这里](https://javen205.gitbooks.io/ijpay/content/contact.html)
+[IJPay交流圈-需要帮助点击这里](https://javen205.gitbooks.io/ijpay/content/contact.html)
 
 [qq0groupsvg]: https://img.shields.io/badge/QQ群-148540125-fba7f9.svg
 [qq0group]: http://shang.qq.com/wpa/qunwpa?idkey=5005dbbee62dac64b34fedc9ff73511762da5d02642a1ef526522fb2e07852dd
