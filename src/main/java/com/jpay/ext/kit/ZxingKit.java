@@ -3,6 +3,7 @@ package com.jpay.ext.kit;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.jpay.util.IOUtils;
 
 /**
  * google 开源图形码工具Zxing使用
@@ -66,6 +68,44 @@ public class ZxingKit {
 			e.printStackTrace();
 		}
 		return bool;
+	}
+
+	/**
+	 *
+	 * @param outputStream
+	 * 			可以来自response，也可以来自文件
+	 * @param contents
+	 *			内容
+	 * @param barcodeFormat
+	 * 			BarcodeFormat对象
+	 * @param margin
+	 * 			图片格式，可选[png,jpg,bmp]
+	 * @param errorLevel
+	 *			纠错级别 一般为：ErrorCorrectionLevel.H
+	 * @param format
+	 * 			图片格式，可选[png,jpg,bmp]
+	 * @param width
+	 * 			宽
+	 * @param height
+	 * 			高
+	 * 	eg:
+	 * 		ZxingKit.encodeOutPutSteam(response.getOutputStream(), qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200);
+	 */
+	public static void encodeOutPutSteam(OutputStream outputStream, String contents, BarcodeFormat barcodeFormat, Integer margin, ErrorCorrectionLevel errorLevel, String format, int width, int height) {
+		Map<EncodeHintType, Object> hints = new HashMap();
+		hints.put(EncodeHintType.ERROR_CORRECTION, errorLevel);
+		hints.put(EncodeHintType.MARGIN, margin);
+		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+
+		try {
+			BitMatrix bitMatrix = (new MultiFormatWriter()).encode(contents, barcodeFormat, width, height, hints);
+			MatrixToImageWriter.writeToStream(bitMatrix, format, outputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			IOUtils.closeQuietly(outputStream);
+		}
+
 	}
 
 	/**

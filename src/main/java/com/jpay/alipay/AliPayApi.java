@@ -13,37 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.domain.AlipayCommerceCityfacilitatorStationQueryModel;
-import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherBatchqueryModel;
-import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherGenerateModel;
-import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherRefundModel;
-import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
-import com.alipay.api.domain.AlipayFundAuthOperationCancelModel;
-import com.alipay.api.domain.AlipayFundAuthOperationDetailQueryModel;
-import com.alipay.api.domain.AlipayFundAuthOrderFreezeModel;
-import com.alipay.api.domain.AlipayFundAuthOrderUnfreezeModel;
-import com.alipay.api.domain.AlipayFundAuthOrderVoucherCreateModel;
-import com.alipay.api.domain.AlipayFundCouponOperationQueryModel;
-import com.alipay.api.domain.AlipayFundCouponOrderAgreementPayModel;
-import com.alipay.api.domain.AlipayFundCouponOrderAppPayModel;
-import com.alipay.api.domain.AlipayFundCouponOrderDisburseModel;
-import com.alipay.api.domain.AlipayFundCouponOrderPagePayModel;
-import com.alipay.api.domain.AlipayFundCouponOrderRefundModel;
-import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
-import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
-import com.alipay.api.domain.AlipayOpenAuthTokenAppModel;
-import com.alipay.api.domain.AlipayOpenAuthTokenAppQueryModel;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.domain.AlipayTradeCancelModel;
-import com.alipay.api.domain.AlipayTradeCloseModel;
-import com.alipay.api.domain.AlipayTradeCreateModel;
-import com.alipay.api.domain.AlipayTradeFastpayRefundQueryModel;
-import com.alipay.api.domain.AlipayTradeOrderSettleModel;
-import com.alipay.api.domain.AlipayTradePayModel;
-import com.alipay.api.domain.AlipayTradePrecreateModel;
-import com.alipay.api.domain.AlipayTradeQueryModel;
-import com.alipay.api.domain.AlipayTradeRefundModel;
-import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.alipay.api.domain.*;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorStationQueryRequest;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherBatchqueryRequest;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherGenerateRequest;
@@ -566,7 +536,7 @@ public class AliPayApi {
 	 * @throws {AlipayApiException}
 	 * @throws IOException
 	 */
-	public static void tradePage(HttpServletResponse httpResponse, AlipayTradePayModel model, String notifyUrl, String returnUrl) throws AlipayApiException, IOException{
+	public static void tradePage(HttpServletResponse httpResponse, AlipayTradePagePayModel model, String notifyUrl, String returnUrl) throws AlipayApiException, IOException{
 		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);

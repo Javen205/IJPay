@@ -72,7 +72,6 @@ public class WxPayApiConfig implements Serializable {
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
-			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
 			if (StrKit.notBlank(getSubAppId())) {
 				map.put("sub_appid", subAppId);
@@ -83,7 +82,6 @@ public class WxPayApiConfig implements Serializable {
 		 * openId和sub_openid可以选传其中之一，如果选择传sub_openid,则必须传sub_appid
 		 */
 		if (getTradeType().equals(TradeType.JSAPI)) {
-			System.out.println("公众号支付...");
 			if (StrKit.notBlank(getSubAppId())) {
 				map.put("sub_appid", subAppId);
 				map.put("sub_openid", getSubOpenId());
@@ -110,7 +108,6 @@ public class WxPayApiConfig implements Serializable {
 		map.put("spbill_create_ip", getSpbillCreateIp());
 
 		map.put("trade_type", getTradeType().name());
-		map.put("out_trade_no", getOutTradeNo());
 
 		map.put("attach", getAttach());
 		if (getTradeType().equals(TradeType.MICROPAY)) {
@@ -133,7 +130,6 @@ public class WxPayApiConfig implements Serializable {
 	public Map<String, String> orderQueryBuild() {
 		Map<String, String> map = new HashMap<String, String>();
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
-			System.out.println("服务商上模式...");
 			map.put("sub_mch_id", getSubMchId());
 			map.put("sub_appid", getSubAppId());
 		}
