@@ -34,9 +34,10 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 **请参考Demo，目前IJPay Demo 提供两个版本 JFinal版本以及Spring Boot版本**
 
+Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
+
 GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
 
-Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
 
 **使用Demo之前请熟读以下文章**
 
