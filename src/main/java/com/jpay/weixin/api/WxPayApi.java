@@ -1,5 +1,6 @@
 package com.jpay.weixin.api;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class WxPayApi {
 	private static final String PAY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank";
 	// 查询企业付款
 	private static final String QUERY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/query_bank";
-	//获取RSA加密公钥
+	// 获取RSA加密公钥
 	private static final String GETPUBLICKEY_URL = "https://fraud.mch.weixin.qq.com/risk/getpublickey";
 	// 申请签约
 	private static final String ENTRUSTWEB_URL = "https://api.mch.weixin.qq.com/papay/entrustweb";
@@ -81,7 +82,7 @@ public class WxPayApi {
 	 * MWEB--WAP支付 MICROPAY--刷卡支付,刷卡支付有单独的支付接口，不调用统一下单接口
 	 */
 	public static enum TradeType {
-		JSAPI, NATIVE, APP, WAP, MICROPAY, MWEB ,PAP
+		JSAPI, NATIVE, APP, WAP, MICROPAY, MWEB, PAP
 	}
 
 	/**
@@ -164,6 +165,10 @@ public class WxPayApi {
 		return doPostSSL(REVERSE_URL, params, certPath, certPass);
 	}
 
+	public static String orderReverse(Map<String, String> params, InputStream certFile, String certPass) {
+		return doPostSSL(REVERSE_URL, params, certFile, certPass);
+	}
+
 	/**
 	 * 申请退款
 	 * 服务商模式接入文档:https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_4
@@ -183,6 +188,12 @@ public class WxPayApi {
 		if (isSandbox)
 			return doPostSSL(REFUND_SANDBOXNEW_URL, params, certPath, certPass);
 		return doPostSSL(REFUND_URL, params, certPath, certPass);
+	}
+
+	public static String orderRefund(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass) {
+		if (isSandbox)
+			return doPostSSL(REFUND_SANDBOXNEW_URL, params, certFile, certPass);
+		return doPostSSL(REFUND_URL, params, certFile, certPass);
 	}
 
 	/**
@@ -279,6 +290,7 @@ public class WxPayApi {
 
 	/**
 	 * 企业付款到零钱
+	 * 
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -291,8 +303,13 @@ public class WxPayApi {
 		return WxPayApi.doPostSSL(TRANSFERS_URL, params, certPath, certPassword);
 	}
 
+	public static String transfers(Map<String, String> params, InputStream certFile, String certPassword) {
+		return WxPayApi.doPostSSL(TRANSFERS_URL, params, certFile, certPassword);
+	}
+
 	/**
 	 * 查询企业付款到零钱
+	 * 
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -304,9 +321,14 @@ public class WxPayApi {
 	public static String getTransferInfo(Map<String, String> params, String certPath, String certPassword) {
 		return WxPayApi.doPostSSL(GETTRANSFERINFO_URL, params, certPath, certPassword);
 	}
-	
+
+	public static String getTransferInfo(Map<String, String> params, InputStream certFile, String certPassword) {
+		return WxPayApi.doPostSSL(GETTRANSFERINFO_URL, params, certFile, certPassword);
+	}
+
 	/**
 	 * 企业付款到银行
+	 * 
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -318,9 +340,14 @@ public class WxPayApi {
 	public static String payBank(Map<String, String> params, String certPath, String certPassword) {
 		return WxPayApi.doPostSSL(PAY_BANK_URL, params, certPath, certPassword);
 	}
-	
+
+	public static String payBank(Map<String, String> params, InputStream certFile, String certPassword) {
+		return WxPayApi.doPostSSL(PAY_BANK_URL, params, certFile, certPassword);
+	}
+
 	/**
 	 * 查询企业付款到银行
+	 * 
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -332,8 +359,14 @@ public class WxPayApi {
 	public static String queryBank(Map<String, String> params, String certPath, String certPassword) {
 		return WxPayApi.doPostSSL(QUERY_BANK_URL, params, certPath, certPassword);
 	}
+
+	public static String queryBank(Map<String, String> params, InputStream certFile, String certPassword) {
+		return WxPayApi.doPostSSL(QUERY_BANK_URL, params, certFile, certPassword);
+	}
+
 	/**
 	 * 获取RSA加密公钥
+	 * 
 	 * @param params
 	 *            请求参数
 	 * @param certPath
@@ -344,6 +377,10 @@ public class WxPayApi {
 	 */
 	public static String getPublicKey(Map<String, String> params, String certPath, String certPassword) {
 		return WxPayApi.doPostSSL(GETPUBLICKEY_URL, params, certPath, certPassword);
+	}
+
+	public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPassword) {
+		return WxPayApi.doPostSSL(GETPUBLICKEY_URL, params, certFile, certPassword);
 	}
 
 	/**
@@ -474,6 +511,10 @@ public class WxPayApi {
 
 	public static String doPostSSL(String url, Map<String, String> params, String certPath, String certPass) {
 		return HttpUtils.postSSL(url, PaymentKit.toXml(params), certPath, certPass);
+	}
+
+	public static String doPostSSL(String url, Map<String, String> params, InputStream certFile, String certPass) {
+		return HttpUtils.postSSL(url, PaymentKit.toXml(params), certFile, certPass);
 	}
 
 }

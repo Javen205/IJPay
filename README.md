@@ -15,10 +15,11 @@
 
 **微信群在线交流活动** [点击这里查看详情](https://github.com/Javen205/IJPay/wiki)
 
+Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
-Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
+
 
 
 - IJPay是[JPay](https://github.com/Javen205/JPay)后台接口SDK不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
@@ -34,9 +35,10 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 **请参考Demo，目前IJPay Demo 提供两个版本 JFinal版本以及Spring Boot版本**
 
+Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
+
 GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
 
-Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
 
 **使用Demo之前请熟读以下文章**
 
