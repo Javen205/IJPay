@@ -92,7 +92,7 @@ public class ZxingKit {
 	 * 		ZxingKit.encodeOutPutSteam(response.getOutputStream(), qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200);
 	 */
 	public static void encodeOutPutSteam(OutputStream outputStream, String contents, BarcodeFormat barcodeFormat, Integer margin, ErrorCorrectionLevel errorLevel, String format, int width, int height) {
-		Map<EncodeHintType, Object> hints = new HashMap();
+		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
 		hints.put(EncodeHintType.ERROR_CORRECTION, errorLevel);
 		hints.put(EncodeHintType.MARGIN, margin);
 		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
