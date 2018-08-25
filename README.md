@@ -28,8 +28,15 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 ### 接入文档
 
+**使用Demo之前请熟读以下文章**
+
+[配置应用环境](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-config.html)
+
+[IJPay 支付宝初始化](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-init.html)
+
 [GitBook 接入文档欢迎订阅，如有疑问请发issues](https://www.gitbook.com/book/javen205/ijpay/details)
 
+`GitBook`无法访问？[请戳这里](https://javen205.gitee.io/IJPay)
 
 ### 效果图
 
@@ -40,11 +47,6 @@ Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay
 GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
 
 
-**使用Demo之前请熟读以下文章**
-
-[配置应用环境](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-config.html)
-
-[IJPay 支付宝初始化](https://javen205.gitbooks.io/ijpay/content/alipay/alipay-init.html)
 
 ### 联系方式
 
