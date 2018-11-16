@@ -1,6 +1,10 @@
 package com.jpay.vo;
 
-public class AjaxResult {
+import java.io.Serializable;
+
+public class AjaxResult implements Serializable{
+
+	private static final long serialVersionUID = 6439646269084700779L;
 
 	private int code = 0;
 

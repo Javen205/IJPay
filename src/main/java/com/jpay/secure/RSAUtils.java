@@ -139,7 +139,7 @@ public class RSAUtils {
 	 * @throws Exception
 	 */
 	public static String encryptByPublicKey(String data,String publicKey,String fillMode) throws Exception {
-		byte[] dataByte = data.getBytes();
+		byte[] dataByte = data.getBytes("UTf-8");
 		byte[] keyBytes = base64.decode(publicKey);
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
