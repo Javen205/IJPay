@@ -1,0 +1,1 @@
+alert("IJPay 让支付触手可及 - By Javen");

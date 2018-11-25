@@ -1,0 +1,796 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>微信小程序支付 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="redpack.html" />
+    
+    
+    <link rel="prev" href="H5.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    项目导航
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../contact.html">
+            
+                <a href="../../contact.html">
+            
+                    
+                    联系方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../study.html">
+            
+                <a href="../../study.html">
+            
+                    
+                    学习资料
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../gitchat.html">
+            
+                <a href="../../gitchat.html">
+            
+                    
+                    GitChat交流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../blog/">
+            
+                <a href="../../blog/">
+            
+                    
+                    我的博客
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../../opensource/">
+            
+                <a href="../../opensource/">
+            
+                    
+                    开源项目
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../opensource/IJPay.html">
+            
+                <a href="../../opensource/IJPay.html">
+            
+                    
+                    What is a IJPay?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../../opensource/JPay.html">
+            
+                <a href="../../opensource/JPay.html">
+            
+                    
+                    Android支付SDK-JPay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../../opensource/weixin_guide.html">
+            
+                <a href="../../opensource/weixin_guide.html">
+            
+                    
+                    极速开发微信公众号
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    IJPay 文档
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../alipay/">
+            
+                <a href="../alipay/">
+            
+                    
+                    支付宝支付
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1.1" data-path="../alipay/alipay-config.html">
+            
+                <a href="../alipay/alipay-config.html">
+            
+                    
+                    配置应用环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.2" data-path="../alipay/alipay-init.html">
+            
+                <a href="../alipay/alipay-init.html">
+            
+                    
+                    IJPay 支付宝初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.3" data-path="../alipay/alipay-wap.html">
+            
+                <a href="../alipay/alipay-wap.html">
+            
+                    
+                    支付宝手机网站支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.4" data-path="../alipay/alipay-pc.html">
+            
+                <a href="../alipay/alipay-pc.html">
+            
+                    
+                    支付宝电脑网站支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.5" data-path="../alipay/alipay-offline.html">
+            
+                <a href="../alipay/alipay-offline.html">
+            
+                    
+                    当面付
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1.5.1" data-path="../alipay/alipay-offline/alipay-qrPay.html">
+            
+                <a href="../alipay/alipay-offline/alipay-qrPay.html">
+            
+                    
+                    支付宝扫码支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.5.2" data-path="../alipay/alipay-offline/alipay-barPay.html">
+            
+                <a href="../alipay/alipay-offline/alipay-barPay.html">
+            
+                    
+                    支付宝条码支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.5.3" data-path="../alipay/alipay-offline/alipay-wavePay.html">
+            
+                <a href="../alipay/alipay-offline/alipay-wavePay.html">
+            
+                    
+                    支付宝声波支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.6" data-path="../alipay/alipay-coupon.html">
+            
+                <a href="../alipay/alipay-coupon.html">
+            
+                    
+                    支付宝红包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.7" data-path="../alipay/alipay-transfer.html">
+            
+                <a href="../alipay/alipay-transfer.html">
+            
+                    
+                    支付宝提现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.8" data-path="../alipay/alipay-app.html">
+            
+                <a href="../alipay/alipay-app.html">
+            
+                    
+                    支付宝APP支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.9" data-path="../alipay/alipay-notify.html">
+            
+                <a href="../alipay/alipay-notify.html">
+            
+                    
+                    支付宝服务端异步通知
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.10" data-path="../alipay/alipay-api.html">
+            
+                <a href="../alipay/alipay-api.html">
+            
+                    
+                    支付宝API字典
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    微信支付
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.2.1" data-path="wxapi.html">
+            
+                <a href="wxapi.html">
+            
+                    
+                    微信公用API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.2" data-path="allapi.html">
+            
+                <a href="allapi.html">
+            
+                    
+                    微信支付API接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.3" data-path="micropay.html">
+            
+                <a href="micropay.html">
+            
+                    
+                    微信刷卡支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.4" data-path="wechatPay.html">
+            
+                <a href="wechatPay.html">
+            
+                    
+                    微信公众号支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.5" data-path="qrPay.html">
+            
+                <a href="qrPay.html">
+            
+                    
+                    微信扫码支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.6" data-path="appPay.html">
+            
+                <a href="appPay.html">
+            
+                    
+                    微信APP支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.7" data-path="H5.html">
+            
+                <a href="H5.html">
+            
+                    
+                    微信H5支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.2.8" data-path="wxapp.html">
+            
+                <a href="wxapp.html">
+            
+                    
+                    微信小程序支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.9" data-path="redpack.html">
+            
+                <a href="redpack.html">
+            
+                    
+                    微信现金红包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.10" data-path="transfers.html">
+            
+                <a href="transfers.html">
+            
+                    
+                    微信企业付款
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.11" data-path="refund.html">
+            
+                <a href="refund.html">
+            
+                    
+                    微信退款
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.12" data-path="wxpay-notify.html">
+            
+                <a href="wxpay-notify.html">
+            
+                    
+                    服务端异步通知
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >微信小程序支付</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="&#x6587;&#x6863;">&#x6587;&#x6863;</h3>
+<p><a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&amp;index=1" target="_blank">&#x5C0F;&#x7A0B;&#x5E8F;&#x652F;&#x4ED8;&#x5B98;&#x65B9;&#x6587;&#x6863;</a></p>
+<h3 id="&#x63A5;&#x5165;&#x6B65;&#x9AA4;">&#x63A5;&#x5165;&#x6B65;&#x9AA4;</h3>
+<ol>
+<li>&#x5C0F;&#x7A0B;&#x5E8F;&#x5185;&#x8C03;&#x7528;<a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_4&amp;index=3" target="_blank">&#x767B;&#x5F55;&#x63A5;&#x53E3;</a>&#xFF0C;&#x83B7;&#x53D6;&#x5230;&#x7528;&#x6237;&#x7684;openid </li>
+<li>&#x8C03;&#x7528;&#x652F;&#x4ED8;<a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&amp;index=1" target="_blank">&#x7EDF;&#x4E00;&#x4E0B;&#x5355;</a>&#x751F;&#x6210;&#x9884;&#x4ED8;&#x8BA2;&#x5355;(&#x53C2;&#x8003;<code>&#x516C;&#x7528;API</code>)</li>
+<li>&#x9884;&#x4ED8;&#x8BA2;&#x5355;<a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&amp;index=3" target="_blank">&#x4E8C;&#x6B21;&#x7B7E;&#x540D;</a>(&#x53C2;&#x8003;<code>&#x516C;&#x7528;API</code>)</li>
+<li>&#x5C0F;&#x7A0B;&#x5E8F;&#x8C03;&#x8D77;<a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&amp;index=5" target="_blank">&#x652F;&#x4ED8;API</a></li>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x5F02;&#x6B65;&#x901A;&#x77E5;&#x5904;&#x7406;(&#x53C2;&#x8003;<code>&#x670D;&#x52A1;&#x7AEF;&#x5F02;&#x6B65;&#x901A;&#x77E5;</code>)</li>
+</ol>
+<p><a href="https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_4&amp;index=3" target="_blank">&#x5B98;&#x65B9;&#x4E1A;&#x52A1;&#x6D41;&#x7A0B;&#x4ECB;&#x7ECD;</a></p>
+<h3 id="&#x4EE3;&#x7801;&#x793A;&#x4F8B;">&#x4EE3;&#x7801;&#x793A;&#x4F8B;</h3>
+<p><a href="https://gitee.com/javen205/IJPay-Demo" target="_blank">https://gitee.com/javen205/IJPay-Demo</a>
+<a href="https://github.com/javen205/IJPay-Demo" target="_blank">https://github.com/javen205/IJPay-Demo</a></p>
+<pre><code>
+    /**
+     * &#x5FAE;&#x4FE1;&#x5C0F;&#x7A0B;&#x5E8F;&#x652F;&#x4ED8;
+     */
+    public void aappPay(){
+
+        String ip = IpKit.getRealIp(getRequest());
+        if (StrKit.isBlank(ip)) {
+            ip = &quot;127.0.0.1&quot;;
+        }
+
+        Map&lt;String, String&gt; params = WxPayApiConfigKit.getWxPayApiConfig()
+                .setAttach(&quot;IJPay &#x6D4B;&#x8BD5;  -By Javen&quot;)
+                .setBody(&quot;IJPay &#x5C0F;&#x7A0B;&#x5E8F;&#x652F;&#x4ED8;&#x6D4B;&#x8BD5;  -By Javen&quot;)
+                .setSpbillCreateIp(ip)
+                .setTotalFee(&quot;100&quot;)
+                .setTradeType(WxPayApi.TradeType.JSAPI)
+                .setNotifyUrl(notify_url)
+                .setOutTradeNo(String.valueOf(System.currentTimeMillis()))
+                .build();
+
+        String xmlResult =  WxPayApi.pushOrder(false,params);
+
+log.info(xmlResult);
+        Map&lt;String, String&gt; result = PaymentKit.xmlToMap(xmlResult);
+
+        String return_code = result.get(&quot;return_code&quot;);
+        String return_msg = result.get(&quot;return_msg&quot;);
+        if (!PaymentKit.codeIsOK(return_code)) {
+            ajax.addError(return_msg);
+            renderJson(ajax);
+            return;
+        }
+        String result_code = result.get(&quot;result_code&quot;);
+        if (!PaymentKit.codeIsOK(result_code)) {
+            ajax.addError(return_msg);
+            renderJson(ajax);
+            return;
+        }
+        // &#x4EE5;&#x4E0B;&#x5B57;&#x6BB5;&#x5728;return_code &#x548C;result_code&#x90FD;&#x4E3A;SUCCESS&#x7684;&#x65F6;&#x5019;&#x6709;&#x8FD4;&#x56DE;
+        String prepay_id = result.get(&quot;prepay_id&quot;);
+        //&#x5C01;&#x88C5;&#x8C03;&#x8D77;&#x5FAE;&#x4FE1;&#x652F;&#x4ED8;&#x7684;&#x53C2;&#x6570;https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&amp;index=5
+        Map&lt;String, String&gt; packageParams = new HashMap&lt;String, String&gt;();
+        packageParams.put(&quot;appId&quot;, WxPayApiConfigKit.getWxPayApiConfig().getAppId());
+        packageParams.put(&quot;timeStamp&quot;, System.currentTimeMillis() / 1000 + &quot;&quot;);
+        packageParams.put(&quot;nonceStr&quot;, System.currentTimeMillis() + &quot;&quot;);
+        packageParams.put(&quot;package&quot;, &quot;prepay_id=&quot;+prepay_id);
+        packageParams.put(&quot;signType&quot;, &quot;MD5&quot;);
+        String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
+        packageParams.put(&quot;paySign&quot;, packageSign);
+
+        String jsonStr = JsonKit.toJson(packageParams);
+log.info(&quot;&#x6700;&#x65B0;&#x8FD4;&#x56DE;&#x5C0F;&#x7A0B;&#x5E8F;&#x652F;&#x4ED8;&#x7684;&#x53C2;&#x6570;:&quot;+jsonStr);
+        renderJson(jsonStr);
+    }
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="H5.html" class="navigation navigation-prev " aria-label="Previous page: 微信H5支付">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="redpack.html" class="navigation navigation-next " aria-label="Next page: 微信现金红包">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"微信小程序支付","level":"1.7.2.8","depth":3,"next":{"title":"微信现金红包","level":"1.7.2.9","depth":3,"path":"doc/ijpay/wxpay/redpack.md","ref":"doc/ijpay/wxpay/redpack.md","articles":[]},"previous":{"title":"微信H5支付","level":"1.7.2.7","depth":3,"path":"doc/ijpay/wxpay/H5.md","ref":"doc/ijpay/wxpay/H5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"doc/ijpay/wxpay/wxapp.md","mtime":"2018-09-07T06:36:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T06:37:49.719Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
