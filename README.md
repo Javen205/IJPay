@@ -18,7 +18,7 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
-APIDOC：[https://apidoc.gitee.com/javen205/IJPay)
+APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/javen205/IJPay)
 
 
 
