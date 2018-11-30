@@ -48,12 +48,21 @@ public class WxPayApiConfig implements Serializable {
 	private String contractId;
 
 	private PayModel payModel;
+	private String profitSharing;
+	private SignType signType;
 
 	/**
 	 * 分别对应商户模式、服务商模式
 	 */
 	public static enum PayModel {
 		BUSINESSMODEL, SERVICEMODE
+	}
+
+	/**
+	 * 签名类型
+	 */
+	public static enum SignType {
+		MD5, HMAC_SHA256
 	}
 
 	private WxPayApiConfig() {
@@ -110,6 +119,7 @@ public class WxPayApiConfig implements Serializable {
 		map.put("trade_type", getTradeType().name());
 
 		map.put("attach", getAttach());
+		map.put("profit_sharing", getProfitSharing());
 		if (getTradeType().equals(TradeType.MICROPAY)) {
 			map.put("auth_code", getAuthCode());
 			map.remove("trade_type");
@@ -460,6 +470,19 @@ public class WxPayApiConfig implements Serializable {
 		return this;
 	}
 
+	public SignType getSignType() {
+		if (signType == null)
+			signType = SignType.MD5;
+		return signType;
+	}
+
+	public WxPayApiConfig setSignType(SignType signType) {
+		if (signType == null)
+			signType = SignType.MD5;
+		this.signType = signType;
+		return this;
+	}
+
 	public String getAuthCode() {
 		if (StrKit.isBlank(authCode))
 			throw new IllegalArgumentException("authCode 未被赋值");
@@ -614,4 +637,12 @@ public class WxPayApiConfig implements Serializable {
 		return this;
 	}
 
+	public String getProfitSharing() {
+		return profitSharing;
+	}
+
+	public WxPayApiConfig setProfitSharing(String profitSharing) {
+		this.profitSharing = profitSharing;
+		return this;
+	}
 }

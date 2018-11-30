@@ -9,6 +9,7 @@ import java.util.TreeMap;
 
 import com.jpay.util.Charsets;
 import com.jpay.util.XmlHelper;
+import com.jpay.weixin.api.WxPayApiConfig.SignType;
 import com.jpay.weixin.api.WxPayApiConfigKit;
 
 /**
@@ -118,6 +119,19 @@ public class PaymentKit {
 		String stringA = packageSign(params, false);
 		String stringSignTemp = stringA + "&key=" + partnerKey;
 		return HashKit.md5(stringSignTemp).toUpperCase();
+	}
+	
+	public static String createSign(Map<String, String> params, String partnerKey,SignType signType) {
+		// 生成签名前先去除sign
+		params.remove("sign");
+		String stringA = packageSign(params, false);
+		String stringSignTemp = stringA + "&key=" + partnerKey;
+		if(signType == SignType.HMAC_SHA256){
+			return HashKit.sha256(stringSignTemp).toUpperCase();
+		}else {
+			return HashKit.md5(stringSignTemp).toUpperCase();
+		}
+		
 	}
 
 	/**
