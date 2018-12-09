@@ -9,15 +9,17 @@ import java.util.TreeMap;
 
 import com.jpay.util.Charsets;
 import com.jpay.util.XmlHelper;
+import com.jpay.weixin.api.WxPayApiConfig.SignType;
 import com.jpay.weixin.api.WxPayApiConfigKit;
 
 /**
  * 微信支付的统一下单工具类
  */
 public class PaymentKit {
-	
+
 	/**
 	 * 构建短链接参数
+	 * 
 	 * @param appid
 	 * @param sub_appid
 	 * @param mch_id
@@ -26,19 +28,18 @@ public class PaymentKit {
 	 * @param paternerKey
 	 * @return <Map<String, String>>
 	 */
-	public static Map<String, String> buildShortUrlParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id, String long_url, String paternerKey){
-		Map<String, String> params =  new HashMap<String, String>();
+	public static Map<String, String> buildShortUrlParasMap(String appid, String sub_appid, String mch_id,
+			String sub_mch_id, String long_url, String paternerKey) {
+		Map<String, String> params = new HashMap<String, String>();
 		params.put("appid", appid);
 		params.put("sub_appid", sub_appid);
 		params.put("mch_id", mch_id);
 		params.put("sub_mch_id", sub_mch_id);
 		params.put("long_url", long_url);
-		
+
 		return buildSignAfterParasMap(params, paternerKey);
-		
+
 	}
-	
-	
 
 	/**
 	 * 组装签名的字段
@@ -89,8 +90,10 @@ public class PaymentKit {
 	public static String urlEncode(String src) throws UnsupportedEncodingException {
 		return URLEncoder.encode(src, Charsets.UTF_8.name()).replace("+", "%20");
 	}
+
 	/**
 	 * 构建签名之后的参数
+	 * 
 	 * @param params
 	 * @param paternerKey
 	 * @return <Map<String, String>>
@@ -120,6 +123,19 @@ public class PaymentKit {
 		return HashKit.md5(stringSignTemp).toUpperCase();
 	}
 
+	public static String createSign(Map<String, String> params, String partnerKey, SignType signType) {
+		// 生成签名前先去除sign
+		params.remove("sign");
+		String stringA = packageSign(params, false);
+		String stringSignTemp = stringA + "&key=" + partnerKey;
+		if (signType == SignType.MD5) {
+			return HashKit.md5(stringSignTemp).toUpperCase();
+		} else {
+			return HashKit.sha256(stringSignTemp).toUpperCase();
+		}
+
+	}
+
 	/**
 	 * 支付异步通知时校验sign
 	 * 
@@ -134,8 +150,16 @@ public class PaymentKit {
 		String localSign = PaymentKit.createSign(params, paternerKey);
 		return sign.equals(localSign);
 	}
+
+	public static boolean verifyNotify(Map<String, String> params, String paternerKey, SignType signType) {
+		String sign = params.get("sign");
+		String localSign = PaymentKit.createSign(params, paternerKey, signType);
+		return sign.equals(localSign);
+	}
+
 	/**
 	 * 预付订单再次签名
+	 * 
 	 * @param prepay_id
 	 * @return <Map<String, String>>
 	 */
@@ -146,21 +170,21 @@ public class PaymentKit {
 		packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
 		packageParams.put("package", "prepay_id=" + prepay_id);
 		packageParams.put("signType", "MD5");
-		String packageSign = PaymentKit.createSign(packageParams, WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
+		String packageSign = PaymentKit.createSign(packageParams,
+				WxPayApiConfigKit.getWxPayApiConfig().getPaternerKey());
 		packageParams.put("paySign", packageSign);
 		return packageParams;
 	}
-	
-	
+
 	/**
 	 * 判断接口返回的code是否是SUCCESS
+	 * 
 	 * @param return_code
 	 * @return {boolean}
 	 */
 	public static boolean codeIsOK(String return_code) {
 		return StrKit.notBlank(return_code) && "SUCCESS".equals(return_code);
 	}
-	
 
 	/**
 	 * 微信下单map to xml
@@ -197,17 +221,19 @@ public class PaymentKit {
 		XmlHelper xmlHelper = XmlHelper.of(xmlStr);
 		return xmlHelper.toMap();
 	}
+
 	/**
 	 * 替换url中的参数
+	 * 
 	 * @param str
 	 * @param regex
 	 * @param args
 	 * @return {String}
 	 */
-	public static String replace(String str,String regex,String... args){
+	public static String replace(String str, String regex, String... args) {
 		int length = args.length;
 		for (int i = 0; i < length; i++) {
-			str=str.replaceFirst(regex, args[i]);
+			str = str.replaceFirst(regex, args[i]);
 		}
 		return str;
 	}
