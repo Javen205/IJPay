@@ -68,6 +68,12 @@ public class WxPayApi {
 	private static final String PROFITSHARINGREMOVERECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver";
 	// 完结分账
 	private static final String PROFITSHARINGFINISH_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish";
+	// 发放代金券
+	private static final String SEND_COUPON_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon";
+	// 查询代金券批次
+	private static final String QUERY_COUPON_STOCK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
+	// 查询代金券信息
+	private static final String QUERY_COUPONSINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo";
 
 	// 获取沙箱秘钥
 	private static final String GETSINGKEY = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
@@ -83,6 +89,7 @@ public class WxPayApi {
 	private static final String REFUNDQUERY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/refundquery";
 	// 下载对账单
 	private static final String DOWNLOADBILLY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
+	
 
 	private WxPayApi() {
 	}
@@ -581,6 +588,46 @@ public class WxPayApi {
 
 	public static String profitsharingfinish(Map<String, String> params, InputStream certFile, String certPassword) {
 		return doPostSSL(PROFITSHARINGFINISH_URL, params, certFile, certPassword);
+	}
+	
+	/**
+	 * 发放代金券
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String sendCoupon(Map<String, String> params, String certPath, String certPassword) {
+		return doPostSSL(SEND_COUPON_URL, params, certPath, certPassword);
+	}
+
+	public static String sendCoupon(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(SEND_COUPON_URL, params, certFile, certPassword);
+	}
+	
+	/**
+	 * 查询代金券批次
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String queryCouponStock(Map<String, String> params) {
+		return doPost(QUERY_COUPON_STOCK_URL, params);
+	}
+	/**
+	 * 查询代金券信息
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String queryCouponsInfo(Map<String, String> params) {
+		return doPost(QUERY_COUPONSINFO_URL, params);
 	}
 
 	public static String doGet(String url, Map<String, String> params) {

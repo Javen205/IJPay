@@ -50,6 +50,16 @@ public class WxPayApiConfig implements Serializable {
 	private PayModel payModel;
 	private String profitSharing;
 	private SignType signType;
+	private String deviceInfo;
+	private String detail;
+	private String feeType;
+	private String timeStart;
+	private String timeExpire;
+	private String goodsTag;
+	private String limitPay;
+	private String receipt;
+	
+	
 
 	/**
 	 * 分别对应商户模式、服务商模式
@@ -119,6 +129,14 @@ public class WxPayApiConfig implements Serializable {
 		map.put("trade_type", getTradeType().name());
 
 		map.put("attach", getAttach());
+		map.put("device_info", getDeviceInfo());
+		map.put("detail", getDetail());
+		map.put("fee_type", getFeeType());
+		map.put("time_start", getTimeStart());
+		map.put("time_expire", getTimeExpire());
+		map.put("goods_tag", getGoodsTag());
+		map.put("limit_pay", getLimitPay());
+		map.put("receipt", getReceipt());
 		map.put("profit_sharing", getProfitSharing());
 		if (getTradeType().equals(TradeType.MICROPAY)) {
 			map.put("auth_code", getAuthCode());
@@ -645,4 +663,77 @@ public class WxPayApiConfig implements Serializable {
 		this.profitSharing = profitSharing;
 		return this;
 	}
+
+	public String getDeviceInfo() {
+		return deviceInfo;
+	}
+
+	public WxPayApiConfig setDeviceInfo(String deviceInfo) {
+		this.deviceInfo = deviceInfo;
+		return this;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public WxPayApiConfig setDetail(String detail) {
+		this.detail = detail;
+		return this;
+	}
+
+	public String getFeeType() {
+		return feeType;
+	}
+
+	public WxPayApiConfig setFeeType(String feeType) {
+		this.feeType = feeType;
+		return this;
+	}
+
+	public String getTimeStart() {
+		return timeStart;
+	}
+
+	public WxPayApiConfig setTimeStart(String timeStart) {
+		this.timeStart = timeStart;
+		return this;
+	}
+
+	public String getTimeExpire() {
+		return timeExpire;
+	}
+
+	public WxPayApiConfig setTimeExpire(String timeExpire) {
+		this.timeExpire = timeExpire;
+		return this;
+	}
+
+	public String getGoodsTag() {
+		return goodsTag;
+	}
+
+	public WxPayApiConfig setGoodsTag(String goodsTag) {
+		this.goodsTag = goodsTag;
+		return this;
+	}
+
+	public String getLimitPay() {
+		return limitPay;
+	}
+
+	public WxPayApiConfig setLimitPay(String limitPay) {
+		this.limitPay = limitPay;
+		return this;
+	}
+
+	public String getReceipt() {
+		return receipt;
+	}
+
+	public WxPayApiConfig setReceipt(String receipt) {
+		this.receipt = receipt;
+		return this;
+	}
+	
 }
