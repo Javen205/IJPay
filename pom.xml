@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>1.1.9</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
@@ -63,11 +63,11 @@
 			<version>3.2.1</version>
 		</dependency>
 		<!-- 开源多维码生成工具 -->
-		<!-- 支付宝必须 -->
+		<!-- 支付宝必须-->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.6</version>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.54</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -75,12 +75,11 @@
 			<version>1.2</version>
 		</dependency>
         <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>3.0.52.ALL</version>
-        </dependency>
-		
-		<!-- 支付宝必须 -->
+		    <groupId>com.alipay.sdk</groupId>
+		    <artifactId>alipay-sdk-java</artifactId>
+		    <version>3.4.49.ALL</version>
+		</dependency>
+		<!-- 支付宝必须-->
 		<!-- 银联必须 -->
 		<dependency>
 			<groupId>com.unionpay</groupId>
@@ -123,16 +122,17 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>3.9.1</version>
-			<scope>provided</scope>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>3.12.0</version>
+		    <scope>provided</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>com.squareup.okio</groupId>
-			<artifactId>okio</artifactId>
-			<version>1.11.0</version>
-			<scope>provided</scope>
+		    <groupId>com.squareup.okio</groupId>
+		    <artifactId>okio</artifactId>
+		    <version>2.1.0</version>
+		    <scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
