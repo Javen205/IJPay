@@ -133,7 +133,18 @@ public class PaymentKit {
 		} else {
 			return HashKit.sha256(stringSignTemp).toUpperCase();
 		}
+	}
 
+	/**
+	 * 解密退款结果通知中的req_info
+	 * 
+	 * @param reqInfo
+	 * @param paternerKey
+	 * @return {String}
+	 * @throws Exception
+	 */
+	public static String decryptRefundData(String reqInfo, String paternerKey) throws Exception {
+		return AesKit.decryptData(reqInfo, paternerKey);
 	}
 
 	/**

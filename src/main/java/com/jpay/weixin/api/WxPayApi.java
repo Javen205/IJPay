@@ -74,6 +74,8 @@ public class WxPayApi {
 	private static final String QUERY_COUPON_STOCK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
 	// 查询代金券信息
 	private static final String QUERY_COUPONSINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo";
+	// 拉取订单评价数据
+	private static final String BATCH_QUERY_COMMENT_URL = "https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment";
 
 	// 获取沙箱秘钥
 	private static final String GETSINGKEY = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
@@ -628,6 +630,25 @@ public class WxPayApi {
 	 */
 	public static String queryCouponsInfo(Map<String, String> params) {
 		return doPost(QUERY_COUPONSINFO_URL, params);
+	}
+	
+	/**
+	 * 拉取订单评价数据
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String batchquerycomment(Map<String, String> params, String certPath, String certPassword) {
+		return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certPath, certPassword);
+	}
+
+	public static String batchquerycomment(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certFile, certPassword);
 	}
 
 	public static String doGet(String url, Map<String, String> params) {
