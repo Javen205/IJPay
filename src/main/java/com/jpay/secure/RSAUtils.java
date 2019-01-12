@@ -1,6 +1,5 @@
 package com.jpay.secure;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +25,7 @@ import java.util.Properties;
 import javax.crypto.Cipher;
 
 import org.apache.commons.codec.binary.Base64;
+
 /**
  * @author Javen
  */
@@ -39,7 +39,7 @@ public class RSAUtils {
 
 	/** 加密算法RSA */
 	private static final String KEY_ALGORITHM = "RSA";
-	
+
 	final static Base64 base64 = new Base64();
 
 	/**
@@ -48,7 +48,7 @@ public class RSAUtils {
 	 * @throws Exception
 	 * 
 	 */
-	public static Map<String, String>  getKeys() throws Exception {
+	public static Map<String, String> getKeys() throws Exception {
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
 		keyPairGen.initialize(1024);
 		KeyPair keyPair = keyPairGen.generateKeyPair();
@@ -61,7 +61,7 @@ public class RSAUtils {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("publicKey", publicKeyStr);
 		map.put("privateKey", privateKeyStr);
-		
+
 		System.out.println("公钥\r\n" + publicKeyStr);
 		System.out.println("私钥\r\n" + privateKeyStr);
 		return map;
@@ -117,28 +117,31 @@ public class RSAUtils {
 
 	/**
 	 * 公钥加密
+	 * 
 	 * @param data
 	 * @param publicKey
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptByPublicKey(String data,String publicKey) throws Exception {
+	public static String encryptByPublicKey(String data, String publicKey) throws Exception {
 		return encryptByPublicKey(data, publicKey, "RSA/ECB/PKCS1Padding");
 	}
-	
-	public static String encryptByPublicKeyByWx(String data,String publicKey) throws Exception {
+
+	public static String encryptByPublicKeyByWx(String data, String publicKey) throws Exception {
 		return encryptByPublicKey(data, publicKey, "RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING");
 	}
-	
+
 	/**
 	 * 公钥加密
+	 * 
 	 * @param data
 	 * @param publicKey
-	 * @param fillMode 填充模式
+	 * @param fillMode
+	 *            填充模式
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptByPublicKey(String data,String publicKey,String fillMode) throws Exception {
+	public static String encryptByPublicKey(String data, String publicKey, String fillMode) throws Exception {
 		byte[] dataByte = data.getBytes("UTf-8");
 		byte[] keyBytes = base64.decode(publicKey);
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
@@ -170,28 +173,69 @@ public class RSAUtils {
 	}
 
 	/**
-	 * 私钥解密
+	 * 私钥签名
+	 * 
 	 * @param data
 	 * @param privateKey
 	 * @return
 	 * @throws Exception
 	 */
-	public static String decryptByPrivateKey(String data,String privateKey) throws Exception {
-		return decryptByPrivateKey(data, privateKey, "RSA/ECB/PKCS1Padding");
+	public static String encryptByPrivateKey(String data, String privateKey) throws Exception {
+		PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(base64.decode(privateKey));
+		KeyFactory keyf = KeyFactory.getInstance("RSA");
+		PrivateKey priKey = keyf.generatePrivate(priPKCS8);
+		java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
+
+		signature.initSign(priKey);
+		signature.update(data.getBytes("UTf-8"));
+		byte[] signed = signature.sign();
+		return base64.encodeToString(signed);
 	}
-	public static String decryptByPrivateKeyByWx(String data,String privateKey) throws Exception {
-		return decryptByPrivateKey(data, privateKey, "RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING");
+	/**
+	 * 公钥验证签名
+	 * @param data
+	 * @param sign
+	 * @param publicKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean checkByPublicKey(String data, String sign, String publicKey) throws Exception {
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		byte[] encodedKey = base64.decode(publicKey);
+		PublicKey pubKey = keyFactory.generatePublic(new X509EncodedKeySpec(encodedKey));
+		java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
+		signature.initVerify(pubKey);
+		signature.update(data.getBytes("utf-8"));
+		return signature.verify(base64.decode(sign.getBytes("UTf-8")));
 	}
-	
+
 	/**
 	 * 私钥解密
+	 * 
 	 * @param data
 	 * @param privateKey
-	 * @param fillMode 填充模式
 	 * @return
 	 * @throws Exception
 	 */
-	public static String decryptByPrivateKey(String data,String privateKey,String fillMode) throws Exception {
+	public static String decryptByPrivateKey(String data, String privateKey) throws Exception {
+		return decryptByPrivateKey(data, privateKey, "RSA/ECB/PKCS1Padding");
+	}
+
+	public static String decryptByPrivateKeyByWx(String data, String privateKey) throws Exception {
+		return decryptByPrivateKey(data, privateKey, "RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING");
+	}
+
+	/**
+	 * 私钥解密
+	 * 
+	 * @param data
+	 * @param privateKey
+	 * @param fillMode
+	 *            填充模式
+	 * @return
+	 * @throws Exception
+	 */
+	public static String decryptByPrivateKey(String data, String privateKey, String fillMode) throws Exception {
 		byte[] encryptedData = base64.decode(data);
 		byte[] keyBytes = base64.decode(privateKey);
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -209,11 +253,9 @@ public class RSAUtils {
 		// 对数据分段解密
 		while (inputLen - offSet > 0) {
 			if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
-				cache = cipher
-						.doFinal(encryptedData, offSet, MAX_DECRYPT_BLOCK);
+				cache = cipher.doFinal(encryptedData, offSet, MAX_DECRYPT_BLOCK);
 			} else {
-				cache = cipher
-						.doFinal(encryptedData, offSet, inputLen - offSet);
+				cache = cipher.doFinal(encryptedData, offSet, inputLen - offSet);
 			}
 			out.write(cache, 0, cache.length);
 			i++;
@@ -226,6 +268,7 @@ public class RSAUtils {
 
 	/**
 	 * 获取模数和密钥
+	 * 
 	 * @return
 	 */
 	public static Map<String, String> getModulusAndKeys() {
@@ -233,8 +276,7 @@ public class RSAUtils {
 		Map<String, String> map = new HashMap<String, String>();
 
 		try {
-			InputStream in = RSAUtils.class
-					.getResourceAsStream("/rsa.properties");
+			InputStream in = RSAUtils.class.getResourceAsStream("/rsa.properties");
 			Properties prop = new Properties();
 			prop.load(in);
 
@@ -251,12 +293,12 @@ public class RSAUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return map;
 	}
 
 	/**
 	 * 从字符串中加载公钥
+	 * 
 	 * @param publicKeyStr
 	 *            公钥数据字符串
 	 * @throws Exception
@@ -280,12 +322,12 @@ public class RSAUtils {
 	/**
 	 * 从字符串中加载私钥<br>
 	 * 加载时使用的是PKCS8EncodedKeySpec（PKCS#8编码的Key指令）。
+	 * 
 	 * @param privateKeyStr
 	 * @return
 	 * @throws Exception
 	 */
-	public static PrivateKey loadPrivateKey(String privateKeyStr)
-			throws Exception {
+	public static PrivateKey loadPrivateKey(String privateKeyStr) throws Exception {
 		try {
 			byte[] buffer = base64.decode(privateKeyStr);
 			// X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
@@ -301,8 +343,7 @@ public class RSAUtils {
 		}
 	}
 
-	public static String getPrivateKeyStr(PrivateKey privateKey)
-			throws Exception {
+	public static String getPrivateKeyStr(PrivateKey privateKey) throws Exception {
 		return new String(base64.encode(privateKey.getEncoded()));
 	}
 
@@ -317,16 +358,20 @@ public class RSAUtils {
 		String content = "我是Javen,I am Javen";
 		String encrypt = encryptByPublicKey(content, publicKey);
 		String decrypt = decryptByPrivateKey(encrypt, privateKey);
-		System.out.println("加密之后："+encrypt);
-		System.out.println("解密之后："+decrypt);
-		
+		System.out.println("加密之后：" + encrypt);
+		System.out.println("解密之后：" + decrypt);
+
 		System.out.println("======华丽的分割线=========");
-		
+
 		content = "我是Javen,I am Javen";
 		encrypt = encryptByPublicKeyByWx(content, publicKey);
 		decrypt = decryptByPrivateKeyByWx(encrypt, privateKey);
-		System.out.println("加密之后："+encrypt);
-		System.out.println("解密之后："+decrypt);
+		System.out.println("加密之后：" + encrypt);
+		System.out.println("解密之后：" + decrypt);
 		
+		//OPPO
+		String sign  = encryptByPrivateKey(content, privateKey);
+		System.out.println("加密之后：" + sign);
+		System.out.println(checkByPublicKey(content, sign, publicKey));
 	}
 }
