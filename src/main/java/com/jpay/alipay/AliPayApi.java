@@ -770,5 +770,19 @@ public class AliPayApi {
 		}
 		return params;
 	}
+	/**
+	 * 生活缴费	查询账单
+	 * @param orderType				支付宝订单类型
+	 * @param merchantOrderNo		业务流水号
+	 * @return
+	 * @throws AlipayApiException
+	 */
+	public static AlipayEbppBillGetResponse ebppBillGet(String orderType,String merchantOrderNo) throws AlipayApiException{
+		AlipayEbppBillGetRequest request = new AlipayEbppBillGetRequest();
+		request.setOrderType(orderType);
+		request.setMerchantOrderNo(merchantOrderNo);
+		return AliPayApiConfigKit.getAliPayApiConfig().getAlipayClient().execute(request);
+		
+	}
 
 }
