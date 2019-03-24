@@ -2,9 +2,15 @@ package com.jpay.ext.kit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import java.util.TreeMap;
 
 import com.jpay.util.Charsets;
@@ -123,7 +129,7 @@ public class PaymentKit {
 		return HashKit.md5(stringSignTemp).toUpperCase();
 	}
 
-	public static String createSign(Map<String, String> params, String partnerKey, SignType signType) {
+	public static String createSign(Map<String, String> params, String partnerKey, SignType signType) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException {
 		// 生成签名前先去除sign
 		params.remove("sign");
 		String stringA = packageSign(params, false);
@@ -131,9 +137,20 @@ public class PaymentKit {
 		if (signType == SignType.MD5) {
 			return HashKit.md5(stringSignTemp).toUpperCase();
 		} else {
-			return HashKit.sha256(stringSignTemp).toUpperCase();
+			return hmacSHA256(stringSignTemp,partnerKey).toUpperCase();
 		}
+	}
 
+	/**
+	 * 解密退款结果通知中的req_info
+	 * 
+	 * @param reqInfo
+	 * @param paternerKey
+	 * @return {String}
+	 * @throws Exception
+	 */
+	public static String decryptRefundData(String reqInfo, String paternerKey) throws Exception {
+		return AesKit.decryptData(reqInfo, paternerKey);
 	}
 
 	/**
@@ -151,7 +168,7 @@ public class PaymentKit {
 		return sign.equals(localSign);
 	}
 
-	public static boolean verifyNotify(Map<String, String> params, String paternerKey, SignType signType) {
+	public static boolean verifyNotify(Map<String, String> params, String paternerKey, SignType signType) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException {
 		String sign = params.get("sign");
 		String localSign = PaymentKit.createSign(params, paternerKey, signType);
 		return sign.equals(localSign);
@@ -236,6 +253,35 @@ public class PaymentKit {
 			str = str.replaceFirst(regex, args[i]);
 		}
 		return str;
+	}
+	
+	/**
+	 * 将加密后的字节数组转换成字符串
+	 */
+	public static String byteArrayToHexString(byte[] b) {
+		StringBuilder hs = new StringBuilder();
+		String stmp;
+		for (int n = 0; b != null && n < b.length; n++) {
+			stmp = Integer.toHexString(b[n] & 0XFF);
+			if (stmp.length() == 1)
+				hs.append('0');
+			hs.append(stmp);
+		}
+		return hs.toString().toLowerCase();
+	}
+
+	/**
+	 * HmacSHA256 签名
+	 * @param stringSignTemp
+	 * @param partnerKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static String hmacSHA256(String stringSignTemp, String partnerKey)  throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+		Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+		SecretKeySpec secret_key = new SecretKeySpec(partnerKey.getBytes(), "HmacSHA256");
+		sha256_HMAC.init(secret_key);
+		return byteArrayToHexString(sha256_HMAC.doFinal(stringSignTemp.getBytes("utf-8")));
 	}
 
 }

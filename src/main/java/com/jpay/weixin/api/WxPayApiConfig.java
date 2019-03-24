@@ -58,8 +58,10 @@ public class WxPayApiConfig implements Serializable {
 	private String goodsTag;
 	private String limitPay;
 	private String receipt;
-	
-	
+	private String beginTime;
+	private String endTime;
+	private int offset;
+	private int limit;
 
 	/**
 	 * 分别对应商户模式、服务商模式
@@ -82,12 +84,7 @@ public class WxPayApiConfig implements Serializable {
 		return new WxPayApiConfig();
 	}
 
-	/**
-	 * 构建请求参数
-	 * 
-	 * @return Map<String, String>
-	 */
-	public Map<String, String> build() {
+	public Map<String, String> createMap() {
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (getPayModel().equals(PayModel.SERVICEMODE)) {
@@ -144,9 +141,34 @@ public class WxPayApiConfig implements Serializable {
 		} else {
 			map.put("notify_url", getNotifyUrl());
 		}
+		return map;
+	}
 
+	/**
+	 * 构建请求参数
+	 * 
+	 * @return Map<String, String>
+	 */
+	public Map<String, String> build() {
+		Map<String, String> map = createMap();
 		map.put("sign", PaymentKit.createSign(map, getPaternerKey()));
-
+		return map;
+	}
+	/**
+	 * 构建请求参数
+	 * 
+	 * @param signType
+	 * @return Map<String, String>
+	 * @throws Exception 
+	 */
+	public Map<String, String> build(SignType signType) throws Exception {
+		Map<String, String> map = createMap();
+		if(SignType.MD5 == signType) {
+			map.put("sign_type", "MD5");
+		}else {
+			map.put("sign_type", "HMAC-SHA256");
+		}
+		map.put("sign", PaymentKit.createSign(map, getPaternerKey(), signType));
 		return map;
 	}
 
@@ -735,5 +757,40 @@ public class WxPayApiConfig implements Serializable {
 		this.receipt = receipt;
 		return this;
 	}
-	
+
+	public String getBeginTime() {
+		return beginTime;
+	}
+
+	public WxPayApiConfig setBeginTime(String beginTime) {
+		this.beginTime = beginTime;
+		return this;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public WxPayApiConfig setEndTime(String endTime) {
+		this.endTime = endTime;
+		return this;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public WxPayApiConfig setOffset(int offset) {
+		this.offset = offset;
+		return this;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public WxPayApiConfig setLimit(int limit) {
+		this.limit = limit;
+		return this;
+	}
 }

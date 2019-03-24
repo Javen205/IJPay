@@ -5,9 +5,9 @@ import java.io.Serializable;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.jpay.ext.kit.StrKit;
+
 /**
- * @author Javen
- * 2017年5月20日
+ * @author Javen 2017年5月20日
  */
 public class AliPayApiConfig implements Serializable {
 	private static final long serialVersionUID = -4736760736935998953L;
@@ -20,16 +20,17 @@ public class AliPayApiConfig implements Serializable {
 	private String signType;
 	private String format;
 	private AlipayClient alipayClient;
-	
+
 	private AliPayApiConfig() {
 	}
 
 	public static AliPayApiConfig New() {
 		return new AliPayApiConfig();
 	}
-	
-	public AliPayApiConfig build(){
-		this.alipayClient = new DefaultAlipayClient(getServiceUrl(), getAppId(), getPrivateKey(), getFormat(), getCharset(), getAlipayPublicKey(),getSignType());
+
+	public AliPayApiConfig build() {
+		this.alipayClient = new DefaultAlipayClient(getServiceUrl(), getAppId(), getPrivateKey(), getFormat(),
+				getCharset(), getAlipayPublicKey(), getSignType());
 		return this;
 	}
 
@@ -38,6 +39,7 @@ public class AliPayApiConfig implements Serializable {
 			throw new IllegalStateException("privateKey 未被赋值");
 		return privateKey;
 	}
+
 	public AliPayApiConfig setPrivateKey(String privateKey) {
 		if (StrKit.isBlank(privateKey))
 			throw new IllegalArgumentException("privateKey 值不能为 null");
@@ -50,6 +52,7 @@ public class AliPayApiConfig implements Serializable {
 			throw new IllegalStateException("alipayPublicKey 未被赋值");
 		return alipayPublicKey;
 	}
+
 	public AliPayApiConfig setAlipayPublicKey(String alipayPublicKey) {
 		if (StrKit.isBlank(alipayPublicKey))
 			throw new IllegalArgumentException("alipayPublicKey 值不能为 null");
@@ -62,6 +65,7 @@ public class AliPayApiConfig implements Serializable {
 			throw new IllegalStateException("appId 未被赋值");
 		return appId;
 	}
+
 	public AliPayApiConfig setAppId(String appId) {
 		if (StrKit.isBlank(appId))
 			throw new IllegalArgumentException("appId 值不能为 null");
@@ -74,7 +78,6 @@ public class AliPayApiConfig implements Serializable {
 			throw new IllegalStateException("serviceUrl 未被赋值");
 		return serviceUrl;
 	}
-	
 
 	public AliPayApiConfig setServiceUrl(String serviceUrl) {
 		if (StrKit.isBlank(serviceUrl))

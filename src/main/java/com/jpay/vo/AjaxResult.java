@@ -60,6 +60,7 @@ public class AjaxResult implements Serializable{
 	 */
 	public AjaxResult success(Object data) {
 		this.data = data;
+		this.code = 0;
 		return this;
 	}
 

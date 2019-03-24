@@ -74,6 +74,22 @@ public class WxPayApi {
 	private static final String QUERY_COUPON_STOCK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
 	// 查询代金券信息
 	private static final String QUERY_COUPONSINFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo";
+	// 拉取订单评价数据
+	private static final String BATCH_QUERY_COMMENT_URL = "https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment";
+	// 支付押金（人脸支付）
+	private static final String DEPOSIT_FACEPAY_URL = "https://api.mch.weixin.qq.com/deposit/facepay";
+	// 支付押金（付款码支付）
+	private static final String DEPOSIT_MICROPAY_URL = "https://api.mch.weixin.qq.com/deposit/micropay";
+	// 查询订单
+	private static final String DEPOSIT_ORDERQUERY_URL = "https://api.mch.weixin.qq.com/deposit/orderquery";
+	// 撤销订单
+	private static final String DEPOSIT_REVERSE_URL = "https://api.mch.weixin.qq.com/deposit/reverse";
+	// 消费押金
+	private static final String DEPOSIT_CONSUME_URL = "https://api.mch.weixin.qq.com/deposit/consume";
+	// 申请退款（押金）
+	private static final String DEPOSIT_REFUND_URL = "https://api.mch.weixin.qq.com/deposit/refund";
+	// 查询退款（押金）
+	private static final String DEPOSIT_REFUNDQUERY_URL = "https://api.mch.weixin.qq.com/deposit/refundquery";
 
 	// 获取沙箱秘钥
 	private static final String GETSINGKEY = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
@@ -89,7 +105,6 @@ public class WxPayApi {
 	private static final String REFUNDQUERY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/refundquery";
 	// 下载对账单
 	private static final String DOWNLOADBILLY_SANDBOXNEW_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
-	
 
 	private WxPayApi() {
 	}
@@ -589,7 +604,7 @@ public class WxPayApi {
 	public static String profitsharingfinish(Map<String, String> params, InputStream certFile, String certPassword) {
 		return doPostSSL(PROFITSHARINGFINISH_URL, params, certFile, certPassword);
 	}
-	
+
 	/**
 	 * 发放代金券
 	 * 
@@ -608,7 +623,7 @@ public class WxPayApi {
 	public static String sendCoupon(Map<String, String> params, InputStream certFile, String certPassword) {
 		return doPostSSL(SEND_COUPON_URL, params, certFile, certPassword);
 	}
-	
+
 	/**
 	 * 查询代金券批次
 	 * 
@@ -619,6 +634,7 @@ public class WxPayApi {
 	public static String queryCouponStock(Map<String, String> params) {
 		return doPost(QUERY_COUPON_STOCK_URL, params);
 	}
+
 	/**
 	 * 查询代金券信息
 	 * 
@@ -628,6 +644,114 @@ public class WxPayApi {
 	 */
 	public static String queryCouponsInfo(Map<String, String> params) {
 		return doPost(QUERY_COUPONSINFO_URL, params);
+	}
+
+	/**
+	 * 拉取订单评价数据
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String batchquerycomment(Map<String, String> params, String certPath, String certPassword) {
+		return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certPath, certPassword);
+	}
+
+	public static String batchquerycomment(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certFile, certPassword);
+	}
+
+	/**
+	 * 支付押金（人脸支付）
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String depositFacepay(Map<String, String> params) {
+		return doPost(DEPOSIT_FACEPAY_URL, params);
+	}
+
+	/**
+	 * 支付押金（付款码支付）
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String depositMicropay(Map<String, String> params) {
+		return doPost(DEPOSIT_MICROPAY_URL, params);
+	}
+
+	/**
+	 * 查询订单
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String depositOrderQuery(Map<String, String> params) {
+		return doPost(DEPOSIT_ORDERQUERY_URL, params);
+	}
+
+	/**
+	 * 撤销订单
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String depositReverse(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(DEPOSIT_REVERSE_URL, params, certFile, certPassword);
+	}
+
+	/**
+	 * 消费押金
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String depositConsume(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(DEPOSIT_CONSUME_URL, params, certFile, certPassword);
+	}
+
+	/**
+	 * 申请退款（押金）
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @param certPath
+	 *            证书文件目录
+	 * @param certPass
+	 *            证书密码
+	 * @return {String}
+	 */
+	public static String depositRefund(Map<String, String> params, InputStream certFile, String certPassword) {
+		return doPostSSL(DEPOSIT_REFUND_URL, params, certFile, certPassword);
+	}
+
+	/**
+	 * 查询退款（押金）
+	 * 
+	 * @param params
+	 *            请求参数
+	 * @return {String}
+	 */
+	public static String depositRefundQuery(Map<String, String> params) {
+		return doPost(DEPOSIT_REFUNDQUERY_URL, params);
 	}
 
 	public static String doGet(String url, Map<String, String> params) {
