@@ -65,6 +65,13 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 
 最后如果该库对你有帮助不妨右上角点点Star或者任意打赏支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
 
+## 开源推荐
+
+- `TNW` 极速开发微信公众号：https://gitee.com/javen205/TNW
+- SpringBoot 微服务高效开发 `mica` 工具集：https://gitee.com/596392912/mica
+- `Avue` 一款基于 vue 可配置化的神奇框架：https://gitee.com/smallweigit/avue
+- `pig` 宇宙最强微服务（架构师必备）：https://gitee.com/log4j/pig
+- `SpringBlade` 完整的线上解决方案（企业开发必备）：https://gitee.com/smallc/SpringBlade
 
 ### 鸣谢
 
