@@ -62,6 +62,20 @@ public class WxPayApiConfig implements Serializable {
 	private String endTime;
 	private int offset;
 	private int limit;
+	
+	private String deposit;
+	private String faceCode;
+	private String consumeFee;
+	private String refundFee;
+	private String refundFeeType;
+	private String refundDesc;
+	private String refundAccount;
+	private String outRefundNo;
+	private String refundId;
+	private String id;
+	private String name;
+	private String areaCode;
+	private String address;
 
 	/**
 	 * 分别对应商户模式、服务商模式
@@ -137,10 +151,22 @@ public class WxPayApiConfig implements Serializable {
 		map.put("profit_sharing", getProfitSharing());
 		if (getTradeType().equals(TradeType.MICROPAY)) {
 			map.put("auth_code", getAuthCode());
-			map.remove("trade_type");
 		} else {
 			map.put("notify_url", getNotifyUrl());
 		}
+		map.put("deposit", getDeposit());
+		map.put("consume_fee",getConsumeFee());
+		map.put("id", getId());
+		map.put("name", getName());
+		map.put("area_code", getAreaCode());
+		map.put("address", getAddress());
+		map.put("refund_fee", getRefundFee());
+		map.put("refund_fee_type", getRefundFeeType());
+		map.put("refund_desc", getAddress());
+		map.put("refund_account", getRefundAccount());
+		map.put("out_refund_no", getOutRefundNo());
+		map.put("refund_id", getRefundId());
+		map.put("face_code", getFaceCode());
 		return map;
 	}
 
@@ -793,4 +819,122 @@ public class WxPayApiConfig implements Serializable {
 		this.limit = limit;
 		return this;
 	}
+
+	public String getDeposit() {
+		return deposit;
+	}
+
+	public WxPayApiConfig setDeposit(String deposit) {
+		this.deposit = deposit;
+		return this;
+	}
+
+	public String getFaceCode() {
+		return faceCode;
+	}
+
+	public WxPayApiConfig setFaceCode(String faceCode) {
+		this.faceCode = faceCode;
+		return this;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public WxPayApiConfig setId(String id) {
+		this.id = id;
+		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public WxPayApiConfig setName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public WxPayApiConfig setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+		return this;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public WxPayApiConfig setAddress(String address) {
+		this.address = address;
+		return this;
+	}
+
+	public String getConsumeFee() {
+		return consumeFee;
+	}
+
+	public WxPayApiConfig setConsumeFee(String consumeFee) {
+		this.consumeFee = consumeFee;
+		return this;
+	}
+
+	public String getRefundFee() {
+		return refundFee;
+	}
+
+	public WxPayApiConfig setRefundFee(String refundFee) {
+		this.refundFee = refundFee;
+		return this;
+	}
+
+	public String getRefundFeeType() {
+		return refundFeeType;
+	}
+
+	public WxPayApiConfig setRefundFeeType(String refundFeeType) {
+		this.refundFeeType = refundFeeType;
+		return this;
+	}
+
+	public String getRefundDesc() {
+		return refundDesc;
+	}
+
+	public WxPayApiConfig setRefundDesc(String refundDesc) {
+		this.refundDesc = refundDesc;
+		return this;
+	}
+
+	public String getRefundAccount() {
+		return refundAccount;
+	}
+
+	public WxPayApiConfig setRefundAccount(String refundAccount) {
+		this.refundAccount = refundAccount;
+		return this;
+	}
+
+	public String getOutRefundNo() {
+		return outRefundNo;
+	}
+
+	public WxPayApiConfig setOutRefundNo(String outRefundNo) {
+		this.outRefundNo = outRefundNo;
+		return this;
+	}
+
+	public String getRefundId() {
+		return refundId;
+	}
+
+	public WxPayApiConfig setRefundId(String refundId) {
+		this.refundId = refundId;
+		return this;
+	}
+	
 }
