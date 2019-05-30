@@ -1,6 +1,8 @@
 package com.jpay.alipay;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -62,11 +64,42 @@ public class AliPayApi {
 	public static void wapPay(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl,
 			String notifyUrl) throws AlipayApiException, IOException {
 		String form = wapPayStr(response, model, returnUrl, notifyUrl);
-		HttpServletResponse httpResponse = response;
-		httpResponse.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
-		httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
-		httpResponse.getWriter().flush();
+		response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+		/**
+		 * PrintWriter out = response.getWriter(); out对象用于输出字符流数据
+		 * 直接输出html表单数据到页面
+		 */
+		PrintWriter out = response.getWriter();
+		out.write(form);
+		out.flush();
 	}
+
+	/**
+	 * WAP支付
+	 * 为了解决Filter中使用OutputStream getOutputStream() 和PrintWriter getWriter()冲突异常问题
+	 * @param response
+	 *          {HttpServletResponse}
+	 * @param model
+	 *          {AlipayTradeWapPayModel}
+	 * @param returnUrl
+	 *          异步通知URL
+	 * @param notifyUrl
+	 *          同步通知URL
+	 * @throws AlipayApiException
+	 * @throws IOException
+	 */
+	public static void wapPayOutputStream(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl, String notifyUrl) throws AlipayApiException, IOException {
+		String form = wapPayStr(response, model, returnUrl, notifyUrl);
+		response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+		/**
+		 * OutputStream out = response.getOutputStream();
+		 *  out用于输出字符流数据或者二进制的字节流数据
+		 */
+		OutputStream out = response.getOutputStream();
+		out.write(form.getBytes(AliPayApiConfigKit.getAliPayApiConfig().getCharset()));
+		response.getOutputStream().flush();
+	}
+
 
 	/**
 	 * WAP支付
