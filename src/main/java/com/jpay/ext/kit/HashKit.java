@@ -83,7 +83,3 @@ public class HashKit {
 		return diff == 0;
     }
 }
-
-
-
-

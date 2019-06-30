@@ -254,9 +254,3 @@ public class HttpKit {
 		return readData(request);
 	}
 }
-
-
-
-
-
-
