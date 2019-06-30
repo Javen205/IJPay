@@ -84,7 +84,15 @@ public final class HttpUtils {
 	}
 
 	// http请求工具代理对象
-	private static final HttpDelegate delegate;
+	public static HttpDelegate delegate;
+
+	public static HttpDelegate getDelegate() {
+		return delegate;
+	}
+
+	public static void setDelegate(HttpDelegate delegate) {
+		HttpUtils.delegate = delegate;
+	}
 
 	static {
 		HttpDelegate delegateToUse = null;

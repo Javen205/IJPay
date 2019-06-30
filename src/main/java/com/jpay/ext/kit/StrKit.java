@@ -143,7 +143,3 @@ public class StrKit {
 		return java.util.UUID.randomUUID().toString().replace("-", "");
 	}
 }
-
-
-
-
