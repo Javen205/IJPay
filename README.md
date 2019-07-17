@@ -67,7 +67,7 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 
 ## 开源推荐
 
-- `TNW` 极速开发微信公众号：https://gitee.com/javen205/TNW
+- `TNW` 微信公众号开发脚手架：https://gitee.com/javen205/TNW
 - SpringBoot 微服务高效开发 `mica` 工具集：https://gitee.com/596392912/mica
 - `Avue` 一款基于 vue 可配置化的神奇框架：https://gitee.com/smallweigit/avue
 - `pig` 宇宙最强微服务（架构师必备）：https://gitee.com/log4j/pig
@@ -77,7 +77,3 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 
 排名不分先后
 
-- [jfinal](http://git.oschina.net/jfinal/jfinal)
-- [jfinal-weixin](http://git.oschina.net/jfinal/jfinal-weixin)
-- [zxing](https://github.com/zxing/zxing)
-- 感谢第三方公司提供微信商户平台测试

@@ -1,31 +1,67 @@
-# maven #
-target
-
-logs
-
-# eclipse #
-.settings
-.svn
+# Eclipse
 .project
 .classpath
-*.log
+.settings/
 
-# windows #
-Thumbs.db
-
-# Mac #
-.DS_Store
-
-# Package Files #
+### maven ###
+target/
 *.war
 *.ear
+*.zip
+*.tar
+*.tar.gz
 
-# idea #
+### gradle ###
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-.idea/
-overlays
-bin
-dev
-MP_verify_lvKCYtYMh7d9PmMu.txt
-MP_verify_WJhHh8ANnw4VR88d.txt
+*.ipr
+rebel.xml
 
+### temp ignore ###
+*.cache
+*.diff
+*.patch
+*.tmp
+*.java~
+*.properties~
+*.xml~
+
+### system ignore ###
+.DS_Store
+Thumbs.db
+Servers
+.metadata
+upload
+gen_code
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/

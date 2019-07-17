@@ -4,8 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.javen205</groupId>
 	<artifactId>IJPay</artifactId>
-	<version>1.2.2</version>
-	<packaging>jar</packaging>
+	<version>2.0.0</version>
+    <modules>
+        <module>IJPay-AliPay</module>
+		<module>IJPay-WxPay</module>
+	</modules>
+    <packaging>pom</packaging>
 	<name>IJPay</name>
 	<description>Easy Pay Library</description>
 	<url>https://github.com/Javen205/IJPay</url>
@@ -46,93 +50,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>8.1.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- 开源多维码生成工具 -->
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		<!-- 开源多维码生成工具 -->
-		<!-- 支付宝必须-->
-		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>fastjson</artifactId>
-		    <version>1.2.54</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
-		</dependency>
-        <dependency>
-		    <groupId>com.alipay.sdk</groupId>
-		    <artifactId>alipay-sdk-java</artifactId>
-		    <version>3.4.49.ALL</version>
-		</dependency>
-		<!-- 支付宝必须-->
-		<!-- 银联必须 -->
-		<dependency>
-			<groupId>com.unionpay</groupId>
-			<artifactId>unionpay-sdk-java</artifactId>
-			<version>1.54</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/bcprov-jdk15on-1.54.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.25</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-		<!-- 银联必须 -->
-		<!-- okhttp -->
-		<dependency>
-			<groupId>com.squareup.okhttp</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>2.7.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-		    <groupId>com.squareup.okhttp3</groupId>
-		    <artifactId>okhttp</artifactId>
-		    <version>3.12.0</version>
-		    <scope>provided</scope>
-		</dependency>
-
-		<dependency>
-		    <groupId>com.squareup.okio</groupId>
-		    <artifactId>okio</artifactId>
-		    <version>2.1.0</version>
-		    <scope>provided</scope>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>4.5.16</version>
 		</dependency>
 	</dependencies>
 	<build>
