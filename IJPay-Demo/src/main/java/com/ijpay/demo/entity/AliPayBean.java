@@ -46,21 +46,20 @@ public class AliPayBean {
         this.serverUrl = serverUrl;
     }
 
-    
 
-	public String getDomain() {
-		return domain;
-	}
+    public String getDomain() {
+        return domain;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-	@Override
-	public String toString() {
-		return "AliPayBean [appId=" + appId + ", privateKey=" + privateKey + ", publicKey=" + publicKey + ", serverUrl="
-				+ serverUrl + ", domain=" + domain + "]";
-	}
+    @Override
+    public String toString() {
+        return "AliPayBean [appId=" + appId + ", privateKey=" + privateKey + ", publicKey=" + publicKey + ", serverUrl="
+                + serverUrl + ", domain=" + domain + "]";
+    }
 
-	
+
 }

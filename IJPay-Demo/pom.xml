@@ -20,6 +20,7 @@
         <java.version>1.8</java.version>
 
         <ijapy.alipay.version>2.0.0</ijapy.alipay.version>
+        <ijapy.wxpay.version>2.0.0</ijapy.wxpay.version>
     </properties>
 
     <dependencies>
@@ -48,6 +49,10 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-AliPay</artifactId>
             <version>${ijapy.alipay.version}</version>
+        </dependency><dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-WxPay</artifactId>
+            <version>${ijapy.wxpay.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

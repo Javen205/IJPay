@@ -29,7 +29,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return {String}
 	 * 
 	 */
-	public static String getUUID () {
+	public static String generateStr () {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 
