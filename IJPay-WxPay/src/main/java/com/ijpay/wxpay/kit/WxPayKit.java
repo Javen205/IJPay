@@ -107,9 +107,7 @@ public class WxPayKit {
         // 生成签名前先去除sign
         params.remove(FIELD_SIGN);
         String stringA = packageSign(params, false);
-        System.out.println("stringA>>>"+stringA);
         String stringSignTemp = stringA + "&key=" + partnerKey;
-        System.out.println("stringSignTemp>>"+stringSignTemp);
         if (signType == SignType.MD5) return md5(stringSignTemp).toUpperCase();
         else return hmacSHA256(stringSignTemp, partnerKey).toUpperCase();
     }

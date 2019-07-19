@@ -87,7 +87,9 @@ public class WxPayController {
         params.put("notify_url", wxPayBean.getDomain().concat("/wxpay/pay_notify"));
         params.put("trade_type", TradeType.JSAPI.getTradeType());
 
-        String xmlResult = WxPayApi.pushOrder(false,WxPayKit.buildSign(params, wxPayBean.getPartnerKey(), SignType.MD5));
+        // 或者 使用 WxPayKit.buildSign(params, wxPayBean.getPartnerKey(), SignType.HMACSHA256)
+        String xmlResult = WxPayApi.pushOrder(false,
+                WxPayKit.buildSign(params, wxPayBean.getPartnerKey(), SignType.MD5));
         log.info(xmlResult);
 
         Map<String, String> resultMap = WxPayKit.xmlToMap(xmlResult);

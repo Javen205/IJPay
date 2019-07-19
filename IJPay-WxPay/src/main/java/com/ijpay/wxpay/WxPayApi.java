@@ -705,7 +705,6 @@ public class WxPayApi {
     }
 
     public static String doPost(String url, Map<String, String> params) {
-        System.out.println(WxPayKit.toXml(params));
         return HttpKit.getDelegate().post(url, WxPayKit.toXml(params));
     }
 
