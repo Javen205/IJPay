@@ -9,10 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>IJPay-WxPay</artifactId>
+    <artifactId>IJPay-All</artifactId>
     <name>${project.artifactId}</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)</description>
     <url>https://github.com/javen205/IJPay</url>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-WxPay</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-AliPay</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+    
 </project>

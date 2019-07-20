@@ -8,10 +8,11 @@
     <modules>
         <module>IJPay-AliPay</module>
 		<module>IJPay-WxPay</module>
+		<module>IJPay-All</module>
 	</modules>
     <packaging>pom</packaging>
 	<name>IJPay</name>
-	<description>Easy Pay Library</description>
+	<description>IJPay 让支付触手可及(Easy Pay Library)</description>
 	<url>https://github.com/Javen205/IJPay</url>
 
 	<parent>

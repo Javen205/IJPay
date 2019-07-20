@@ -9,29 +9,27 @@ public class WxPayKitTest {
 
     @Test
     public void hmacSHA256(){
-        Assert.assertEquals("9d67ee93641f99f0de85756c1debd8a4e315fbf8fd4ed966ed352bc1a658a8df",
-                WxPayKit.hmacSHA256("IJPay 让支付触手可及","123"));
+        Assert.assertEquals("8ae6af1a6f6e75f20b8240f320f33e1a376105c5668f1b57a591cd61fe409ee3",
+                WxPayKit.hmacSHA256("IJPay","123"));
     }
 
     @Test
     public void mad5(){
-        Assert.assertEquals("42cc1d91bab89b65ff55b19e28fff4f0",
-                WxPayKit.md5("IJPay 让支付触手可及"));
+        Assert.assertEquals("cbfc2149d454ecf4ab0f32e58430fcdd",
+                WxPayKit.md5("IJPay"));
     }
-
-    @Test
-    public void generateStr(){
-        Assert.assertEquals("42cc1d91bab89b65ff55b19e28fff4f0",WxPayKit.generateStr());
-    }
-
 
     @Test
     public void encryptData(){
-        Assert.assertEquals("",WxPayKit.encryptData("IJPay 让支付触手可及","42cc1d91bab89b65ff55b19e28fff4f0"));
+        Assert.assertEquals("K8fdh/6THGfTKio8pxXS6Q==",
+                WxPayKit.encryptData("IJPay","42cc1d91bab89b65ff55b19e28fff4f0"));
     }
     
     @Test
     public void decryptData(){
-        Assert.assertEquals("IJPay 让支付触手可及",WxPayKit.decryptData(WxPayKit.encryptData("IJPay 让支付触手可及","42cc1d91bab89b65ff55b19e28fff4f0"),"42cc1d91bab89b65ff55b19e28fff4f0"));
+        Assert.assertEquals("IJPay",
+                WxPayKit.decryptData(
+                        WxPayKit.encryptData("IJPay","42cc1d91bab89b65ff55b19e28fff4f0"),
+                        "42cc1d91bab89b65ff55b19e28fff4f0"));
     }
 }
