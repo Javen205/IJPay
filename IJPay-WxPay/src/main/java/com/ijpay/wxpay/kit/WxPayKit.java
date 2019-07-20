@@ -14,6 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+
+/**
+ * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
+ *
+ * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
+ *
+ * <p>微信支付工具类</p>
+ *
+ * @author Javen
+ */
 public class WxPayKit {
     private static final String FIELD_SIGN = "sign";
     private static final String FIELD_SIGN_TYPE = "sign_type";
@@ -118,7 +128,7 @@ public class WxPayKit {
      * @param params     需要签名的参数
      * @param partnerKey 密钥
      * @param signType   签名类型
-     * @return  <@link Map<String, String>>  签名后的
+     * @return <@link Map<String, String>>  签名后的
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType) {
         if (signType == null) {
@@ -168,13 +178,13 @@ public class WxPayKit {
     /**
      * 替换url中的参数
      *
-     * @param str 原始字符串
+     * @param str   原始字符串
      * @param regex 表达式
      * @param args  替换字符串
      * @return {String}
      */
     public static String replace(String str, String regex, String... args) {
-        for ( String arg: args) {
+        for (String arg : args) {
             str = str.replaceFirst(regex, arg);
         }
         return str;
@@ -183,7 +193,7 @@ public class WxPayKit {
     /**
      * 判断接口返回的 code
      *
-     * @param codeValue  code 值
+     * @param codeValue code 值
      * @return 是否是 SUCCESS
      */
     public static boolean codeIsOK(String codeValue) {
@@ -192,19 +202,20 @@ public class WxPayKit {
 
     /**
      * 预付订单再次签名
-     * @param prepay_id 预付订单号
-     * @param appId 应用编号
+     *
+     * @param prepay_id  预付订单号
+     * @param appId      应用编号
      * @param partnerKey API Key
-     * @return  {@link Map<String,String>} 再次签名后的 Map
+     * @return {@link Map<String,String>} 再次签名后的 Map
      */
-    public static Map<String, String> prepayIdCreateSign(String prepay_id,String appId,String partnerKey) {
+    public static Map<String, String> prepayIdCreateSign(String prepay_id, String appId, String partnerKey) {
         Map<String, String> packageParams = new HashMap<String, String>();
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
         packageParams.put("package", "prepay_id=" + prepay_id);
         packageParams.put("signType", "MD5");
-        String packageSign = WxPayKit.createSign(packageParams, partnerKey,SignType.MD5);
+        String packageSign = WxPayKit.createSign(packageParams, partnerKey, SignType.MD5);
         packageParams.put("paySign", packageSign);
         return packageParams;
     }

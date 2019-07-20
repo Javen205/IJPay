@@ -13,7 +13,11 @@ import java.security.SecureRandom;
 import java.util.Map;
 
 /**
- * Http 代理类
+ * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
+ *
+ * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
+ *
+ * <p>Http 代理类</p>
  *
  * @author Javen
  */
@@ -31,11 +35,11 @@ public abstract class HttpDelegate {
         return HttpUtil.post(url, data);
     }
 
-    protected  String post(String url, Map<String, Object> paramMap){
+    protected String post(String url, Map<String, Object> paramMap) {
         return HttpUtil.post(url, paramMap);
     }
 
-    protected  String postSSL(String url, String data, String certPath, String certPass){
+    protected String postSSL(String url, String data, String certPath, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
@@ -53,7 +57,7 @@ public abstract class HttpDelegate {
         }
     }
 
-    protected  String postSSL(String url, String data, InputStream certFile, String certPass){
+    protected String postSSL(String url, String data, InputStream certFile, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
