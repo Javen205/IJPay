@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>IJPay-AliPay</artifactId>
+    <name>${project.artifactId}</name>
+    <description>IJPay 让支付触手可及(Easy Pay Library)</description>
+    <url>https://github.com/javen205/IJPay</url>
+    
     <dependencies>
         <dependency>
             <groupId>com.alipay.sdk</groupId>
