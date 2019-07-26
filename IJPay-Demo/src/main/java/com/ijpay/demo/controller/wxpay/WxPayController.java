@@ -9,6 +9,7 @@ import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.constant.enums.SignType;
 import com.ijpay.wxpay.constant.enums.TradeType;
 import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.wxpay.model.UnifiedOrderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,8 +26,6 @@ import java.util.Map;
 @RequestMapping("/wxpay")
 public class WxPayController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
-
-    private AjaxResult result = new AjaxResult();
 
     @Autowired
     WxPayBean wxPayBean;
@@ -64,45 +62,45 @@ public class WxPayController {
             openId = "11111111";
         }
         if (StrUtil.isEmpty(openId)) {
-            result.addError("openId is null");
-            return result;
+            return new AjaxResult().addError("openId is null");
         }
         if (StrUtil.isEmpty(total_fee)) {
-            result.addError("请输入数字金额");
-            return result;
+            return new AjaxResult().addError("请输入数字金额");
         }
         String ip = IpKit.getRealIp(request);
         if (StrUtil.isEmpty(ip)) {
             ip = "127.0.0.1";
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("appid", wxPayBean.getAppId());
-        params.put("mch_id", wxPayBean.getMchId());
-        params.put("body", "IJPay");
-        params.put("attach", "IJPay");
-        params.put("out_trade_no", WxPayKit.generateStr());
-        params.put("total_fee", total_fee);
-        params.put("spbill_create_ip", ip);
-        params.put("notify_url", wxPayBean.getDomain().concat("/wxpay/pay_notify"));
-        params.put("trade_type", TradeType.JSAPI.getTradeType());
 
-        // 或者 使用 WxPayKit.buildSign(params, wxPayBean.getPartnerKey(), SignType.HMACSHA256)
-        String xmlResult = WxPayApi.pushOrder(false,
-                WxPayKit.buildSign(params, wxPayBean.getPartnerKey(), SignType.MD5));
+        Map<String, String> params = UnifiedOrderModel
+                .builder()
+                .appid(wxPayBean.getAppId())
+                .mch_id(wxPayBean.getMchId())
+                .nonce_str(WxPayKit.generateStr())
+                .body("IJPay 让支付触手可及")
+                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .out_trade_no(WxPayKit.generateStr())
+                .total_fee("1000")
+                .spbill_create_ip(ip)
+                .notify_url(wxPayBean.getDomain().concat("/wxpay/pay_notify"))
+                .trade_type(TradeType.JSAPI.getTradeType())
+                .build()
+                .creatSign(wxPayBean.getPartnerKey(), SignType.HMACSHA256);
+
+
+        String xmlResult = WxPayApi.pushOrder(false,params);
         log.info(xmlResult);
 
         Map<String, String> resultMap = WxPayKit.xmlToMap(xmlResult);
         String return_code = resultMap.get("return_code");
         String return_msg = resultMap.get("return_msg");
         if (!WxPayKit.codeIsOK(return_code)) {
-            result.addError(return_msg);
-            return result;
+            return new AjaxResult().addError(return_msg);
         }
         String result_code = resultMap.get("result_code");
         if (!WxPayKit.codeIsOK(result_code)) {
-            result.addError(return_msg);
-            return result;
+            return new AjaxResult().addError(return_msg);
         }
 
         // 以下字段在return_code 和result_code都为SUCCESS的时候有返回
@@ -112,7 +110,8 @@ public class WxPayController {
         Map<String, String> packageParams = WxPayKit.prepayIdCreateSign(prepay_id, wxPayBean.getAppId(), wxPayBean.getPartnerKey());
 
         String jsonStr = JSON.toJSONString(packageParams);
-        result.success(jsonStr);
-        return result;
+        return new AjaxResult().success(jsonStr);
     }
+
+
 }

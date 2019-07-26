@@ -14,5 +14,13 @@
     <description>IJPay 让支付触手可及(Easy Pay Library)</description>
     <url>https://github.com/javen205/IJPay</url>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
