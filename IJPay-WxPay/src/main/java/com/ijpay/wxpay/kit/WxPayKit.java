@@ -138,6 +138,7 @@ public class WxPayKit {
         if (signType == null) {
             signType = SignType.MD5;
         }
+        params.put("nonce_str", WxPayKit.generateStr());
         params.put(FIELD_SIGN_TYPE, signType.getType());
         String sign = createSign(params, partnerKey, signType);
         params.put(FIELD_SIGN, sign);

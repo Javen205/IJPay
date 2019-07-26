@@ -7,6 +7,8 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
+ * <p>Model 公用方法</p>
+ *
  * @author Javen
  */
 package com.ijpay.wxpay.model;
