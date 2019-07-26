@@ -117,7 +117,7 @@ public class WxPayController {
 
         String prepay_id = resultMap.get("prepay_id");
 
-        Map<String, String> packageParams = WxPayKit.prepayIdCreateSign(prepay_id, wxPayBean.getAppId(), wxPayBean.getPartnerKey());
+        Map<String, String> packageParams = WxPayKit.prepayIdCreateSign(prepay_id, wxPayBean.getAppId(), wxPayBean.getPartnerKey(),SignType.HMACSHA256);
 
         String jsonStr = JSON.toJSONString(packageParams);
         return new AjaxResult().success(jsonStr);
