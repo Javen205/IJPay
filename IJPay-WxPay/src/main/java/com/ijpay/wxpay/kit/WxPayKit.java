@@ -270,17 +270,45 @@ public class WxPayKit {
      * 公众号支付-预付订单再次签名<br/>
      * 注意此处签名方式需与统一下单的签名类型一致<br/>
      *
-     * @param prepay_id  预付订单号
+     * @param prepayId   预付订单号
      * @param appId      应用编号
      * @param partnerKey API Key
      * @return {@link Map<String,String>} 再次签名后的 Map
      */
-    public static Map<String, String> prepayIdCreateSign(String prepay_id, String appId, String partnerKey, SignType signType) {
+    public static Map<String, String> prepayIdCreateSign(String prepayId, String appId, String partnerKey, SignType signType) {
         Map<String, String> packageParams = new HashMap<String, String>();
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
-        packageParams.put("package", "prepay_id=" + prepay_id);
+        packageParams.put("package", "prepay_id=" + prepayId);
+        if (signType == null) {
+            signType = SignType.MD5;
+        }
+        packageParams.put("signType", signType.getType());
+        String packageSign = WxPayKit.createSign(packageParams, partnerKey, signType);
+        packageParams.put("paySign", packageSign);
+        return packageParams;
+    }
+
+    /**
+     * APP 支付-预付订单再次签名<br/>
+     * 注意此处签名方式需与统一下单的签名类型一致<br/>
+     *
+     * @param appId      应用ID 或者 子商户应用ID
+     * @param partnerId  商户号 或者 子商户号
+     * @param prepayId   预支付交易会话ID
+     * @param partnerKey API Key
+     * @param signType   签名方式
+     * @return {@link Map<String,String>} 再次签名后的 Map
+     */
+    public static Map<String, String> appPrepayIdCreateSign(String appId, String partnerId, String prepayId, String partnerKey, SignType signType) {
+        Map<String, String> packageParams = new HashMap<String, String>();
+        packageParams.put("appId", appId);
+        packageParams.put("partnerid", partnerId);
+        packageParams.put("prepayid", prepayId);
+        packageParams.put("package", "Sign=WXPay");
+        packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
+        packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         if (signType == null) {
             signType = SignType.MD5;
         }
