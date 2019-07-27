@@ -76,3 +76,9 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 - `Avue` 一款基于 vue 可配置化的神奇框架：https://gitee.com/smallweigit/avue
 - `pig` 宇宙最强微服务（架构师必备）：https://gitee.com/log4j/pig
 - `SpringBlade` 完整的线上解决方案（企业开发必备）：https://gitee.com/smallc/SpringBlade
+
+
+## 官方文档 
+
+- [微信委托扣款API](https://pay.weixin.qq.com/wiki/doc/api/pap_sl.php?chapter=18_18&index=6)
+- [微信刷脸支付API](https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/backend.html)
