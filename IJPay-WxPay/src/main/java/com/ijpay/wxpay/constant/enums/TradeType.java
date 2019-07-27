@@ -14,11 +14,11 @@ package com.ijpay.wxpay.constant.enums;
  * @author Javen
  */
 public enum TradeType {
-    JSAPI("JSAPI","微信公众号支付或者小程序支付"),
-    NATIVE("NATIVE","微信扫码支付"),
-    APP("APP","微信APP支付"),
-    MICROPAY("MICROPAY","付款码支付"),
-    MWEB("MWEB","H5支付");
+    JSAPI("JSAPI", "微信公众号支付或者小程序支付"),
+    NATIVE("NATIVE", "微信扫码支付"),
+    APP("APP", "微信APP支付"),
+    MICROPAY("MICROPAY", "付款码支付"),
+    MWEB("MWEB", "H5支付");
 
     /**
      * 交易类型枚举<br/>
