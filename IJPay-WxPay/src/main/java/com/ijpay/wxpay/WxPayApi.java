@@ -108,6 +108,12 @@ public class WxPayApi {
     private static final String DEPOSIT_REFUND_URL = "https://api.mch.weixin.qq.com/deposit/refund";
     // 查询退款（押金）
     private static final String DEPOSIT_REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/refundquery";
+    // 刷脸支付
+    private static final String FACE_PAY_URL = "https://api.mch.weixin.qq.com/pay/facepay";
+    // 刷脸支付查询订单
+    private static final String FACE_PAY_QUERY_URL = "https://api.mch.weixin.qq.com/pay/facepayquery";
+    // 刷脸支付撤销订单
+    private static final String FACE_PAY_REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/facepayreverse";
 
     // 获取沙箱秘钥
     private static final String GET_SING_KEY_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
@@ -783,6 +789,50 @@ public class WxPayApi {
      */
     public static String downloadfundflow(Map<String, String> params, String certPath, String certPassword) {
         return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 刷脸支付
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePay(Map<String, String> params) {
+        return doPost(FACE_PAY_URL, params);
+    }
+
+    /**
+     * 查询刷脸支付订单
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayQuery(Map<String, String> params) {
+        return doPost(FACE_PAY_QUERY_URL, params);
+    }
+
+    /**
+     * 刷脸支付撤销订单
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayReverse(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(FACE_PAY_REVERSE_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 刷脸支付撤销订单
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(FACE_PAY_REVERSE_URL, params, certFile, certPassword);
     }
 
     /**
