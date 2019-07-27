@@ -7,8 +7,7 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>申请退款 Model</p>
- * <p>支付押金</p>
+ * <p>撤销订单 Model</p>
  *
  * @author Javen
  */
@@ -22,21 +21,14 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class RefundModel extends BaseModel {
+public class ReverseModel extends BaseModel {
     private String appid;
     private String sub_appid;
     private String mch_id;
     private String sub_mch_id;
+    private String transaction_id;
+    private String out_trade_no;
     private String nonce_str;
     private String sign;
     private String sign_type;
-    private String transaction_id;
-    private String out_trade_no;
-    private String out_refund_no;
-    private String total_fee;
-    private String refund_fee;
-    private String refund_fee_type;
-    private String refund_desc;
-    private String refund_account;
-    private String notify_url;
 }

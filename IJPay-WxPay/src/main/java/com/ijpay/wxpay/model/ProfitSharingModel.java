@@ -7,12 +7,14 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>申请退款 Model</p>
- * <p>支付押金</p>
+ * <p>分账 Model</p>
+ *
+ * <p>支持: 请求单次分账、请求多次分账、添加分账接收方、删除分账接收方、完结分账</p>
  *
  * @author Javen
  */
 package com.ijpay.wxpay.model;
+
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,7 +24,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class RefundModel extends BaseModel {
+public class ProfitSharingModel extends BaseModel {
     private String appid;
     private String sub_appid;
     private String mch_id;
@@ -31,12 +33,7 @@ public class RefundModel extends BaseModel {
     private String sign;
     private String sign_type;
     private String transaction_id;
-    private String out_trade_no;
-    private String out_refund_no;
-    private String total_fee;
-    private String refund_fee;
-    private String refund_fee_type;
-    private String refund_desc;
-    private String refund_account;
-    private String notify_url;
+    private String out_order_no;
+    private String receivers;
+    private String description;
 }

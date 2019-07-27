@@ -8,6 +8,7 @@
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
  * <p>查询订单 Model</p>
+ * <p>支持: 普通订单查询、查询分账结果、回退结果查询</p>
  *
  * @author Javen
  */
@@ -28,6 +29,9 @@ public class OrderQueryModel extends BaseModel {
     private String sub_mch_id;
     private String transaction_id;
     private String out_trade_no;
+    private String order_id;
+    private String out_order_no;
+    private String out_return_no;
     private String nonce_str;
     private String sign;
     private String sign_type;

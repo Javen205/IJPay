@@ -7,7 +7,8 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>提交付款码支付 Model</p>
+ * <p>付款码支付 Model</p>
+ * <p>支持付款支付、支付押金（人脸支付）、支付押金（付款码支付）</p>
  *
  * @author Javen
  */
@@ -22,6 +23,10 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class MicroPayModel extends BaseModel {
+    /**
+     * 是否押金支付
+     */
+    private String deposit;
     private String appid;
     private String sub_appid;
     private String mch_id;
@@ -44,4 +49,9 @@ public class MicroPayModel extends BaseModel {
     private String auth_code;
     private String receipt;
     private String scene_info;
+    private String openid;
+    /**
+     * 人脸凭证，用于人脸支付
+     */
+    private String face_code;
 }
