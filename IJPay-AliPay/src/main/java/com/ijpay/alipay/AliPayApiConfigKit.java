@@ -10,6 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
+ * <p>IJPay 交流群: 723992875</p>
+ *
+ * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
+ *
  * @author Javen
  */
 public class AliPayApiConfigKit {
