@@ -20,6 +20,10 @@ import java.util.TreeMap;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
+ * <p>IJPay 交流群: 723992875</p>
+ *
+ * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
+ *
  * <p>微信支付工具类</p>
  *
  * @author Javen
@@ -134,7 +138,6 @@ public class WxPayKit {
         if (signType == null) {
             signType = SignType.MD5;
         }
-        params.put("nonce_str", WxPayKit.generateStr());
         params.put(FIELD_SIGN_TYPE, signType.getType());
         String sign = createSign(params, partnerKey, signType);
         params.put(FIELD_SIGN, sign);
@@ -176,6 +179,69 @@ public class WxPayKit {
     }
 
     /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param sign      签名
+     * @param appId     公众账号ID
+     * @param mchId     商户号
+     * @param productId 商品ID
+     * @param timeStamp 时间戳
+     * @param nonceStr  随机字符串
+     * @return
+     */
+    public static String bizPayUrl(String sign, String appId, String mchId, String productId, String timeStamp, String nonceStr) {
+        String rules = "weixin://wxpay/bizpayurl?sign=Temp&appid=Temp&mch_id=Temp&product_id=Temp&time_stamp=Temp&nonce_str=Temp";
+        return replace(rules, "Temp", sign, appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+    /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param partnerKey 密钥
+     * @param appId      公众账号ID
+     * @param mchId      商户号
+     * @param productId  商品ID
+     * @param timeStamp  时间戳
+     * @param nonceStr   随机字符串
+     * @param signType   签名类型
+     * @return
+     */
+    public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId, String timeStamp, String nonceStr, SignType signType) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("appid", appId);
+        map.put("mch_id", mchId);
+        map.put("time_stamp", StrUtil.isEmpty(timeStamp) ? Long.toString(System.currentTimeMillis() / 1000) : timeStamp);
+        map.put("nonce_str", StrUtil.isEmpty(nonceStr) ? WxPayKit.generateStr() : nonceStr);
+        map.put("product_id", productId);
+        return bizPayUrl(createSign(map, partnerKey, signType), appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+    /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param partnerKey 密钥
+     * @param appId      公众账号ID
+     * @param mchId      商户号
+     * @param productId  商品ID
+     * @return
+     */
+    public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId) {
+        String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
+        String nonceStr = WxPayKit.generateStr();
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("appid", appId);
+        map.put("mch_id", mchId);
+        map.put("time_stamp", timeStamp);
+        map.put("nonce_str", nonceStr);
+        map.put("product_id", productId);
+        return bizPayUrl(createSign(map, partnerKey, null), appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+
+    /**
      * 替换url中的参数
      *
      * @param str   原始字符串
@@ -201,21 +267,53 @@ public class WxPayKit {
     }
 
     /**
-     * 预付订单再次签名
+     * 公众号支付-预付订单再次签名<br/>
+     * 注意此处签名方式需与统一下单的签名类型一致<br/>
      *
-     * @param prepay_id  预付订单号
+     * @param prepayId   预付订单号
      * @param appId      应用编号
      * @param partnerKey API Key
      * @return {@link Map<String,String>} 再次签名后的 Map
      */
-    public static Map<String, String> prepayIdCreateSign(String prepay_id, String appId, String partnerKey) {
+    public static Map<String, String> prepayIdCreateSign(String prepayId, String appId, String partnerKey, SignType signType) {
         Map<String, String> packageParams = new HashMap<String, String>();
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
-        packageParams.put("package", "prepay_id=" + prepay_id);
-        packageParams.put("signType", "MD5");
-        String packageSign = WxPayKit.createSign(packageParams, partnerKey, SignType.MD5);
+        packageParams.put("package", "prepay_id=" + prepayId);
+        if (signType == null) {
+            signType = SignType.MD5;
+        }
+        packageParams.put("signType", signType.getType());
+        String packageSign = WxPayKit.createSign(packageParams, partnerKey, signType);
+        packageParams.put("paySign", packageSign);
+        return packageParams;
+    }
+
+    /**
+     * APP 支付-预付订单再次签名<br/>
+     * 注意此处签名方式需与统一下单的签名类型一致<br/>
+     *
+     * @param appId      应用ID 或者 子商户应用ID
+     * @param partnerId  商户号 或者 子商户号
+     * @param prepayId   预支付交易会话ID
+     * @param partnerKey API Key
+     * @param signType   签名方式
+     * @return {@link Map<String,String>} 再次签名后的 Map
+     */
+    public static Map<String, String> appPrepayIdCreateSign(String appId, String partnerId, String prepayId, String partnerKey, SignType signType) {
+        Map<String, String> packageParams = new HashMap<String, String>();
+        packageParams.put("appId", appId);
+        packageParams.put("partnerid", partnerId);
+        packageParams.put("prepayid", prepayId);
+        packageParams.put("package", "Sign=WXPay");
+        packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
+        packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+        if (signType == null) {
+            signType = SignType.MD5;
+        }
+        packageParams.put("signType", signType.getType());
+        String packageSign = WxPayKit.createSign(packageParams, partnerKey, signType);
         packageParams.put("paySign", packageSign);
         return packageParams;
     }

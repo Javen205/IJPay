@@ -13,6 +13,10 @@ import java.util.Map;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
+ * <p>IJPay 交流群: 723992875</p>
+ *
+ * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
+ *
  * <p>微信支付相关接口</p>
  *
  * @author Javen
@@ -32,6 +36,8 @@ public class WxPayApi {
     private static final String REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/pay/refundquery";
     // 下载对账单
     private static final String DOWNLOAD_BILLY_URL = "https://api.mch.weixin.qq.com/pay/downloadbill";
+    // 下载资金账单
+    private static final String DOWNLOAD_FUND_FLOW_URL = "https://api.mch.weixin.qq.com/pay/downloadfundflow";
     // 交易保障
     private static final String REPORT_URL = "https://api.mch.weixin.qq.com/payitil/report";
     // 转换短链接
@@ -701,6 +707,30 @@ public class WxPayApi {
      */
     public static String depositRefundQuery(Map<String, String> params) {
         return doPost(DEPOSIT_REFUND_QUERY_URL, params);
+    }
+
+    /**
+     * 下载资金账单
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String downloadfundflow(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 下载资金账单
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String downloadfundflow(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certFile, certPassword);
     }
 
     public static String doGet(String url, Map<String, Object> params) {
