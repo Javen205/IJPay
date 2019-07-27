@@ -70,8 +70,10 @@ public class WxPayApi {
     private static final String CONTRACT_BILL_URL = "https://api.mch.weixin.qq.com/papay/contractbill";
     // 代扣查询订单
     private static final String PAP_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/paporderquery";
-    // 分账请求
+    // 请求单次分账
     private static final String PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharing";
+    // 请求多次分账
+    private static final String MULTI_PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/multiprofitsharing";
     // 查询分账结果
     private static final String PROFIT_SHARING_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingquery";
     // 添加分账接收方
@@ -80,6 +82,10 @@ public class WxPayApi {
     private static final String PROFIT_SHARING_REMOVE_RECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver";
     // 完结分账
     private static final String PROFIT_SHARING_FINISH_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish";
+    // 分账回退
+    private static final String PROFIT_SHARING_RETURN_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingreturn";
+    // 回退结果查询
+    private static final String PROFIT_SHARING_RETURN_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingreturnquery";
     // 发放代金券
     private static final String SEND_COUPON_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon";
     // 查询代金券批次
@@ -102,6 +108,12 @@ public class WxPayApi {
     private static final String DEPOSIT_REFUND_URL = "https://api.mch.weixin.qq.com/deposit/refund";
     // 查询退款（押金）
     private static final String DEPOSIT_REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/refundquery";
+    // 刷脸支付
+    private static final String FACE_PAY_URL = "https://api.mch.weixin.qq.com/pay/facepay";
+    // 刷脸支付查询订单
+    private static final String FACE_PAY_QUERY_URL = "https://api.mch.weixin.qq.com/pay/facepayquery";
+    // 刷脸支付撤销订单
+    private static final String FACE_PAY_REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/facepayreverse";
 
     // 获取沙箱秘钥
     private static final String GET_SING_KEY_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
@@ -488,7 +500,7 @@ public class WxPayApi {
     }
 
     /**
-     * 分账请求
+     * 请求单次分账
      *
      * @param params       请求参数
      * @param certPath     证书文件目录
@@ -500,7 +512,7 @@ public class WxPayApi {
     }
 
     /**
-     * 分账请求
+     * 请求单次分账
      *
      * @param params       请求参数
      * @param certFile     证书文件的  InputStream
@@ -509,6 +521,30 @@ public class WxPayApi {
      */
     public static String profitSharing(Map<String, String> params, InputStream certFile, String certPassword) {
         return doPostSSL(PROFIT_SHARING_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 请求多次分账
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String multiProfitSharing(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(MULTI_PROFIT_SHARING_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 请求多次分账
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的  InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String multiProfitSharing(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(MULTI_PROFIT_SHARING_URL, params, certFile, certPassword);
     }
 
     /**
@@ -563,6 +599,40 @@ public class WxPayApi {
      */
     public static String profitSharingFinish(Map<String, String> params, InputStream certFile, String certPassword) {
         return doPostSSL(PROFIT_SHARING_FINISH_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 分账回退
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String profitSharingReturn(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(PROFIT_SHARING_RETURN_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 分账回退
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String profitSharingReturn(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(PROFIT_SHARING_RETURN_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 分账回退结果查询
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String profitSharingReturnQuery(Map<String, String> params) {
+        return doPost(PROFIT_SHARING_RETURN_QUERY_URL, params);
     }
 
     /**
@@ -719,6 +789,50 @@ public class WxPayApi {
      */
     public static String downloadfundflow(Map<String, String> params, String certPath, String certPassword) {
         return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 刷脸支付
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePay(Map<String, String> params) {
+        return doPost(FACE_PAY_URL, params);
+    }
+
+    /**
+     * 查询刷脸支付订单
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayQuery(Map<String, String> params) {
+        return doPost(FACE_PAY_QUERY_URL, params);
+    }
+
+    /**
+     * 刷脸支付撤销订单
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayReverse(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(FACE_PAY_REVERSE_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 刷脸支付撤销订单
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(FACE_PAY_REVERSE_URL, params, certFile, certPassword);
     }
 
     /**
