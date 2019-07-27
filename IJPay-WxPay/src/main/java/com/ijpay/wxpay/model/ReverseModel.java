@@ -8,6 +8,7 @@
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
  * <p>撤销订单 Model</p>
+ * <p>支持: 普通支付撤销订单、刷脸支付撤销订单</p>
  *
  * @author Javen
  */

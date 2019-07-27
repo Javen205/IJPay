@@ -8,7 +8,7 @@
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
  * <p>申请退款 Model</p>
- * <p>支付押金</p>
+ * <p>支持: 普通接口申请退款、刷脸支付退款、支付押金退款</p>
  *
  * @author Javen
  */

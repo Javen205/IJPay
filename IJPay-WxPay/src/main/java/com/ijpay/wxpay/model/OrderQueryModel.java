@@ -8,7 +8,7 @@
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
  * <p>查询订单 Model</p>
- * <p>支持: 普通订单查询、查询分账结果、回退结果查询</p>
+ * <p>支持: 普通订单查询、刷脸支付订单、查询分账结果、回退结果查询</p>
  *
  * @author Javen
  */
