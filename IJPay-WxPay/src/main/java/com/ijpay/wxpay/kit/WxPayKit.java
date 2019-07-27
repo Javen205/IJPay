@@ -180,6 +180,69 @@ public class WxPayKit {
     }
 
     /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param sign      签名
+     * @param appId     公众账号ID
+     * @param mchId     商户号
+     * @param productId 商品ID
+     * @param timeStamp 时间戳
+     * @param nonceStr  随机字符串
+     * @return
+     */
+    public static String bizPayUrl(String sign, String appId, String mchId, String productId, String timeStamp, String nonceStr) {
+        String rules = "weixin://wxpay/bizpayurl?sign=Temp&appid=Temp&mch_id=Temp&product_id=Temp&time_stamp=Temp&nonce_str=Temp";
+        return replace(rules, "Temp", sign, appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+    /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param partnerKey 密钥
+     * @param appId      公众账号ID
+     * @param mchId      商户号
+     * @param productId  商品ID
+     * @param timeStamp  时间戳
+     * @param nonceStr   随机字符串
+     * @param signType   签名类型
+     * @return
+     */
+    public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId, String timeStamp, String nonceStr, SignType signType) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("appid", appId);
+        map.put("mch_id", mchId);
+        map.put("time_stamp", StrUtil.isEmpty(timeStamp) ? Long.toString(System.currentTimeMillis() / 1000) : timeStamp);
+        map.put("nonce_str", StrUtil.isEmpty(nonceStr) ? WxPayKit.generateStr() : nonceStr);
+        map.put("product_id", productId);
+        return bizPayUrl(createSign(map, partnerKey, signType), appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+    /**
+     * 生成二维码链接 <br/>
+     * 原生支付接口模式一(扫码模式一) <br/>
+     *
+     * @param partnerKey 密钥
+     * @param appId      公众账号ID
+     * @param mchId      商户号
+     * @param productId  商品ID
+     * @return
+     */
+    public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId) {
+        String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
+        String nonceStr = WxPayKit.generateStr();
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("appid", appId);
+        map.put("mch_id", mchId);
+        map.put("time_stamp", timeStamp);
+        map.put("nonce_str", nonceStr);
+        map.put("product_id", productId);
+        return bizPayUrl(createSign(map, partnerKey, null), appId, mchId, productId, timeStamp, nonceStr);
+    }
+
+
+    /**
      * 替换url中的参数
      *
      * @param str   原始字符串
