@@ -19,8 +19,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.alipay.version>2.0.0</ijapy.alipay.version>
-        <ijapy.wxpay.version>2.0.0</ijapy.wxpay.version>
+        <ijapy.alipay.version>2.1.1</ijapy.alipay.version>
+        <ijapy.wxpay.version>2.1.1</ijapy.wxpay.version>
     </properties>
 
     <dependencies>
