@@ -23,8 +23,8 @@ public class AliPayApiConfigKit {
     private static final String DEFAULT_CFG_KEY = "_default_key_";
 
     /**
-     * 向缓存中设置 AliPayApiConfig <br/>
-     * 每个 appId 只需添加一次，相同 appId 将被覆盖 <br/>
+     * <p>向缓存中设置 AliPayApiConfig </p>
+     * <p>每个 appId 只需添加一次，相同 appId 将被覆盖</p>
      *
      * @param aliPayApiConfig 支付宝支付配置
      * @return {@link AliPayApiConfig}

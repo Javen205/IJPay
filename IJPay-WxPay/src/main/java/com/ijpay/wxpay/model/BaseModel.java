@@ -27,7 +27,7 @@ public class BaseModel {
     /**
      * 将建构的 builder 转为 Map
      *
-     * @return Map<String, String>
+     * @return 转化后的 Map
      */
     public Map<String, String> toMap() {
         HashMap<String, String> map = new HashMap<String, String>();
@@ -35,7 +35,7 @@ public class BaseModel {
         for (int i = 0; i < fieldNames.length; i++) {
             String name = fieldNames[i];
             String value = (String) getFieldValueByName(name, this);
-            System.out.println("name:"+name+",value:"+value);
+            System.out.println("name:" + name + ",value:" + value);
             if (StrUtil.isNotEmpty(value)) {
                 map.put(name, value);
             }
@@ -48,7 +48,7 @@ public class BaseModel {
      *
      * @param partnerKey API KEY
      * @param signType   {@link SignType} 签名类型
-     * @return Map<String, String>
+     * @return 构建签名后的 Map
      */
     public Map<String, String> creatSign(String partnerKey, SignType signType) {
         return WxPayKit.buildSign(toMap(), partnerKey, signType);
