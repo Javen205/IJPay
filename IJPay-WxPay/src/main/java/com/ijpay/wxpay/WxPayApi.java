@@ -430,7 +430,7 @@ public class WxPayApi {
     }
 
     /**
-     * 申请签约 https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_1&index=1
+     * 申请签约
      *
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
@@ -440,7 +440,7 @@ public class WxPayApi {
     }
 
     /**
-     * 支付中签约 https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_13&index=2
+     * 支付中签约
      *
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
@@ -450,7 +450,7 @@ public class WxPayApi {
     }
 
     /**
-     * 查询签约关系 https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_2&index=3
+     * 查询签约关系
      *
      * @param params 请求参数
      * @return {@link String} 请求返回的结果

@@ -132,7 +132,7 @@ public class WxPayKit {
      * @param params     需要签名的参数
      * @param partnerKey 密钥
      * @param signType   签名类型
-     * @return <@link Map<String, String>>  签名后的
+     * @return 签名后的 Map
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType) {
         if (signType == null) {
@@ -171,7 +171,7 @@ public class WxPayKit {
      * 针对支付的 xml，没有嵌套节点的简单处理
      *
      * @param xmlStr xml 字符串
-     * @return <@link Map<String, String>>
+     * @return 转化后的 Map
      */
     public static Map<String, String> xmlToMap(String xmlStr) {
         XmlHelper xmlHelper = XmlHelper.of(xmlStr);
@@ -179,8 +179,8 @@ public class WxPayKit {
     }
 
     /**
-     * 生成二维码链接 <br/>
-     * 原生支付接口模式一(扫码模式一) <br/>
+     * <p>生成二维码链接</p>
+     * <p>原生支付接口模式一(扫码模式一)</p>
      *
      * @param sign      签名
      * @param appId     公众账号ID
@@ -196,8 +196,8 @@ public class WxPayKit {
     }
 
     /**
-     * 生成二维码链接 <br/>
-     * 原生支付接口模式一(扫码模式一) <br/>
+     * <p>生成二维码链接</p>
+     * <p>原生支付接口模式一(扫码模式一)</p>
      *
      * @param partnerKey 密钥
      * @param appId      公众账号ID
@@ -219,8 +219,8 @@ public class WxPayKit {
     }
 
     /**
-     * 生成二维码链接 <br/>
-     * 原生支付接口模式一(扫码模式一) <br/>
+     * <p>生成二维码链接</p>
+     * <p>原生支付接口模式一(扫码模式一)</p>
      *
      * @param partnerKey 密钥
      * @param appId      公众账号ID
@@ -267,13 +267,13 @@ public class WxPayKit {
     }
 
     /**
-     * 公众号支付-预付订单再次签名<br/>
-     * 注意此处签名方式需与统一下单的签名类型一致<br/>
+     * <p>公众号支付-预付订单再次签名</p>
+     * <p>注意此处签名方式需与统一下单的签名类型一致</p>
      *
      * @param prepayId   预付订单号
      * @param appId      应用编号
      * @param partnerKey API Key
-     * @return {@link Map<String,String>} 再次签名后的 Map
+     * @return 再次签名后的 Map
      */
     public static Map<String, String> prepayIdCreateSign(String prepayId, String appId, String partnerKey, SignType signType) {
         Map<String, String> packageParams = new HashMap<String, String>();
@@ -291,15 +291,15 @@ public class WxPayKit {
     }
 
     /**
-     * APP 支付-预付订单再次签名<br/>
-     * 注意此处签名方式需与统一下单的签名类型一致<br/>
+     * <p>APP 支付-预付订单再次签名</p>
+     * <p>注意此处签名方式需与统一下单的签名类型一致</p>
      *
      * @param appId      应用ID 或者 子商户应用ID
      * @param partnerId  商户号 或者 子商户号
      * @param prepayId   预支付交易会话ID
      * @param partnerKey API Key
      * @param signType   签名方式
-     * @return {@link Map<String,String>} 再次签名后的 Map
+     * @return 再次签名后的 Map
      */
     public static Map<String, String> appPrepayIdCreateSign(String appId, String partnerId, String prepayId, String partnerKey, SignType signType) {
         Map<String, String> packageParams = new HashMap<String, String>();

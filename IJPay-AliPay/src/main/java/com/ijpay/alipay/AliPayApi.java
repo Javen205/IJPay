@@ -69,8 +69,9 @@ public class AliPayApi {
     }
 
     /**
-     * WAP支付 <br/>
-     * 为了解决 Filter 中使用 OutputStream getOutputStream() 和 PrintWriter getWriter() 冲突异常问题
+     * <p>WAP支付</p>
+     *
+     * <p>为了解决 Filter 中使用 OutputStream getOutputStream() 和 PrintWriter getWriter() 冲突异常问题</p>
      *
      * @param response  {@link HttpServletResponse}
      * @param model     {@link AlipayTradeWapPayModel}
@@ -726,7 +727,7 @@ public class AliPayApi {
      * 将异步通知的参数转化为Map
      *
      * @param request {HttpServletRequest}
-     * @return {Map<String, String>}
+     * @return 转化后的Map
      */
     public static Map<String, String> toMap(HttpServletRequest request) {
         Map<String, String> params = new HashMap<String, String>();
