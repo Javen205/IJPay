@@ -44,7 +44,7 @@
     </developers>
 
     <properties>
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.7</jdk.version>
         <junit.version>4.12</junit.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,11 +59,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- huTool 工具包 -->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>hutool-crypto</artifactId>
             <version>4.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>4.6.1</version>
+        </dependency>
+        <!-- huTool 工具包 End -->
     </dependencies>
     <build>
         <finalName>IJPay</finalName>
