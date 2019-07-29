@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.javen205</groupId>
     <artifactId>IJPay</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2-SNAPSHOT</version>
     <modules>
         <module>IJPay-AliPay</module>
         <module>IJPay-WxPay</module>
