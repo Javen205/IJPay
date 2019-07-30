@@ -5,9 +5,8 @@
 [![Gitee star](https://gitee.com/javen205/IJPay/badge/star.svg?theme=white)](https://gitee.com/javen205/IJPay/stargazers)
 [![Github start](https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars)](https://github.com/Javen205/IJPay)
 [![License][licensesvg]][license]
-[![JDK](https://img.shields.io/badge/JDK-1.6+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
+[![JDK](https://img.shields.io/badge/JDK-1.7+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![IJPay Author](https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg)](https://javen205.github.io)
-[![GitHub release](https://img.shields.io/github/release/Javen205/IJPay.svg)](https://github.com/Javen205/IJPay/release)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay)
 [![Donate](https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg)](https://github.com/Javen205/donate)
 [![Gitter](https://badges.gitter.im/IJPay/community.svg)](https://gitter.im/IJPay/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -81,6 +80,7 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 
 ## 官方文档 
 
-- [微信委托扣款 API](https://pay.weixin.qq.com/wiki/doc/api/pap_sl.php?chapter=17_1)
+- [微信委托扣款 API-服务商模式](https://pay.weixin.qq.com/wiki/doc/api/pap_sl.php?chapter=17_1)
+- [微信委托扣款 API-普通商户模式](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=17_1)
 - [微信刷脸支付 API](https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/backend.html)
 - [支付宝开发平台](https://docs.open.alipay.com)
