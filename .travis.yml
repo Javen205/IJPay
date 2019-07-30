@@ -5,7 +5,6 @@ sudo: false
 install: true
 
 jdk:
-  - openjdk8
   - oraclejdk8
 
 notifications:
