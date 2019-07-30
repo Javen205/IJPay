@@ -5,14 +5,11 @@ sudo: false
 install: true
 
 jdk:
+  - openjdk7
   - openjdk8
-  - oraclejdk8
   - openjdk9
-  - oraclejdk9
   - openjdk10
-  - oraclejdk10
   - openjdk11
-  - oraclejdk11
 
 notifications:
   email:
