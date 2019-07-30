@@ -1,5 +1,6 @@
 package com.ijpay.wxpay;
 
+import com.ijpay.wxpay.constant.enums.PayModel;
 import com.ijpay.wxpay.constant.enums.SignType;
 import com.ijpay.wxpay.kit.HttpKit;
 import com.ijpay.wxpay.kit.WxPayKit;
@@ -22,112 +23,228 @@ import java.util.Map;
  * @author Javen
  */
 public class WxPayApi {
-    // 统一下单接口
+    /**
+     * 统一下单接口
+     */
     private static final String UNIFIED_ORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-    // 订单查询
+    /**
+     * 订单查询
+     */
     private static final String ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
-    // 关闭订单
+    /**
+     * 关闭订单
+     */
     private static final String CLOSE_ORDER_URL = "https://api.mch.weixin.qq.com/pay/closeorder";
-    // 撤销订单
+    /**
+     * 撤销订单
+     */
     private static final String REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/reverse";
-    // 申请退款
+    /**
+     * 申请退款
+     */
     private static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-    // 查询退款
+    /**
+     * 查询退款
+     */
     private static final String REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/pay/refundquery";
-    // 下载对账单
+    /**
+     * 下载对账单
+     */
     private static final String DOWNLOAD_BILLY_URL = "https://api.mch.weixin.qq.com/pay/downloadbill";
-    // 下载资金账单
+    /**
+     * 下载资金账单
+     */
     private static final String DOWNLOAD_FUND_FLOW_URL = "https://api.mch.weixin.qq.com/pay/downloadfundflow";
-    // 交易保障
+    /**
+     * 交易保障
+     */
     private static final String REPORT_URL = "https://api.mch.weixin.qq.com/payitil/report";
-    // 转换短链接
+    /**
+     * 转换短链接
+     */
     private static final String SHORT_URL = "https://api.mch.weixin.qq.com/tools/shorturl";
-    // 授权码查询openId接口
+    /**
+     * 授权码查询openId接口
+     */
     private static final String AUTH_CODE_TO_OPENID_URL = "https://api.mch.weixin.qq.com/tools/authcodetoopenid";
-    // 刷卡支付
+    /**
+     * 刷卡支付
+     */
     private static final String MICRO_PAY_URL = "https://api.mch.weixin.qq.com/pay/micropay";
-    // 企业付款
+    /**
+     * 企业付款
+     */
     private static final String TRANSFERS_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-    // 查询企业付款
+    /**
+     * 查询企业付款
+     */
     private static final String GET_TRANSFER_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
-    // 企业付款到银行
+    /**
+     * 企业付款到银行
+     */
     private static final String PAY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank";
-    // 查询企业付款
+    /**
+     * 查询企业付款
+     */
     private static final String QUERY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/query_bank";
-    // 获取RSA加密公钥
+    /**
+     * 获取RSA加密公钥
+     */
     private static final String GET_PUBLIC_KEY_URL = "https://fraud.mch.weixin.qq.com/risk/getpublickey";
-    // 申请签约
+    /**
+     * 公众号纯签约
+     */
     private static final String ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/entrustweb";
-    // 支付中签约接口
+    private static final String PARTNER_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/partner/entrustweb";
+    /**
+     * H5纯签约
+     */
+    private static final String H5_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/h5entrustweb";
+    private static final String PARTNER_H5_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/partner/h5entrustweb";
+    /**
+     * 支付中签约接口
+     */
     private static final String CONTRACT_ORDER_URL = "https://api.mch.weixin.qq.com/pay/contractorder";
-    // 查询签约关系
+    /**
+     * 查询签约关系
+     */
     private static final String QUERY_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/querycontract";
-    // 申请扣款
+    private static final String PARTNER_QUERY_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/partner/querycontract";
+    /**
+     * 申请扣款
+     */
     private static final String PAP_PAY_APPLY_URL = "https://api.mch.weixin.qq.com/pay/pappayapply";
-    // 申请解约
+    private static final String PARTNER_PAP_PAY_APPLY_URL = "https://api.mch.weixin.qq.com/pay/partner/pappayapply";
+    /**
+     * 申请解约
+     */
     private static final String DELETE_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/deletecontract";
-    // 查询签约关系对账单
+    private static final String PARTNER_DELETE_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/partner/deletecontract";
+    /**
+     * 查询签约关系对账单
+     */
     private static final String CONTRACT_BILL_URL = "https://api.mch.weixin.qq.com/papay/contractbill";
-    // 代扣查询订单
+    /**
+     * 代扣查询订单
+     */
     private static final String PAP_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/paporderquery";
-    // 请求单次分账
+    private static final String PARTNER_PAP_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/partner/paporderquery";
+    /**
+     * 请求单次分账
+     */
     private static final String PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharing";
-    // 请求多次分账
+    /**
+     * 请求多次分账
+     */
     private static final String MULTI_PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/multiprofitsharing";
-    // 查询分账结果
+    /**
+     * 查询分账结果
+     */
     private static final String PROFIT_SHARING_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingquery";
-    // 添加分账接收方
+    /**
+     * 添加分账接收方
+     */
     private static final String PROFIT_SHARING_ADD_RECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingaddreceiver";
-    // 删除分账接收方
+    /**
+     * 删除分账接收方
+     */
     private static final String PROFIT_SHARING_REMOVE_RECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver";
-    // 完结分账
+    /**
+     * 完结分账
+     */
     private static final String PROFIT_SHARING_FINISH_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish";
-    // 分账回退
+    /**
+     * 分账回退
+     */
     private static final String PROFIT_SHARING_RETURN_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingreturn";
-    // 回退结果查询
+    /**
+     * 回退结果查询
+     */
     private static final String PROFIT_SHARING_RETURN_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingreturnquery";
-    // 发放代金券
+    /**
+     * 发放代金券
+     */
     private static final String SEND_COUPON_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon";
-    // 查询代金券批次
+    /**
+     * 查询代金券批次
+     */
     private static final String QUERY_COUPON_STOCK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
-    // 查询代金券信息
+    /**
+     * 查询代金券信息
+     */
     private static final String QUERY_COUPONS_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo";
-    // 拉取订单评价数据
+    /**
+     * 拉取订单评价数据
+     */
     private static final String BATCH_QUERY_COMMENT_URL = "https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment";
-    // 支付押金（人脸支付）
+    /**
+     * 支付押金（人脸支付）
+     */
     private static final String DEPOSIT_FACE_PAY_URL = "https://api.mch.weixin.qq.com/deposit/facepay";
-    // 支付押金（付款码支付）
+    /**
+     * 支付押金（付款码支付）
+     */
     private static final String DEPOSIT_MICRO_PAY_URL = "https://api.mch.weixin.qq.com/deposit/micropay";
-    // 查询订单
+    /**
+     * 查询订单
+     */
     private static final String DEPOSIT_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/orderquery";
-    // 撤销订单
+    /**
+     * 撤销订单
+     */
     private static final String DEPOSIT_REVERSE_URL = "https://api.mch.weixin.qq.com/deposit/reverse";
-    // 消费押金
+    /**
+     * 消费押金
+     */
     private static final String DEPOSIT_CONSUME_URL = "https://api.mch.weixin.qq.com/deposit/consume";
-    // 申请退款（押金）
+    /**
+     * 申请退款（押金）
+     */
     private static final String DEPOSIT_REFUND_URL = "https://api.mch.weixin.qq.com/deposit/refund";
-    // 查询退款（押金）
+    /**
+     * 查询退款（押金）
+     */
     private static final String DEPOSIT_REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/refundquery";
-    // 刷脸支付
+    /**
+     * 刷脸支付
+     */
     private static final String FACE_PAY_URL = "https://api.mch.weixin.qq.com/pay/facepay";
-    // 刷脸支付查询订单
+    /**
+     * 刷脸支付查询订单
+     */
     private static final String FACE_PAY_QUERY_URL = "https://api.mch.weixin.qq.com/pay/facepayquery";
-    // 刷脸支付撤销订单
+    /**
+     * 刷脸支付撤销订单
+     */
     private static final String FACE_PAY_REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/facepayreverse";
 
-    // 获取沙箱秘钥
+    /**
+     * 获取沙箱秘钥
+     */
     private static final String GET_SING_KEY_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
-    // 统一下单接口
+    /**
+     * 统一下单接口
+     */
     private static final String UNIFIED_ORDER_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder";
-    // 刷卡支付
+    /**
+     * 刷卡支付
+     */
     private static final String MICRO_PAY_SANDBOX_RUL = "https://api.mch.weixin.qq.com/sandboxnew/pay/micropay";
-    // 订单查询
+    /**
+     * 订单查询
+     */
     private static final String ORDER_QUERY_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/orderquery";
-    // 申请退款
+    /**
+     * 申请退款
+     */
     private static final String REFUND_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/secapi/pay/refund";
-    // 查询退款
+    /**
+     * 查询退款
+     */
     private static final String REFUND_QUERY_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/refundquery";
-    // 下载对账单
+    /**
+     * 下载对账单
+     */
     private static final String DOWNLOAD_BILL_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
 
     private WxPayApi() {
@@ -142,7 +259,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getSignKey(String mch_id, String partnerKey, SignType signType) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(3);
         String nonce_str = WxPayKit.generateStr();
         map.put("mch_id", mch_id);
         map.put("nonce_str", nonce_str);
@@ -158,8 +275,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String pushOrder(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPost(UNIFIED_ORDER_SANDBOX_URL, params);
+        }
         return doPost(UNIFIED_ORDER_URL, params);
     }
 
@@ -171,8 +289,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderQuery(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPost(ORDER_QUERY_SANDBOX_URL, params);
+        }
         return doPost(ORDER_QUERY_URL, params);
     }
 
@@ -220,8 +339,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, String certPath, String certPass) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPostSSL(REFUND_SANDBOX_URL, params, certPath, certPass);
+        }
         return doPostSSL(REFUND_URL, params, certPath, certPass);
     }
 
@@ -235,8 +355,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPostSSL(REFUND_SANDBOX_URL, params, certFile, certPass);
+        }
         return doPostSSL(REFUND_URL, params, certFile, certPass);
     }
 
@@ -248,8 +369,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundQuery(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPost(REFUND_QUERY_SANDBOX_URL, params);
+        }
         return doPost(REFUND_QUERY_URL, params);
     }
 
@@ -261,8 +383,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String downloadBill(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox)
+        if (isSandbox) {
             return doPost(DOWNLOAD_BILL_SANDBOX_URL, params);
+        }
         return doPost(DOWNLOAD_BILLY_URL, params);
     }
 
@@ -304,8 +427,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String micropay(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox)
+        if (isSandbox) {
             return WxPayApi.doPost(MICRO_PAY_SANDBOX_RUL, params);
+        }
         return WxPayApi.doPost(MICRO_PAY_URL, params);
     }
 
@@ -430,13 +554,33 @@ public class WxPayApi {
     }
 
     /**
-     * 申请签约
+     * 公众号纯签约
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param payModel 商户平台模式
      * @return {@link String} 请求返回的结果
      */
-    public static String entrustweb(Map<String, Object> params) {
-        return doGet(ENTRUST_WEB_URL, params);
+    public static String entrustWeb(Map<String, Object> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doGet(ENTRUST_WEB_URL, params);
+        } else {
+            return doGet(PARTNER_ENTRUST_WEB_URL, params);
+        }
+    }
+
+    /**
+     * H5 纯签约
+     *
+     * @param params   请求参数
+     * @param payModel 商户平台模式
+     * @return {@link String} 请求返回的结果
+     */
+    public static String h5EntrustWeb(Map<String, Object> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doGet(H5_ENTRUST_WEB_URL, params);
+        } else {
+            return doGet(PARTNER_H5_ENTRUST_WEB_URL, params);
+        }
     }
 
     /**
@@ -445,38 +589,53 @@ public class WxPayApi {
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String contractorder(Map<String, String> params) {
+    public static String contractOrder(Map<String, String> params) {
         return doPost(CONTRACT_ORDER_URL, params);
     }
 
     /**
      * 查询签约关系
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param payModel 商户平台模式
      * @return {@link String} 请求返回的结果
      */
-    public static String querycontract(Map<String, String> params) {
-        return doPost(QUERY_CONTRACT_URL, params);
+    public static String queryContract(Map<String, String> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doPost(QUERY_CONTRACT_URL, params);
+        } else {
+            return doPost(PARTNER_QUERY_CONTRACT_URL, params);
+        }
     }
 
     /**
      * 申请扣款
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param payModel 商户平台模式
      * @return {@link String} 请求返回的结果
      */
-    public static String papPayApply(Map<String, String> params) {
-        return doPost(PAP_PAY_APPLY_URL, params);
+    public static String papPayApply(Map<String, String> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doPost(PAP_PAY_APPLY_URL, params);
+        } else {
+            return doPost(PARTNER_PAP_PAY_APPLY_URL, params);
+        }
     }
 
     /**
      * 申请解约
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param payModel 商户平台模式
      * @return {@link String} 请求返回的结果
      */
-    public static String deleteContract(Map<String, String> params) {
-        return doPost(DELETE_CONTRACT_URL, params);
+    public static String deleteContract(Map<String, String> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doPost(DELETE_CONTRACT_URL, params);
+        } else {
+            return doPost(PARTNER_DELETE_CONTRACT_URL, params);
+        }
     }
 
     /**
@@ -490,13 +649,18 @@ public class WxPayApi {
     }
 
     /**
-     * 代扣订单查询
+     * 查询代扣订单
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param payModel 商户平台模式
      * @return {@link String} 请求返回的结果
      */
-    public static String papOrderQuery(Map<String, String> params) {
-        return doPost(PAP_ORDER_QUERY_URL, params);
+    public static String papOrderQuery(Map<String, String> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return doPost(PAP_ORDER_QUERY_URL, params);
+        } else {
+            return doPost(PARTNER_PAP_ORDER_QUERY_URL, params);
+        }
     }
 
     /**
