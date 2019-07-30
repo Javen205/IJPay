@@ -2,6 +2,7 @@
 
 ![](assets/img/IJPay-t.png)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dd61ce30546e42999f8491246a6133c7)](https://app.codacy.com/app/Javen205/IJPay?utm_source=github.com&utm_medium=referral&utm_content=Javen205/IJPay&utm_campaign=Badge_Grade_Dashboard)
 [![Gitee star](https://gitee.com/javen205/IJPay/badge/star.svg?theme=white)](https://gitee.com/javen205/IJPay/stargazers)
 [![Github start](https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars)](https://github.com/Javen205/IJPay)
 [![License][licensesvg]][license]
