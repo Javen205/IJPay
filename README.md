@@ -111,3 +111,4 @@ GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJ
 - [微信委托扣款 API-普通商户模式](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=17_1)
 - [微信刷脸支付 API](https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/backend.html)
 - [支付宝开发平台](https://docs.open.alipay.com)
+- [QQ 钱包开发文档](https://qpay.qq.com/buss/doc.shtml)
