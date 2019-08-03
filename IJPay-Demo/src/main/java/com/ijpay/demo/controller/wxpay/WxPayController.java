@@ -6,9 +6,9 @@ import com.ijpay.demo.entity.WxPayBean;
 import com.ijpay.demo.kit.IpKit;
 import com.ijpay.demo.vo.AjaxResult;
 import com.ijpay.wxpay.WxPayApi;
-import com.ijpay.wxpay.constant.enums.SignType;
-import com.ijpay.wxpay.constant.enums.TradeType;
-import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.core.enums.SignType;
+import com.ijpay.core.enums.TradeType;
+import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.model.UnifiedOrderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +65,7 @@ public class WxPayController {
      */
     @RequestMapping(value = "/webPay", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public AjaxResult webPay(HttpServletRequest request, @RequestParam("total_fee") String total_fee) {
+    public AjaxResult webPay(HttpServletRequest request, @RequestParam("total_fee") String totalFee) {
         // openId，采用 网页授权获取 access_token API：SnsAccessTokenApi获取
         String openId = (String) request.getSession().getAttribute("openId");
         if (openId == null){
@@ -74,7 +74,7 @@ public class WxPayController {
         if (StrUtil.isEmpty(openId)) {
             return new AjaxResult().addError("openId is null");
         }
-        if (StrUtil.isEmpty(total_fee)) {
+        if (StrUtil.isEmpty(totalFee)) {
             return new AjaxResult().addError("请输入数字金额");
         }
         String ip = IpKit.getRealIp(request);
@@ -103,21 +103,21 @@ public class WxPayController {
         log.info(xmlResult);
 
         Map<String, String> resultMap = WxPayKit.xmlToMap(xmlResult);
-        String return_code = resultMap.get("return_code");
-        String return_msg = resultMap.get("return_msg");
-        if (!WxPayKit.codeIsOK(return_code)) {
-            return new AjaxResult().addError(return_msg);
+        String returnCode = resultMap.get("return_code");
+        String returnMsg = resultMap.get("return_msg");
+        if (!WxPayKit.codeIsOk(returnCode)) {
+            return new AjaxResult().addError(returnMsg);
         }
-        String result_code = resultMap.get("result_code");
-        if (!WxPayKit.codeIsOK(result_code)) {
-            return new AjaxResult().addError(return_msg);
+        String resultCode = resultMap.get("result_code");
+        if (!WxPayKit.codeIsOk(resultCode)) {
+            return new AjaxResult().addError(returnMsg);
         }
 
         // 以下字段在return_code 和result_code都为SUCCESS的时候有返回
 
-        String prepay_id = resultMap.get("prepay_id");
+        String prepayId = resultMap.get("prepay_id");
 
-        Map<String, String> packageParams = WxPayKit.prepayIdCreateSign(prepay_id, wxPayBean.getAppId(), wxPayBean.getPartnerKey(),SignType.HMACSHA256);
+        Map<String, String> packageParams = WxPayKit.prepayIdCreateSign(prepayId, wxPayBean.getAppId(), wxPayBean.getPartnerKey(),SignType.HMACSHA256);
 
         String jsonStr = JSON.toJSONString(packageParams);
         return new AjaxResult().success(jsonStr);
