@@ -1,0 +1,31 @@
+language: java
+
+sudo: false
+
+install: true
+
+jdk:
+  - openjdk7
+  - openjdk8
+#  - openjdk9
+#  - openjdk10
+#  - openjdk11
+
+notifications:
+  email:
+    recipients:
+      - javendev@126.com
+    on_success: never
+    on_failure: always
+
+#cache:
+#  directories:
+#    - '$HOME/.m2'
+
+script:
+  - export TZ=Asia/Shanghai
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn cobertura:cobertura -Dcobertura.report.format=xml -Dmaven.javadoc.skip.true
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
