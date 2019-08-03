@@ -11,11 +11,11 @@
  *
  * @author Javen
  */
-package com.ijpay.wxpay.model;
+package com.ijpay.core.model;
 
 import cn.hutool.core.util.StrUtil;
-import com.ijpay.wxpay.constant.enums.SignType;
-import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.core.kit.WxPayKit;
+import com.ijpay.core.enums.SignType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

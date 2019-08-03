@@ -1,9 +1,9 @@
 package com.ijpay.wxpay;
 
-import com.ijpay.wxpay.constant.enums.PayModel;
-import com.ijpay.wxpay.constant.enums.SignType;
-import com.ijpay.wxpay.kit.HttpKit;
-import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.core.kit.HttpKit;
+import com.ijpay.core.enums.PayModel;
+import com.ijpay.core.enums.SignType;
+import com.ijpay.core.kit.WxPayKit;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -1020,11 +1020,11 @@ public class WxPayApi {
     }
 
     public static String doPostSSL(String url, Map<String, String> params, String certPath, String certPass) {
-        return HttpKit.getDelegate().postSSL(url, WxPayKit.toXml(params), certPath, certPass);
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certPath, certPass);
     }
 
     public static String doPostSSL(String url, Map<String, String> params, InputStream certFile, String certPass) {
-        return HttpKit.getDelegate().postSSL(url, WxPayKit.toXml(params), certFile, certPass);
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass);
     }
 
 }

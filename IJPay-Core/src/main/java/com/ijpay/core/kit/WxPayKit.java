@@ -1,12 +1,12 @@
-package com.ijpay.wxpay.kit;
+package com.ijpay.core.kit;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
-import com.ijpay.wxpay.XmlHelper;
-import com.ijpay.wxpay.constant.enums.SignType;
+import com.ijpay.core.XmlHelper;
+import com.ijpay.core.enums.SignType;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,7 +32,7 @@ public class WxPayKit {
     private static final String FIELD_SIGN = "sign";
     private static final String FIELD_SIGN_TYPE = "sign_type";
 
-    public static String hmacSHA256(String data, String key) {
+    public static String hmacSha256(String data, String key) {
         return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data, CharsetUtil.UTF_8);
     }
 
@@ -120,10 +120,13 @@ public class WxPayKit {
         }
         // 生成签名前先去除sign
         params.remove(FIELD_SIGN);
-        String stringA = packageSign(params, false);
-        String stringSignTemp = stringA + "&key=" + partnerKey;
-        if (signType == SignType.MD5) return md5(stringSignTemp).toUpperCase();
-        else return hmacSHA256(stringSignTemp, partnerKey).toUpperCase();
+        String tempStr = packageSign(params, false);
+        String stringSignTemp = tempStr + "&key=" + partnerKey;
+        if (signType == SignType.MD5) {
+            return md5(stringSignTemp).toUpperCase();
+        } else {
+            return hmacSha256(stringSignTemp, partnerKey).toUpperCase();
+        }
     }
 
     /**
@@ -157,8 +160,9 @@ public class WxPayKit {
             String key = entry.getKey();
             String value = entry.getValue();
             // 略过空值
-            if (StrUtil.isEmpty(value))
+            if (StrUtil.isEmpty(value)) {
                 continue;
+            }
             xml.append("<").append(key).append(">");
             xml.append(entry.getValue());
             xml.append("</").append(key).append(">");
@@ -262,7 +266,7 @@ public class WxPayKit {
      * @param codeValue code 值
      * @return 是否是 SUCCESS
      */
-    public static boolean codeIsOK(String codeValue) {
+    public static boolean codeIsOk(String codeValue) {
         return StrUtil.isNotEmpty(codeValue) && "SUCCESS".equals(codeValue);
     }
 

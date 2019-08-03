@@ -1,6 +1,6 @@
-package com.ijpay.wxpay.kit;
+package com.ijpay.core.kit;
 
-import com.ijpay.wxpay.HttpDelegate;
+import com.ijpay.core.http.AbstractHttpDelegate;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -17,21 +17,21 @@ import com.ijpay.wxpay.HttpDelegate;
  */
 public class HttpKit {
 
-    private static HttpDelegate delegate = new DefaultHttpKit();
+    private static AbstractHttpDelegate delegate = new DefaultHttpKit();
 
-    public static HttpDelegate getDelegate() {
+    public static AbstractHttpDelegate getDelegate() {
         return delegate;
     }
 
-    public static void setDelegate(HttpDelegate delegate) {
+    public static void setDelegate(AbstractHttpDelegate delegate) {
         HttpKit.delegate = delegate;
     }
 }
 
 /**
- * 使用 hutool 实现的 Http 工具类
+ * 使用 huTool 实现的 Http 工具类
  *
  * @author Javen
  */
-class DefaultHttpKit extends HttpDelegate {
+class DefaultHttpKit extends AbstractHttpDelegate {
 }

@@ -1,4 +1,4 @@
-package com.ijpay.wxpay;
+package com.ijpay.core.http;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
@@ -25,25 +25,60 @@ import java.util.Map;
  *
  * @author Javen
  */
-public abstract class HttpDelegate {
-
-    protected String get(String url) {
+public abstract class AbstractHttpDelegate {
+    /**
+     * get 请求
+     *
+     * @param url 请求url
+     * @return {@link String} 请求返回的结果
+     */
+     public String get(String url) {
         return HttpUtil.get(url);
     }
 
-    protected String get(String url, Map<String, Object> paramMap) {
+    /**
+     * get 请求
+     *
+     * @param url      请求url
+     * @param paramMap 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public String get(String url, Map<String, Object> paramMap) {
         return HttpUtil.get(url, paramMap);
     }
 
-    protected String post(String url, String data) {
+    /**
+     * post 请求
+     *
+     * @param url  请求url
+     * @param data 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, String data) {
         return HttpUtil.post(url, data);
     }
 
-    protected String post(String url, Map<String, Object> paramMap) {
+    /**
+     * post 请求
+     *
+     * @param url      请求url
+     * @param paramMap 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, Map<String, Object> paramMap) {
         return HttpUtil.post(url, paramMap);
     }
 
-    protected String postSSL(String url, String data, String certPath, String certPass) {
+    /**
+     * post 请求
+     *
+     * @param url      请求url
+     * @param data     请求参数
+     * @param certPath 证书路径
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, String data, String certPath, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
@@ -61,7 +96,16 @@ public abstract class HttpDelegate {
         }
     }
 
-    protected String postSSL(String url, String data, InputStream certFile, String certPass) {
+    /**
+     * post 请求
+     *
+     * @param url      请求url
+     * @param data     请求参数
+     * @param certFile 证书文件输入流
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, String data, InputStream certFile, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
@@ -81,8 +125,11 @@ public abstract class HttpDelegate {
 
     private KeyManager[] getKeyManager(String certPass, String certPath, InputStream certFile) throws Exception {
         KeyStore clientStore = KeyStore.getInstance("PKCS12");
-        if (certFile != null) clientStore.load(certFile, certPass.toCharArray());
-        else clientStore.load(new FileInputStream(certPath), certPass.toCharArray());
+        if (certFile != null) {
+            clientStore.load(certFile, certPass.toCharArray());
+        } else {
+            clientStore.load(new FileInputStream(certPath), certPass.toCharArray());
+        }
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(clientStore, certPass.toCharArray());
         return kmf.getKeyManagers();

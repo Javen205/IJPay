@@ -1,4 +1,4 @@
-package com.ijpay.wxpay;
+package com.ijpay.core;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,6 +29,7 @@ import java.util.Map;
  *     文档地址：
  *     http://www.w3school.com.cn/xpath/index.asp
  * </pre>
+ * @author L.cm
  */
 public class XmlHelper {
     private final XPath path;
@@ -66,7 +67,7 @@ public class XmlHelper {
         dbf.setExpandEntityReferences(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         doc = db.parse(inputSource);
-        path = getXPathFactory().newXPath();
+        path = getXpathFactory().newXPath();
     }
 
     private static XmlHelper create(InputSource inputSource) {
@@ -99,7 +100,7 @@ public class XmlHelper {
         return xmlHelper;
     }
 
-    private Object evalXPath(String expression, Object item, QName returnType) {
+    private Object evalXpath(String expression, Object item, QName returnType) {
         item = null == item ? doc : item;
         try {
             return path.evaluate(expression, item, returnType);
@@ -115,7 +116,7 @@ public class XmlHelper {
      * @return String
      */
     public String getString(String expression) {
-        return (String) evalXPath(expression, null, XPathConstants.STRING);
+        return (String) evalXpath(expression, null, XPathConstants.STRING);
     }
 
     /**
@@ -125,7 +126,7 @@ public class XmlHelper {
      * @return String
      */
     public Boolean getBoolean(String expression) {
-        return (Boolean) evalXPath(expression, null, XPathConstants.BOOLEAN);
+        return (Boolean) evalXpath(expression, null, XPathConstants.BOOLEAN);
     }
 
     /**
@@ -135,7 +136,7 @@ public class XmlHelper {
      * @return {Number}
      */
     public Number getNumber(String expression) {
-        return (Number) evalXPath(expression, null, XPathConstants.NUMBER);
+        return (Number) evalXpath(expression, null, XPathConstants.NUMBER);
     }
 
     /**
@@ -145,7 +146,7 @@ public class XmlHelper {
      * @return {Node}
      */
     public Node getNode(String expression) {
-        return (Node) evalXPath(expression, null, XPathConstants.NODE);
+        return (Node) evalXpath(expression, null, XPathConstants.NODE);
     }
 
     /**
@@ -155,7 +156,7 @@ public class XmlHelper {
      * @return NodeList
      */
     public NodeList getNodeList(String expression) {
-        return (NodeList) evalXPath(expression, null, XPathConstants.NODESET);
+        return (NodeList) evalXpath(expression, null, XPathConstants.NODESET);
     }
 
     /**
@@ -166,7 +167,7 @@ public class XmlHelper {
      * @return String
      */
     public String getString(Object node, String expression) {
-        return (String) evalXPath(expression, node, XPathConstants.STRING);
+        return (String) evalXpath(expression, node, XPathConstants.STRING);
     }
 
     /**
@@ -177,7 +178,7 @@ public class XmlHelper {
      * @return String
      */
     public Boolean getBoolean(Object node, String expression) {
-        return (Boolean) evalXPath(expression, node, XPathConstants.BOOLEAN);
+        return (Boolean) evalXpath(expression, node, XPathConstants.BOOLEAN);
     }
 
     /**
@@ -188,7 +189,7 @@ public class XmlHelper {
      * @return {Number}
      */
     public Number getNumber(Object node, String expression) {
-        return (Number) evalXPath(expression, node, XPathConstants.NUMBER);
+        return (Number) evalXpath(expression, node, XPathConstants.NUMBER);
     }
 
     /**
@@ -199,7 +200,7 @@ public class XmlHelper {
      * @return {Node}
      */
     public Node getNode(Object node, String expression) {
-        return (Node) evalXPath(expression, node, XPathConstants.NODE);
+        return (Node) evalXpath(expression, node, XPathConstants.NODE);
     }
 
     /**
@@ -210,7 +211,7 @@ public class XmlHelper {
      * @return NodeList
      */
     public NodeList getNodeList(Object node, String expression) {
-        return (NodeList) evalXPath(expression, node, XPathConstants.NODESET);
+        return (NodeList) evalXpath(expression, node, XPathConstants.NODESET);
     }
 
     /**
@@ -220,10 +221,10 @@ public class XmlHelper {
      */
     public Map<String, String> toMap() {
         Element root = doc.getDocumentElement();
-        Map<String, String> params = new HashMap<String, String>();
 
         // 将节点封装成map形式
         NodeList list = root.getChildNodes();
+        Map<String, String> params = new HashMap<String, String>(list.getLength());
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
             params.put(node.getNodeName(), node.getTextContent());
@@ -237,7 +238,7 @@ public class XmlHelper {
         return XmlHelper.XmlHelperHolder.documentBuilderFactory;
     }
 
-    private static XPathFactory getXPathFactory() {
+    private static XPathFactory getXpathFactory() {
         return XmlHelper.XmlHelperHolder.xPathFactory;
     }
 
