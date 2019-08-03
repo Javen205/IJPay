@@ -6,14 +6,14 @@ version: 2
 jobs:
   build:
     image: maven:3-jdk-8
-      stage: build
-      script:
-        - 'mvn install -Dmaven.repo.local=.m2/repository'
-      cache:
-        key: M2_REPO
-        paths:
-          - ~/.m2/repository
-        policy: pull
+    stage: build
+    script:
+      - 'mvn install -Dmaven.repo.local=.m2/repository'
+    cache:
+      key: M2_REPO
+      paths:
+        - ~/.m2/repository
+      policy: pull
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
@@ -21,6 +21,7 @@ jobs:
       - restore_cache:
           keys:
             - IJPay-{{ checksum "pom.xml" }}
+            - IJPay-
       - run: mvn dependency:go-offline
       - save_cache:
           paths:
