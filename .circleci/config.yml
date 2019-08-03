@@ -1,0 +1,29 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+  build:
+    image: maven:3-jdk-8
+      stage: build
+      script:
+        - 'mvn install -Dmaven.repo.local=.m2/repository'
+      cache:
+        key: M2_REPO
+        paths:
+          - ~/.m2/repository
+        policy: pull
+    environment:
+      MAVEN_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - IJPay-{{ checksum "pom.xml" }}
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2/repository
+          key: IJPay-{{ checksum "pom.xml" }}
+      - run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
