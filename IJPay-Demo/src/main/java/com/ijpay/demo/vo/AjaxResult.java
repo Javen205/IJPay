@@ -2,16 +2,23 @@ package com.ijpay.demo.vo;
 
 import java.io.Serializable;
 
+/**
+ * @author Javen
+ */
 public class AjaxResult implements Serializable {
 
     private static final long serialVersionUID = 6439646269084700779L;
 
     private int code = 0;
 
-    // 返回的中文消息
+    /**
+     * 返回的中文消息
+     */
     private String message;
 
-    // 成功时携带的数据
+    /**
+     * 成功时携带的数据
+     */
     private Object data;
 
     public int getCode() {
@@ -30,12 +37,21 @@ public class AjaxResult implements Serializable {
         this.data = data;
     }
 
-    // 校验错误
+    /**
+     * 校验错误
+     *
+     * @return
+     */
     public boolean hasError() {
         return this.code != 0;
     }
 
-    // 添加错误，用于alertError
+    /**
+     * 添加错误，用于alertError
+     *
+     * @param message
+     * @return
+     */
     public AjaxResult addError(String message) {
         this.message = message;
         this.code = 1;
