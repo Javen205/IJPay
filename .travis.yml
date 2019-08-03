@@ -7,9 +7,9 @@ install: true
 jdk:
   - openjdk7
   - openjdk8
-  - openjdk9
-  - openjdk10
-  - openjdk11
+#  - openjdk9
+#  - openjdk10
+#  - openjdk11
 
 notifications:
   email:
