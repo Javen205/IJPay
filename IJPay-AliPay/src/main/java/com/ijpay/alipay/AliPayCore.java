@@ -1,6 +1,7 @@
 package com.ijpay.alipay;
 
 import cn.hutool.crypto.SecureUtil;
+import enums.SignType;
 
 import java.util.*;
 
@@ -28,7 +29,7 @@ public class AliPayCore {
     public static String buildRequestMySign(Map<String, String> params, String key, String signType) {
         // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String preStr = createLinkString(params);
-        if (signType.equals("MD5")) {
+        if (SignType.MD5.getType().equals(signType)) {
             return SecureUtil.md5(preStr.concat(key));
         }
         return null;
@@ -62,14 +63,14 @@ public class AliPayCore {
      * @return 去掉空值与签名参数后的新签名参数组
      */
     public static Map<String, String> paraFilter(Map<String, String> sArray) {
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>(sArray.size());
         if (sArray == null || sArray.size() <= 0) {
             return result;
         }
         for (String key : sArray.keySet()) {
             String value = sArray.get(key);
-            if (value == null || value.equals("") || key.equalsIgnoreCase("sign")
-                    || key.equalsIgnoreCase("sign_type")) {
+            if (value == null || "".equals(value) || "sign".equalsIgnoreCase(key)
+                    || "sign_type".equalsIgnoreCase(key)) {
                 continue;
             }
             result.put(key, value);
@@ -90,7 +91,8 @@ public class AliPayCore {
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = params.get(key);
-            if (i == keys.size() - 1) {// 拼接时，不包括最后一个&字符
+            // 拼接时，不包括最后一个&字符
+            if (i == keys.size() - 1) {
                 content.append(key + "=" + value);
             } else {
                 content.append(key + "=" + value + "&");

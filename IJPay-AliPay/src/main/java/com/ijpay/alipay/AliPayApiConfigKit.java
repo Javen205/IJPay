@@ -116,9 +116,9 @@ public class AliPayApiConfigKit {
      */
     public static AliPayApiConfig getApiConfig(String appId) {
         AliPayApiConfig cfg = CFG_MAP.get(appId);
-        if (cfg == null)
-            throw new IllegalStateException(
-                    "需事先调用 AliPayApiConfigKit.putApiConfig(aliPayApiConfig) 将 appId对应的 aliPayApiConfig 对象存入，才可以使用 AliPayApiConfigKit.getAliPayApiConfig() 的系列方法");
+        if (cfg == null) {
+            throw new IllegalStateException("需事先调用 AliPayApiConfigKit.putApiConfig(aliPayApiConfig) 将 appId对应的 aliPayApiConfig 对象存入，才可以使用 AliPayApiConfigKit.getAliPayApiConfig() 的系列方法");
+        }
         return cfg;
     }
 }

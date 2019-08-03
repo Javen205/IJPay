@@ -35,6 +35,11 @@ import java.util.Map;
 public class AliPayApi {
 
     /**
+     * 支付宝提供给商户的服务接入网关URL(新)
+     */
+    private static final String GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
+
+    /**
      * APP支付
      *
      * @param model     {@link AlipayTradeAppPayModel}
@@ -117,7 +122,8 @@ public class AliPayApi {
      */
     public static AlipayTradePayResponse tradePayToResponse(AlipayTradePayModel model, String notifyUrl) throws AlipayApiException {
         AlipayTradePayRequest request = new AlipayTradePayRequest();
-        request.setBizModel(model);// 填充业务参数
+        // 填充业务参数
+        request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
     }
@@ -188,10 +194,9 @@ public class AliPayApi {
         } else {
             // 调用查询接口查询数据
             JSONObject jsonObject = JSONObject.parseObject(result);
-            String out_biz_no = jsonObject.getJSONObject("alipay_fund_trans_toaccount_transfer_response")
-                    .getString("out_biz_no");
+            String outBizNo = jsonObject.getJSONObject("alipay_fund_trans_toaccount_transfer_response").getString("out_biz_no");
             AlipayFundTransOrderQueryModel queryModel = new AlipayFundTransOrderQueryModel();
-            model.setOutBizNo(out_biz_no);
+            model.setOutBizNo(outBizNo);
             return transferQuery(queryModel);
         }
     }
@@ -710,16 +715,11 @@ public class AliPayApi {
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
     }
 
-    /**
-     * 支付宝提供给商户的服务接入网关URL(新)
-     */
-    private static final String GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
-
-    public static void batchTrans(Map<String, String> params, String private_key, String sign_type, HttpServletResponse response) throws IOException {
+    public static void batchTrans(Map<String, String> params, String privateKey, String signType, HttpServletResponse response) throws IOException {
         params.put("service", "batch_trans_notify");
         params.put("_input_charset", "UTF-8");
         params.put("pay_date", DateUtil.format(new Date(), "YYYYMMDD"));
-        Map<String, String> param = AliPayCore.buildRequestPara(params, private_key, sign_type);
+        Map<String, String> param = AliPayCore.buildRequestPara(params, privateKey, signType);
         response.sendRedirect(GATEWAY_NEW.concat(AliPayCore.createLinkString(param)));
     }
 
