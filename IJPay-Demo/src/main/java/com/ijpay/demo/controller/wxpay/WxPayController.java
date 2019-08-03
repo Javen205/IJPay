@@ -105,11 +105,11 @@ public class WxPayController {
         Map<String, String> resultMap = WxPayKit.xmlToMap(xmlResult);
         String return_code = resultMap.get("return_code");
         String return_msg = resultMap.get("return_msg");
-        if (!WxPayKit.codeIsOK(return_code)) {
+        if (!WxPayKit.codeIsOk(return_code)) {
             return new AjaxResult().addError(return_msg);
         }
         String result_code = resultMap.get("result_code");
-        if (!WxPayKit.codeIsOK(result_code)) {
+        if (!WxPayKit.codeIsOk(result_code)) {
             return new AjaxResult().addError(return_msg);
         }
 

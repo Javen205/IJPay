@@ -15,12 +15,17 @@ package com.ijpay.wxpay.constant.enums;
  * @author Javen
  */
 public enum PayModel {
-    BUSINESS_MODEL("BUSINESS_MODEL", "商户模式"),
-    SERVICE_MODE("SERVICE_MODE", "服务商模式");
+    /**
+     * 商户模式
+     */
+    BUSINESS_MODEL("BUSINESS_MODEL"),
+    /**
+     * 服务商模式
+     */
+    SERVICE_MODE("SERVICE_MODE");
 
-    PayModel(String payModel, String description) {
+    PayModel(String payModel) {
         this.payModel = payModel;
-        this.description = description;
     }
 
     /**
@@ -28,16 +33,8 @@ public enum PayModel {
      */
     private final String payModel;
 
-    /**
-     * 描述
-     */
-    private final String description;
 
     public String getPayModel() {
         return payModel;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

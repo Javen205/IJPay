@@ -14,8 +14,13 @@ package com.ijpay.wxpay.constant.enums;
  * @author Javen
  */
 public enum SignType {
+    /**
+     * HMAC-SHA256 加密
+     */
     HMACSHA256("HMAC-SHA256"),
-
+    /**
+     *  MD5 加密
+     */
     MD5("MD5");
 
     SignType(String type) {

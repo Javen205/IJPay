@@ -1020,11 +1020,11 @@ public class WxPayApi {
     }
 
     public static String doPostSSL(String url, Map<String, String> params, String certPath, String certPass) {
-        return HttpKit.getDelegate().postSSL(url, WxPayKit.toXml(params), certPath, certPass);
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certPath, certPass);
     }
 
     public static String doPostSSL(String url, Map<String, String> params, InputStream certFile, String certPass) {
-        return HttpKit.getDelegate().postSSL(url, WxPayKit.toXml(params), certFile, certPass);
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass);
     }
 
 }

@@ -15,31 +15,35 @@ package com.ijpay.wxpay.constant.enums;
  */
 
 public enum ReceiverType {
-    MERCHANT("MERCHANT_ID","商户ID"),
-    WECHATID("PERSONAL_WECHATID","个人微信号"),
-    OPENID("PERSONAL_OPENID","个人 openId（由父商户 appId 转换得到）"),
-    SUB_OPENID("PERSONAL_SUB_OPENID","个人 sub_openid（由子商户 appId 转换得到）");
+    /**
+     * 商户ID
+     */
+    MERCHANT("MERCHANT_ID"),
+    /**
+     * 个人微信号
+     */
+    WECHATID("PERSONAL_WECHATID"),
+    /**
+     * 个人 openId（由父商户 appId 转换得到）
+     */
+    OPENID("PERSONAL_OPENID"),
+    /**
+     * 个人 sub_openid（由子商户 appId 转换得到）
+     */
+    SUB_OPENID("PERSONAL_SUB_OPENID");
 
 
     /**
      * 类型
      */
     private final String type;
-    /**
-     * 描述
-     */
-    private final String description;
 
-    ReceiverType(String type, String description) {
+    ReceiverType(String type) {
         this.type = type;
-        this.description = description;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getDescription() {
-        return description;
-    }
 }
