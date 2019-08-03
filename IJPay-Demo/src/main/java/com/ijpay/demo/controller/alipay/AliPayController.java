@@ -42,7 +42,7 @@ public class AliPayController extends AliPayApiController {
         try {
             aliPayApiConfig = AliPayApiConfigKit.getApiConfig(aliPayBean.getAppId());
         } catch (Exception e) {
-            aliPayApiConfig = AliPayApiConfig.New()
+            aliPayApiConfig = AliPayApiConfig.builder()
                     .setAppId(aliPayBean.getAppId())
                     .setAliPayPublicKey(aliPayBean.getPublicKey())
                     .setCharset("UTF-8")
