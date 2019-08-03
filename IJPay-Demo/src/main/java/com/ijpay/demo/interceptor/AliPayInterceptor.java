@@ -1,7 +1,7 @@
 package com.ijpay.demo.interceptor;
 
 import com.ijpay.alipay.AliPayApiConfigKit;
-import com.ijpay.demo.controller.alipay.AliPayApiController;
+import com.ijpay.demo.controller.alipay.AbstractAliPayApiController;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -28,11 +28,11 @@ public class AliPayInterceptor implements HandlerInterceptor {
         if (HandlerMethod.class.equals(handler.getClass())) {
             HandlerMethod method = (HandlerMethod) handler;
             Object controller = method.getBean();
-            if (!(controller instanceof AliPayApiController)) {
+            if (!(controller instanceof AbstractAliPayApiController)) {
                 throw new RuntimeException("控制器需要继承 AliPayApiController");
             }
             try {
-                AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AliPayApiController) controller).getApiConfig());
+                AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AbstractAliPayApiController) controller).getApiConfig());
                 return true;
             } finally {
 
