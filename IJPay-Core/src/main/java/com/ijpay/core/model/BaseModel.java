@@ -30,12 +30,11 @@ public class BaseModel {
      * @return 转化后的 Map
      */
     public Map<String, String> toMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
         String[] fieldNames = getFiledNames(this);
+        HashMap<String, String> map = new HashMap<String, String>(fieldNames.length);
         for (int i = 0; i < fieldNames.length; i++) {
             String name = fieldNames[i];
             String value = (String) getFieldValueByName(name, this);
-            System.out.println("name:" + name + ",value:" + value);
             if (StrUtil.isNotEmpty(value)) {
                 map.put(name, value);
             }
