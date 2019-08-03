@@ -1,12 +1,12 @@
-package com.ijpay.wxpay.kit;
+package com.ijpay.core.kit;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
-import com.ijpay.wxpay.XmlHelper;
-import com.ijpay.wxpay.constant.enums.SignType;
+import com.ijpay.core.XmlHelper;
+import com.ijpay.core.enums.SignType;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

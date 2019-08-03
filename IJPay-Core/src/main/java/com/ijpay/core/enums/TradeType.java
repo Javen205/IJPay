@@ -1,4 +1,4 @@
-package com.ijpay.wxpay.constant.enums;
+package com.ijpay.core.enums;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>

@@ -14,6 +14,7 @@
  */
 package com.ijpay.wxpay.model;
 
+import com.ijpay.core.model.BaseModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

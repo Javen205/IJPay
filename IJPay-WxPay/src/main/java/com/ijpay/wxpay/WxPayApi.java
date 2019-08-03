@@ -1,9 +1,9 @@
 package com.ijpay.wxpay;
 
-import com.ijpay.wxpay.constant.enums.PayModel;
-import com.ijpay.wxpay.constant.enums.SignType;
-import com.ijpay.wxpay.kit.HttpKit;
-import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.core.kit.HttpKit;
+import com.ijpay.core.enums.PayModel;
+import com.ijpay.core.enums.SignType;
+import com.ijpay.core.kit.WxPayKit;
 
 import java.io.InputStream;
 import java.util.HashMap;

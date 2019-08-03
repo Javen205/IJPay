@@ -1,4 +1,4 @@
-package com.ijpay.wxpay.constant.enums;
+package com.ijpay.core.enums;
 
 
 /**

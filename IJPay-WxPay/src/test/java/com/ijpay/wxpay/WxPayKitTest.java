@@ -1,7 +1,7 @@
 package com.ijpay.wxpay;
 
 
-import com.ijpay.wxpay.kit.WxPayKit;
+import com.ijpay.core.kit.WxPayKit;
 import org.junit.Assert;
 import org.junit.Test;
 

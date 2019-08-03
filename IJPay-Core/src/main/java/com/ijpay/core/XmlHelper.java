@@ -1,4 +1,4 @@
-package com.ijpay.wxpay;
+package com.ijpay.core;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

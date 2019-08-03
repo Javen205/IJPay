@@ -1,4 +1,4 @@
-package com.ijpay.wxpay;
+package com.ijpay.core.http;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
@@ -32,7 +32,7 @@ public abstract class AbstractHttpDelegate {
      * @param url 请求url
      * @return {@link String} 请求返回的结果
      */
-    protected String get(String url) {
+     public String get(String url) {
         return HttpUtil.get(url);
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractHttpDelegate {
      * @param paramMap 请求参数
      * @return {@link String} 请求返回的结果
      */
-    protected String get(String url, Map<String, Object> paramMap) {
+    public String get(String url, Map<String, Object> paramMap) {
         return HttpUtil.get(url, paramMap);
     }
 
@@ -54,7 +54,7 @@ public abstract class AbstractHttpDelegate {
      * @param data 请求参数
      * @return {@link String} 请求返回的结果
      */
-    protected String post(String url, String data) {
+    public String post(String url, String data) {
         return HttpUtil.post(url, data);
     }
 
@@ -65,7 +65,7 @@ public abstract class AbstractHttpDelegate {
      * @param paramMap 请求参数
      * @return {@link String} 请求返回的结果
      */
-    protected String post(String url, Map<String, Object> paramMap) {
+    public String post(String url, Map<String, Object> paramMap) {
         return HttpUtil.post(url, paramMap);
     }
 
@@ -78,7 +78,7 @@ public abstract class AbstractHttpDelegate {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    protected String post(String url, String data, String certPath, String certPass) {
+    public String post(String url, String data, String certPath, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
@@ -105,7 +105,7 @@ public abstract class AbstractHttpDelegate {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    protected String post(String url, String data, InputStream certFile, String certPass) {
+    public String post(String url, String data, InputStream certFile, String certPass) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder

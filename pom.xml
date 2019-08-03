@@ -9,6 +9,7 @@
         <module>IJPay-AliPay</module>
         <module>IJPay-WxPay</module>
         <module>IJPay-All</module>
+        <module>IJPay-Core</module>
     </modules>
     <packaging>pom</packaging>
     <name>IJPay</name>
