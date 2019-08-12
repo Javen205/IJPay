@@ -43,6 +43,9 @@ public class AliPayApiConfigKit {
      * @return {@link AliPayApiConfig}
      */
     public static AliPayApiConfig setThreadLocalAliPayApiConfig(AliPayApiConfig aliPayApiConfig) {
+        if (StrUtil.isNotEmpty(aliPayApiConfig.getAppId())){
+            setThreadLocalAppId(aliPayApiConfig.getAppId());
+        }
         return putApiConfig(aliPayApiConfig);
     }
 
