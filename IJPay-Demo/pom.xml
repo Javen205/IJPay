@@ -21,6 +21,8 @@
 
         <ijapy.alipay.version>2.1.2</ijapy.alipay.version>
         <ijapy.wxpay.version>2.1.2</ijapy.wxpay.version>
+        <ijapy.unionpay.version>2.1.2</ijapy.unionpay.version>
+        <enjoy.version>4.3</enjoy.version>
     </properties>
 
     <dependencies>
@@ -32,7 +34,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -49,15 +50,27 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-AliPay</artifactId>
             <version>${ijapy.alipay.version}</version>
-        </dependency><dependency>
+        </dependency>
+        <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-WxPay</artifactId>
             <version>${ijapy.wxpay.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-UnionPay</artifactId>
+            <version>${ijapy.unionpay.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>enjoy</artifactId>
+            <version>${enjoy.version}</version>
         </dependency>
     </dependencies>
 

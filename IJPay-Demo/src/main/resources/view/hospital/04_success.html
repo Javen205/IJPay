@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>挂号成功</title>
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/hospital.css">
+</head>
+<body>
+<section class="suc-wrap">
+	<div class="suc">
+		<div class="suc-tit-s">
+			<div class="suc-tit">
+				<h1 class="suc-titm">挂号成功,请前往内科候诊</h1>
+				<p class="suc-titf flex flex-align-center">
+					<i class="suc-line flex-1"></i>
+					<span>内科室位于医院四楼出电梯右转前50米</span>
+					<i class="suc-line flex-1"></i>
+				</p>
+			</div>
+		</div>
+		<div class="suc-inf-s">
+			<div class="suc-inf-box">
+				<div class="suc-items-b">
+					<div class="suc-items suc-fl suc-1">
+						<span class="suc-f-12 suc-fl">就诊人</span>
+						<span class="suc-inf-18 suc-fl suc-pdLeft">李三</span>
+					</div>
+					<div class="suc-items suc-fl suc-2">
+						<span class="suc-f-12 suc-fl">排号</span>
+						<span class="suc-inf-18 suc-fl suc-pdLeft">02号</span>
+						<span class="suc-inf-p suc-fl">(前面还有<i>01</i>人)</span>
+					</div>
+				</div>
+				<div class="suc-items">
+					<span class="suc-lb suc-lb-w">检查时间</span>
+					<span class="suc-inf suc-inf-w">2015年10月14日 15:00-16:00</span>
+				</div>
+				<div class="suc-gap-line"></div>
+				<div class="suc-items">
+					<span class="suc-lb">医&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生</span>
+					<span class="suc-inf">张建民 主任医生</span>
+				</div>
+				<div class="suc-items">
+					<span class="suc-lb">科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;室</span>
+					<span class="suc-inf">内科门诊</span>
+				</div>
+				<div class="suc-items">
+					<span class="suc-lb">医院地址</span>
+					<span class="suc-inf">南山区科技中三路4001号</span>
+				</div>
+				<div class="suc-items">
+					<span class="suc-lb">医院电话</span>
+					<span class="suc-inf"><a href="tel:0755-56781234">0755-56781234</a></span>
+				</div>
+				<div class="suc-items">
+					<span class="suc-lb">注意事项</span>
+					<span class="suc-inf">
+						<ul>
+							<li>1、请携带【诊疗卡】到诊室就诊</li>
+							<li>2、您的挂号可能需要验血,请空腹</li>
+							<li>3、请按时抵达诊室,迟到30分钟即视为自动放弃就诊</li>
+						</ul>
+					</span>
+				</div>
+			</div>
+				
+		</div>
+		<div class="suc-about-s">
+			<!-- 
+				交互说明 ,控制.suc-about
+				1.添加class:show-detail显示详情
+			 -->
+			<div class="suc-about">
+				
+				<p class="suc-about-tit flex flex-pack-justify" id="suc_about_tit">
+					<span>打印发票、费用清单、办理退费等问题</span>
+					<span class="suc-ico-arrow"></span>
+				</p>
+				<div class="suc-about-detail">
+					<p>1、打印发票或办理退费,请凭微信缴费消息到各楼层收费处办理请凭微信缴费消息到各楼层收费处办理</p>
+					<p>2、打印发票或办理退费,请凭微信缴费消息到各楼层收费处办理</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+
+
+<script type="text/javascript" src="#(ctxPath)/static/js/zepto.min.js"></script>
+<script type="text/javascript">
+
+$("#suc_layer_return").on("click",function(){
+	$("#suc_layer").addClass("hide");
+})
+
+$("#suc_layer_confirm").on("click",function(){
+	window.location.href = "register.html"
+})
+$("#suc_about_tit").on("click",function(){
+	if($(".suc-about").hasClass("show-detail")){
+		$(".suc-about").removeClass("show-detail");
+	}
+	else{
+		$(".suc-about").addClass("show-detail");
+	}
+})
+
+
+</script>
+</body>
+</html>
+ 
+
+
