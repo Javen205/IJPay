@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "docs of IJPay",
+  "author": "Javen",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.0.3",
+    "@vuepress/plugin-pwa": "^1.0.3",
+    "vuepress": "^1.0.3"
+  }
+}
