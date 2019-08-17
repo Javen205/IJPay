@@ -11,6 +11,7 @@
         <module>IJPay-All</module>
         <module>IJPay-Core</module>
         <module>IJPay-QQ</module>
+        <module>IJPay-UnionPay</module>
     </modules>
     <packaging>pom</packaging>
     <name>IJPay</name>
