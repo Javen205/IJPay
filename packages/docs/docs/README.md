@@ -20,12 +20,6 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
      <a target="_blank" href="https://github.com/Javen205/IJPay">
         <img src="https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars" ></img>
      </a>
-     <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">
-        <img src="https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg" ></img>
-     </a>
-     <a target="_blank" href="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay">
-        <img src="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg" ></img>
-     </a> 
      <a target="_blank" href="https://github.com/Javen205/donate">
         <img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg" ></img>
      </a> 

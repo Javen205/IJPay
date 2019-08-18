@@ -37,8 +37,8 @@ module.exports = [
         link: 'https://ijpay.javen.dev/doc/opensource/IJPay.html',
     },
     {
-        text: '赞赏',
-        link: 'https://github.com/Javen205/donate',
+        text: '捐赠',
+        link: '/guide/donate/',
     },
     {
         text: '云主机低至2折',

@@ -6,12 +6,13 @@ IJPay 中的支付宝支付是对 [alipay-sdk-java](https://github.com/alipay/al
 简化 `DefaultAlipayClient` 的配置并支持多应用无缝切换。
 
 ## 使用步骤
-- [添加相关依赖](../maven.md)
-- [获取支付宝应用配置参数](../config/alipay_config.md)
-- [初始化支付宝](init.md)
-- 调用 [AliPayApi](https://gitee.com/javen205/IJPay/blob/master/IJPay-AliPay/src/main/java/com/ijpay/alipay/AliPayApi.java) 
+
+1. [添加相关依赖](../maven.md)
+2. [获取支付宝应用配置参数](../config/alipay_config.md)
+3. [初始化支付宝](init.md)
+4. 调用 [AliPayApi](https://gitee.com/javen205/IJPay/blob/master/IJPay-AliPay/src/main/java/com/ijpay/alipay/AliPayApi.java) 
 中的接口
-- 根据接口传入对应的 Model 来构建请求参数，Model 对应的接口参数下面有提供列表参考
+5. 根据接口传入对应的 Model 来构建请求参数，Model 对应的接口参数下面有提供列表参考
 
 ## 特殊情况
 

@@ -1,5 +1,5 @@
 module.exports = ctx => ( {
-    base:'/IJPay/',
+    base:'/ijpay/',
     locales: {
         '/': {
             lang: 'zh-CN',
@@ -40,7 +40,7 @@ module.exports = ctx => ( {
                 sidebar: {
                     '/guide/': getGuideSidebar('客户端','微信公众号开发脚手架',
                         'IJPay 让支付触手可及','获取支付配置','支付宝支付','微信支付',
-                        'QQ 钱包支付','银联支付','京东支付'),
+                        'QQ 钱包支付','银联支付','京东支付','捐赠'),
                 },
             },
             // '/en/': {
@@ -59,7 +59,22 @@ module.exports = ctx => ( {
         ['@vuepress/back-to-top', true],
         ['@vuepress/pwa', {
             serviceWorker: true,
-            updatePopup: true
+            // updatePopup: true,
+            updatePopup: {
+               message: "部分内容已更新请刷新",
+               buttonText: "刷新"
+            }
+        }],
+        ['@vuepress/medium-zoom', true],
+        ['container', {
+            type: 'vue',
+            before: '<pre class="vue-container"><code>',
+            after: '</code></pre>',
+        }],
+        ['container', {
+            type: 'upgrade',
+            before: info => `<UpgradePath title="${info}">`,
+            after: '</UpgradePath>',
         }],
     ],
     extraWatchFiles: [
@@ -68,7 +83,7 @@ module.exports = ctx => ( {
     ]
 })
 
-function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,groupH,groupI) {
+function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,groupH,groupI,groupK) {
     return [
         {
             title: groupA,
@@ -108,8 +123,6 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             children: [
                 'alipay/',
                 'alipay/init',
-                // 'alipay/h5',
-                // 'alipay/pc',
             ]
         },
         {
@@ -117,6 +130,34 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             collapsable: false,
             children: [
                 'wxpay/',
+            ]
+        },
+        {
+            title: groupG,
+            collapsable: false,
+            children: [
+                'qqpay/',
+            ]
+        },
+        {
+            title: groupH,
+            collapsable: false,
+            children: [
+                'unionpay/',
+            ]
+        },
+        {
+            title: groupI,
+            collapsable: false,
+            children: [
+                'jdpay/',
+            ]
+        },
+        {
+            title: groupK,
+            collapsable: false,
+            children: [
+                'donate/',
             ]
         },
     ]
