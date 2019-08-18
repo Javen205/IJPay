@@ -59,6 +59,32 @@ public class QqPayApi {
      */
     private static final String DOWNLOAD_BILL_URL = "https://qpay.qq.com/cgi-bin/sp_download/qpay_mch_statement_down.cgi";
 
+    /**
+     * 创建现金红包
+     */
+    private static final String CREATE_READ_PACK_URL = "https://api.qpay.qq.com/cgi-bin/hongbao/qpay_hb_mch_send.cgi";
+    /**
+     * 查询红包详情
+     */
+    private static final String GET_HB_INFO_URL = "https://qpay.qq.com/cgi-bin/mch_query/qpay_hb_mch_list_query.cgi";
+    /**
+     * 红包对账单下载
+     */
+    private static final String DOWNLOAD_HB_BILL_URL = "https://api.qpay.qq.com/cgi-bin/hongbao/qpay_hb_mch_down_list_file.cgi";
+
+    /**
+     * 企业付款到余额
+     */
+    private static final String TRANSFER_URL = "https://api.qpay.qq.com/cgi-bin/epay/qpay_epay_b2c.cgi";
+    /**
+     * 查询企业付款
+     */
+    private static final String GET_TRANSFER_INFO_URL = "https://qpay.qq.com/cgi-bin/pay/qpay_epay_query.cgi";
+    /**
+     * 企业付款对账单下载
+     */
+    private static final String DOWNLOAD_TRANSFER_BILL_URL = "https://qpay.qq.com/cgi-bin/pay/qpay_epay_statement_down.cgi";
+
 
     /**
      * 提交付款码支付
@@ -89,6 +115,7 @@ public class QqPayApi {
     public static String orderQuery(Map<String, String> params) {
         return doPost(ORDER_QUERY_URL, params);
     }
+
     /**
      * 关闭订单
      *
@@ -165,6 +192,95 @@ public class QqPayApi {
      */
     public static String downloadBill(Map<String, String> params) {
         return doPost(DOWNLOAD_BILL_URL, params);
+    }
+
+    /**
+     * 创建现金红包
+     *
+     * @param params   请求参数
+     * @param cerPath  证书文件目录
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String createReadPack(Map<String, String> params, String cerPath, String certPass) {
+        return doPost(CREATE_READ_PACK_URL, params, cerPath, certPass);
+    }
+
+    /**
+     * 创建现金红包
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String createReadPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return doPost(CREATE_READ_PACK_URL, params, certFile, certPass);
+    }
+
+    /**
+     * 查询红包详情
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getHbInfo(Map<String, String> params) {
+        return doPost(GET_HB_INFO_URL, params);
+    }
+
+    /**
+     * 下载红包对账单
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String downloadHbBill(Map<String, String> params) {
+        return doPost(DOWNLOAD_HB_BILL_URL, params);
+    }
+
+
+    /**
+     * 企业付款到余额
+     *
+     * @param params   请求参数
+     * @param cerPath  证书文件目录
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String transfer(Map<String, String> params, String cerPath, String certPass) {
+        return doPost(TRANSFER_URL, params, cerPath, certPass);
+    }
+
+    /**
+     * 企业付款到余额
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String transfer(Map<String, String> params, InputStream certFile, String certPass) {
+        return doPost(TRANSFER_URL, params, certFile, certPass);
+    }
+
+    /**
+     * 查询企业付款
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getTransferInfo(Map<String, String> params) {
+        return doPost(GET_TRANSFER_INFO_URL, params);
+    }
+
+    /**
+     * 下载企业付款对账单
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String downloadTransferBill(Map<String, String> params) {
+        return doPost(DOWNLOAD_TRANSFER_BILL_URL, params);
     }
 
 
