@@ -1,5 +1,8 @@
 package com.ijpay.wxpay;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -14,8 +17,11 @@ import java.io.Serializable;
  *
  * @author Javen
  */
+
+@Getter
+@Setter
 public class WxPayApiConfig implements Serializable {
-    private static final long serialVersionUID = -6447075676732210047L;
+    private static final long serialVersionUID = -9044503427692786302L;
     
     private String appId;
     private String mchId;
@@ -24,60 +30,4 @@ public class WxPayApiConfig implements Serializable {
     private String partnerKey;
     private String domain;
     private String certPath;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
-
-    public String getSubAppId() {
-        return subAppId;
-    }
-
-    public void setSubAppId(String subAppId) {
-        this.subAppId = subAppId;
-    }
-
-    public String getSubMchId() {
-        return subMchId;
-    }
-
-    public void setSubMchId(String subMchId) {
-        this.subMchId = subMchId;
-    }
-
-    public String getPartnerKey() {
-        return partnerKey;
-    }
-
-    public void setPartnerKey(String partnerKey) {
-        this.partnerKey = partnerKey;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public String getCertPath() {
-        return certPath;
-    }
-
-    public void setCertPath(String certPath) {
-        this.certPath = certPath;
-    }
 }

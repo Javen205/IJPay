@@ -217,6 +217,18 @@ public class WxPayApi {
      * 刷脸支付撤销订单
      */
     private static final String FACE_PAY_REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/facepayreverse";
+    /**
+     * 发放普通红包
+     */
+    private static final String SEND_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+    /**
+     * 发放裂变红包
+     */
+    private static final String SEND_GROUP_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack";
+    /**
+     * 查询红包记录
+     */
+    private static final String GET_HB_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo";
 
     /**
      * 获取沙箱秘钥
@@ -1009,6 +1021,78 @@ public class WxPayApi {
      */
     public static String downloadfundflow(Map<String, String> params, InputStream certFile, String certPassword) {
         return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 发放普通红包
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendRedPack(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(SEND_RED_PACK_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 发放普通红包
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(SEND_RED_PACK_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 发放裂变红包
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendGroupRedPack(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 发放裂变红包
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendGroupRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 查询红包记录
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getHbInfo(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(GET_HB_INFO_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 查询红包记录
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getHbInfo(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certFile, certPassword);
     }
 
     public static String doGet(String url, Map<String, Object> params) {
