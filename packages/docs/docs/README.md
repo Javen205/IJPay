@@ -41,7 +41,7 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 ### 全民云计算
 
-[云主机低至2折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=aam58met)
+[云主机低至2折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x)
 
 ### 广而告之
 

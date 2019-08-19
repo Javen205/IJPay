@@ -42,7 +42,7 @@ module.exports = [
     },
     {
         text: '云主机低至2折',
-        link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=aam58met',
+        link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
     },
     {
         text: 'Gitee',
