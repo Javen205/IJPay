@@ -45,6 +45,10 @@ module.exports = [
         link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
     },
     {
+        text: '聊天室',
+        link: 'https://gitter.im/Javen205/IJPay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge',
+    },
+    {
         text: 'Gitee',
         link: 'https://gitee.com/javen205/IJPay',
     },

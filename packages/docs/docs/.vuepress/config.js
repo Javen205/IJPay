@@ -1,5 +1,5 @@
 module.exports = ctx => ( {
-    base:'/ijpay/',
+    base:'/IJPay/',
     locales: {
         '/': {
             lang: 'zh-CN',
@@ -66,6 +66,9 @@ module.exports = ctx => ( {
             }
         }],
         ['@vuepress/medium-zoom', true],
+        ['@vuepress/google-analytics', {
+            ga: 'UA-146072085-2'
+        }],
         ['container', {
             type: 'vue',
             before: '<pre class="vue-container"><code>',
@@ -78,7 +81,7 @@ module.exports = ctx => ( {
         }],
     ],
     extraWatchFiles: [
-        '.vuepress/nav/en.js',
+        // '.vuepress/nav/en.js',
         '.vuepress/nav/zh.js',
     ]
 })
