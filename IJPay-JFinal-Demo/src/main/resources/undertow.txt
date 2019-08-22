@@ -1,0 +1,59 @@
+# 配置 undertow
+
+undertow.devMode=true
+undertow.host=0.0.0.0
+undertow.port=80
+
+# 打成 fatjar 部署的项目开启下面的配置
+# undertow.resourcePath=src/main/webapp, classpath:webapp
+
+# 开启 gzip 压缩
+undertow.gzip.enable=true
+# 配置压缩级别，默认值 -1。 可配置 1 到 9。 1 拥有最快压缩速度，9 拥有最高压缩率
+undertow.gzip.level=-1
+# 触发压缩的最小内容长度
+undertow.gzip.minLength=1024
+
+
+# IO 线程数，一般建议使用默认值
+# undertow.ioThreads=
+
+
+# worker 线程数，一般建议使用默认值
+# 高性能场景下可配置为：cores / (1 - 阻塞系数)
+# 其中 cores 为 cpu 核心数量，阻塞系数 = 阻塞时间 / (阻塞时间 + 使用CPU的时间)
+# undertow.workerThreads=
+
+
+# 下面两行命令生成密钥库
+# keytool -genkeypair -validity 3650 -alias club -keyalg RSA -keystore club.jks
+# keytool -importkeystore -srckeystore club.jks -destkeystore club.pfx -deststoretype PKCS12
+# 生成过程中提示输入 "名字与姓氏" 时输入 localhost。生产环境从阿里云下载 tomcat 类型的密钥库
+#
+# 更详细的 https/ssl 配置见 jfinal 官方文档 ：http://www.jfinal.com/doc/1-4
+#
+# 是否开启 ssl
+undertow.ssl.enable=false
+# ssl 监听端口号，部署环境设置为 443
+undertow.ssl.port=443
+# 密钥库类型，建议使用 PKCS12
+undertow.ssl.keyStoreType=PKCS12
+# 密钥库文件
+undertow.ssl.keyStore=demo.pfx
+# 密钥库密码
+undertow.ssl.keyStorePassword=111111
+
+
+# ssl 开启时，是否开启 http2。检测该配置是否生效在 chrome 地址栏中输入: chrome://net-internals/#http2
+undertow.http2.enable=false
+
+
+# ssl 开启时，http 请求是否重定向到 https
+# undertow.http.toHttps=false
+# ssl 开启时，http 请求跳转到 https 使用的状态码，默认值 302
+# undertow.http.toHttpsStatusCode=302
+# ssl 开启时，是否关闭 http
+# undertow.http.disable=false
+
+
+

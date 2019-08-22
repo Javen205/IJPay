@@ -1,0 +1,67 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+	
+	<!-- 
+		assembly 打包配置更多配置可参考官方文档：
+			http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html
+	 -->
+	
+	<id>release</id>
+	
+	<!--
+		设置打包格式，可同时设置多种格式，常用格式有：dir、zip、tar、tar.gz
+			dir 格式便于在本地测试打包结果
+			zip 格式便于 windows 系统下解压运行
+			tar、tar.gz 格式便于 linux 系统下解压运行
+	 -->
+	<formats>
+		<format>dir</format>
+		<format>zip</format>
+		<!-- <format>tar.gz</format> -->
+	</formats>
+	
+	<!-- 打 zip 设置为 true 时，会在 zip 包中生成一个根目录，打 dir 时设置为 false 少层目录 -->
+	<includeBaseDirectory>true</includeBaseDirectory>
+	
+	<fileSets>
+		<!-- src/main/resources 全部 copy 到 config 目录下 -->
+		<fileSet>
+			<directory>${basedir}/src/main/resources</directory>
+			<outputDirectory>config</outputDirectory>
+		</fileSet>
+		
+		<!-- src/main/webapp 全部 copy 到 webapp 目录下 -->
+		<fileSet>
+			<directory>${basedir}/src/main/webapp</directory>
+			<outputDirectory>webapp</outputDirectory>
+			<excludes>
+				<exclude>WEB-INF</exclude>
+				<exclude>WEB-INF/web.xml</exclude>
+			</excludes>
+		</fileSet>
+		
+		<!-- 项目根下面的脚本文件 copy 到根目录下 -->
+		<fileSet>
+			<directory>${basedir}</directory>
+			<outputDirectory></outputDirectory>
+			<!-- 脚本文件在 linux 下的权限设为 755，无需 chmod 可直接运行 -->
+			<fileMode>755</fileMode>
+			<includes>
+				<include>*.sh</include>
+				<include>*.bat</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	
+	<!-- 依赖的 jar 包 copy 到 lib 目录下 -->
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>			
+		</dependencySet>
+	</dependencySets>
+	
+</assembly>
+
+
+

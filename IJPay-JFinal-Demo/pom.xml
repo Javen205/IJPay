@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ijpay.demo</groupId>
+    <artifactId>IJPay-JFinal-Demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
+    <description>IJPay Demo for JFinal</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <ijapy.alipay.version>2.2.0</ijapy.alipay.version>
+        <jfinal.version>4.4</jfinal.version>
+    </properties>
+
+
+    <!-- 使用阿里 maven 库 -->
+    <repositories>
+        <repository>
+            <id>ali-maven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal-undertow</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal</artifactId>
+            <version>${jfinal.version}</version>
+        </dependency>
+        <!-- 避免控制台输出如下提示信息：
+		 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+		 项目中实际上用不到这个 jar 包，本 jfinal demo 用不上这个依赖，在此仅为大家
+		 在未来基于 jfinal demo 为模板做开发时做准备工作
+		 注意：eclipse 下可以将 scope 设置为 provided
+		 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.25</version>
+            <!-- 打包前改成 provided，此处使用 compile 仅为支持 IDEA -->
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-All</artifactId>
+            <version>${ijapy.alipay.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-codec</artifactId>
+                    <groupId>commons-codec</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>fastjson</artifactId>
+                    <groupId>com.alibaba</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal-weixin</artifactId>
+            <version>2.4</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>IJPay-JFinal-Demo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- java8 保留参数名编译参数 -->
+                    <compilerArgument>-parameters</compilerArgument>
+                    <compilerArguments>
+                        <verbose/>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
+            <!--
+                jar 包中的配置文件优先级高于 config 目录下的 "同名文件"
+                因此，打包时需要排除掉 jar 包中来自 src/main/resources 目录的
+                配置文件，否则部署时 config 目录中的同名配置文件不会生效
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludes>
+                        <exclude>*.txt</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.properties</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!--
+                使用 mvn clean package 打包
+                更多配置可参考官司方文档：http://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+
+                        <configuration>
+                            <!-- 打包生成的文件名 -->
+                            <finalName>${project.artifactId}</finalName>
+                            <!-- jar 等压缩文件在被打包进入 zip、tar.gz 时是否压缩，设置为 false 可加快打包速度 -->
+                            <recompressZippedFiles>false</recompressZippedFiles>
+                            <!-- 打包生成的文件是否要追加 release.xml 中定义的 id 值 -->
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <!-- 指向打包描述文件 package.xml -->
+                            <descriptors>
+                                <descriptor>package.xml</descriptor>
+                            </descriptors>
+                            <!-- 打包结果输出的基础目录 -->
+                            <outputDirectory>${project.build.directory}/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
