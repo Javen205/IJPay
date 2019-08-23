@@ -147,15 +147,11 @@ public class WxPayKit {
         return params;
     }
 
-    /**
-     * 微信下单 map to xml
-     *
-     * @param params Map 参数
-     * @return xml 字符串
-     */
-    public static String toXml(Map<String, String> params) {
+    public static StringBuilder forEachMap(Map<String, String> params,String prefix,String suffix){
         StringBuilder xml = new StringBuilder();
-        xml.append("<xml>");
+        if (StrUtil.isNotEmpty(prefix)){
+            xml.append(prefix);
+        }
         for (Map.Entry<String, String> entry : params.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -167,7 +163,20 @@ public class WxPayKit {
             xml.append(entry.getValue());
             xml.append("</").append(key).append(">");
         }
-        xml.append("</xml>");
+        if (StrUtil.isNotEmpty(suffix)){
+            xml.append(suffix);
+        }
+        return xml;
+    }
+
+    /**
+     * 微信下单 map to xml
+     *
+     * @param params Map 参数
+     * @return xml 字符串
+     */
+    public static String toXml(Map<String, String> params) {
+        StringBuilder xml = forEachMap(params,"<xml>","</xml>");
         return xml.toString();
     }
 
