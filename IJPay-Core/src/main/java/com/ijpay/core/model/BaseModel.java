@@ -49,7 +49,7 @@ public class BaseModel {
      * @param signType   {@link SignType} 签名类型
      * @return 构建签名后的 Map
      */
-    public Map<String, String> creatSign(String partnerKey, SignType signType) {
+    public Map<String, String> createSign(String partnerKey, SignType signType) {
         return WxPayKit.buildSign(toMap(), partnerKey, signType);
     }
 
