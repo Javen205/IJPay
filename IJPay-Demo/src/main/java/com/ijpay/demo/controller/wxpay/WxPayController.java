@@ -95,8 +95,9 @@ public class WxPayController {
                 .spbill_create_ip(ip)
                 .notify_url(wxPayBean.getDomain().concat("/wxpay/pay_notify"))
                 .trade_type(TradeType.JSAPI.getTradeType())
+                .openid(openId)
                 .build()
-                .creatSign(wxPayBean.getPartnerKey(), SignType.HMACSHA256);
+                .createSign(wxPayBean.getPartnerKey(), SignType.HMACSHA256);
 
 
         String xmlResult = WxPayApi.pushOrder(false,params);

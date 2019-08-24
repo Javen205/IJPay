@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="#(ctxPath)/static/css/demos.css">
+    <link rel="stylesheet" href="#(ctxPath)/static/css/pay.css">
+    <title>京东商户二维码支付</title>
+</head>
+<body>
+<body ontouchstart onload="autoSubmit()">
+<div class="bd">
+    <div class="page__bd">
+        <header class='demos-header'>
+            <h1 class="demos-title">京东支付</h1>
+            <p class='demos-sub-title'>IJPay 让支付触手可及，商户二维码支付</p>
+        </header>
+        <form action="#(payUrl)" method="post" id="batchForm">
+            <input type="hidden" name="version" value="#(map.version)"><br/>
+            <input type="hidden" name="merchant" value="#(map.merchant)"><br/>
+            <input type="hidden" name="tradeNum" value="#(map.tradeNum)"><br/>
+            <input type="hidden" name="tradeName" value="#(map.tradeName)"><br/>
+            <input type="hidden" name="tradeDesc" value="#(map.tradeDesc)"><br/>
+            <input type="hidden" name="tradeTime" value="#(map.tradeTime)"><br/>
+            <input type="hidden" name="orderType" value="#(map.orderType)"><br/>
+            <input type="hidden" name="currency" value="#(map.currency)"><br/>
+            <input type="hidden" name="note" value="#(map.note)"><br/>
+            <input type="hidden" name="notifyUrl" value="#(map.notifyUrl)"><br/>
+            <input type="hidden" name="sign" value="#(map.sign)"><br/>
+        </form>
+    </div>
+</div>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+</body>
+<script>
+	function autoSubmit(){
+		document.getElementById("batchForm").submit();
+	}
+</script>
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<script src="#(ctxPath)/static/layer/layer.js"></script>
+</html>
