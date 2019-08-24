@@ -5,13 +5,13 @@
     <parent>
         <artifactId>IJPay</artifactId>
         <groupId>com.github.javen205</groupId>
-        <version>2.1.2</version>
+        <version>2.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>IJPay-AliPay</artifactId>
     <name>${project.artifactId}</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)</description>
+    <description>IJPay 让支付触手可及(Easy Pay Library)-支付宝支付</description>
     <url>https://github.com/javen205/IJPay</url>
     
     <dependencies>
