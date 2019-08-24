@@ -13,7 +13,7 @@ public class XmlEncryptUtil {
 
 
     public static String encrypt(String rsaPrivateKey, String strDesKey, String genSignStr) {
-        System.out.println("genSignStr>"+genSignStr);
+        System.out.println("genSignStr>" + genSignStr);
         String encrypt = null;
         if (StrUtil.isNotEmpty(rsaPrivateKey) && StrUtil.isNotEmpty(strDesKey) && StrUtil.isNotEmpty(genSignStr)) {
 
@@ -25,7 +25,7 @@ public class XmlEncryptUtil {
                 genSignStr = JdPayXmlUtil.delXmlElm(genSignStr, SIGN);
 
                 String sign = VerifySignatureUtl.encryptMerchant(genSignStr, rsaPrivateKey);
-                System.out.println("sign>"+sign);
+                System.out.println("sign>" + sign);
                 String data = genSignStr.substring(0, genSignStr.length() - XML_JDPAY_END.length()) + XML_SIGN_START + sign + XML_SIGN_END + XML_JDPAY_END;
 
                 encrypt = Base64.encodeBase64String(ThreeDesUtil.encrypt2HexStr(RsaUtil.decryptBASE64(strDesKey), data).getBytes("UTF-8"));

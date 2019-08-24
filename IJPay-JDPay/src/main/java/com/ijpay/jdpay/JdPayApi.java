@@ -54,7 +54,14 @@ public class JdPayApi {
      * 撤销申请接口
      */
     public static String REVOKE_URL = "https://paygate.jd.com/service/revoke";
+    /**
+     * 用户关系查询接口
+     */
     public static String GET_USER_RELATION_URL = "https://paygate.jd.com/service/getUserRelation";
+    /**
+     * 用户关系解绑接口
+     */
+    public static String CANCEL_USER_RELATION_URL = "https://paygate.jd.com/service/cancelUserRelation";
 
     /**
      * 统一下单
@@ -114,6 +121,26 @@ public class JdPayApi {
      */
     public static String revoke(String xml) {
         return doPost(REVOKE_URL, xml);
+    }
+
+    /**
+     * 查询用户关系
+     *
+     * @param xml 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getUserRelation(String xml) {
+        return doPost(GET_USER_RELATION_URL, xml);
+    }
+
+    /**
+     * 解除用户关系
+     *
+     * @param xml 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String cancelUserRelation(String xml) {
+        return doPost(GET_USER_RELATION_URL, xml);
     }
 
     public static String doPost(String url, String reqXml) {

@@ -7,7 +7,7 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>退款申请接口 Model</p>
+ * <p>白条分期策略查询接口 Model</p>
  *
  * @author Javen
  */
@@ -21,18 +21,10 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class RefundModel extends JdBaseModel {
+public class QueryBaiTiaoFqModel extends JdBaseModel {
     private String version;
     private String merchant;
     private String tradeNum;
-    private String oTradeNum;
     private String amount;
-    private String currency;
-    private String tradeTime;
-    private String notifyUrl;
-    private String note;
     private String sign;
-    private String device;
-    private String termInfoId;
-    private String cert;
 }

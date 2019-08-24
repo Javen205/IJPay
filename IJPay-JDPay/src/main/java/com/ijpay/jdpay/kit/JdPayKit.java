@@ -13,11 +13,11 @@
  */
 package com.ijpay.jdpay.kit;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.ijpay.core.kit.WxPayKit;
-import com.ijpay.jdpay.util.BASE64;
 import com.ijpay.jdpay.util.SignUtil;
 import com.ijpay.jdpay.util.ThreeDesUtil;
 import com.ijpay.jdpay.util.XmlEncryptUtil;
@@ -95,7 +95,7 @@ public class JdPayKit {
      * @return 加密后的字符串
      */
     public static String threeDesEncrypt(String desKey, String sourceData) {
-        byte[] key = BASE64.decode(desKey);
+        byte[] key = Base64.decode(desKey);
         return ThreeDesUtil.encrypt2HexStr(key, sourceData);
     }
 
@@ -107,7 +107,7 @@ public class JdPayKit {
      * @return 解密后的字符串
      */
     public static String threeDecDecrypt(String desKey, String sourceData) {
-        byte[] key = BASE64.decode(desKey);
+        byte[] key = Base64.decode(desKey);
         return ThreeDesUtil.decrypt4HexStr(key, sourceData);
     }
 

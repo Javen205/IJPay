@@ -7,7 +7,7 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>请求参数 Model </p>
+ * <p>用户关系 Model</p>
  *
  * @author Javen
  */
@@ -21,8 +21,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class JDRequestModel extends JdBaseModel {
+public class UserRelationModel extends JdBaseModel {
     private String version;
     private String merchant;
-    private String encrypt;
+    private String userId;
+    private String sign;
 }

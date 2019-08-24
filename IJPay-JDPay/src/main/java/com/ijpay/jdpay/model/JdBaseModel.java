@@ -36,7 +36,7 @@ public class JdBaseModel extends BaseModel {
             throw new RuntimeException("version or merchant is empty");
         }
         String encrypt = JdPayKit.encrypt(rsaPrivateKey, strDesKey, JdPayKit.toJdXml(toMap()));
-        Map<String, String> requestMap = JDRequestModel.builder()
+        Map<String, String> requestMap = JdRequestModel.builder()
                 .version(version)
                 .merchant(merchant)
                 .encrypt(encrypt)

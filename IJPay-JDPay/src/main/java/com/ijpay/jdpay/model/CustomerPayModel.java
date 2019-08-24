@@ -7,7 +7,7 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>退款申请接口 Model</p>
+ * <p>商户二维码支付接口 Model</p>
  *
  * @author Javen
  */
@@ -21,18 +21,26 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class RefundModel extends JdBaseModel {
+public class CustomerPayModel extends JdBaseModel {
     private String version;
-    private String merchant;
-    private String tradeNum;
-    private String oTradeNum;
-    private String amount;
-    private String currency;
-    private String tradeTime;
-    private String notifyUrl;
-    private String note;
     private String sign;
+    private String merchant;
+    private String payMerchant;
     private String device;
-    private String termInfoId;
-    private String cert;
+    private String tradeNum;
+    private String tradeName;
+    private String tradeDesc;
+    private String tradeTime;
+    private String amount;
+    private String orderType;
+    private String industryCategoryCode;
+    private String currency;
+    private String note;
+    private String callbackUrl;
+    private String notifyUrl;
+    private String ip;
+    private String expireTime;
+    private String riskInfo;
+    private String goodsInfo;
+    private String bizTp;
 }
