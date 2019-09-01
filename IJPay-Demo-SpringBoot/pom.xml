@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ijpay.demo</groupId>
-    <artifactId>IJPay-Demo</artifactId>
+    <artifactId>IJPay-Demo-SpringBoot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>IJPay Demo for Spring Boot</description>
