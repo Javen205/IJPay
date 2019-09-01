@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ijpay.demo</groupId>
-    <artifactId>IJPay-JFinal-Demo</artifactId>
+    <artifactId>IJPay-Demo-JFinal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>IJPay Demo for JFinal</description>
@@ -106,7 +106,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>IJPay-JFinal-Demo</finalName>
+        <finalName>IJPay-Demo-JFinal</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
