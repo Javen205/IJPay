@@ -38,7 +38,7 @@ public class QqPayApiConfigKit {
         return CFG_MAP.put(qqPayApiConfig.getAppId(), qqPayApiConfig);
     }
 
-    public static QqPayApiConfig setThreadLocalWxPayApiConfig(QqPayApiConfig qqPayApiConfig) {
+    public static QqPayApiConfig setThreadLocalQqPayApiConfig(QqPayApiConfig qqPayApiConfig) {
         if (StrUtil.isNotEmpty(qqPayApiConfig.getAppId())) {
             setThreadLocalAppId(qqPayApiConfig.getAppId());
         }
@@ -72,7 +72,7 @@ public class QqPayApiConfigKit {
         return appId;
     }
 
-    public static QqPayApiConfig getWxPayApiConfig() {
+    public static QqPayApiConfig getQqPayApiConfig() {
         String appId = getAppId();
         return getApiConfig(appId);
     }
@@ -80,7 +80,7 @@ public class QqPayApiConfigKit {
     public static QqPayApiConfig getApiConfig(String appId) {
         QqPayApiConfig cfg = CFG_MAP.get(appId);
         if (cfg == null) {
-            throw new IllegalStateException("需事先调用 WxPayApiConfigKit.putApiConfig(wxPayApiConfig) 将 appId 对应的 WxPayApiConfig 对象存入，才可以使用 WxPayApiConfigKit.getWxPayApiConfig() 的系列方法");
+            throw new IllegalStateException("需事先调用 QqPayApiConfigKit.putApiConfig(qqPayApiConfig) 将 appId 对应的 QqPayApiConfig 对象存入，才可以使用 QqPayApiConfigKit.getQqPayApiConfig() 的系列方法");
         }
         return cfg;
     }
