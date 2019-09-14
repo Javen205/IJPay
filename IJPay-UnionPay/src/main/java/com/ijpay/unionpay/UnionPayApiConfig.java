@@ -101,7 +101,7 @@ public class UnionPayApiConfig {
                 txnAmt = "1";
             }
             if (SDKUtil.isEmpty(txnTime)) {
-                txnTime = DateUtil.format(new Date(), "YYYYMMddHHmmss");
+                txnTime = DateUtil.format(new Date(), "yyyyMMddHHmmss");
             }
             if (SDKUtil.isEmpty(payTimeout)) {
                 payTimeout = DateUtil.format(new Date(new Date().getTime() + 15 * 60 * 1000), "YYYYMMddHHmmss");

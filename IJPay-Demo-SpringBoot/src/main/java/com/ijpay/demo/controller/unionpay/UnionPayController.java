@@ -211,7 +211,7 @@ public class UnionPayController {
 					.setTxnSubType("00")
 					.setMerId("777290058151764")
 					.setOrderId("1507277885640")
-					.setTxnTime("20171006161805")
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))
 					.createMap();
 			Map<String, String> rspData = UnionPayApi.singleQueryByMap(reqData);
 			if(!rspData.isEmpty()){
@@ -259,7 +259,7 @@ public class UnionPayController {
 					.setChannelType("07") //渠道类型，07-PC，08-手机
 					.setMerId("777290058151764")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setTxnAmt("6666")
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
 					.setOrigQryId("201710061443208788498") //****原消费交易返回的的queryId，可以从消费交易后台通知接口中或者交易状态查询接口中获取
@@ -330,8 +330,8 @@ public class UnionPayController {
 					logger.info("验证签名成功");
 					String respCode = rspData.get("respCode");
 					if("00".equals(respCode)){
-//						String outPutDirectory ="/Users/Javen/Documents/dev/JPay";
-						String outPutDirectory ="d:\\";
+						String outPutDirectory ="/Users/Javen/Documents/dev/IJPay";
+//						String outPutDirectory ="d:\\";
 						// 交易成功，解析返回报文中的fileContent并落地
 						String zipFilePath = AcpService.deCodeFileContent(rspData,outPutDirectory,DemoBase.encoding);
 						//对落地的zip文件解压缩并解析
@@ -389,7 +389,7 @@ public class UnionPayController {
 					.setBussCode("J1_9800_0000_1")
 					.setMerId("777290058151764")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setTxnAmt("1234")
 					.setBillQueryInfo(AcpService.base64Encode(JSONUtil.toJsonPrettyStr(map), DemoBase.encoding))
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
@@ -422,7 +422,7 @@ public class UnionPayController {
 					.setQrNo("6225058203886110875")
 					.setTermId("00000011")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setTxnAmt("2580")
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
 					.setReqReserved("IJPay qrCodePay")
@@ -493,7 +493,7 @@ public class UnionPayController {
 					.setAccessType("0")
 					.setAccType("01")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setEncryptCertId(AcpService.getEncryptCertId())//加密证书的certId，配置在acp_sdk.properties文件 acpsdk.encryptCert.path属性下
 					.setCustomerInfo(customerInfoStr)
@@ -565,7 +565,7 @@ public class UnionPayController {
 					.setAccessType("0")
 					.setAccType("01")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
 					.setFrontUrl(SDKConfig.getConfig().getFrontUrl())
@@ -594,7 +594,7 @@ public class UnionPayController {
 					.setChannelType("07") //渠道类型，07-PC，08-手机
 					.setMerId("777290058151764")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setEncryptCertId(AcpService.getEncryptCertId())//加密证书的certId，配置在acp_sdk.properties文件 acpsdk.encryptCert.path属性下
 					.createMap();
@@ -646,7 +646,7 @@ public class UnionPayController {
 					.setAccType("01")
 					.setTxnAmt("8888")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setEncryptCertId(AcpService.getEncryptCertId())//加密证书的certId，配置在acp_sdk.properties文件 acpsdk.encryptCert.path属性下
 					.createMap();
@@ -699,14 +699,14 @@ public class UnionPayController {
 			String accNoEnc = AcpService.encryptData("6216261000000000018", DemoBase.encoding);
 
 			Map<String, String> reqData = UnionPayApiConfig.builder()
-					.setTxnType("78")
+					.setTxnType("00")
 					.setTxnSubType("00")
 					.setBizType("000301")
 					.setChannelType("07") //渠道类型，07-PC，08-手机
 					.setMerId("777290058151764")
 					.setAccessType("0")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setEncryptCertId(AcpService.getEncryptCertId())//加密证书的certId，配置在acp_sdk.properties文件 acpsdk.encryptCert.path属性下
 					.createMap();
@@ -742,6 +742,7 @@ public class UnionPayController {
 			}
 			String reqMessage = getHtmlResult(reqData);
 			String rspMessage = getHtmlResult(rspData);
+			logger.info(getHtmlResult(rspData));
 			response.getWriter().write("</br>请求报文:<br/>"+reqMessage+"<br/>" + "应答报文:</br>"+rspMessage+parseStr);
 			
 		} catch (Exception e) {
@@ -780,7 +781,7 @@ public class UnionPayController {
 					.setAccessType("0")
 					.setAccType("01")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
 					.setFrontUrl(SDKConfig.getConfig().getFrontUrl())
@@ -814,7 +815,7 @@ public class UnionPayController {
 					.setAccType("01")
 					.setTxnAmt("6363")
 					.setOrderId(String.valueOf(System.currentTimeMillis()))//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则，重新产生，不同于原消费
-					.setTxnTime(DateUtil.format(new Date(),"YYYYMMDDhhmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
+					.setTxnTime(DateUtil.format(new Date(),"yyyyMMddHHmmss"))//订单发送时间，格式为YYYYMMDDhhmmss，必须取当前时间，否则会报txnTime无效
 					.setAccNo(accNoEnc)
 					.setEncryptCertId(AcpService.getEncryptCertId())//加密证书的certId，配置在acp_sdk.properties文件 acpsdk.encryptCert.path属性下
 					.setBackUrl(SDKConfig.getConfig().getBackUrl())
