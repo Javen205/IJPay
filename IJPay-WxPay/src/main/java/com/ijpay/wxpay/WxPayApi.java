@@ -229,7 +229,10 @@ public class WxPayApi {
      * 查询红包记录
      */
     private static final String GET_HB_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo";
-
+    /**
+     * 小程序红包-发放红包接口
+     */
+    private static final String SEND_MINI_PROGRAM_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendminiprogramhb";
     /**
      * 获取沙箱秘钥
      */
@@ -963,8 +966,20 @@ public class WxPayApi {
      * @param certPassword 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String downloadfundflow(Map<String, String> params, String certPath, String certPassword) {
+    public static String downloadFundFlow(Map<String, String> params, String certPath, String certPassword) {
         return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 下载资金账单
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String downloadFundFlow(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certFile, certPassword);
     }
 
     /**
@@ -1009,18 +1024,6 @@ public class WxPayApi {
      */
     public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPassword) {
         return doPostSSL(FACE_PAY_REVERSE_URL, params, certFile, certPassword);
-    }
-
-    /**
-     * 下载资金账单
-     *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
-     * @return {@link String} 请求返回的结果
-     */
-    public static String downloadfundflow(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certFile, certPassword);
     }
 
     /**
@@ -1092,7 +1095,31 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getHbInfo(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certFile, certPassword);
+        return doPostSSL(GET_HB_INFO_URL, params, certFile, certPassword);
+    }
+
+    /**
+     * 小程序发放红包接口
+     *
+     * @param params       请求参数
+     * @param certPath     证书文件目录
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendMiniProgramRedPack(Map<String, String> params, String certPath, String certPassword) {
+        return doPostSSL(SEND_MINI_PROGRAM_RED_PACK_URL, params, certPath, certPassword);
+    }
+
+    /**
+     * 小程序发放红包接口
+     *
+     * @param params       请求参数
+     * @param certFile     证书文件的 InputStream
+     * @param certPassword 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendMiniProgramRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
+        return doPostSSL(SEND_MINI_PROGRAM_RED_PACK_URL, params, certFile, certPassword);
     }
 
     public static String doGet(String url, Map<String, Object> params) {

@@ -39,4 +39,5 @@ public class SendReadPackModel extends BaseModel {
     private String remark;
     private String scene_id;
     private String risk_info;
+    private String notify_way;
 }
