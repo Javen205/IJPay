@@ -761,4 +761,95 @@ public class AliPayApi {
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
     }
 
+    /**
+     * H5刷脸认证初始化
+     *
+     * @param model {@link ZolozIdentificationUserWebInitializeModel}
+     * @return {@link ZolozIdentificationUserWebInitializeResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozIdentificationUserWebInitializeResponse identificationUserWebInitialize(ZolozIdentificationUserWebInitializeModel model) throws AlipayApiException {
+        ZolozIdentificationUserWebInitializeRequest request = new ZolozIdentificationUserWebInitializeRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * H5刷脸认证查询
+     *
+     * @param model {@link ZolozIdentificationUserWebQueryModel}
+     * @return {@link ZolozIdentificationUserWebQueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozIdentificationUserWebQueryResponse identificationUserWebInitialize(ZolozIdentificationUserWebQueryModel model) throws AlipayApiException {
+        ZolozIdentificationUserWebQueryRequest request = new ZolozIdentificationUserWebQueryRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 热脸入库
+     *
+     * @param model {@link ZolozAuthenticationCustomerFacemanageCreateModel}
+     * @return {@link ZolozAuthenticationCustomerFacemanageCreateResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozAuthenticationCustomerFacemanageCreateResponse authenticationCustomerFaceManageCreate(ZolozAuthenticationCustomerFacemanageCreateModel model) throws AlipayApiException {
+        ZolozAuthenticationCustomerFacemanageCreateRequest request = new ZolozAuthenticationCustomerFacemanageCreateRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 热脸出库
+     *
+     * @param model {@link ZolozAuthenticationCustomerFacemanageDeleteModel}
+     * @return {@link ZolozAuthenticationCustomerFacemanageDeleteResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozAuthenticationCustomerFacemanageDeleteResponse authenticationCustomerFaceManageDelete(ZolozAuthenticationCustomerFacemanageDeleteModel model) throws AlipayApiException {
+        ZolozAuthenticationCustomerFacemanageDeleteRequest request = new ZolozAuthenticationCustomerFacemanageDeleteRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 人脸 ftoken 查询消费接口
+     *
+     * @param model {@link ZolozAuthenticationCustomerFtokenQueryModel}
+     * @return {@link ZolozAuthenticationCustomerFtokenQueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozAuthenticationCustomerFtokenQueryResponse authenticationCustomerFTokenQuery(ZolozAuthenticationCustomerFtokenQueryModel model) throws AlipayApiException {
+        ZolozAuthenticationCustomerFtokenQueryRequest request = new ZolozAuthenticationCustomerFtokenQueryRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 人脸初始化刷脸付
+     *
+     * @param model {@link ZolozAuthenticationSmilepayInitializeModel}
+     * @return {@link ZolozAuthenticationSmilepayInitializeResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozAuthenticationSmilepayInitializeResponse authenticationSmilePayInitialize(ZolozAuthenticationSmilepayInitializeModel model) throws AlipayApiException {
+        ZolozAuthenticationSmilepayInitializeRequest request = new ZolozAuthenticationSmilepayInitializeRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 人脸初始化唤起zim
+     *
+     * @param model {@link ZolozAuthenticationCustomerSmilepayInitializeModel}
+     * @return {@link ZolozAuthenticationCustomerSmilepayInitializeResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static ZolozAuthenticationCustomerSmilepayInitializeResponse authenticationCustomerSmilePayInitialize(ZolozAuthenticationCustomerSmilepayInitializeModel model) throws AlipayApiException {
+        ZolozAuthenticationCustomerSmilepayInitializeRequest request = new ZolozAuthenticationCustomerSmilepayInitializeRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
 }
