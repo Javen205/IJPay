@@ -10,9 +10,7 @@ import com.ijpay.core.enums.SignType;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 /**
@@ -64,6 +62,29 @@ public class WxPayKit {
 
     public static String generateStr() {
         return IdUtil.fastSimpleUUID();
+    }
+
+    /**
+     * 把数组所有元素排序
+     *
+     * @param params 需要排序并参与字符拼接的参数组
+     * @return 拼接后字符串
+     */
+    public static String createLinkString(Map<String, String> params) {
+        List<String> keys = new ArrayList<String>(params.keySet());
+        Collections.sort(keys);
+        StringBuffer content = new StringBuffer();
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            String value = params.get(key);
+            // 拼接时，不包括最后一个&字符
+            if (i == keys.size() - 1) {
+                content.append(key + "=" + value);
+            } else {
+                content.append(key + "=" + value + "&");
+            }
+        }
+        return content.toString();
     }
 
     /**
@@ -147,9 +168,9 @@ public class WxPayKit {
         return params;
     }
 
-    public static StringBuilder forEachMap(Map<String, String> params,String prefix,String suffix){
+    public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
         StringBuilder xml = new StringBuilder();
-        if (StrUtil.isNotEmpty(prefix)){
+        if (StrUtil.isNotEmpty(prefix)) {
             xml.append(prefix);
         }
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -163,7 +184,7 @@ public class WxPayKit {
             xml.append(entry.getValue());
             xml.append("</").append(key).append(">");
         }
-        if (StrUtil.isNotEmpty(suffix)){
+        if (StrUtil.isNotEmpty(suffix)) {
             xml.append(suffix);
         }
         return xml;
@@ -176,7 +197,7 @@ public class WxPayKit {
      * @return xml 字符串
      */
     public static String toXml(Map<String, String> params) {
-        StringBuilder xml = forEachMap(params,"<xml>","</xml>");
+        StringBuilder xml = forEachMap(params, "<xml>", "</xml>");
         return xml.toString();
     }
 
