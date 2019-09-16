@@ -65,7 +65,7 @@ public class WxPayKit {
     }
 
     /**
-     * 把数组所有元素排序
+     * 把所有元素排序
      *
      * @param params 需要排序并参与字符拼接的参数组
      * @return 拼接后字符串
@@ -87,44 +87,35 @@ public class WxPayKit {
         return content.toString();
     }
 
-    /**
-     * 组装签名的字段
-     *
-     * @param params     参数
-     * @param urlEncoder 是否urlEncoder
-     * @return {String}
-     */
-    public static String packageSign(Map<String, String> params, boolean urlEncoder) {
-        // 先将参数以其参数名的字典序升序进行排序
-        TreeMap<String, String> sortedParams = new TreeMap<String, String>(params);
-        // 遍历排序后的字典，将所有参数按"key=value"格式拼接在一起
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (Map.Entry<String, String> param : sortedParams.entrySet()) {
-            String value = param.getValue();
-            if (StrUtil.isEmpty(value)) {
-                continue;
-            }
-            if (first) {
-                first = false;
-            } else {
-                sb.append("&");
-            }
-            sb.append(param.getKey()).append("=");
-            if (urlEncoder) {
-                try {
-                    value = urlEncode(value);
-                } catch (UnsupportedEncodingException e) {
-                }
-            }
-            sb.append(value);
-        }
-        return sb.toString();
-    }
-
 
     public static String urlEncode(String src) throws UnsupportedEncodingException {
         return URLEncoder.encode(src, CharsetUtil.UTF_8).replace("+", "%20");
+    }
+
+    /**
+     * 支付异步通知时校验 sign
+     *
+     * @param params     参数
+     * @param partnerKey 支付密钥
+     * @return {boolean}
+     */
+    public static boolean verifyNotify(Map<String, String> params, String partnerKey) {
+        String sign = params.get("sign");
+        String localSign = createSign(params, partnerKey, SignType.MD5);
+        return sign.equals(localSign);
+    }
+
+    /**
+     * 支付异步通知时校验 sign
+     * @param params     参数
+     * @param partnerKey    支付密钥
+     * @param signType {@link SignType}
+     * @return
+     */
+    public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
+        String sign = params.get("sign");
+        String localSign = createSign(params, partnerKey, signType);
+        return sign.equals(localSign);
     }
 
     /**
@@ -141,7 +132,7 @@ public class WxPayKit {
         }
         // 生成签名前先去除sign
         params.remove(FIELD_SIGN);
-        String tempStr = packageSign(params, false);
+        String tempStr = createLinkString(params);
         String stringSignTemp = tempStr + "&key=" + partnerKey;
         if (signType == SignType.MD5) {
             return md5(stringSignTemp).toUpperCase();
@@ -347,9 +338,8 @@ public class WxPayKit {
             signType = SignType.MD5;
         }
         packageParams.put("signType", signType.getType());
-        String packageSign = WxPayKit.createSign(packageParams, partnerKey, signType);
+        String packageSign = createSign(packageParams, partnerKey, signType);
         packageParams.put("paySign", packageSign);
         return packageParams;
     }
-
 }

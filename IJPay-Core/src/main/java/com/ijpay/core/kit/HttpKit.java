@@ -2,6 +2,10 @@ package com.ijpay.core.kit;
 
 import com.ijpay.core.http.AbstractHttpDelegate;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
  *
@@ -25,6 +29,31 @@ public class HttpKit {
 
     public static void setDelegate(AbstractHttpDelegate delegate) {
         HttpKit.delegate = delegate;
+    }
+
+    public static String readData(HttpServletRequest request) {
+        BufferedReader br = null;
+        try {
+            StringBuilder result = new StringBuilder();
+            br = request.getReader();
+            for (String line; (line = br.readLine()) != null; ) {
+                if (result.length() > 0) {
+                    result.append("\n");
+                }
+                result.append(line);
+            }
+            return result.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
 

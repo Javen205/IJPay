@@ -13,6 +13,14 @@
     <name>${project.artifactId}</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)-核心工具包</description>
     <url>https://github.com/javen205/IJPay</url>
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
