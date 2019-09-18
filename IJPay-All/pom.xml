@@ -25,12 +25,6 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-AliPay</artifactId>
             <version>${project.parent.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.javen205</groupId>
