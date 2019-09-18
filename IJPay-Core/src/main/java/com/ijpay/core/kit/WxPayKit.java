@@ -1,16 +1,11 @@
 package com.ijpay.core.kit;
 
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.enums.SignType;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -31,11 +26,11 @@ public class WxPayKit {
     private static final String FIELD_SIGN_TYPE = "sign_type";
 
     public static String hmacSha256(String data, String key) {
-        return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data, CharsetUtil.UTF_8);
+        return PayKit.hmacSha256(data,key);
     }
 
     public static String md5(String data) {
-        return SecureUtil.md5(data);
+        return PayKit.md5(data);
     }
 
     /**
@@ -46,7 +41,7 @@ public class WxPayKit {
      * @return 解密后的数据
      */
     public static String decryptData(String base64Data, String key) {
-        return SecureUtil.aes(md5(key).toLowerCase().getBytes()).decryptStr(base64Data);
+        return PayKit.decryptData(base64Data,key);
     }
 
     /**
@@ -57,40 +52,15 @@ public class WxPayKit {
      * @return 加密后的数据
      */
     public static String encryptData(String data, String key) {
-        return SecureUtil.aes(md5(key).toLowerCase().getBytes()).encryptBase64(data.getBytes());
+        return PayKit.encryptData(data,key);
     }
 
     public static String generateStr() {
-        return IdUtil.fastSimpleUUID();
-    }
-
-    /**
-     * 把所有元素排序
-     *
-     * @param params 需要排序并参与字符拼接的参数组
-     * @return 拼接后字符串
-     */
-    public static String createLinkString(Map<String, String> params) {
-        List<String> keys = new ArrayList<String>(params.keySet());
-        Collections.sort(keys);
-        StringBuffer content = new StringBuffer();
-        for (int i = 0; i < keys.size(); i++) {
-            String key = keys.get(i);
-            String value = params.get(key);
-            // 拼接时，不包括最后一个&字符
-            if (i == keys.size() - 1) {
-                content.append(key + "=" + value);
-            } else {
-                content.append(key + "=" + value + "&");
-            }
-        }
-        return content.toString();
+        return PayKit.generateStr();
     }
 
 
-    public static String urlEncode(String src) throws UnsupportedEncodingException {
-        return URLEncoder.encode(src, CharsetUtil.UTF_8).replace("+", "%20");
-    }
+
 
     /**
      * 支付异步通知时校验 sign
@@ -132,7 +102,7 @@ public class WxPayKit {
         }
         // 生成签名前先去除sign
         params.remove(FIELD_SIGN);
-        String tempStr = createLinkString(params);
+        String tempStr = PayKit.createLinkString(params);
         String stringSignTemp = tempStr + "&key=" + partnerKey;
         if (signType == SignType.MD5) {
             return md5(stringSignTemp).toUpperCase();
