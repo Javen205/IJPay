@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0">
+<title>Javen二维码测试</title>
+<link rel="stylesheet"
+	href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+<link rel="stylesheet"
+	href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/demos.css">
+</head>
+<body>
+<body ontouchstart>
+	<div class="weui-tab">
+		<div class="weui-tab__bd">
+			<header class='demos-header'>
+				<h1 class="demos-title">二维码测试</h1>
+			</header>
+			<div class="bd">
+				<div class="page__bd">
+					<div style="text-align: center; margin-top: 30px">
+						<div id="qrcode"></div>
+					</div>
+					<div class="weui-btn-area">
+						<a href="javascript:simple();" class="weui-btn weui-btn_primary">最简单方式</a>
+					</div>
+					<div class="weui-btn-area">
+						<a href="javascript:custom();" class="weui-btn weui-btn_primary">自定义方式</a>
+					</div>
+					<div class="weui-btn-area">
+						<a href="javascript:chorme();" class="weui-btn weui-btn_primary">chorme</a>
+					</div>
+					<div class="weui-btn-area">
+						<a href="javascript:Chinese();" class="weui-btn weui-btn_primary">中文测试</a>
+					</div>
+
+					<div class="weui-btn-area">
+						<a href="javascript:logo();" class="weui-btn weui-btn_primary">中间添加logo</a>
+					</div>
+
+
+					<div class="weui-btn-area">
+						<a href="weixin://dl/business/?ticket=tde5a259db11165ddf54a2f4403195275#wechat_redirect"
+							class="weui-btn weui-btn_primary">支付测试</a>
+					</div>
+					<div class="weui-btn-area">
+						<a href="weixin://" class="weui-btn weui-btn_primary">打开微信</a>
+					</div>
+					<div class="weui-btn-area">
+						<a href="weixin://dl/scan" class="weui-btn weui-btn_primary">打开微信扫一扫</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<script src="#(ctxPath)/static/layer/layer.js"></script>
+<script type="text/javascript"
+	src="#(ctxPath)/static/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+	function clear() {
+		$('#qrcode').empty();
+	}
+	/* 最简单方式	 */
+	function simple() {
+		clear();
+		jQuery('#qrcode').qrcode("http://blog.csdn.net/zyw_java");
+	}
+
+	function custom() {
+		clear();
+		jQuery('#qrcode').qrcode({
+			render : "canvas",
+			width : 200,
+			height : 200,
+			correctLevel : 0,
+			text : "http://blog.csdn.net/zyw_java"
+		});
+	}
+	/*在chorme浏览器中二维码生成成功后无法扫描解决方法：  */
+	function chorme() {
+		clear();
+		//改成使用table的渲染方式，亲测支持各种各版本的浏览器  
+		jQuery('#qrcode').qrcode({
+			width : 200,
+			height : 200,
+			correctLevel : 0,
+			render : "table",
+			text : "http://blog.csdn.net/zyw_java"
+		});
+	}
+
+	function Chinese() {
+		clear();
+
+		jQuery('#qrcode').qrcode({
+			width : 200,
+			height : 200,
+			correctLevel : 0,
+			render : "canvas",
+			text : utf16to8("jquery-qrcode居然不支持中文，太可恨了！")
+		});
+	}
+
+	function logo() {
+		clear();
+		alert("https://my.oschina.net/xuwang1993/blog/647291");
+		console.info("Javen测试");
+	}
+
+	function utf16to8(str) {
+		var out, i, len, c;
+		out = "";
+		len = str.length;
+		for (i = 0; i < len; i++) {
+			c = str.charCodeAt(i);
+			if ((c >= 0x0001) && (c <= 0x007F)) {
+				out += str.charAt(i);
+			} else if (c > 0x07FF) {
+				out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+				out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+			} else {
+				out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+			}
+		}
+		return out;
+	}
+</script>
+</html>

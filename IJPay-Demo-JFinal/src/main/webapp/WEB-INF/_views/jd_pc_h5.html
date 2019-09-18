@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="#(ctxPath)/static/css/demos.css">
+    <link rel="stylesheet" href="#(ctxPath)/static/css/pay.css">
+    <title>京东PC支付</title>
+</head>
+<body>
+<body ontouchstart onload="autoSubmit()">
+<div class="bd">
+    <div class="page__bd">
+        <header class='demos-header'>
+            <h1 class="demos-title">京东支付</h1>
+            <p class='demos-sub-title'>IJPay 让支付触手可及，京东PC支付</p>
+        </header>
+        <form action="#(payUrl)" method="post" id="batchForm">
+            <input type="hidden" name="version" value="#(map.version)"><br/>
+            <input type="hidden" name="merchant" value="#(map.merchant)"><br/>
+            <!--			<input type="hidden" name="device" value="#(map.device)"><br />-->
+            <input type="hidden" name="tradeNum" value="#(map.tradeNum)"><br/>
+            <input type="hidden" name="tradeName" value="#(map.tradeName)"><br/>
+            <input type="hidden" name="tradeDesc" value="#(map.tradeDesc)"><br/>
+            <input type="hidden" name="tradeTime" value="#(map.tradeTime)"><br/>
+            <input type="hidden" name="amount" value="#(map.amount)"><br/>
+            <input type="hidden" name="currency" value="#(map.currency)"><br/>
+            <input type="hidden" name="note" value="#(map.note)"><br/>
+            <input type="hidden" name="callbackUrl" value="#(map.callbackUrl)"><br/>
+            <input type="hidden" name="notifyUrl" value="#(map.notifyUrl)"><br/>
+            <input type="hidden" name="ip" value="#(map.ip)"><br/>
+<!--            <input type="hidden" name="userType" value="#(map.userType)"><br/>-->
+            <input type="hidden" name="userId" value="#(map.userId)"><br/>
+<!--            <input type="hidden" name="expireTime" value="#(map.expireTime)"><br/>-->
+            <input type="hidden" name="orderType" value="#(map.orderType)"><br/>
+<!--            <input type="hidden" name="industryCategoryCode" value="#(map.industryCategoryCode)"><br/>-->
+<!--            <input type="hidden" name="specCardNo" value="#(map.specCardNo)"><br/>-->
+<!--            <input type="hidden" name="specId" value="#(map.specId)"><br/>-->
+<!--            <input type="hidden" name="specName" value="#(map.specName)"><br/>-->
+<!--            <input type="hidden" name="payChannel" value="#(map.payChannel)"><br/>-->
+            <input type="hidden" name="sign" value="#(map.sign)"><br/>
+<!--            <input type="hidden" name="cert" value="#(map.cert)"><br/>-->
+<!--            <input type="hidden" name="vendorId" value="#(map.vendorId)"><br/>-->
+<!--            <input type="hidden" name="goodsInfo" value="#(map.goodsInfo)"><br/>-->
+<!--            <input type="hidden" name="orderGoodsNum" value="#(map.orderGoodsNum)"><br/>-->
+<!--            <input type="hidden" name="receiverInfo" value="#(map.receiverInfo)"><br/>-->
+<!--            <input type="hidden" name="termInfo" value="#(map.termInfo)"><br/>-->
+<!--            <input type="hidden" name="riskInfo" value="#(map.riskInfo)"><br/>-->
+
+        </form>
+    </div>
+</div>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+</body>
+<script>
+	function autoSubmit(){
+		document.getElementById("batchForm").submit();
+	}
+</script>
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<script src="#(ctxPath)/static/layer/layer.js"></script>
+</html>

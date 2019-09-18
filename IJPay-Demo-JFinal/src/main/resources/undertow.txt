@@ -5,7 +5,7 @@ undertow.host=0.0.0.0
 undertow.port=80
 
 # 打成 fatjar 部署的项目开启下面的配置
-# undertow.resourcePath=src/main/webapp, classpath:webapp
+undertow.resourcePath=src/main/webapp, classpath:webapp, IJPay-Demo-JFinal/src/main/webapp
 
 # 开启 gzip 压缩
 undertow.gzip.enable=true
@@ -45,7 +45,7 @@ undertow.ssl.keyStorePassword=111111
 
 
 # ssl 开启时，是否开启 http2。检测该配置是否生效在 chrome 地址栏中输入: chrome://net-internals/#http2
-undertow.http2.enable=false
+undertow.http2.enable=true
 
 
 # ssl 开启时，http 请求是否重定向到 https

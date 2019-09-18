@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>选择医生挂号</title>
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/hospital.css">
+</head>
+
+<body>
+<div class="selectdoctor">
+	<div class="selectdoctor-time flex flex-pack-justify onepxborder-b">
+		<a href="javascript:;" class="li on">
+			<div class="week">今天</div>
+			<div class="date">10月14号</div>
+		</a>
+		<a href="javascript:;" class="li">
+			<div class="week">周四</div>
+			<div class="date">10月15号</div>
+		</a>
+		<a href="javascript:;" class="li">
+			<div class="week">周五</div>
+			<div class="date">10月16号</div>
+		</a>
+		<a href="javascript:;" class="li">
+			<div class="week">周六</div>
+			<div class="date">10月17号</div>
+		</a>
+		<a href="javascript:;" class="li">
+			<div class="week">周日</div>
+			<div class="date">10月18号</div>
+		</a>
+	</div>
+	<div class="selectdoctor-doctor-wrap">
+		<!-- 
+			控制.selectdoctor-doctor
+			1.添加“可预约”按钮，添加class:show-num  
+			2.已约满添加class:show-over  
+		-->
+		<div class="selectdoctor-doctor onepxborder-b show-num">
+			<div class="selectdoctor-doctor-intro flex onepxborder-b">
+				<img src="#(ctxPath)/static/images/img/photo.jpg" alt="" class="photo">
+				<div class="detail flex-1">
+					<h2 class="detail-title"><strong>张建明</strong><em>主任医生</em></h2>
+					<p class="detail-info">擅长：治疗糖、尿病通风、垂体食、欲不振胃、脘不适</p>
+				</div>
+				<a href="javascript:;" class="state">可预约</a>
+				<div class="state-over">已约满</div>
+			</div>
+			<div class="selectdoctor-doctor-num show-over">
+				<a href="javascript:;" class="selectdoctor-doctor-num-li flex onepxborder-b">
+					<div class="time">15:00-16:00</div>
+					<div class="info">剩余<em>5</em>个号</div>
+				</a>
+				<a href="javascript:;" class="selectdoctor-doctor-num-li flex onepxborder-b">
+					<div class="time">16:00-17:00</div>
+					<div class="info">剩余<em>5</em>个号</div>
+				</a>
+				<a href="javascript:;" class="selectdoctor-doctor-num-li flex">
+					<div class="time">14:00-15:00</div>
+					<div class="info">已满</div>
+				</a>
+			</div>
+		</div>	
+	</div>
+</div>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+<script type="text/javascript" src="#(ctxPath)/static/js/zepto.min.js"></script>
+<script type="text/javascript">
+
+$(".selectdoctor-time .li").on("click",function(){
+	$(this).addClass("on");
+	$(this).siblings().removeClass("on");
+})
+$(".selectdoctor-doctor-intro .state").on("click",function(){
+	if($(this).parent().parent().hasClass("show-num")){
+		$(this).parent().parent().removeClass("show-num");
+	}
+	else{
+		$(this).parent().parent().addClass("show-num");
+	}
+})
+$(".selectdoctor-doctor-num-li").on("click",function(){
+	if($(this).hasClass("onepxborder-b")){
+		window.location.href="register_info";
+	}
+})
+
+</script>
+</body>
+
+</html>
+ 
+
+

@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+html,body{
+	width:100%; 
+	height:100%; 
+	margin:0 auto;
+	padding:0px;
+	background-color:#EFEFF4;
+}
+.payinfo{
+	display:none;
+}
+table{
+	width:100%; 
+	height:50%;
+	position:absolute;
+	bottom:0;
+    background-color:white;
+    background-top:none;
+}
+table tr td{
+	text-align:center;
+	width:24.9999999%;
+	border-right:1px solid #D9D9D9;
+	border-bottom:1px solid #D9D9D9;
+}
+table tr td:active{
+	background-color:#ECECEC;
+}
+.keybord-return,.keybord-stop{
+	width:30px;
+	height:30px;
+	margin:0px auto;
+	color:white;
+}
+.keybord-return{background-image:url(../images/keybord-return.png); background-size:100% 90%; }
+.keybord-stop{background-image:url(../images/keybord-stop.png); background-size:90% 90%;}
+.pay{
+	color:#ffffff;
+	font-size:120%;
+	background-color:#1AAD19;
+}
+.pay:active{
+	background-color:#179B16;
+}

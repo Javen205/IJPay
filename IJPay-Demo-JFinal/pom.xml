@@ -6,6 +6,7 @@
 
     <groupId>com.ijpay.demo</groupId>
     <artifactId>IJPay-Demo-JFinal</artifactId>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>IJPay Demo for JFinal</description>
@@ -15,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.alipay.version>2.2.0</ijapy.alipay.version>
+        <ijapy.version>2.2.0</ijapy.version>
         <jfinal.version>4.4</jfinal.version>
     </properties>
 
@@ -68,12 +69,11 @@
             <version>1.7.25</version>
             <!-- 打包前改成 provided，此处使用 compile 仅为支持 IDEA -->
             <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -83,16 +83,8 @@
         <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-All</artifactId>
-            <version>${ijapy.alipay.version}</version>
+            <version>${ijapy.version}</version>
             <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-codec</artifactId>
-                    <groupId>commons-codec</groupId>
-                </exclusion>
                 <exclusion>
                     <artifactId>fastjson</artifactId>
                     <groupId>com.alibaba</groupId>
@@ -107,6 +99,14 @@
     </dependencies>
     <build>
         <finalName>IJPay-Demo-JFinal</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${profiles.active}</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -178,4 +178,25 @@
 
         </plugins>
     </build>
+    <profiles>
+        <!-- 默认激活 dev 开发环境 -->
+        <!-- production使用 mvn xxx -Pproduction -->
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>development</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>production</id>
+            <properties>
+                <profiles.active>production</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>

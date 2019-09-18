@@ -22,7 +22,7 @@
 # ----------------------------------------------------------------------
 
 # 启动入口类，该脚本文件用于别的项目时要改这里
-MAIN_CLASS=com.ijpay.jfinal.demo.AppConfig
+MAIN_CLASS= com.ijpay.demo.AppConfig
 
 if [[ "$MAIN_CLASS" == "com.yourpackage.YourMainClass" ]]; then
     echo "请先修改 MAIN_CLASS 的值为你自己项目启动Class，然后再执行此脚本。"

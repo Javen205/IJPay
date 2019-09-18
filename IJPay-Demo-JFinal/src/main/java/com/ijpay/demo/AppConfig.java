@@ -11,10 +11,12 @@
  *
  * @author Javen
  */
-package com.ijpay.jfinal.demo;
+package com.ijpay.demo;
 
-import com.ijpay.jfinal.demo.controller.IndexController;
+import com.ijpay.demo.controller.IndexController;
+import com.ijpay.demo.controller.alipay.AliPayController;
 import com.jfinal.config.*;
+import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.server.undertow.UndertowServer;
@@ -41,6 +43,10 @@ public class AppConfig extends JFinalConfig {
         loadConfig();
 
         me.setDevMode(p.getBoolean("devMode", false));
+        me.setEncoding("utf-8");
+        me.setError401View("/WEB-INF/error/401.html");
+        me.setError404View("/WEB-INF/error/404.html");
+        me.setError500View("/WEB-INF/error/500.html");
 
         /**
          * 支持 Controller、Interceptor、Validator 之中使用 @Inject 注入业务层，并且自动实现 AOP
@@ -57,8 +63,9 @@ public class AppConfig extends JFinalConfig {
      */
     @Override
     public void configRoute(Routes me) {
-        me.setBaseViewPath("/webapp");
-        me.add("/", IndexController.class,"index");
+        me.setBaseViewPath("/WEB-INF/_views");
+        me.add("/", IndexController.class);
+        me.add("/aliPay", AliPayController.class);
     }
 
     @Override
@@ -86,8 +93,8 @@ public class AppConfig extends JFinalConfig {
      * 配置处理器
      */
     @Override
-    public void configHandler(Handlers handlers) {
-
+    public void configHandler(Handlers me) {
+        me.add(new ContextPathHandler("ctxPath"));
     }
 
     /**

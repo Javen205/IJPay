@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/pay.css">
+<title>选择金额付款</title>
+</head>
+<!-- 
+	通用说明： 
+	1.模块的隐藏添加class:hide;
+	2.body标签默认绑定ontouchstart事件，激活所有按钮的:active效果
+-->
+<body ontouchstart>
+<div class="weui-wepay-pay-select">
+    <div class="weui-wepay-pay-select__hd">
+        <h1 class="weui-wepay-pay-select__title">选择金额付款</h1>
+        <p class="weui-wepay-pay-select__info">支付金额给商户</p>
+    </div>
+    <div class="weui-wepay-pay-select__bd">
+        <ul class="weui-wepay-pay-select__element">
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item weui-wepay-pay-select__item_on">1元</a>
+            </li>
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item">10元</a>
+            </li>
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item">100元</a>
+            </li>
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item">200元</a>
+            </li>
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item">300元</a>
+            </li>
+            <li class="weui-wepay-pay-select__li">
+                <a href="javascript:;" class="weui-wepay-pay-select__item">500元</a>
+            </li>
+        </ul>
+    </div>
+    <div class="weui-wepay-pay-select__ft">
+        <div class="weui-wepay-pay__btn">
+            <a href="javascript:;" class="weui-btn weui-btn_primary">立即支付</a>
+        </div>
+        <p class="weui-wepay-pay__info">点击上面的“立即支付”按钮，即表示你同意<a href="javascript:;" class="weui-wepay-color-blue">条款声明</a>。</p>
+    </div>
+</div>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+
+<script type="text/javascript" src="#(ctxPath)/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="#(ctxPath)/static/js/pay.js"></script>
+</body>
+</html>

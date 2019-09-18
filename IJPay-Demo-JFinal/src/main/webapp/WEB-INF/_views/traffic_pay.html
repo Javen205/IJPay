@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/order.css">
+<title>广东东站汽车站</title>
+</head>
+<body ontouchstart class="pay">
+
+	<!-- 加载中弹层[[ -->
+	<div class="mask popload-mask flex flex-align-center flex-pack-center hide">
+		<div class="popload">
+		<span class="popload-ico"></span>
+		<p class="popload-txt">加载中...</p>
+		</div>
+	</div>
+	<!-- 加载中弹层]] -->
+
+	<section class="main">
+		<div class="page-title">为你查询到最近的班次</div>
+
+		<div class="form ticket-form">
+			<div class="ticket-main">
+				<div class="ticket-info flex-box">
+					<div class="flex-1 station-name">华商商学院</div>
+
+					<!-- 选择日期[[ -->
+					<div class="select day-select">
+						<select name="" id="" class="text">
+							<option value="">2015.1.3</option>
+							<option value="">2015.1.4</option>
+							<option value="">2015.1.5</option>
+							<option value="">2015.1.6</option>
+						</select>
+									<a href="javascript:" class="arrow-down"></a>
+					</div>
+					<!-- 选择日期]] -->
+				</div>
+
+				<div class="ticket-info flex-box">
+					<div class="stime-info flex-1">07:30<a href="#none" class="change-link">修改</a></div>
+					<div class="price-info flex-1"><span class="money-mark">￥</span>107.0</div>
+				</div>
+
+				<div class="other-tips">无须取票，凭微信消息中的条码上车</div>
+			</div>
+
+			<div class="line-area line-lines">
+				<div class="quantity">
+					1张<span class="last-num">(余票<span class="highlight">10</span>张)</span>
+					<a href="#none" class="cut-btn"><!-- 减少票数 --></a>
+					<a href="#none" class="plus-btn"><!-- 增加票数 --></a>
+				</div>
+				<div class="flex-box">
+					<label for="pingzheng" class="protocol flex-1 ">
+								<span>
+									<input type="checkbox" name="" id="pingzheng" checked="checked">
+								</span>需要报销凭证
+					</label>
+					<label for="tongxing" class="protocol flex-1">
+								<span>
+									<input type="checkbox" name="" id="tongxing">
+								</span>有免票儿童同行
+				</label>
+				</div >
+
+				<!-- 报销凭证填写证件号[[ -->
+				<div class=""><!-- 勾选"需要报销凭证"时去除此处class="hide" -->
+					<div class="id-area flex-box">
+						<label for="" class="label flex-1">
+							<!-- 选择证件[[ -->
+							<div class="select type-select">
+								<select name="" id="" class="text">
+									<option value="">身份证号</option>
+									<option value="">护照</option>
+									<option value="">港澳通行证</option>
+								</select>
+								<a href="javascript:" class="arrow-down"></a>
+							</div>
+							<!-- 选择证件]] -->
+						</label>
+
+						<div class="element flex-3"><!-- 表单输入内容后，添加class:show-clear 可显示清除按钮 -->
+							<input type="tel" class="text" placeholder="取票凭证为身份证号码">
+							<a href="javascript:" class="ico-clear">清除</a>
+						</div>
+					</div>
+					<div class="form-info">可在售票窗兑换纸质票，也可在购票1小时后至发车当日24点前，到珠江通取票机自动取票。</div>
+				</div>
+				<!-- 报销凭证填写证件号]] -->
+
+				<!-- 儿童票[[ -->
+				<div class=""><!-- 勾选"有免票儿童同行"时去除此处class="hide" -->
+					<div class="quantity">
+						儿童票：1张<span class="last-num">(余票<span class="highlight">10</span>张)</span>
+
+						<a href="#none" class="cut-btn"><!-- 减少票数 --></a>
+						<a href="#none" class="plus-btn"><!-- 增加票数 --></a>
+					</div>
+					<div class="form-info">可在售票窗兑换纸质票，也可在购票1小时后至发车当日24点前，到珠江通取票机自动取票。</div>
+				</div>
+				<!-- 儿童票]] -->
+
+				<div class="flex-box other-info">
+					<div class="flex-1 sum-info highlight"><span class="small-mark">￥</span>214.0</div>
+					<a href="#none" class="notice">购票须知</a>
+				</div>
+				<a href="javascript:;" class="weui-btn weui-btn_primary pay-btn">同意须知，立即购票</a>
+			</div>
+		</div>
+	</section>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+</body>
+</html>

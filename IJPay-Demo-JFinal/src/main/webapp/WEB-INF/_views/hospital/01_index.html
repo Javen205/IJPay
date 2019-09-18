@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>医生名片</title>
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="#(ctxPath)/static/css/hospital.css">
+</head>
+<!-- 
+	通用说明： 
+	1.模块的隐藏添加class:hide;
+	2.body标签默认绑定ontouchstart事件，激活所有按钮的:active效果
+-->
+<body ontouchstart>
+<!-- 内容[[ -->
+<article class="index">
+	<header class="index-head onepxborder-b">
+		<div class="photo onepxradius">
+			<img src="#(ctxPath)/static/images/img/photo.jpg" alt="">
+		</div>
+		<h2 class="title">张建明</h2>
+		<p class="info">消化内科</p>
+		<p class="job">主任医生</p>
+	</header>
+	<div class="index-main onepxborder-b">
+		<div class="index-main-li onepxborder-b">
+			<h3 class="title"><span class="ico-heart"></span>医生专长</h3>
+			<div class="cnt">消化科常见疾病（慢性胃炎、消化性溃疡、胃食管反流病、功能性胃肠病、肝硬化、肝功能损害、炎症性肠病、缺血性肠病、消化道出血）</div>
+			<div class="more">
+				<a href="javascript:;" class="txt">展开</a>
+			</div>
+		</div>
+		<div class="index-main-li">
+			<h3 class="title"><span class="ico-time"></span>出诊时间</h3>
+			<div class="cnt">每周周三下午、周五下午</div>
+		</div>
+	</div>
+	<div class="index-btn">
+		<a href="javascript:;" class="weui-btn weui-btn_primary" id="registerBtn">预约挂号</a>
+		<a href="#(ctxPath)/register_info" class="weui-btn weui-btn_default">查看已挂号消息</a>
+	</div>
+</article>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+<!-- 内容}] -->
+
+<!-- 日期 [[-->
+<div class="dateselect-wrap hide" id="dateselect">
+	<div class="dateselect flex flex-v">
+		<h2 class="dateselect-title">选择日期挂号</h2>
+		<p class="dateselect-month">7月</p>
+		<div class="dateselect-cnt flex-1" id="iscroll">
+			<ul>
+				<li class="show-full">
+					<div class="date">1</div>
+					<div class="month">星期一</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">2</div>
+					<div class="month">星期二</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">3</div>
+					<div class="month">星期三</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li class="show-full">
+					<div class="date">4</div>
+					<div class="month">星期四</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">5</div>
+					<div class="month">星期五</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li class="show-full">
+					<div class="date">6</div>
+					<div class="month">星期六</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">7</div>
+					<div class="month">星期天</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">8</div>
+					<div class="month">星期一</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">9</div>
+					<div class="month">星期二</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">10</div>
+					<div class="month">星期三</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">11</div>
+					<div class="month">星期四</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">1</div>
+					<div class="month">星期五</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">12</div>
+					<div class="month">星期六</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">1</div>
+					<div class="month">星期日</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">13</div>
+					<div class="month">星期一</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">1</div>
+					<div class="month">星期二</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+				<li>
+					<div class="date">14</div>
+					<div class="month">星期三</div>
+					<strong class="full"><span class="txt">满</span><span class="ico-angle"></span></strong>
+				</li>
+			</ul>
+		</div>
+		<a href="javascript:;" class="dateselect-btn">取消</a>
+	</div>
+</div>
+<!-- 日期 ]]-->
+
+
+<script type="text/javascript" src="#(ctxPath)/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="#(ctxPath)/static/js/iscroll-min.js"></script>
+<script type="text/javascript">
+var iscroll;
+function loaded() {
+	iscroll = new iScroll('iscroll', {
+		useTransform: false,
+		onBeforeScrollStart: function (e) {
+			var target = e.target;
+			while (target.nodeType != 1) target = target.parentNode;
+
+			if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA' && target.tagName != 'A')
+				e.preventDefault();
+		}
+	});
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', loaded, false);
+
+$("#registerBtn").on("click",function(){
+	$("#dateselect").removeClass("hide");
+})
+
+$(".dateselect-btn").on("click",function(){
+	$("#dateselect").addClass("hide")
+})
+$(".dateselect-cnt ul li").on("click",function(){
+	window.location.href="/select_time";
+})
+$(".dateselect-btn").on("click",function(){
+	$(".dateselect-wrap").addClass("hide")
+})
+setTimeout(function(){
+	$(".dateselect-wrap").addClass("hide")
+},0)
+
+$("#showMore").on("click",function(){
+	$("#indexIntro").addClass("show-more");
+
+})
+
+</script>
+
+</body>
+</html>
+ 
+
+
