@@ -1,7 +1,6 @@
 package com.ijpay.core.kit;
 
 import cn.hutool.core.util.StrUtil;
-import com.ijpay.core.XmlHelper;
 import com.ijpay.core.enums.SignType;
 
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class WxPayKit {
     private static final String FIELD_SIGN_TYPE = "sign_type";
 
     public static String hmacSha256(String data, String key) {
-        return PayKit.hmacSha256(data,key);
+        return PayKit.hmacSha256(data, key);
     }
 
     public static String md5(String data) {
@@ -41,7 +40,7 @@ public class WxPayKit {
      * @return 解密后的数据
      */
     public static String decryptData(String base64Data, String key) {
-        return PayKit.decryptData(base64Data,key);
+        return PayKit.decryptData(base64Data, key);
     }
 
     /**
@@ -52,14 +51,12 @@ public class WxPayKit {
      * @return 加密后的数据
      */
     public static String encryptData(String data, String key) {
-        return PayKit.encryptData(data,key);
+        return PayKit.encryptData(data, key);
     }
 
     public static String generateStr() {
         return PayKit.generateStr();
     }
-
-
 
 
     /**
@@ -77,9 +74,10 @@ public class WxPayKit {
 
     /**
      * 支付异步通知时校验 sign
+     *
      * @param params     参数
-     * @param partnerKey    支付密钥
-     * @param signType {@link SignType}
+     * @param partnerKey 支付密钥
+     * @param signType   {@link SignType}
      * @return
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
@@ -130,25 +128,7 @@ public class WxPayKit {
     }
 
     public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
-        StringBuilder xml = new StringBuilder();
-        if (StrUtil.isNotEmpty(prefix)) {
-            xml.append(prefix);
-        }
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            // 略过空值
-            if (StrUtil.isEmpty(value)) {
-                continue;
-            }
-            xml.append("<").append(key).append(">");
-            xml.append(entry.getValue());
-            xml.append("</").append(key).append(">");
-        }
-        if (StrUtil.isNotEmpty(suffix)) {
-            xml.append(suffix);
-        }
-        return xml;
+        return PayKit.forEachMap(params,prefix,suffix);
     }
 
     /**
@@ -158,8 +138,7 @@ public class WxPayKit {
      * @return xml 字符串
      */
     public static String toXml(Map<String, String> params) {
-        StringBuilder xml = forEachMap(params, "<xml>", "</xml>");
-        return xml.toString();
+        return PayKit.toXml(params);
     }
 
     /**
@@ -169,8 +148,7 @@ public class WxPayKit {
      * @return 转化后的 Map
      */
     public static Map<String, String> xmlToMap(String xmlStr) {
-        XmlHelper xmlHelper = XmlHelper.of(xmlStr);
-        return xmlHelper.toMap();
+        return PayKit.xmlToMap(xmlStr);
     }
 
     /**
@@ -204,7 +182,7 @@ public class WxPayKit {
      * @return
      */
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId, String timeStamp, String nonceStr, SignType signType) {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<String, String>(5);
         map.put("appid", appId);
         map.put("mch_id", mchId);
         map.put("time_stamp", StrUtil.isEmpty(timeStamp) ? Long.toString(System.currentTimeMillis() / 1000) : timeStamp);
@@ -226,7 +204,7 @@ public class WxPayKit {
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId) {
         String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
         String nonceStr = WxPayKit.generateStr();
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<String, String>(5);
         map.put("appid", appId);
         map.put("mch_id", mchId);
         map.put("time_stamp", timeStamp);
@@ -268,10 +246,11 @@ public class WxPayKit {
      * @param prepayId   预付订单号
      * @param appId      应用编号
      * @param partnerKey API Key
+     * @param signType   签名方式
      * @return 再次签名后的 Map
      */
     public static Map<String, String> prepayIdCreateSign(String prepayId, String appId, String partnerKey, SignType signType) {
-        Map<String, String> packageParams = new HashMap<String, String>();
+        Map<String, String> packageParams = new HashMap<String, String>(6);
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
@@ -289,21 +268,46 @@ public class WxPayKit {
      * <p>APP 支付-预付订单再次签名</p>
      * <p>注意此处签名方式需与统一下单的签名类型一致</p>
      *
-     * @param appId      应用ID 或者 子商户应用ID
-     * @param partnerId  商户号 或者 子商户号
-     * @param prepayId   预支付交易会话ID
+     * @param appId      应用编号
+     * @param partnerId  商户号
+     * @param prepayId   预付订单号
      * @param partnerKey API Key
      * @param signType   签名方式
      * @return 再次签名后的 Map
      */
     public static Map<String, String> appPrepayIdCreateSign(String appId, String partnerId, String prepayId, String partnerKey, SignType signType) {
-        Map<String, String> packageParams = new HashMap<String, String>();
-        packageParams.put("appId", appId);
+        Map<String, String> packageParams = new HashMap<String, String>(8);
+        packageParams.put("appid", appId);
         packageParams.put("partnerid", partnerId);
         packageParams.put("prepayid", prepayId);
         packageParams.put("package", "Sign=WXPay");
-        packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
+        packageParams.put("noncestr", String.valueOf(System.currentTimeMillis()));
+        packageParams.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
+        if (signType == null) {
+            signType = SignType.MD5;
+        }
+        packageParams.put("signType", signType.getType());
+        String packageSign = createSign(packageParams, partnerKey, signType);
+        packageParams.put("sign", packageSign);
+        return packageParams;
+    }
+
+    /**
+     * <p>小程序-预付订单再次签名</p>
+     * <p>注意此处签名方式需与统一下单的签名类型一致</p>
+     *
+     * @param appId      应用编号
+     * @param prepayId   预付订单号
+     * @param partnerKey API Key
+     * @param signType   签名方式
+     * @return 再次签名后的 Map
+     */
+    public static Map<String, String> miniAppPrepayIdCreateSign(String appId, String prepayId, String partnerKey, SignType signType) {
+        Map<String, String> packageParams = new HashMap<String, String>(6);
+        packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+        packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
+        packageParams.put("package", "prepay_id=" + prepayId);
         if (signType == null) {
             signType = SignType.MD5;
         }
