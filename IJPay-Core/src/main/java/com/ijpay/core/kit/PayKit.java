@@ -2,8 +2,10 @@ package com.ijpay.core.kit;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
+import com.ijpay.core.XmlHelper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -93,5 +95,57 @@ public class PayKit {
      */
     public static String urlEncode(String src) throws UnsupportedEncodingException {
         return URLEncoder.encode(src, CharsetUtil.UTF_8).replace("+", "%20");
+    }
+
+    /**
+     * 遍历 Map 并构建 xml 数据
+     *
+     * @param params 需要遍历的 Map
+     * @param prefix xml 前缀
+     * @param suffix xml 后缀
+     * @return
+     */
+    public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
+        StringBuilder xml = new StringBuilder();
+        if (StrUtil.isNotEmpty(prefix)) {
+            xml.append(prefix);
+        }
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            // 略过空值
+            if (StrUtil.isEmpty(value)) {
+                continue;
+            }
+            xml.append("<").append(key).append(">");
+            xml.append(entry.getValue());
+            xml.append("</").append(key).append(">");
+        }
+        if (StrUtil.isNotEmpty(suffix)) {
+            xml.append(suffix);
+        }
+        return xml;
+    }
+
+    /**
+     * 微信下单 map to xml
+     *
+     * @param params Map 参数
+     * @return xml 字符串
+     */
+    public static String toXml(Map<String, String> params) {
+        StringBuilder xml = forEachMap(params, "<xml>", "</xml>");
+        return xml.toString();
+    }
+
+    /**
+     * 针对支付的 xml，没有嵌套节点的简单处理
+     *
+     * @param xmlStr xml 字符串
+     * @return 转化后的 Map
+     */
+    public static Map<String, String> xmlToMap(String xmlStr) {
+        XmlHelper xmlHelper = XmlHelper.of(xmlStr);
+        return xmlHelper.toMap();
     }
 }
