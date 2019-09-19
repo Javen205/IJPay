@@ -1,7 +1,6 @@
 package com.ijpay.qqpay;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -21,6 +20,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QqPayApiConfig implements Serializable {
     private static final long serialVersionUID = 8365822256469245771L;
     

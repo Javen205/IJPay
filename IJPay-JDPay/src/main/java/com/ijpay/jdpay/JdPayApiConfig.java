@@ -1,7 +1,6 @@
 package com.ijpay.jdpay;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -21,6 +20,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class JdPayApiConfig implements Serializable {
     private static final long serialVersionUID = -9044503427692786302L;
     
