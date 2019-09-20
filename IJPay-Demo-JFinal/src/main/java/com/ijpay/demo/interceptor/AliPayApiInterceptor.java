@@ -13,13 +13,10 @@ public class AliPayApiInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation inv) {
         Controller controller = inv.getController();
-        if (controller instanceof AliPayApiController == false)
+        if (!(controller instanceof AliPayApiController)){
             throw new RuntimeException("控制器需要继承 AliPayApiController");
-
-        try {
-            AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AliPayApiController) controller).getApiConfig());
-            inv.invoke();
-        } finally {
         }
+        AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AliPayApiController) controller).getApiConfig());
+        inv.invoke();
     }
 }

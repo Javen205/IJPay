@@ -15,6 +15,7 @@ package com.ijpay.demo;
 
 import com.ijpay.demo.controller.IndexController;
 import com.ijpay.demo.controller.alipay.AliPayController;
+import com.ijpay.demo.controller.wxpay.WxPayController;
 import com.jfinal.config.*;
 import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.kit.Prop;
@@ -66,6 +67,7 @@ public class AppConfig extends JFinalConfig {
         me.setBaseViewPath("/WEB-INF/_views");
         me.add("/", IndexController.class);
         me.add("/aliPay", AliPayController.class);
+        me.add("/wxPay", WxPayController.class);
     }
 
     @Override
