@@ -40,7 +40,7 @@ import java.util.Map;
  * @author Javen
  */
 @Controller
-@RequestMapping("/alipay")
+@RequestMapping("/aliPay")
 public class AliPayController extends AbstractAliPayApiController {
     private static final Logger log = LoggerFactory.getLogger(AliPayController.class);
 
@@ -98,7 +98,7 @@ public class AliPayController extends AbstractAliPayApiController {
             model.setTotalAmount("0.01");
             model.setPassbackParams("callback params");
             model.setProductCode("QUICK_MSECURITY_PAY");
-            String orderInfo = AliPayApi.appPayToResponse(model, aliPayBean.getDomain() + "/alipay/notify_url").getBody();
+            String orderInfo = AliPayApi.appPayToResponse(model, aliPayBean.getDomain() + "/aliPay/notify_url").getBody();
             result.success(orderInfo);
         } catch (AlipayApiException e) {
             e.printStackTrace();
@@ -115,8 +115,8 @@ public class AliPayController extends AbstractAliPayApiController {
         String subject = "Javen Wap支付测试";
         String totalAmount = "1";
         String passbackParams = "1";
-        String returnUrl = aliPayBean.getDomain() + "/alipay/return_url";
-        String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+        String returnUrl = aliPayBean.getDomain() + "/aliPay/return_url";
+        String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
 
         AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
         model.setBody(body);
@@ -147,8 +147,8 @@ public class AliPayController extends AbstractAliPayApiController {
             String outTradeNo = StringUtils.getOutTradeNo();
             log.info("pc outTradeNo>" + outTradeNo);
 
-            String returnUrl = aliPayBean.getDomain() + "/alipay/return_url";
-            String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+            String returnUrl = aliPayBean.getDomain() + "/aliPay/return_url";
+            String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
             AlipayTradePagePayModel model = new AlipayTradePagePayModel();
 
             model.setOutTradeNo(outTradeNo);
@@ -186,7 +186,7 @@ public class AliPayController extends AbstractAliPayApiController {
             subject = "Javen 支付宝条形码支付测试";
         }
         String totalAmount = "100";
-        String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+        String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
 
         AlipayTradePayModel model = new AlipayTradePayModel();
         model.setAuthCode(authCode);
@@ -212,7 +212,7 @@ public class AliPayController extends AbstractAliPayApiController {
         String subject = "Javen 支付宝扫码支付测试";
         String totalAmount = "86";
         String storeId = "123";
-        String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+        String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
 
         AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
         model.setSubject(subject);
@@ -382,7 +382,7 @@ public class AliPayController extends AbstractAliPayApiController {
     @ResponseBody
     public String tradeCreate(@RequestParam("out_trade_no") String outTradeNo) {
 
-        String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+        String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
 
         AlipayTradeCreateModel model = new AlipayTradeCreateModel();
         model.setOutTradeNo(outTradeNo);
@@ -463,7 +463,7 @@ public class AliPayController extends AbstractAliPayApiController {
     @ResponseBody
     public void toOauth(HttpServletResponse response) {
         try {
-            String redirectUri = aliPayBean.getDomain() + "/alipay/redirect_uri";
+            String redirectUri = aliPayBean.getDomain() + "/aliPay/redirect_uri";
             String oauth2Url = AliPayApi.getOauth2Url(aliPayBean.getAppId(), redirectUri);
             response.sendRedirect(oauth2Url);
         } catch (Exception e) {
@@ -515,7 +515,7 @@ public class AliPayController extends AbstractAliPayApiController {
     public void batchTrans(HttpServletResponse response) {
         try {
             String signType = "MD5";
-            String notifyUrl = aliPayBean.getDomain() + "/alipay/notify_url";
+            String notifyUrl = aliPayBean.getDomain() + "/aliPay/notify_url";
             Map<String, String> params = new HashMap<>(15);
             params.put("partner", "PID");
             params.put("sign_type", signType);

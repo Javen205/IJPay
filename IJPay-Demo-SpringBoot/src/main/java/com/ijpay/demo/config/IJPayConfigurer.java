@@ -4,6 +4,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.ijpay.demo.interceptor.AliPayInterceptor;
+import com.ijpay.demo.interceptor.WxPayInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -21,7 +22,8 @@ import java.util.List;
 public class IJPayConfigurer extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AliPayInterceptor()).addPathPatterns("/alipay/**");
+        registry.addInterceptor(new AliPayInterceptor()).addPathPatterns("/aliPay/**");
+        registry.addInterceptor(new WxPayInterceptor()).addPathPatterns("/wxPay/**");
         super.addInterceptors(registry);
     }
 

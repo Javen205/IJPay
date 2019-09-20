@@ -1,7 +1,7 @@
 package com.ijpay.demo.interceptor;
 
-import com.ijpay.alipay.AliPayApiConfigKit;
-import com.ijpay.demo.controller.alipay.AbstractAliPayApiController;
+import com.ijpay.demo.controller.wxpay.AbstractWxPayApiController;
+import com.ijpay.wxpay.WxPayApiConfigKit;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,21 +17,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
  *
- * <p>支付宝支付拦截器</p>
+ * <p>微信支付拦截器</p>
  *
  * @author Javen
  */
-public class AliPayInterceptor implements HandlerInterceptor {
+public class WxPayInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
         if (HandlerMethod.class.equals(handler.getClass())) {
             HandlerMethod method = (HandlerMethod) handler;
             Object controller = method.getBean();
-            if (!(controller instanceof AbstractAliPayApiController)) {
+            if (!(controller instanceof AbstractWxPayApiController)) {
                 throw new RuntimeException("控制器需要继承 AliPayApiController");
             }
-            AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AbstractAliPayApiController) controller).getApiConfig());
+            WxPayApiConfigKit.setThreadLocalWxPayApiConfig(((AbstractWxPayApiController) controller).getApiConfig());
             return true;
         }
         return false;

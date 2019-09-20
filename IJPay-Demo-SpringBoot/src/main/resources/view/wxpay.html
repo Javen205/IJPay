@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="#(ctxPath)/static/css/pay.css">
 <title>商户模式-微信支付</title>
 </head>
-<body>
 <body ontouchstart>
 	<div class="weui-tab">
 		<div class="weui-tab__bd">
@@ -205,7 +204,7 @@
 	function scanCode1() {
 		$.showLoading("正在加载...");
 		var total_fee = $.trim($("#money1").val());
-		$.post("#(ctxPath)/wxpay/scanCode1", {
+		$.post("#(ctxPath)/wxPay/scanCode1", {
 			productId : total_fee,
 		}, function(res) {
 			$.hideLoading();
@@ -228,7 +227,7 @@
 	function scanCode2() {
 		$.showLoading("正在加载...");
 		var total_fee = $.trim($("#money2").val());
-		$.post("#(ctxPath)/wxpay/scanCode2", {
+		$.post("#(ctxPath)/wxPay/scanCode2", {
 			total_fee : total_fee,
 		}, function(res) {
 			$.hideLoading();
@@ -258,7 +257,7 @@
 		$.showLoading("正在加载...");
 		var total_fee = $.trim($("#micropay_money").val());
 		var auth_code = $.trim($("#auth_code").val());
-		$.post("#(ctxPath)/wxpay/micropay", {
+		$.post("#(ctxPath)/wxPay/microPay", {
 			total_fee : total_fee,
 			auth_code : auth_code,
 		}, function(res) {
@@ -285,7 +284,7 @@
 	function wxpay() {
 		$.showLoading("正在加载...");
 		var total_fee = $.trim($("#web_money").val());
-		$.post("#(ctxPath)/wxpay/webPay", {
+		$.post("#(ctxPath)/wxPay/webPay", {
 			total_fee : total_fee,
 		}, function(res) {
 			$.hideLoading();
