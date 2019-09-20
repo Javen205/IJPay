@@ -13,6 +13,7 @@
     <name>${project.artifactId}</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)-核心工具包</description>
     <url>https://github.com/javen205/IJPay</url>
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -20,6 +21,19 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- 开源多维码生成工具 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <!-- 开源多维码生成工具 -->
     </dependencies>
 
 
