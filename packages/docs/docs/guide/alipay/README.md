@@ -5,6 +5,18 @@
 IJPay 中的支付宝支付是对 [alipay-sdk-java](https://github.com/alipay/alipay-sdk-java-all) 的二次封装，
 简化 `DefaultAlipayClient` 的配置并支持多应用无缝切换。
 
+## 支付方式与支付工具
+
+1. 当面付(条码支付/扫码支付/声波支付)
+2. 刷脸支付
+3. APP支付
+4. 手机网站支付(H5 支付)
+5. 电脑网站支付(PC 支付)
+6. 花呗分期
+7. 单笔转账到支付宝账户
+8. 批量付款
+9. 现金红包 
+
 ## 使用步骤
 
 1. [添加相关依赖](../maven.md)
