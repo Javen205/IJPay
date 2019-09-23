@@ -74,14 +74,12 @@ APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/jave
 [IJPay 让支付触手可及](https://javen205.gitee.io/ijpay/)
 
 
-### 效果图
+### 效果图&示例
 
 **请参考Demo，目前IJPay Demo 提供两个版本 JFinal 版本以及 Spring Boot 版本**
 
-Gitee：[https://gitee.com/Javen205/IJPay-Demo](https://gitee.com/Javen205/IJPay-Demo)
-
-GitHub：[https://github.com/Javen205/IJPay-Demo](https://github.com/Javen205/IJPay-Demo)
-
+1.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay-Demo)  [GitHub](https://github.com/javen205/IJPay-Demo)
+2.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)
 
 ### 联系方式
 
