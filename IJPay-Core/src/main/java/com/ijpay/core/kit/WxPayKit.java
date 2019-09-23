@@ -286,7 +286,6 @@ public class WxPayKit {
         if (signType == null) {
             signType = SignType.MD5;
         }
-        packageParams.put("signType", signType.getType());
         String packageSign = createSign(packageParams, partnerKey, signType);
         packageParams.put("sign", packageSign);
         return packageParams;
