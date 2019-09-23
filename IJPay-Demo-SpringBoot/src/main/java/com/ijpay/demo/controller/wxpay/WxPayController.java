@@ -119,13 +119,14 @@ public class WxPayController extends AbstractWxPayApiController {
                 .appid(wxPayApiConfig.getAppId())
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
-                .body("IJPay 让支付触手可及-公众号支付")
+                .body("IJPay 让支付触手可及-H5支付")
                 .attach("Node.js 版:https://gitee.com/javen205/TNW")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1000")
                 .spbill_create_ip(ip)
                 .notify_url(notifyUrl)
                 .trade_type(TradeType.MWEB.getTradeType())
+                .scene_info(JSON.toJSONString(sceneInfo))
                 .build()
                 .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256);
 
