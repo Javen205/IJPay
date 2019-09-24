@@ -262,9 +262,6 @@ public class WxPayApi {
      */
     private static final String DOWNLOAD_BILL_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
 
-    private WxPayApi() {
-    }
-
     /**
      * 获取验签秘钥API
      *
