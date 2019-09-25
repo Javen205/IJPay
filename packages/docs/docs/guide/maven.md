@@ -42,7 +42,49 @@
     <artifactId>IJPay-WxPay</artifactId>
     <version>latest-version</version>
 </dependency>
-```         
+```  
+
+::: tip
+QQ 支付
+:::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-QQ</artifactId>
+    <version>latest-version</version>
+</dependency>
+``` 
+
+::: tip
+京东支付
+:::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-JDPay</artifactId>
+    <version>latest-version</version>
+</dependency>
+```    
+
+::: tip
+银联支付
+:::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-UnionPay</artifactId>
+    <version>latest-version</version>
+</dependency>
+```       
 
 ## 更多依赖方式
 

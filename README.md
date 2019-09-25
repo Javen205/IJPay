@@ -76,7 +76,7 @@ APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/jave
 
 ### 效果图&示例
 
-**请参考Demo，目前IJPay Demo 提供两个版本 JFinal 版本以及 Spring Boot 版本**
+**请参考 Demo，目前 IJPay Demo 提供两个版本 JFinal 版本以及 Spring Boot 版本**
 
 1.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay-Demo)  [GitHub](https://github.com/javen205/IJPay-Demo)
 

@@ -28,7 +28,7 @@ IJPay 中支持的支付方式以及支付工具
 ## 使用步骤
 
 1. [添加相关依赖](../maven.md)
-2. 找到相关支付方式的文档构建请求参数 Model，并使用 https 执行请求
+2. 找到相关支付方式的接口文档。构建请求参数 Model，并使用 https 执行请求
 3. 调用支付接口唤起支付并完成支付逻辑
 
 
@@ -117,7 +117,7 @@ return new AjaxResult().success(jsonStr);
 ``` 
 
 ::: tip 完整示例
-公众号[如何唤起支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6)，完整示例请参考 [IJPay-Demo](https://gitee.com/javen205/IJPay/blob/master/IJPay-Demo/src/main/java/com/ijpay/demo/controller/wxpay/WxPayController.java)
+公众号[如何唤起支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6)，完整示例请参考 [IJPay-Demo](https://gitee.com/javen205/IJPay/blob/master/IJPay-Demo-SpringBoot/src/main/java/com/ijpay/demo/controller/wxpay/WxPayController.java)
 :::
 
 ## 多应用支持
@@ -125,5 +125,19 @@ return new AjaxResult().success(jsonStr);
 微信支付的多应用支持方式与支付宝的多应用无缝切换一致，请参考 [支付宝初始化](../alipay/init.md)
 
 
+## 完整示例
+
+ ::: tip
+ IJPay 2.x 版本示例
+ :::
+ 
+- [IJPay-Demo-SpringBoot](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
+- [IJPay-Demo-JFinal](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)
+
+ ::: tip
+ IJPay 1.x 版本示例
+ :::
+ 
+- [IJPay-Demo](https://gitee.com/javen205/IJPay-Demo)
 
 

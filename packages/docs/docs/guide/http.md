@@ -6,7 +6,7 @@
 [HuTool 详细介绍](https://hutool.cn/docs/#/http/%E6%A6%82%E8%BF%B0?id=%e7%94%b1%e6%9d%a5)
 
 
-## 简单封装
+## IJPay 中简单封装
 
 抽象 Http 代理 [AbstractHttpDelegate](https://gitee.com/javen205/IJPay/blob/master/IJPay-Core/src/main/java/com/ijpay/core/http/AbstractHttpDelegate.java)，
 IJPay 中经常使用到的 [HttpKit](https://gitee.com/javen205/IJPay/blob/master/IJPay-Core/src/main/java/com/ijpay/core/kit/HttpKit.java) 工具类。
@@ -69,7 +69,12 @@ public class xxHttpKit extends AbstractHttpDelegate {
     }
 
 }
-``` 
+```  
+
+## 获取异步通知中的数据
+
+在 IJPay 中如何快捷的获取异步通知中的数据呢？ 在 [HttpKit](https://gitee.com/javen205/IJPay/blob/master/IJPay-Core/src/main/java/com/ijpay/core/kit/HttpKit.java) 中提供了 readData 方法 `HttpKit.readData(HttpServletRequest request)`
+
 
 
 

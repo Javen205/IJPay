@@ -7,6 +7,10 @@ IJPay 中的支付宝支付是对 [alipay-sdk-java](https://github.com/alipay/al
 
 ## 支付方式与支付工具
 
+::: tip
+IJPay 中支持的支付方式以及支付工具
+:::
+
 1. 当面付(条码支付/扫码支付/声波支付)
 2. 刷脸支付
 3. APP支付
@@ -129,9 +133,18 @@ public static AlipayTradeCloseResponse tradeCloseToResponse(AlipayTradeCloseMode
 ## 总结
 
 看到这里我想大家都理解了 IJPay 中对支付宝封装的原理。至于如何调用接口进行支付应该不用再过多介绍了吧。
+ 
+ ::: tip
+ IJPay 2.x 版本示例
+ :::
+ 
+- [IJPay-Demo-SpringBoot](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
+- [IJPay-Demo-JFinal](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)
 
-示例源码请参考 
-- [IJPay-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo)
-- [2.0.0 以下版本示例](https://gitee.com/javen205/IJPay-Demo)
+ ::: tip
+ IJPay 1.x 版本示例
+ :::
+ 
+- [IJPay-Demo](https://gitee.com/javen205/IJPay-Demo)
 
 
