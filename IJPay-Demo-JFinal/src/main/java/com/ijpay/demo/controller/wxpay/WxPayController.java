@@ -320,16 +320,8 @@ public class WxPayController extends WxPayApiController {
      * 扫码支付模式二
      */
     public void scanCode2() {
-
-        String openId = (String) getSession().getAttribute("openId");
-        //String openId="o5NJx1dVRilQI6uUVSaBDuLnM3iM";
-
         String totalFee = getPara("total_fee");
 
-        if (StrKit.isBlank(openId)) {
-            renderJson(new AjaxResult().addError("openId is null"));
-            return;
-        }
         if (StrKit.isBlank(totalFee)) {
             renderJson(new AjaxResult().addError("支付金额不能为空"));
             return;
@@ -353,7 +345,6 @@ public class WxPayController extends WxPayApiController {
                 .spbill_create_ip(ip)
                 .notify_url(notifyUrl)
                 .trade_type(TradeType.NATIVE.getTradeType())
-                .openid(openId)
                 .build()
                 .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256);
 
@@ -532,6 +523,7 @@ public class WxPayController extends WxPayApiController {
                 .spbill_create_ip(ip)
                 .notify_url(notifyUrl)
                 .trade_type(TradeType.JSAPI.getTradeType())
+                .openid(openId)
                 .build()
                 .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256);
 
