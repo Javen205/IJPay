@@ -60,12 +60,15 @@ APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/jave
 - [JPay](https://github.com/Javen205/JPay) 是简易而不简单的 Android 支付 SDK，JPay 是对微信 App 支付、支付宝 App 支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
 - IOS 支付 SDK，敬请关注。
 
-### 赞助商
+### 赞助商与活动推广
 
  <p align="left">
  	<a target="_blank" href="https://www.jetbrains.com/?from=IJPay">
- 	    <img src="assets/img/jetbrains.png" width="100" alt="jetbrains">
+ 	    <img src="assets/img/jetbrains.png" height="100" alt="jetbrains">
  	</a>
+ 	<a left="100" target="_blank" href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=b1hkzv2x">
+        <img src="assets/img/aliYun.jpg" height="100" alt="">
+    </a>
  </p>
 
 ### 接入文档
