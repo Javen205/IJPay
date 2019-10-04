@@ -42,7 +42,7 @@
      <a target="_blank" href="https://gitter.im/Javen205/IJPay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
         <img src="https://badges.gitter.im/Javen205/IJPay.svg" ></img>
      </a>
-     
+
 </p>
 
 
@@ -52,7 +52,7 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
-APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/javen205/IJPay)
+JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/javen205/IJPay)
 
 
 
@@ -81,9 +81,15 @@ APIDOC：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/jave
 
 **请参考 Demo，目前 IJPay Demo 提供两个版本 JFinal 版本以及 Spring Boot 版本**
 
-1.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay-Demo)  [GitHub](https://github.com/javen205/IJPay-Demo)
+1.x 版本 Demo : 
 
-2.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)
+[Gitee-IJPay-Demo](https://gitee.com/javen205/IJPay-Demo)  [GitHub-IJPay-Demo](https://github.com/javen205/IJPay-Demo)
+
+2.x 版本 Demo :
+
+[Gitee-JFinal-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub-JFinal-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  
+
+[Gitee-SpringBoot-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)  [GitHub-SpringBoot-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
 
 ### 联系方式
 
