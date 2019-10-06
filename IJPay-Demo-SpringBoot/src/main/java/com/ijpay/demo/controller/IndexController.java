@@ -22,10 +22,9 @@ public class IndexController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("")
-    @ResponseBody
     public String index() {
-        logger.error("欢迎使用 IJPay -By Javen <br/><br>  交流群：723992875");
-        return "欢迎使用 IJPay -By Javen <br/><br>  交流群：723992875";
+        logger.error("欢迎使用 IJPay -By Javen  交流群：723992875");
+        return "index.html";
     }
 
     @RequestMapping("/toWxH5Pay")
