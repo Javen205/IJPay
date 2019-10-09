@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -236,9 +237,10 @@ public class WxPayController extends AbstractWxPayApiController {
             log.info(qrCodeUrl);
             //生成二维码保存的路径
             String name = "payQRCode1.png";
+            log.info(ResourceUtils.getURL("classpath:").getPath());
             Boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H,
                     "png", 200, 200,
-                    request.getSession().getServletContext().getRealPath("/") + File.separator + name);
+                    ResourceUtils.getURL("classpath:").getPath().concat("static").concat(File.separator).concat(name));
             if (encode) {
                 //在页面上显示
                 return new AjaxResult().success(name);
