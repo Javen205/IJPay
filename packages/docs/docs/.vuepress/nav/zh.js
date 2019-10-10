@@ -1,11 +1,23 @@
 module.exports = [
     {
-        text: '指南',
+        text: '接入指南',
         link: '/guide/',
     },
     {
+        text: '加入VIP',
+        link: '/guide/donate/',
+    },
+    {
+        text: '云主机低至2折',
+        link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
+    },
+    {
+        text: '聊天室',
+        link: 'https://gitter.im/Javen205/IJPay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge',
+    },
+    {
         text: '开源项目',
-        items:[
+        items: [
             {
                 text: 'IJPay 让支付触手可及',
                 link: 'https://gitee.com/javen205/IJPay'
@@ -35,18 +47,6 @@ module.exports = [
     {
         text: '1.x 文档',
         link: 'https://ijpay.javen.dev/doc/opensource/IJPay.html',
-    },
-    {
-        text: '捐赠',
-        link: '/guide/donate/',
-    },
-    {
-        text: '云主机低至2折',
-        link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
-    },
-    {
-        text: '聊天室',
-        link: 'https://gitter.im/Javen205/IJPay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge',
     },
     {
         text: 'Gitee',

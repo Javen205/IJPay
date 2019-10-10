@@ -52,6 +52,8 @@ Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
+JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/javen205/IJPay)
+
 
 - IJPay 是 [JPay](https://github.com/Javen205/JPay) 后台接口 SDK 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 - [JPay](https://github.com/Javen205/JPay) 是简易而不简单的 Android 支付 SDK，JPay 是对微信 App 支付、支付宝 App 支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
@@ -61,8 +63,11 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
  <p align="left">
  	<a target="_blank" href="https://www.jetbrains.com/?from=IJPay">
- 	    <img src="https://gitee.com/javen205/IJPay/raw/master/assets/img/jetbrains.png" width="100" alt="jetbrains">
+ 	    <img src="https://gitee.com/javen205/IJPay/raw/master/assets/img/jetbrains.png" height="100" alt="jetbrains">
  	</a>
+ 	<a left="100" target="_blank" href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=b1hkzv2x">
+            <img src=" 	https://gitee.com/javen205/IJPay/raw/master/assets/img/aliYun.jpg" height="100" alt="">
+    </a>
  </p>
 
 ### 接入文档
@@ -75,9 +80,15 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 
 **请参考 Demo，目前 IJPay Demo 提供两个版本 JFinal 版本以及 Spring Boot 版本**
 
-1.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay-Demo)  [GitHub](https://github.com/javen205/IJPay-Demo)
+1.x 版本 Demo : 
 
-2.x 版本 Demo : [Gitee](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)
+[Gitee-IJPay-Demo](https://gitee.com/javen205/IJPay-Demo)  [GitHub-IJPay-Demo](https://github.com/javen205/IJPay-Demo)
+
+2.x 版本 Demo :
+
+[Gitee-JFinal-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub-JFinal-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  
+
+[Gitee-SpringBoot-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)  [GitHub-SpringBoot-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
 
 ### 联系方式
 
