@@ -28,11 +28,6 @@
         </dependency>
         <dependency>
             <groupId>com.github.javen205</groupId>
-            <artifactId>IJPay-UnionPay</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-JDPay</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
