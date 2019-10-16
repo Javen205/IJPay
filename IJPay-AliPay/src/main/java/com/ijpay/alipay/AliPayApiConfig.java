@@ -1,7 +1,9 @@
 package com.ijpay.alipay;
 
 import cn.hutool.core.util.StrUtil;
+import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.CertAlipayRequest;
 import com.alipay.api.DefaultAlipayClient;
 
 import java.io.Serializable;
@@ -41,6 +43,28 @@ public class AliPayApiConfig implements Serializable {
     public AliPayApiConfig build() {
         this.alipayClient = new DefaultAlipayClient(getServiceUrl(), getAppId(), getPrivateKey(), getFormat(),
                 getCharset(), getAliPayPublicKey(), getSignType());
+        return this;
+    }
+
+    /**
+     * @param appCertPath        应用公钥证书路径
+     * @param aliPayCertPath     支付宝公钥证书文件路径
+     * @param aliPayRootCertPath 支付宝CA根证书文件路径
+     * @return {@link AliPayApiConfig}  支付宝支付配置
+     * @throws {@link AlipayApiException} 支付宝 Api 异常
+     */
+    public AliPayApiConfig build(String appCertPath, String aliPayCertPath, String aliPayRootCertPath) throws AlipayApiException {
+        CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
+        certAlipayRequest.setServerUrl(getServiceUrl());
+        certAlipayRequest.setAppId(getAppId());
+        certAlipayRequest.setPrivateKey(getPrivateKey());
+        certAlipayRequest.setFormat(getFormat());
+        certAlipayRequest.setCharset(getCharset());
+        certAlipayRequest.setSignType(getSignType());
+        certAlipayRequest.setCertPath(appCertPath);
+        certAlipayRequest.setAlipayPublicCertPath(aliPayCertPath);
+        certAlipayRequest.setRootCertPath(aliPayRootCertPath);
+        this.alipayClient = new DefaultAlipayClient(certAlipayRequest);
         return this;
     }
 
