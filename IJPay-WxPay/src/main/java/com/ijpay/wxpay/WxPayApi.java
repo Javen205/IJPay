@@ -1,9 +1,11 @@
 package com.ijpay.wxpay;
 
-import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.enums.PayModel;
 import com.ijpay.core.enums.SignType;
+import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.WxPayKit;
+import com.ijpay.wxpay.enums.WxApiType;
+import com.ijpay.wxpay.enums.WxDomain;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -23,246 +25,102 @@ import java.util.Map;
  * @author Javen
  */
 public class WxPayApi {
-    /**
-     * 统一下单接口
-     */
-    private static final String UNIFIED_ORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-    /**
-     * 订单查询
-     */
-    private static final String ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
-    /**
-     * 关闭订单
-     */
-    private static final String CLOSE_ORDER_URL = "https://api.mch.weixin.qq.com/pay/closeorder";
-    /**
-     * 撤销订单
-     */
-    private static final String REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/reverse";
-    /**
-     * 申请退款
-     */
-    private static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-    /**
-     * 查询退款
-     */
-    private static final String REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/pay/refundquery";
-    /**
-     * 下载对账单
-     */
-    private static final String DOWNLOAD_BILLY_URL = "https://api.mch.weixin.qq.com/pay/downloadbill";
-    /**
-     * 下载资金账单
-     */
-    private static final String DOWNLOAD_FUND_FLOW_URL = "https://api.mch.weixin.qq.com/pay/downloadfundflow";
-    /**
-     * 交易保障
-     */
-    private static final String REPORT_URL = "https://api.mch.weixin.qq.com/payitil/report";
-    /**
-     * 转换短链接
-     */
-    private static final String SHORT_URL = "https://api.mch.weixin.qq.com/tools/shorturl";
-    /**
-     * 授权码查询openId接口
-     */
-    private static final String AUTH_CODE_TO_OPENID_URL = "https://api.mch.weixin.qq.com/tools/authcodetoopenid";
-    /**
-     * 刷卡支付
-     */
-    private static final String MICRO_PAY_URL = "https://api.mch.weixin.qq.com/pay/micropay";
-    /**
-     * 企业付款
-     */
-    private static final String TRANSFERS_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-    /**
-     * 查询企业付款
-     */
-    private static final String GET_TRANSFER_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
-    /**
-     * 企业付款到银行
-     */
-    private static final String PAY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank";
-    /**
-     * 查询企业付款
-     */
-    private static final String QUERY_BANK_URL = "https://api.mch.weixin.qq.com/mmpaysptrans/query_bank";
-    /**
-     * 获取RSA加密公钥
-     */
-    private static final String GET_PUBLIC_KEY_URL = "https://fraud.mch.weixin.qq.com/risk/getpublickey";
-    /**
-     * 公众号纯签约
-     */
-    private static final String ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/entrustweb";
-    private static final String PARTNER_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/partner/entrustweb";
-    /**
-     * H5纯签约
-     */
-    private static final String H5_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/h5entrustweb";
-    private static final String PARTNER_H5_ENTRUST_WEB_URL = "https://api.mch.weixin.qq.com/papay/partner/h5entrustweb";
-    /**
-     * 支付中签约接口
-     */
-    private static final String CONTRACT_ORDER_URL = "https://api.mch.weixin.qq.com/pay/contractorder";
-    /**
-     * 查询签约关系
-     */
-    private static final String QUERY_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/querycontract";
-    private static final String PARTNER_QUERY_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/partner/querycontract";
-    /**
-     * 申请扣款
-     */
-    private static final String PAP_PAY_APPLY_URL = "https://api.mch.weixin.qq.com/pay/pappayapply";
-    private static final String PARTNER_PAP_PAY_APPLY_URL = "https://api.mch.weixin.qq.com/pay/partner/pappayapply";
-    /**
-     * 申请解约
-     */
-    private static final String DELETE_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/deletecontract";
-    private static final String PARTNER_DELETE_CONTRACT_URL = "https://api.mch.weixin.qq.com/papay/partner/deletecontract";
-    /**
-     * 查询签约关系对账单
-     */
-    private static final String CONTRACT_BILL_URL = "https://api.mch.weixin.qq.com/papay/contractbill";
-    /**
-     * 代扣查询订单
-     */
-    private static final String PAP_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/paporderquery";
-    private static final String PARTNER_PAP_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/pay/partner/paporderquery";
-    /**
-     * 请求单次分账
-     */
-    private static final String PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharing";
-    /**
-     * 请求多次分账
-     */
-    private static final String MULTI_PROFIT_SHARING_URL = "https://api.mch.weixin.qq.com/secapi/pay/multiprofitsharing";
-    /**
-     * 查询分账结果
-     */
-    private static final String PROFIT_SHARING_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingquery";
-    /**
-     * 添加分账接收方
-     */
-    private static final String PROFIT_SHARING_ADD_RECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingaddreceiver";
-    /**
-     * 删除分账接收方
-     */
-    private static final String PROFIT_SHARING_REMOVE_RECEIVER_URL = "https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver";
-    /**
-     * 完结分账
-     */
-    private static final String PROFIT_SHARING_FINISH_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish";
-    /**
-     * 分账回退
-     */
-    private static final String PROFIT_SHARING_RETURN_URL = "https://api.mch.weixin.qq.com/secapi/pay/profitsharingreturn";
-    /**
-     * 回退结果查询
-     */
-    private static final String PROFIT_SHARING_RETURN_QUERY_URL = "https://api.mch.weixin.qq.com/pay/profitsharingreturnquery";
-    /**
-     * 发放代金券
-     */
-    private static final String SEND_COUPON_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon";
-    /**
-     * 查询代金券批次
-     */
-    private static final String QUERY_COUPON_STOCK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock";
-    /**
-     * 查询代金券信息
-     */
-    private static final String QUERY_COUPONS_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo";
-    /**
-     * 拉取订单评价数据
-     */
-    private static final String BATCH_QUERY_COMMENT_URL = "https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment";
-    /**
-     * 支付押金（人脸支付）
-     */
-    private static final String DEPOSIT_FACE_PAY_URL = "https://api.mch.weixin.qq.com/deposit/facepay";
-    /**
-     * 支付押金（付款码支付）
-     */
-    private static final String DEPOSIT_MICRO_PAY_URL = "https://api.mch.weixin.qq.com/deposit/micropay";
-    /**
-     * 查询订单
-     */
-    private static final String DEPOSIT_ORDER_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/orderquery";
-    /**
-     * 撤销订单
-     */
-    private static final String DEPOSIT_REVERSE_URL = "https://api.mch.weixin.qq.com/deposit/reverse";
-    /**
-     * 消费押金
-     */
-    private static final String DEPOSIT_CONSUME_URL = "https://api.mch.weixin.qq.com/deposit/consume";
-    /**
-     * 申请退款（押金）
-     */
-    private static final String DEPOSIT_REFUND_URL = "https://api.mch.weixin.qq.com/deposit/refund";
-    /**
-     * 查询退款（押金）
-     */
-    private static final String DEPOSIT_REFUND_QUERY_URL = "https://api.mch.weixin.qq.com/deposit/refundquery";
-    /**
-     * 刷脸支付
-     */
-    private static final String FACE_PAY_URL = "https://api.mch.weixin.qq.com/pay/facepay";
-    /**
-     * 刷脸支付查询订单
-     */
-    private static final String FACE_PAY_QUERY_URL = "https://api.mch.weixin.qq.com/pay/facepayquery";
-    /**
-     * 刷脸支付撤销订单
-     */
-    private static final String FACE_PAY_REVERSE_URL = "https://api.mch.weixin.qq.com/secapi/pay/facepayreverse";
-    /**
-     * 发放普通红包
-     */
-    private static final String SEND_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
-    /**
-     * 发放裂变红包
-     */
-    private static final String SEND_GROUP_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack";
-    /**
-     * 查询红包记录
-     */
-    private static final String GET_HB_INFO_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo";
-    /**
-     * 小程序红包-发放红包接口
-     */
-    private static final String SEND_MINI_PROGRAM_RED_PACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendminiprogramhb";
-    /**
-     * 获取沙箱秘钥
-     */
-    private static final String GET_SING_KEY_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
-    /**
-     * 统一下单接口
-     */
-    private static final String UNIFIED_ORDER_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder";
-    /**
-     * 刷卡支付
-     */
-    private static final String MICRO_PAY_SANDBOX_RUL = "https://api.mch.weixin.qq.com/sandboxnew/pay/micropay";
-    /**
-     * 订单查询
-     */
-    private static final String ORDER_QUERY_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/orderquery";
-    /**
-     * 申请退款
-     */
-    private static final String REFUND_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/secapi/pay/refund";
-    /**
-     * 查询退款
-     */
-    private static final String REFUND_QUERY_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/refundquery";
-    /**
-     * 下载对账单
-     */
-    private static final String DOWNLOAD_BILL_SANDBOX_URL = "https://api.mch.weixin.qq.com/sandboxnew/pay/downloadbill";
 
     private WxPayApi() {
+    }
+
+    /**
+     * 获取接口请求的 URL
+     *
+     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
+     * @return {@link String} 返回完整的接口请求URL
+     */
+    public static String getReqUrl(WxApiType wxApiType) {
+        return getReqUrl(wxApiType, null, false);
+    }
+
+    /**
+     * 获取接口请求的 URL
+     *
+     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
+     * @param isSandBox 是否是沙箱环境
+     * @return {@link String} 返回完整的接口请求URL
+     */
+    public static String getReqUrl(WxApiType wxApiType, boolean isSandBox) {
+        return getReqUrl(wxApiType, null, isSandBox);
+    }
+
+    /**
+     * 获取接口请求的 URL
+     *
+     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
+     * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
+     * @param isSandBox 是否是沙箱环境
+     * @return {@link String} 返回完整的接口请求URL
+     */
+    public static String getReqUrl(WxApiType wxApiType, WxDomain wxDomain, boolean isSandBox) {
+        if (wxDomain == null) {
+            wxDomain = WxDomain.CHINA;
+        }
+        return wxDomain.getType()
+                .concat(isSandBox ? WxApiType.SAND_BOX_NEW.getType() : "")
+                .concat(wxApiType.getType());
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl 接口 URL
+     *               通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *               或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params 接口请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String execution(String apiUrl, Map<String, String> params) {
+        return doPost(apiUrl, params);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl 接口 URL
+     *               通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *               或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params 接口请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByGet(String apiUrl, Map<String, Object> params) {
+        return doGet(apiUrl, params);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String execution(String apiUrl, Map<String, String> params, String certPath, String certPass) {
+        return doPostSSL(apiUrl, params, certPath, certPass);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certFile 证书文件输入流
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String execution(String apiUrl, Map<String, String> params, InputStream certFile, String certPass) {
+        return doPostSSL(apiUrl, params, certFile, certPass);
     }
 
     /**
@@ -279,21 +137,50 @@ public class WxPayApi {
         map.put("mch_id", mch_id);
         map.put("nonce_str", nonce_str);
         map.put("sign", WxPayKit.createSign(map, partnerKey, signType));
-        return doPost(GET_SING_KEY_URL, map);
+        return execution(getReqUrl(WxApiType.GET_SIGN_KEY), map);
+    }
+
+    /**
+     * 统一下单
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String pushOrder(Map<String, String> params) {
+        return pushOrder(false, null, params);
     }
 
     /**
      * 统一下单
      *
      * @param isSandbox 是否是沙盒环境
-     * @param params    统一下单请求参数
+     * @param params    请求参数
      * @return {@link String} 请求返回的结果
      */
     public static String pushOrder(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox) {
-            return doPost(UNIFIED_ORDER_SANDBOX_URL, params);
-        }
-        return doPost(UNIFIED_ORDER_URL, params);
+        return pushOrder(isSandbox, null, params);
+    }
+
+    /**
+     * 统一下单
+     *
+     * @param isSandbox 是否是沙盒环境
+     * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
+     * @param params    请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String pushOrder(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.UNIFIED_ORDER, wxDomain, isSandbox), params);
+    }
+
+    /**
+     * 订单查询
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String orderQuery(Map<String, String> params) {
+        return orderQuery(false, null, params);
     }
 
     /**
@@ -304,10 +191,18 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderQuery(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox) {
-            return doPost(ORDER_QUERY_SANDBOX_URL, params);
-        }
-        return doPost(ORDER_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.ORDER_QUERY, null, isSandbox), params);
+    }
+
+    /**
+     * 订单查询
+     *
+     * @param isSandbox 是否是沙盒环境
+     * @param params    请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String orderQuery(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.ORDER_QUERY, wxDomain, isSandbox), params);
     }
 
     /**
@@ -317,7 +212,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String closeOrder(Map<String, String> params) {
-        return doPost(CLOSE_ORDER_URL, params);
+        return execution(getReqUrl(WxApiType.CLOSE_ORDER), params);
     }
 
     /**
@@ -329,7 +224,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReverse(Map<String, String> params, String certPath, String certPass) {
-        return doPostSSL(REVERSE_URL, params, certPath, certPass);
+        return execution(getReqUrl(WxApiType.REVERSE), params, certPath, certPass);
     }
 
     /**
@@ -341,7 +236,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReverse(Map<String, String> params, InputStream certFile, String certPass) {
-        return doPostSSL(REVERSE_URL, params, certFile, certPass);
+        return execution(getReqUrl(WxApiType.REVERSE), params, certFile, certPass);
     }
 
     /**
@@ -354,10 +249,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, String certPath, String certPass) {
-        if (isSandbox) {
-            return doPostSSL(REFUND_SANDBOX_URL, params, certPath, certPass);
-        }
-        return doPostSSL(REFUND_URL, params, certPath, certPass);
+        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass);
     }
 
     /**
@@ -370,10 +262,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass) {
-        if (isSandbox) {
-            return doPostSSL(REFUND_SANDBOX_URL, params, certFile, certPass);
-        }
-        return doPostSSL(REFUND_URL, params, certFile, certPass);
+        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certFile, certPass);
     }
 
     /**
@@ -384,10 +273,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundQuery(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox) {
-            return doPost(REFUND_QUERY_SANDBOX_URL, params);
-        }
-        return doPost(REFUND_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.REFUND_QUERY, null, isSandbox), params);
     }
 
     /**
@@ -398,10 +284,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String downloadBill(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox) {
-            return doPost(DOWNLOAD_BILL_SANDBOX_URL, params);
-        }
-        return doPost(DOWNLOAD_BILLY_URL, params);
+        return execution(getReqUrl(WxApiType.DOWNLOAD_BILL, null, isSandbox), params);
     }
 
     /**
@@ -411,7 +294,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReport(Map<String, String> params) {
-        return doPost(REPORT_URL, params);
+        return execution(getReqUrl(WxApiType.REPORT, null, false), params);
     }
 
     /**
@@ -421,7 +304,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String toShortUrl(Map<String, String> params) {
-        return doPost(SHORT_URL, params);
+        return execution(getReqUrl(WxApiType.SHORT_URL, null, false), params);
     }
 
     /**
@@ -431,7 +314,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String authCodeToOpenid(Map<String, String> params) {
-        return doPost(AUTH_CODE_TO_OPENID_URL, params);
+        return execution(getReqUrl(WxApiType.AUTH_CODE_TO_OPENID, null, false), params);
     }
 
     /**
@@ -441,131 +324,128 @@ public class WxPayApi {
      * @param params    请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String micropay(boolean isSandbox, Map<String, String> params) {
-        if (isSandbox) {
-            return WxPayApi.doPost(MICRO_PAY_SANDBOX_RUL, params);
-        }
-        return WxPayApi.doPost(MICRO_PAY_URL, params);
+    public static String microPay(boolean isSandbox, Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.MICRO_PAY, null, isSandbox), params);
     }
 
     /**
      * 企业付款到零钱
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String transfers(Map<String, String> params, String certPath, String certPassword) {
-        return WxPayApi.doPostSSL(TRANSFERS_URL, params, certPath, certPassword);
+    public static String transfers(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.TRANSFER, null, false), params, certPath, certPass);
     }
 
     /**
      * 企业付款到零钱
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String transfers(Map<String, String> params, InputStream certFile, String certPassword) {
-        return WxPayApi.doPostSSL(TRANSFERS_URL, params, certFile, certPassword);
+    public static String transfers(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.TRANSFER, null, false), params, certFile, certPass);
     }
 
     /**
      * 查询企业付款到零钱
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getTransferInfo(Map<String, String> params, String certPath, String certPassword) {
-        return WxPayApi.doPostSSL(GET_TRANSFER_INFO_URL, params, certPath, certPassword);
+    public static String getTransferInfo(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_TRANSFER_INFO, null, false), params, certPath, certPass);
     }
 
     /**
      * 查询企业付款到零钱
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getTransferInfo(Map<String, String> params, InputStream certFile, String certPassword) {
-        return WxPayApi.doPostSSL(GET_TRANSFER_INFO_URL, params, certFile, certPassword);
+    public static String getTransferInfo(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_TRANSFER_INFO, null, false), params, certFile, certPass);
     }
 
     /**
      * 企业付款到银行
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String payBank(Map<String, String> params, String certPath, String certPassword) {
-        return WxPayApi.doPostSSL(PAY_BANK_URL, params, certPath, certPassword);
+    public static String payBank(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certPath, certPass);
     }
 
     /**
      * 企业付款到银行
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String payBank(Map<String, String> params, InputStream certFile, String certPassword) {
-        return WxPayApi.doPostSSL(PAY_BANK_URL, params, certFile, certPassword);
+    public static String payBank(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certFile, certPass);
     }
 
     /**
      * 查询企业付款到银行
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String queryBank(Map<String, String> params, String certPath, String certPassword) {
-        return WxPayApi.doPostSSL(QUERY_BANK_URL, params, certPath, certPassword);
+    public static String queryBank(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_TRANSFER_BANK_INFO, null, false), params, certPath, certPass);
     }
 
     /**
      * 查询企业付款到银行
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的  InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的  InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String queryBank(Map<String, String> params, InputStream certFile, String certPassword) {
-        return WxPayApi.doPostSSL(QUERY_BANK_URL, params, certFile, certPassword);
+    public static String queryBank(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_TRANSFER_BANK_INFO, null, false), params, certFile, certPass);
     }
 
     /**
      * 获取 RSA 加密公钥
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getPublicKey(Map<String, String> params, String certPath, String certPassword) {
-        return WxPayApi.doPostSSL(GET_PUBLIC_KEY_URL, params, certPath, certPassword);
+    public static String getPublicKey(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, null, false), params, certPath, certPass);
     }
 
     /**
      * 获取 RSA 加密公钥
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的   InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的   InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPassword) {
-        return WxPayApi.doPostSSL(GET_PUBLIC_KEY_URL, params, certFile, certPassword);
+    public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, null, false), params, certFile, certPass);
     }
 
     /**
@@ -577,11 +457,28 @@ public class WxPayApi {
      */
     public static String entrustWeb(Map<String, Object> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doGet(ENTRUST_WEB_URL, params);
+            return executionByGet(getReqUrl(WxApiType.ENTRUST_WEB), params);
         } else {
-            return doGet(PARTNER_ENTRUST_WEB_URL, params);
+            return executionByGet(getReqUrl(WxApiType.PARTNER_ENTRUST_WEB), params);
         }
     }
+
+
+    /**
+     * APP 纯签约
+     *
+     * @param params   请求参数
+     * @param payModel 商户平台模式
+     * @return {@link String} 请求返回的结果
+     */
+    public static String preEntrustWeb(Map<String, Object> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return executionByGet(getReqUrl(WxApiType.PRE_ENTRUST_WEB), params);
+        } else {
+            return executionByGet(getReqUrl(WxApiType.PARTNER_PRE_ENTRUST_WEB), params);
+        }
+    }
+
 
     /**
      * H5 纯签约
@@ -592,9 +489,9 @@ public class WxPayApi {
      */
     public static String h5EntrustWeb(Map<String, Object> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doGet(H5_ENTRUST_WEB_URL, params);
+            return executionByGet(getReqUrl(WxApiType.H5_ENTRUST_WEB), params);
         } else {
-            return doGet(PARTNER_H5_ENTRUST_WEB_URL, params);
+            return executionByGet(getReqUrl(WxApiType.PARTNER_H5_ENTRUST_WEB), params);
         }
     }
 
@@ -605,7 +502,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String contractOrder(Map<String, String> params) {
-        return doPost(CONTRACT_ORDER_URL, params);
+        return execution(getReqUrl(WxApiType.PAY_CONTRACT_ORDER), params);
     }
 
     /**
@@ -617,9 +514,9 @@ public class WxPayApi {
      */
     public static String queryContract(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doPost(QUERY_CONTRACT_URL, params);
+            return execution(getReqUrl(WxApiType.QUERY_ENTRUST_CONTRACT), params);
         } else {
-            return doPost(PARTNER_QUERY_CONTRACT_URL, params);
+            return execution(getReqUrl(WxApiType.PARTNER_QUERY_ENTRUST_CONTRACT), params);
         }
     }
 
@@ -632,9 +529,9 @@ public class WxPayApi {
      */
     public static String papPayApply(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doPost(PAP_PAY_APPLY_URL, params);
+            return execution(getReqUrl(WxApiType.PAP_PAY_APPLY), params);
         } else {
-            return doPost(PARTNER_PAP_PAY_APPLY_URL, params);
+            return execution(getReqUrl(WxApiType.PARTNER_PAP_PAY_APPLY), params);
         }
     }
 
@@ -647,9 +544,9 @@ public class WxPayApi {
      */
     public static String deleteContract(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doPost(DELETE_CONTRACT_URL, params);
+            return execution(getReqUrl(WxApiType.DELETE_ENTRUST_CONTRACT), params);
         } else {
-            return doPost(PARTNER_DELETE_CONTRACT_URL, params);
+            return execution(getReqUrl(WxApiType.PARTNER_DELETE_ENTRUST_CONTRACT), params);
         }
     }
 
@@ -659,8 +556,12 @@ public class WxPayApi {
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String contractBill(Map<String, String> params) {
-        return doPost(CONTRACT_BILL_URL, params);
+    public static String contractBill(Map<String, String> params, PayModel payModel) {
+        if (payModel == PayModel.BUSINESS_MODEL) {
+            return execution(getReqUrl(WxApiType.QUERY_ENTRUST_CONTRACT), params);
+        } else {
+            return execution(getReqUrl(WxApiType.PARTNER_QUERY_ENTRUST_CONTRACT), params);
+        }
     }
 
     /**
@@ -672,58 +573,58 @@ public class WxPayApi {
      */
     public static String papOrderQuery(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return doPost(PAP_ORDER_QUERY_URL, params);
+            return execution(getReqUrl(WxApiType.PAP_ORDER_QUERY), params);
         } else {
-            return doPost(PARTNER_PAP_ORDER_QUERY_URL, params);
+            return execution(getReqUrl(WxApiType.PARTNER_PAP_ORDER_QUERY), params);
         }
     }
 
     /**
      * 请求单次分账
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharing(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_URL, params, certPath, certPassword);
+    public static String profitSharing(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING), params, certPath, certPass);
     }
 
     /**
      * 请求单次分账
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的  InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的  InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharing(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_URL, params, certFile, certPassword);
+    public static String profitSharing(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING), params, certFile, certPass);
     }
 
     /**
      * 请求多次分账
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String multiProfitSharing(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(MULTI_PROFIT_SHARING_URL, params, certPath, certPassword);
+    public static String multiProfitSharing(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.MULTI_PROFIT_SHARING), params, certPath, certPass);
     }
 
     /**
      * 请求多次分账
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的  InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的  InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String multiProfitSharing(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(MULTI_PROFIT_SHARING_URL, params, certFile, certPassword);
+    public static String multiProfitSharing(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.MULTI_PROFIT_SHARING), params, certFile, certPass);
     }
 
     /**
@@ -733,7 +634,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingQuery(Map<String, String> params) {
-        return doPost(PROFIT_SHARING_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_QUERY), params);
     }
 
     /**
@@ -743,7 +644,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingAddReceiver(Map<String, String> params) {
-        return doPost(PROFIT_SHARING_ADD_RECEIVER_URL, params);
+        return execution(getReqUrl(WxApiType.PROFITS_HARING_ADD_RECEIVER), params);
     }
 
     /**
@@ -753,55 +654,55 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingRemoveReceiver(Map<String, String> params) {
-        return doPost(PROFIT_SHARING_REMOVE_RECEIVER_URL, params);
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_REMOVE_RECEIVER), params);
     }
 
     /**
      * 完结分账
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharingFinish(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_FINISH_URL, params, certPath, certPassword);
+    public static String profitSharingFinish(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_FINISH), params, certPath, certPass);
     }
 
     /**
      * 完结分账
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharingFinish(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_FINISH_URL, params, certFile, certPassword);
+    public static String profitSharingFinish(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_FINISH), params, certFile, certPass);
     }
 
     /**
      * 分账回退
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharingReturn(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_RETURN_URL, params, certPath, certPassword);
+    public static String profitSharingReturn(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN), params, certPath, certPass);
     }
 
     /**
      * 分账回退
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String profitSharingReturn(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(PROFIT_SHARING_RETURN_URL, params, certFile, certPassword);
+    public static String profitSharingReturn(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN), params, certFile, certPass);
     }
 
     /**
@@ -811,31 +712,31 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingReturnQuery(Map<String, String> params) {
-        return doPost(PROFIT_SHARING_RETURN_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN_QUERY), params);
     }
 
     /**
      * 发放代金券
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendCoupon(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(SEND_COUPON_URL, params, certPath, certPassword);
+    public static String sendCoupon(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_COUPON), params, certPath, certPass);
     }
 
     /**
      * 发放代金券
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendCoupon(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(SEND_COUPON_URL, params, certFile, certPassword);
+    public static String sendCoupon(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_COUPON), params, certFile, certPass);
     }
 
     /**
@@ -845,7 +746,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryCouponStock(Map<String, String> params) {
-        return doPost(QUERY_COUPON_STOCK_URL, params);
+        return execution(getReqUrl(WxApiType.QUERY_COUPON_STOCK), params);
     }
 
     /**
@@ -855,31 +756,31 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryCouponsInfo(Map<String, String> params) {
-        return doPost(QUERY_COUPONS_INFO_URL, params);
+        return execution(getReqUrl(WxApiType.QUERY_COUPONS_INFO), params);
     }
 
     /**
      * 拉取订单评价数据
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String batchQueryComment(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certPath, certPassword);
+    public static String batchQueryComment(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.BATCH_QUERY_COMMENT), params, certPath, certPass);
     }
 
     /**
      * 拉取订单评价数据
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String batchQueryComment(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(BATCH_QUERY_COMMENT_URL, params, certFile, certPassword);
+    public static String batchQueryComment(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.BATCH_QUERY_COMMENT), params, certFile, certPass);
     }
 
     /**
@@ -888,8 +789,8 @@ public class WxPayApi {
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String depositFacepay(Map<String, String> params) {
-        return doPost(DEPOSIT_FACE_PAY_URL, params);
+    public static String depositFacePay(Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_FACE_PAY), params);
     }
 
     /**
@@ -898,8 +799,8 @@ public class WxPayApi {
      * @param params 请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String depositMicropay(Map<String, String> params) {
-        return doPost(DEPOSIT_MICRO_PAY_URL, params);
+    public static String depositMicroPay(Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_MICRO_PAY), params);
     }
 
     /**
@@ -909,43 +810,79 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositOrderQuery(Map<String, String> params) {
-        return doPost(DEPOSIT_ORDER_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.DEPOSIT_ORDER_QUERY), params);
     }
 
     /**
      * 撤销订单
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String depositReverse(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(DEPOSIT_REVERSE_URL, params, certFile, certPassword);
+    public static String depositReverse(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_REVERSE), params, certPath, certPass);
+    }
+
+    /**
+     * 撤销订单
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String depositReverse(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_REVERSE), params, certFile, certPass);
     }
 
     /**
      * 消费押金
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件的目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String depositConsume(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(DEPOSIT_CONSUME_URL, params, certFile, certPassword);
+    public static String depositConsume(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_CONSUME), params, certPath, certPass);
+    }
+
+    /**
+     * 消费押金
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String depositConsume(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_CONSUME), params, certFile, certPass);
     }
 
     /**
      * 申请退款（押金）
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件的目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String depositRefund(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(DEPOSIT_REFUND_URL, params, certFile, certPassword);
+    public static String depositRefund(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND), params, certPath, certPass);
+    }
+
+    /**
+     * 申请退款（押金）
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String depositRefund(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND), params, certFile, certPass);
     }
 
     /**
@@ -955,31 +892,31 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositRefundQuery(Map<String, String> params) {
-        return doPost(DEPOSIT_REFUND_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND_QUERY), params);
     }
 
     /**
      * 下载资金账单
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String downloadFundFlow(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certPath, certPassword);
+    public static String downloadFundFlow(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.DOWNLOAD_FUND_FLOW), params, certPath, certPass);
     }
 
     /**
      * 下载资金账单
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String downloadFundFlow(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(DOWNLOAD_FUND_FLOW_URL, params, certFile, certPassword);
+    public static String downloadFundFlow(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.DOWNLOAD_FUND_FLOW), params, certFile, certPass);
     }
 
     /**
@@ -989,7 +926,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePay(Map<String, String> params) {
-        return doPost(FACE_PAY_URL, params);
+        return execution(getReqUrl(WxApiType.FACE_PAY), params);
     }
 
     /**
@@ -999,127 +936,127 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePayQuery(Map<String, String> params) {
-        return doPost(FACE_PAY_QUERY_URL, params);
+        return execution(getReqUrl(WxApiType.FACE_PAY_QUERY), params);
     }
 
     /**
      * 刷脸支付撤销订单
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String facePayReverse(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(FACE_PAY_REVERSE_URL, params, certPath, certPassword);
+    public static String facePayReverse(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.FACE_PAY_REVERSE), params, certPath, certPass);
     }
 
     /**
      * 刷脸支付撤销订单
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(FACE_PAY_REVERSE_URL, params, certFile, certPassword);
+    public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.FACE_PAY_REVERSE), params, certFile, certPass);
     }
 
     /**
      * 发放普通红包
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendRedPack(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(SEND_RED_PACK_URL, params, certPath, certPassword);
+    public static String sendRedPack(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_RED_PACK), params, certPath, certPass);
     }
 
     /**
      * 发放普通红包
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(SEND_RED_PACK_URL, params, certFile, certPassword);
+    public static String sendRedPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_RED_PACK), params, certFile, certPass);
     }
 
     /**
      * 发放裂变红包
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendGroupRedPack(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certPath, certPassword);
+    public static String sendGroupRedPack(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certPath, certPass);
     }
 
     /**
      * 发放裂变红包
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendGroupRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(SEND_GROUP_RED_PACK_URL, params, certFile, certPassword);
+    public static String sendGroupRedPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certFile, certPass);
     }
 
     /**
      * 查询红包记录
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getHbInfo(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(GET_HB_INFO_URL, params, certPath, certPassword);
+    public static String getHbInfo(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_HB_INFO), params, certPath, certPass);
     }
 
     /**
      * 查询红包记录
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String getHbInfo(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(GET_HB_INFO_URL, params, certFile, certPassword);
+    public static String getHbInfo(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.GET_HB_INFO), params, certFile, certPass);
     }
 
     /**
      * 小程序发放红包接口
      *
-     * @param params       请求参数
-     * @param certPath     证书文件目录
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendMiniProgramRedPack(Map<String, String> params, String certPath, String certPassword) {
-        return doPostSSL(SEND_MINI_PROGRAM_RED_PACK_URL, params, certPath, certPassword);
+    public static String sendMiniProgramRedPack(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certPath, certPass);
     }
 
     /**
      * 小程序发放红包接口
      *
-     * @param params       请求参数
-     * @param certFile     证书文件的 InputStream
-     * @param certPassword 证书密码
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String sendMiniProgramRedPack(Map<String, String> params, InputStream certFile, String certPassword) {
-        return doPostSSL(SEND_MINI_PROGRAM_RED_PACK_URL, params, certFile, certPassword);
+    public static String sendMiniProgramRedPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
     }
 
     public static String doGet(String url, Map<String, Object> params) {
