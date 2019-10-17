@@ -13,12 +13,17 @@
     <name>${project.artifactId}</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)-支付宝支付</description>
     <url>https://github.com/javen205/IJPay</url>
+
+    <properties>
+        <alipay.version>4.8.10.ALL</alipay.version>
+        <fastjson.version>1.2.62</fastjson.version>
+    </properties>
     
     <dependencies>
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
-            <version>4.7.11.ALL</version>
+            <version>${alipay.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>fastjson</artifactId>
@@ -35,7 +40,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.61</version>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 
