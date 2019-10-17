@@ -253,7 +253,51 @@ public enum WxApiType {
     /**
      * 撤销刷脸支付订单
      */
-    FACE_PAY_REVERSE("/secapi/pay/facepayreverse");
+    FACE_PAY_REVERSE("/secapi/pay/facepayreverse"),
+    /**
+     * 小微商户申请入驻
+     */
+    MICRO_SUBMIT("/applyment/micro/submit"),
+    /**
+     * 查询申请状态
+     */
+    GET_MICRO_SUBMIT_STATE("/applyment/micro/getstate"),
+    /**
+     * 提交升级申请
+     */
+    MICRO_SUBMIT_UPGRADE("/applyment/micro/submitupgrade"),
+    /**
+     * 查询升级申请单状态
+     */
+    GET_MICRO_UPGRADE_STATE("/applyment/micro/getupgradestate"),
+    /**
+     * 查询提现状态
+     */
+    QUERY_AUTO_WITH_DRAW_BY_DATE("/fund/queryautowithdrawbydate"),
+    /**
+     * 修改结算银行卡
+     */
+    MICRO_MODIFY_ARCHIVES("/applyment/micro/modifyarchives"),
+    /**
+     * 重新发起提现
+     */
+    RE_AUTO_WITH_DRAW_BY_DATE("/fund/reautowithdrawbydate"),
+    /**
+     * 修改联系信息
+     */
+    MICRO_MODIFY_CONTACT_INFO("/applyment/micro/modifycontactinfo"),
+    /**
+     * 小微商户关注功能配置
+     */
+    ADD_RECOMMEND_CONF("/secapi/mkt/addrecommendconf"),
+    /**
+     * 小微商户开发配置新增支付目录
+     */
+    ADD_SUB_DEV_CONFIG("/secapi/mch/addsubdevconfig"),
+    /**
+     * 小微商户开发配置查询
+     */
+    QUERY_SUB_DEV_CONFIG("/secapi/mch/querysubdevconfig");
 
     /**
      * 类型
