@@ -99,9 +99,9 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 
 ### 贡献代码
 
-最后如果该库对你有帮助不妨右上角点点Star或者任意打赏支持一下，我更喜欢你 Fork PR 成为项目贡献者 .
+最后如果该库对你有帮助不妨右上角点点 Star 或者任意赞助支持，我更喜欢你 Fork PR 成为项目贡献者 .
 
-[前往捐赠](https://github.com/Javen205/donate)
+[前往赞助](https://github.com/Javen205/donate)
 
 
 ### 鸣谢
@@ -126,6 +126,8 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 - [微信委托扣款 API-服务商模式](https://pay.weixin.qq.com/wiki/doc/api/pap_sl.php?chapter=17_1)
 - [微信委托扣款 API-普通商户模式](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=17_1)
 - [微信刷脸支付 API](https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/backend.html)
+- [微信酒店押金](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=26_1)
+- [微信小微商户](https://pay.weixin.qq.com/index.php/core/affiliate/micro_intro)
 - [支付宝开发平台](https://docs.open.alipay.com)
 - [QQ 钱包开发文档](https://qpay.qq.com/buss/doc.shtml)
 - [京东支付](https://qpay.qq.com/buss/doc.shtml)
