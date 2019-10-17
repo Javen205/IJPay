@@ -70,6 +70,15 @@ public class PayKit {
      * @return 拼接后字符串
      */
     public static String createLinkString(Map<String, String> params) {
+        return createLinkString(params, false);
+    }
+
+    /**
+     * @param params 需要排序并参与字符拼接的参数组
+     * @param encode 是否进行URLEncoder
+     * @return 拼接后字符串
+     */
+    public static String createLinkString(Map<String, String> params, boolean encode) {
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
         StringBuffer content = new StringBuffer();
@@ -78,23 +87,28 @@ public class PayKit {
             String value = params.get(key);
             // 拼接时，不包括最后一个&字符
             if (i == keys.size() - 1) {
-                content.append(key + "=" + value);
+                content.append(key + "=" + (encode ? urlEncode(value) : value));
             } else {
-                content.append(key + "=" + value + "&");
+                content.append(key + "=" + (encode ? urlEncode(value) : value) + "&");
             }
         }
         return content.toString();
     }
+
 
     /**
      * URL 编码
      *
      * @param src 需要编码的字符串
      * @return 编码后的字符串
-     * @throws UnsupportedEncodingException
      */
-    public static String urlEncode(String src) throws UnsupportedEncodingException {
-        return URLEncoder.encode(src, CharsetUtil.UTF_8).replace("+", "%20");
+    public static String urlEncode(String src) {
+        try {
+            return URLEncoder.encode(src, CharsetUtil.UTF_8).replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
