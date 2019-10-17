@@ -5,7 +5,7 @@ actionText: 快速上手 →
 actionLink: /guide/
 features:
 - title: 简洁至上
-  details: 以 Module 为中心的项目结构，简洁方便易扩展，总包体不超过 2M。
+  details: 以 Module 为中心的项目结构，简洁方便易扩展，发布后总包体不超过 2M。
 - title: 开箱即用
   details: 不依赖任何第三方 MVC 框架，仅仅作为工具使用，简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 - title: 渠道丰富
