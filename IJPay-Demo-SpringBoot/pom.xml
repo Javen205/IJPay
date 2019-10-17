@@ -60,6 +60,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-UnionPay</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>

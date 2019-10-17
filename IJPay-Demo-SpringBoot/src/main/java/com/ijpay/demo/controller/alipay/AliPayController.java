@@ -1,5 +1,7 @@
 package com.ijpay.demo.controller.alipay;
 
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.*;
@@ -10,6 +12,8 @@ import com.alipay.api.response.AlipayTradeCreateResponse;
 import com.ijpay.alipay.AliPayApi;
 import com.ijpay.alipay.AliPayApiConfig;
 import com.ijpay.alipay.AliPayApiConfigKit;
+import com.ijpay.core.kit.PayKit;
+import com.ijpay.core.kit.RsaKit;
 import com.ijpay.demo.entity.AliPayBean;
 import com.ijpay.demo.utils.StringUtils;
 import com.ijpay.demo.vo.AjaxResult;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +112,48 @@ public class AliPayController extends AbstractAliPayApiController {
         return result;
     }
 
+    @RequestMapping(value = "/wapPayNoSdk")
+    @ResponseBody
+    public void wapPayNoSdk(HttpServletResponse response) {
+        try {
+            AliPayApiConfig aliPayApiConfig = AliPayApiConfigKit.getAliPayApiConfig();
+            Map<String, String> paramsMap = new HashMap<>();
+            paramsMap.put("app_id", aliPayApiConfig.getAppId());
+            paramsMap.put("method", "alipay.trade.wap.pay");
+            paramsMap.put("return_url", aliPayBean.getDomain() + "aliPay/return_url");
+            paramsMap.put("charset", aliPayApiConfig.getCharset());
+            paramsMap.put("sign_type", aliPayApiConfig.getSignType());
+            paramsMap.put("timestamp", DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            paramsMap.put("version", "1.0");
+            paramsMap.put("notify_url", aliPayBean.getDomain() + "/aliPay/notify_url");
+
+            Map<String, String> bizMap = new HashMap<>();
+            bizMap.put("body", "IJPay 聚合支付-H5");
+            bizMap.put("subject", "IJPay 让支付触手可及");
+            bizMap.put("out_trade_no", StringUtils.getOutTradeNo());
+            bizMap.put("total_amount", "6.66");
+            bizMap.put("product_code", "QUICK_WAP_WAY");
+
+            paramsMap.put("biz_content", JSON.toJSONString(bizMap));
+
+            String content = PayKit.createLinkString(paramsMap);
+
+            System.out.println(content);
+
+            String encrypt = RsaKit.encryptByPrivateKey(content, aliPayApiConfig.getPrivateKey());
+            System.out.println(encrypt);
+//            encrypt = AlipaySignature.rsaSign(content,aliPayApiConfig.getPrivateKey(), "UTF-8","RSA2");
+//            System.out.println(encrypt);
+            paramsMap.put("sign", encrypt);
+
+            String url = aliPayApiConfig.getServiceUrl() + "?" + PayKit.createLinkString(paramsMap,true);
+            System.out.println(url);
+            response.sendRedirect(url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @RequestMapping(value = "/wapPay")
     @ResponseBody

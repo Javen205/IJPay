@@ -412,7 +412,7 @@ public class WxPayController extends WxPayApiController {
                 .build()
                 .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256);
 
-        String xmlResult = WxPayApi.micropay(false, params);
+        String xmlResult = WxPayApi.microPay(false, params);
         //同步返回结果
         log.info("xmlResult:" + xmlResult);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
