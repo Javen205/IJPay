@@ -31,6 +31,9 @@ public class AliPayApiConfig implements Serializable {
     private String charset;
     private String signType;
     private String format;
+    private String appCertPath;
+    private String aliPayCertPath;
+    private String aliPayRootCertPath;
     private AlipayClient alipayClient;
 
     private AliPayApiConfig() {
@@ -46,12 +49,16 @@ public class AliPayApiConfig implements Serializable {
         return this;
     }
 
+    public AliPayApiConfig buildByCert() throws AlipayApiException {
+        return build(getAppCertPath(), getAliPayCertPath(), getAliPayRootCertPath());
+    }
+
     /**
      * @param appCertPath        应用公钥证书路径
      * @param aliPayCertPath     支付宝公钥证书文件路径
      * @param aliPayRootCertPath 支付宝CA根证书文件路径
      * @return {@link AliPayApiConfig}  支付宝支付配置
-     * @throws {@link AlipayApiException} 支付宝 Api 异常
+     * @throws AlipayApiException
      */
     public AliPayApiConfig build(String appCertPath, String aliPayCertPath, String aliPayRootCertPath) throws AlipayApiException {
         CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
@@ -163,6 +170,33 @@ public class AliPayApiConfig implements Serializable {
             format = "json";
         }
         return format;
+    }
+
+    public String getAppCertPath() {
+        return appCertPath;
+    }
+
+    public AliPayApiConfig setAppCertPath(String appCertPath) {
+        this.appCertPath = appCertPath;
+        return this;
+    }
+
+    public String getAliPayCertPath() {
+        return aliPayCertPath;
+    }
+
+    public AliPayApiConfig setAliPayCertPath(String aliPayCertPath) {
+        this.aliPayCertPath = aliPayCertPath;
+        return this;
+    }
+
+    public String getAliPayRootCertPath() {
+        return aliPayRootCertPath;
+    }
+
+    public AliPayApiConfig setAliPayRootCertPath(String aliPayRootCertPath) {
+        this.aliPayRootCertPath = aliPayRootCertPath;
+        return this;
     }
 
     public AlipayClient getAliPayClient() {
