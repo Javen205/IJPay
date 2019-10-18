@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.version>2.2.1</ijapy.version>
+        <ijapy.version>2.3.0</ijapy.version>
         <jfinal.version>4.4</jfinal.version>
     </properties>
 
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.59</version>
+            <version>1.2.62</version>
         </dependency>
         <dependency>
             <groupId>com.github.javen205</groupId>
