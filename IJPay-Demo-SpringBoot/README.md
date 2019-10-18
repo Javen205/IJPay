@@ -1,4 +1,4 @@
-# IJPay-Demo-JFinal
+# IJPay-Demo-SpringBoot
 
 如果该库对你有帮助不妨右上角点点 Star 或者任意赞助支持，我更喜欢你 Fork PR 成为项目贡献者。
 
