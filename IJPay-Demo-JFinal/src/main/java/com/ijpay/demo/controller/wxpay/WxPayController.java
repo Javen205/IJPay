@@ -62,9 +62,9 @@ public class WxPayController extends WxPayApiController {
         renderHtml("欢迎使用 IJPay 中的微信支付 -By Javen  <br/><br>  交流群：723992875");
     }
 
-    public String getKey() {
-        return WxPayApi.getSignKey(WxPayApiConfigKit.getWxPayApiConfig().getMchId(),
-                WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey(), SignType.MD5);
+    public void getKey() {
+        renderText(WxPayApi.getSignKey(WxPayApiConfigKit.getWxPayApiConfig().getMchId(),
+                WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey(), SignType.MD5));
     }
 
     /**
