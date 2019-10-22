@@ -43,6 +43,9 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 [云主机低至2折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x)
 
+[云服务首年 88](https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
+
+
 ### 谁在使用？
 
 <p align="left">

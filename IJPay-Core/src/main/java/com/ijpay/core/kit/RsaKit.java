@@ -140,7 +140,7 @@ public class RsaKit {
      * @throws Exception
      */
     public static String encryptByPublicKey(String data, String publicKey, String fillMode) throws Exception {
-        byte[] dataByte = data.getBytes("UTf-8");
+        byte[] dataByte = data.getBytes("UTF-8");
         byte[] keyBytes = Base64.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -184,7 +184,7 @@ public class RsaKit {
         java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
 
         signature.initSign(priKey);
-        signature.update(data.getBytes("UTf-8"));
+        signature.update(data.getBytes("UTF-8"));
         byte[] signed = signature.sign();
         return StrUtil.str(Base64.encode(signed));
     }
@@ -204,8 +204,8 @@ public class RsaKit {
         PublicKey pubKey = keyFactory.generatePublic(new X509EncodedKeySpec(encodedKey));
         java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
         signature.initVerify(pubKey);
-        signature.update(data.getBytes("UTf-8"));
-        return signature.verify(Base64.decode(sign.getBytes("UTf-8")));
+        signature.update(data.getBytes("UTF-8"));
+        return signature.verify(Base64.decode(sign.getBytes("UTF-8")));
     }
 
     /**
