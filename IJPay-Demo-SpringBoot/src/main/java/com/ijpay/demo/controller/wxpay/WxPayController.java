@@ -51,6 +51,7 @@ public class WxPayController extends AbstractWxPayApiController {
     WxPayBean wxPayBean;
 
     private String notifyUrl;
+    private String refundNotifyUrl;
     private static final String USER_PAYING = "USERPAYING";
 
 
@@ -70,6 +71,7 @@ public class WxPayController extends AbstractWxPayApiController {
                     .build();
         }
         notifyUrl = apiConfig.getDomain().concat("/wxPay/payNotify");
+        refundNotifyUrl = apiConfig.getDomain().concat("/wxPay/refundNotify");
         return apiConfig;
     }
 
@@ -742,6 +744,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .out_refund_no(WxPayKit.generateStr())
                 .total_fee("1")
                 .refund_fee("1")
+                .notify_url(refundNotifyUrl)
                 .build()
                 .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);
 
@@ -775,6 +778,32 @@ public class WxPayController extends AbstractWxPayApiController {
     }
 
     /**
+     * 退款通知
+     */
+    @RequestMapping(value = "/refundNotify", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String refundNotify(HttpServletRequest request) {
+        String xmlMsg = HttpKit.readData(request);
+        log.info("退款通知=" + xmlMsg);
+        Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
+
+        String returnCode = params.get("return_code");
+        // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
+        if (WxPayKit.codeIsOk(returnCode)) {
+            String reqInfo = params.get("req_info");
+            String decryptData = WxPayKit.decryptData(reqInfo, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey());
+            log.info("退款通知解密后的数据=" + decryptData);
+            // 更新订单信息
+            // 发送通知等
+            Map<String, String> xml = new HashMap<String, String>(2);
+            xml.put("return_code", "SUCCESS");
+            xml.put("return_msg", "OK");
+            return WxPayKit.toXml(xml);
+        }
+        return null;
+    }
+
+    /**
      * 异步通知
      */
     @RequestMapping(value = "/payNotify", method = {RequestMethod.POST, RequestMethod.GET})
@@ -784,12 +813,12 @@ public class WxPayController extends AbstractWxPayApiController {
         log.info("支付通知=" + xmlMsg);
         Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 
-        String resultCode = params.get("result_code");
+        String returnCode = params.get("return_code");
 
         // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
-
-        if (WxPayKit.verifyNotify(params, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey())) {
-            if (WxPayKit.codeIsOk(resultCode)) {
+        // 注意此处签名方式需与统一下单的签名类型一致
+        if (WxPayKit.verifyNotify(params, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey(), SignType.HMACSHA256)) {
+            if (WxPayKit.codeIsOk(returnCode)) {
                 // 更新订单信息
                 // 发送通知等
                 Map<String, String> xml = new HashMap<String, String>(2);
