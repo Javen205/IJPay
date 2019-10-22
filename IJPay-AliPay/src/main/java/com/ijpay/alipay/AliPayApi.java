@@ -483,6 +483,28 @@ public class AliPayApi {
     }
 
     /**
+     * 电脑网站支付(PC支付)
+     *
+     * @param response  {@link HttpServletResponse}
+     * @param model     {@link AlipayTradePagePayModel}
+     * @param notifyUrl 异步通知URL
+     * @param returnUrl 同步通知URL
+     * @throws AlipayApiException 支付宝 Api 异常
+     * @throws IOException        IO 异常
+     */
+    public static void tradePageByOutputStream(HttpServletResponse response, AlipayTradePagePayModel model, String notifyUrl, String returnUrl) throws AlipayApiException, IOException {
+        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        request.setBizModel(model);
+        request.setNotifyUrl(notifyUrl);
+        request.setReturnUrl(returnUrl);
+        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();// 调用SDK生成表单
+        response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+        OutputStream out = response.getOutputStream();
+        out.write(form.getBytes(AliPayApiConfigKit.getAliPayApiConfig().getCharset()));
+        response.getOutputStream().flush();
+    }
+
+    /**
      * 资金预授权冻结接口
      *
      * @param model {@link AlipayFundAuthOrderFreezeModel}
