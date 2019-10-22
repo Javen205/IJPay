@@ -118,17 +118,29 @@ public class WxPayKit {
      * @return 签名后的 Map
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType) {
-        if (signType == null) {
-            signType = SignType.MD5;
+        return buildSign(params,partnerKey,signType,true);
+    }
+
+    /**
+     * 构建签名
+     *
+     * @param params       需要签名的参数
+     * @param partnerKey   密钥
+     * @param signType     签名类型
+     * @param haveSignType 签名是否包含 sign_type 字段
+     * @return 签名后的 Map
+     */
+    public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType, boolean haveSignType) {
+        if(haveSignType){
+            params.put(FIELD_SIGN_TYPE, signType.getType());
         }
-        params.put(FIELD_SIGN_TYPE, signType.getType());
         String sign = createSign(params, partnerKey, signType);
         params.put(FIELD_SIGN, sign);
         return params;
     }
 
     public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
-        return PayKit.forEachMap(params,prefix,suffix);
+        return PayKit.forEachMap(params, prefix, suffix);
     }
 
     /**
