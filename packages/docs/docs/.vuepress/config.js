@@ -135,6 +135,7 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             collapsable: false,
             children: [
                 'wxpay/',
+                'wxpay/external',
             ]
         },
         {

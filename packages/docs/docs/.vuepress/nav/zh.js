@@ -8,8 +8,21 @@ module.exports = [
         link: '/guide/donate/',
     },
     {
-        text: '云主机低至2折',
-        link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
+        text: '全民云计算',
+        items: [
+            {
+                text: '云主机低至2折',
+                link: 'https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x',
+            },
+            {
+                text: '云服务器首年 88',
+                link: 'https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console',
+            },
+        ]
+    },
+    {
+        text: 'JavaDoc 文档',
+        link: 'https://apidoc.gitee.com/javen205/IJPay',
     },
     {
         text: '聊天室',
