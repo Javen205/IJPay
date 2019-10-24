@@ -50,7 +50,19 @@ public class BaseModel {
      * @return 构建签名后的 Map
      */
     public Map<String, String> createSign(String partnerKey, SignType signType) {
-        return WxPayKit.buildSign(toMap(), partnerKey, signType);
+        return createSign(partnerKey,signType,true);
+    }
+
+    /**
+     * 构建签名 Map
+     *
+     * @param partnerKey   API KEY
+     * @param signType     {@link SignType} 签名类型
+     * @param haveSignType 签名是否包含 sign_type 字段
+     * @return 构建签名后的 Map
+     */
+    public Map<String, String> createSign(String partnerKey, SignType signType, boolean haveSignType) {
+        return WxPayKit.buildSign(toMap(), partnerKey, signType,haveSignType);
     }
 
     /**
