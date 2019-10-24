@@ -26,7 +26,7 @@ public class GetTransferInfoModel extends BaseModel {
     private String nonce_str;
     private String sign;
     private String partner_trade_no;
-    private String mchid;
+    private String mch_id;
     private String appid;
 
 }
