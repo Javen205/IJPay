@@ -634,7 +634,7 @@ public class WxPayController extends AbstractWxPayApiController {
             Map<String, String> params = GetTransferInfoModel.builder()
                     .nonce_str(WxPayKit.generateStr())
                     .partner_trade_no(partnerTradeNo)
-                    .mchid(wxPayApiConfig.getMchId())
+                    .mch_id(wxPayApiConfig.getMchId())
                     .appid(wxPayApiConfig.getAppId())
                     .build()
                     .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256);
