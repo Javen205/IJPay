@@ -49,4 +49,5 @@ public class UnifiedOrderModel extends BaseModel {
     private String sub_openid;
     private String receipt;
     private String scene_info;
+    private String profit_sharing;
 }
