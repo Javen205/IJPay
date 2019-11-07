@@ -2,9 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <packaging>pom</packaging>
+
     <groupId>com.github.javen205</groupId>
     <artifactId>IJPay</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.2</version>
+    <name>IJPay</name>
+    <description>IJPay 让支付触手可及(Easy Pay Library)</description>
+    <url>https://github.com/Javen205/IJPay</url>
+
     <modules>
         <module>IJPay-AliPay</module>
         <module>IJPay-WxPay</module>
@@ -14,30 +21,25 @@
         <module>IJPay-UnionPay</module>
         <module>IJPay-JDPay</module>
     </modules>
-    <packaging>pom</packaging>
-    <name>IJPay</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)</description>
-    <url>https://github.com/Javen205/IJPay</url>
-
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
 
     <licenses>
         <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>Mulan Permissive Software License，Version 1</name>
+            <url>https://license.coscl.org.cn/MulanPSL</url>
         </license>
     </licenses>
-
 
     <scm>
         <connection>scm:git:git@github.com:javen205/IJPay</connection>
         <developerConnection>scm:git:git@github.com:javen205/IJPay</developerConnection>
         <url>scm:git:git@github.com:javen205/IJPay</url>
     </scm>
+
+    <issueManagement>
+        <system>Github Issue</system>
+        <url>https://github.com/javen205/IJPay/issues</url>
+    </issueManagement>
+
     <developers>
         <developer>
             <name>Javen</name>
@@ -50,7 +52,7 @@
     <properties>
         <jdk.version>1.7</jdk.version>
         <junit.version>4.12</junit.version>
-        <hutool.version>5.0.1</hutool.version>
+        <hutool.version>5.0.4</hutool.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -138,7 +140,7 @@
                         <format>html</format>
                         <format>xml</format>
                     </formats>
-                    <check />
+                    <check/>
                 </configuration>
             </plugin>
         </plugins>
@@ -177,14 +179,4 @@
             </distributionManagement>
         </profile>
     </profiles>
-
-    <!-- 使用aliyun maven -->
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
-
 </project>
