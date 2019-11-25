@@ -1,5 +1,5 @@
 module.exports = ctx => ( {
-    base:'/IJPay/',
+    base:'/ijpay/',
     locales: {
         '/': {
             lang: 'zh-CN',
@@ -38,7 +38,7 @@ module.exports = ctx => ( {
                 lastUpdated: '上次更新',
                 nav: require('./nav/zh'),
                 sidebar: {
-                    '/guide/': getGuideSidebar('客户端','微信公众号开发脚手架',
+                    '/guide/': getGuideSidebar('客户端','微信系开发脚手架',
                         'IJPay 让支付触手可及','获取支付配置','支付宝支付','微信支付',
                         'QQ 钱包支付','银联支付','京东支付','赞助'),
                 },
@@ -100,7 +100,7 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             title: groupB,
             collapsable: false,
             children: [
-                'weixin/tnw',
+                'weixin/tnwx',
                 'weixin/weixin_guide',
             ]
         },

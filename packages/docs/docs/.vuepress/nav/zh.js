@@ -40,8 +40,8 @@ module.exports = [
                 link: 'https://gitee.com/javen205/JPay'
             },
             {
-                text: 'TNW 微信公众号开发脚手架',
-                link: 'https://gitee.com/javen205/TNW'
+                text: 'TNWX 微信系开发脚手架',
+                link: 'https://gitee.com/javen205/TNWX'
             },
             {
                 text: 'weixin_guide 微信公众号开发指南',

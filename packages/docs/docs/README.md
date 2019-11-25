@@ -41,10 +41,11 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 ### 全民云计算
 
-[云主机低至2折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x)
+[阿里云主机低至2折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x)
 
-[云服务器首年 88](https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
+[腾讯云服务器首年 88](https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
 
+[华为云购买享受红利](https://activity.huaweicloud.com/discount_area_v5/index.html?&fromuser=aHcxMTc2NTU3MQ==&utm_source=aHcxMTc2NTU3MQ==&utm_medium=cps&utm_campaign=201905)
 
 ### 谁在使用？
 
@@ -59,6 +60,7 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 
 <script>
+// import { Notification } from 'element-ui';
 export default {
   mounted () {
     let xmlHttp = new XMLHttpRequest();
@@ -69,6 +71,32 @@ export default {
     for (let i = 0; i < codeNodeList.length; i++) {
         codeNodeList[i].innerHTML = codeNodeList[i].innerHTML.replace('latest-version', versionInfo);
     }
+    
+   
+    this.$notify({
+      offset: 50,
+      title: '请为 IJPay 投票',
+      message: '2019 年度中国开源软件评选来了！希望你能够为 IJPay 投一票(点击消息再点击「投票赢奖品」) 截止日期：2019 年 12 月 6 日 24 点',
+      type: 'success',
+      showClose: false,
+      duration: 0,
+      onClick: function() {
+        // Notification.closeAll();
+        window.open("https://www.oschina.net/p/ijpay");
+      }
+    });
+    
+    this.$notify({
+      offset: 200,
+      title: 'TNWX 微信系开发脚手架，Start 支持一下',
+      message: '同时支持微信公众号、微信支付、微信小游戏(微信小程序、微信企业号敬请期待)。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
+      type: 'success',
+      showClose: true,
+      duration: 0,
+      onClick: function() {
+        window.open("https://gitee.com/Javen205/TNWX");
+      }
+    });
   }
 }
 </script>

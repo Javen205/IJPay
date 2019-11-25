@@ -16,5 +16,8 @@
     "@vuepress/plugin-pwa": "^1.0.3",
     "vue-toasted": "^1.1.27",
     "vuepress": "^1.0.3"
+  },
+  "dependencies": {
+    "element-ui": "^2.12.0"
   }
 }
