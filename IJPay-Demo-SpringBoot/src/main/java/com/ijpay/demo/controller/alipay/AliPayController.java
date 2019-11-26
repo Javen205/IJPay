@@ -360,7 +360,7 @@ public class AliPayController extends AbstractAliPayApiController {
             AlipayDataDataserviceBillDownloadurlQueryModel model = new AlipayDataDataserviceBillDownloadurlQueryModel();
             model.setBillType("trade");
             model.setBillDate(billDate);
-            return AliPayApi.billDownloadurlQuery(model);
+            return AliPayApi.billDownloadUrlQuery(model);
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }

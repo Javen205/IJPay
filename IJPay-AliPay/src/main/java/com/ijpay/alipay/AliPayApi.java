@@ -55,6 +55,23 @@ public class AliPayApi {
     }
 
     /**
+     * APP支付
+     *
+     * @param model        {@link AlipayTradeAppPayModel}
+     * @param notifyUrl    异步通知 URL
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayTradeAppPayResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradeAppPayResponse appPayToResponse(AlipayTradeAppPayModel model, String notifyUrl, String appAuthToken) throws AlipayApiException {
+        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+        request.setBizModel(model);
+        request.setNotifyUrl(notifyUrl);
+        request.putOtherTextParam("app_auth_token", appAuthToken);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().sdkExecute(request);
+    }
+
+    /**
      * WAP支付
      *
      * @param response  {@link HttpServletResponse}
@@ -71,6 +88,48 @@ public class AliPayApi {
         out.write(form);
         out.flush();
         out.close();
+    }
+
+    /**
+     * WAP支付
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param model        {@link AlipayTradeWapPayModel}
+     * @param returnUrl    异步通知URL
+     * @param notifyUrl    同步通知URL
+     * @param appAuthToken 应用授权token
+     * @throws AlipayApiException 支付宝 Api 异常
+     * @throws IOException        IO 异常
+     */
+    public static void wapPay(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl,
+                              String notifyUrl, String appAuthToken) throws AlipayApiException, IOException {
+        String form = wapPayStr(model, returnUrl, notifyUrl, appAuthToken);
+        response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+        PrintWriter out = response.getWriter();
+        out.write(form);
+        out.flush();
+        out.close();
+    }
+
+    /**
+     * <p>WAP支付</p>
+     *
+     * <p>为了解决 Filter 中使用 OutputStream getOutputStream() 和 PrintWriter getWriter() 冲突异常问题</p>
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param model        {@link AlipayTradeWapPayModel}
+     * @param returnUrl    异步通知URL
+     * @param notifyUrl    同步通知URL
+     * @param appAuthToken 应用授权token
+     * @throws AlipayApiException 支付宝 Api 异常
+     * @throws IOException        IO 异常
+     */
+    public static void wapPayByOutputStream(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl, String notifyUrl, String appAuthToken) throws AlipayApiException, IOException {
+        String form = wapPayStr(model, returnUrl, notifyUrl, appAuthToken);
+        response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+        OutputStream out = response.getOutputStream();
+        out.write(form.getBytes(AliPayApiConfigKit.getAliPayApiConfig().getCharset()));
+        response.getOutputStream().flush();
     }
 
     /**
@@ -93,7 +152,6 @@ public class AliPayApi {
         response.getOutputStream().flush();
     }
 
-
     /**
      * WAP支付
      *
@@ -108,6 +166,25 @@ public class AliPayApi {
         aliPayRequest.setReturnUrl(returnUrl);
         aliPayRequest.setNotifyUrl(notifyUrl);
         aliPayRequest.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(aliPayRequest).getBody();
+    }
+
+    /**
+     * WAP支付
+     *
+     * @param model        {@link AlipayTradeWapPayModel}
+     * @param returnUrl    异步通知URL
+     * @param notifyUrl    同步通知URL
+     * @param appAuthToken 应用授权token
+     * @return {String}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static String wapPayStr(AlipayTradeWapPayModel model, String returnUrl, String notifyUrl, String appAuthToken) throws AlipayApiException {
+        AlipayTradeWapPayRequest aliPayRequest = new AlipayTradeWapPayRequest();
+        aliPayRequest.setReturnUrl(returnUrl);
+        aliPayRequest.setNotifyUrl(notifyUrl);
+        aliPayRequest.setBizModel(model);
+        aliPayRequest.putOtherTextParam("app_auth_token", appAuthToken);
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(aliPayRequest).getBody();
     }
 
@@ -381,6 +458,33 @@ public class AliPayApi {
     }
 
     /**
+     * 统一收单退款页面接口
+     *
+     * @param model {@link AlipayTradePageRefundModel}
+     * @return {@link AlipayTradePageRefundResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradePageRefundResponse tradeRefundToResponse(AlipayTradePageRefundModel model) throws AlipayApiException {
+        AlipayTradePageRefundRequest request = new AlipayTradePageRefundRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 统一收单退款页面接口
+     *
+     * @param model        {@link AlipayTradePageRefundModel}
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayTradePageRefundResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradePageRefundResponse tradeRefundToResponse(AlipayTradePageRefundModel model, String appAuthToken) throws AlipayApiException {
+        AlipayTradePageRefundRequest request = new AlipayTradePageRefundRequest();
+        request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request, null, appAuthToken);
+    }
+
+    /**
      * 统一收单交易退款查询
      *
      * @param model {@link AlipayTradeFastpayRefundQueryModel}
@@ -414,7 +518,7 @@ public class AliPayApi {
      * @return 对账单下载地址
      * @throws AlipayApiException 支付宝 Api 异常
      */
-    public static String billDownloadurlQuery(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException {
+    public static String billDownloadUrlQuery(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException {
         AlipayDataDataserviceBillDownloadurlQueryResponse response = billDownloadUrlQueryToResponse(model);
         return response.getBillDownloadUrl();
     }
@@ -429,6 +533,21 @@ public class AliPayApi {
     public static AlipayDataDataserviceBillDownloadurlQueryResponse billDownloadUrlQueryToResponse(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException {
         AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
         request.setBizModel(model);
+        return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
+    }
+
+    /**
+     * 查询对账单下载地址
+     *
+     * @param model        {@link AlipayDataDataserviceBillDownloadurlQueryModel}
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayDataDataserviceBillDownloadurlQueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayDataDataserviceBillDownloadurlQueryResponse billDownloadUrlQueryToResponse(AlipayDataDataserviceBillDownloadurlQueryModel model, String appAuthToken) throws AlipayApiException {
+        AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
+        request.setBizModel(model);
+        request.putOtherTextParam("app_auth_token", appAuthToken);
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
     }
 
@@ -474,13 +593,39 @@ public class AliPayApi {
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
         request.setReturnUrl(returnUrl);
-        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();// 调用SDK生成表单
+        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();
         response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
         PrintWriter out = response.getWriter();
         out.write(form);
         out.flush();
         out.close();
     }
+
+    /**
+     * 电脑网站支付(PC支付)
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param model        {@link AlipayTradePagePayModel}
+     * @param notifyUrl    异步通知URL
+     * @param returnUrl    同步通知URL
+     * @param appAuthToken 应用授权token
+     * @throws AlipayApiException 支付宝 Api 异常
+     * @throws IOException        IO 异常
+     */
+    public static void tradePage(HttpServletResponse response, AlipayTradePagePayModel model, String notifyUrl, String returnUrl, String appAuthToken) throws AlipayApiException, IOException {
+        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        request.setBizModel(model);
+        request.setNotifyUrl(notifyUrl);
+        request.setReturnUrl(returnUrl);
+        request.putOtherTextParam("app_auth_token", appAuthToken);
+        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();
+        response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+        PrintWriter out = response.getWriter();
+        out.write(form);
+        out.flush();
+        out.close();
+    }
+
 
     /**
      * 电脑网站支付(PC支付)
@@ -497,7 +642,32 @@ public class AliPayApi {
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
         request.setReturnUrl(returnUrl);
-        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();// 调用SDK生成表单
+        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();
+        response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+        OutputStream out = response.getOutputStream();
+        out.write(form.getBytes(AliPayApiConfigKit.getAliPayApiConfig().getCharset()));
+        response.getOutputStream().flush();
+    }
+
+    /**
+     * 电脑网站支付(PC支付)
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param model        {@link AlipayTradePagePayModel}
+     * @param notifyUrl    异步通知URL
+     * @param returnUrl    同步通知URL
+     * @param appAuthToken 应用授权token
+     * @throws AlipayApiException 支付宝 Api 异常
+     * @throws IOException        IO 异常
+     */
+    public static void tradePageByOutputStream(HttpServletResponse response, AlipayTradePagePayModel model,
+                                               String notifyUrl, String returnUrl, String appAuthToken) throws AlipayApiException, IOException {
+        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        request.setBizModel(model);
+        request.setNotifyUrl(notifyUrl);
+        request.setReturnUrl(returnUrl);
+        request.putOtherTextParam("app_auth_token", appAuthToken);
+        String form = AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().pageExecute(request).getBody();
         response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
         OutputStream out = response.getOutputStream();
         out.write(form.getBytes(AliPayApiConfigKit.getAliPayApiConfig().getCharset()));
@@ -761,8 +931,6 @@ public class AliPayApi {
             for (int i = 0; i < values.length; i++) {
                 valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
             }
-            // 乱码解决，这段代码在出现乱码时使用
-            // valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
         }
         return params;
@@ -842,7 +1010,8 @@ public class AliPayApi {
      * @return {@link ZolozAuthenticationCustomerFtokenQueryResponse}
      * @throws AlipayApiException 支付宝 Api 异常
      */
-    public static ZolozAuthenticationCustomerFtokenQueryResponse authenticationCustomerFTokenQuery(ZolozAuthenticationCustomerFtokenQueryModel model) throws AlipayApiException {
+    public static ZolozAuthenticationCustomerFtokenQueryResponse
+    authenticationCustomerFTokenQuery(ZolozAuthenticationCustomerFtokenQueryModel model) throws AlipayApiException {
         ZolozAuthenticationCustomerFtokenQueryRequest request = new ZolozAuthenticationCustomerFtokenQueryRequest();
         request.setBizModel(model);
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
