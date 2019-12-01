@@ -304,7 +304,7 @@ public class RsaKit {
             byte[] buffer = Base64.decode(publicKeyStr);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
-            return (RSAPublicKey) keyFactory.generatePublic(keySpec);
+            return keyFactory.generatePublic(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
@@ -327,7 +327,7 @@ public class RsaKit {
             byte[] buffer = Base64.decode(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-            return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+            return keyFactory.generatePrivate(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
@@ -337,12 +337,12 @@ public class RsaKit {
         }
     }
 
-    public static String getPrivateKeyStr(PrivateKey privateKey) throws Exception {
-        return new String(Base64.encode(privateKey.getEncoded()));
+    public static String getPrivateKeyStr(PrivateKey privateKey) {
+        return Base64.encode(privateKey.getEncoded());
     }
 
-    public static String getPublicKeyStr(PublicKey publicKey) throws Exception {
-        return new String(Base64.encode(publicKey.getEncoded()));
+    public static String getPublicKeyStr(PublicKey publicKey) {
+        return Base64.encode(publicKey.getEncoded());
     }
 
     public static void main(String[] args) throws Exception {

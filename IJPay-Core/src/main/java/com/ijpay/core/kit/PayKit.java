@@ -1,18 +1,17 @@
 package com.ijpay.core.kit;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
+import com.ijpay.core.enums.RequestMethod;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -79,6 +78,20 @@ public class PayKit {
      * @return 拼接后字符串
      */
     public static String createLinkString(Map<String, String> params, boolean encode) {
+        return createLinkString(params, "&", encode);
+    }
+
+    /**
+     * @param params  需要排序并参与字符拼接的参数组
+     * @param connStr 连接符号
+     * @param encode  是否进行URLEncoder
+     * @return 拼接后字符串
+     */
+    public static String createLinkString(Map<String, String> params, String connStr, boolean encode) {
+        return createLinkString(params, connStr, encode, false);
+    }
+
+    public static String createLinkString(Map<String, String> params, String connStr, boolean encode, boolean quotes) {
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
         StringBuffer content = new StringBuffer();
@@ -87,9 +100,17 @@ public class PayKit {
             String value = params.get(key);
             // 拼接时，不包括最后一个&字符
             if (i == keys.size() - 1) {
-                content.append(key + "=" + (encode ? urlEncode(value) : value));
+                if (quotes) {
+                    content.append(key + "=" + '"' + (encode ? urlEncode(value) : value) + '"');
+                } else {
+                    content.append(key + "=" + (encode ? urlEncode(value) : value));
+                }
             } else {
-                content.append(key + "=" + (encode ? urlEncode(value) : value) + "&");
+                if (quotes) {
+                    content.append(key + "=" + '"' + (encode ? urlEncode(value) : value) + '"' + connStr);
+                } else {
+                    content.append(key + "=" + (encode ? urlEncode(value) : value) + connStr);
+                }
             }
         }
         return content.toString();
@@ -161,5 +182,67 @@ public class PayKit {
     public static Map<String, String> xmlToMap(String xmlStr) {
         XmlHelper xmlHelper = XmlHelper.of(xmlStr);
         return xmlHelper.toMap();
+    }
+
+    /**
+     * 构造签名串
+     *
+     * @param method    {@link RequestMethod} GET,POST,PUT等
+     * @param url       请求接口 /v3/certificates
+     * @param timestamp 获取发起请求时的系统当前时间戳
+     * @param nonceStr  随机字符串
+     * @param body      请求报文主体
+     * @return
+     */
+    public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
+        return new StringBuffer()
+                .append(method.toString())
+                .append("\n")
+                .append(url)
+                .append("\n")
+                .append(timestamp)
+                .append("\n")
+                .append(nonceStr)
+                .append("\n")
+                .append(body)
+                .append("\n")
+                .toString();
+    }
+
+    /**
+     * 获取授权认证信息
+     *
+     * @param mchId     商户号
+     * @param serialNo  商户API证书序列号
+     * @param nonceStr  请求随机串
+     * @param timestamp 时间戳
+     * @param signature 签名值
+     * @param authType  认证类型，目前为WECHATPAY2-SHA256-RSA2048
+     * @return
+     */
+    public static String getAuthorization(String mchId, String serialNo, String nonceStr, String timestamp, String signature, String authType) {
+        Map<String, String> params = new HashMap<>(5);
+        params.put("mchid", mchId);
+        params.put("serial_no", serialNo);
+        params.put("nonce_str", nonceStr);
+        params.put("timestamp", timestamp);
+        params.put("signature", signature);
+        return authType.concat(" ").concat(createLinkString(params, ",", false,true));
+    }
+
+    /**
+     * 获取商户私钥
+     *
+     * @param apiClientKeyPath apiclient_key.pem 路径
+     * @return 商户私钥
+     * @throws Exception
+     */
+    public static String getPrivateKey(String apiClientKeyPath) throws Exception {
+        String originalKey = FileUtil.readUtf8String(apiClientKeyPath);
+        String privateKey = originalKey
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replaceAll("\\s+", "");
+        return RsaKit.getPrivateKeyStr(RsaKit.loadPrivateKey(privateKey));
     }
 }
