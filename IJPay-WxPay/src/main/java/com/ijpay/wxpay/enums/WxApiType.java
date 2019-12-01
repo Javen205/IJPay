@@ -297,7 +297,26 @@ public enum WxApiType {
     /**
      * 小微商户开发配置查询
      */
-    QUERY_SUB_DEV_CONFIG("/secapi/mch/querysubdevconfig");
+    QUERY_SUB_DEV_CONFIG("/secapi/mch/querysubdevconfig"),
+
+    /**
+     * 查询用户支付分开启状态
+     */
+    USER_SERVICE_STATE("/v3/payscore/user-service-state"),
+    /**
+     * 创建先享后付订单 OR 查询先享后付订单
+     */
+    PAY_AFTER_ORDERS("/v3/payscore/payafter-orders"),
+    /**
+     * 撤销先享后付订单
+     */
+    CANCEL_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/cancel"),
+    /**
+     * 完结先享后付订单
+     */
+    COMPLETE_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/complete"),
+    CANCEL1_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/cancel");
+
 
     /**
      * 类型

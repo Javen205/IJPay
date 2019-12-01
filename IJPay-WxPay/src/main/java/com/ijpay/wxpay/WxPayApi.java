@@ -96,6 +96,20 @@ public class WxPayApi {
     /**
      * 发起请求
      *
+     * @param apiUrl        接口 URL
+     *                      通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                      或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param authorization 授权认证信息 通过 {@link com.ijpay.core.kit.PayKit#getAuthorization(String, String, String, String, String, String)}} 来获取
+     * @param params        接口请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByGet(String apiUrl, String authorization, Map<String, Object> params) {
+        return doGet(apiUrl, authorization, params);
+    }
+
+    /**
+     * 发起请求
+     *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
      *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
@@ -1059,8 +1073,16 @@ public class WxPayApi {
         return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
     }
 
+    public static String userServiceState(String authorization, Map<String, Object> params) {
+        return executionByGet(getReqUrl(WxApiType.USER_SERVICE_STATE), authorization, params);
+    }
+
     public static String doGet(String url, Map<String, Object> params) {
         return HttpKit.getDelegate().get(url, params);
+    }
+
+    public static String doGet(String url, String authorization, Map<String, Object> params) {
+        return HttpKit.getDelegate().get(url, authorization, params);
     }
 
     public static String doPost(String url, Map<String, String> params) {
