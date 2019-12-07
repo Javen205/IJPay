@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.*;
 import com.alipay.api.domain.*;
+import com.alipay.api.internal.util.StringUtils;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
 
@@ -73,7 +74,6 @@ public class AliPayApi {
     }
 
     public static <T extends AlipayResponse> T certificateExecute(AlipayRequest<T> request) throws AlipayApiException {
-        System.out.println(AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient() == null);
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().certificateExecute(request);
     }
 
@@ -388,6 +388,70 @@ public class AliPayApi {
             return execute(request);
         }
     }
+
+    /**
+     * 统一转账接口
+     *
+     * @param model        model {@link AlipayFundTransUniTransferModel}
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayFundTransUniTransferResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayFundTransUniTransferResponse uniTransferToResponse(AlipayFundTransUniTransferModel model, String appAuthToken) throws AlipayApiException {
+        AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
+        request.setBizModel(model);
+        if (!StringUtils.isEmpty(appAuthToken)) {
+            request.putOtherTextParam("app_auth_token", appAuthToken);
+        }
+        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
+            return certificateExecute(request);
+        } else {
+            return execute(request);
+        }
+    }
+
+    /**
+     * 转账业务单据查询接口
+     *
+     * @param model        model {@link AlipayFundTransCommonQueryModel}
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayFundTransCommonQueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayFundTransCommonQueryResponse transCommonQueryToResponse(AlipayFundTransCommonQueryModel model, String appAuthToken) throws AlipayApiException {
+        AlipayFundTransCommonQueryRequest request = new AlipayFundTransCommonQueryRequest();
+        request.setBizModel(model);
+        if (!StringUtils.isEmpty(appAuthToken)) {
+            request.putOtherTextParam("app_auth_token", appAuthToken);
+        }
+        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
+            return certificateExecute(request);
+        } else {
+            return execute(request);
+        }
+    }
+
+    /**
+     * 支付宝资金账户资产查询接口
+     *
+     * @param model        model {@link AlipayFundAccountQueryModel}
+     * @param appAuthToken 应用授权token
+     * @return {@link AlipayFundAccountQueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayFundAccountQueryResponse accountQueryToResponse(AlipayFundAccountQueryModel model, String appAuthToken) throws AlipayApiException {
+        AlipayFundAccountQueryRequest request = new AlipayFundAccountQueryRequest();
+        request.setBizModel(model);
+        if (!StringUtils.isEmpty(appAuthToken)) {
+            request.putOtherTextParam("app_auth_token", appAuthToken);
+        }
+        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
+            return certificateExecute(request);
+        } else {
+            return execute(request);
+        }
+    }
+
 
     /**
      * 统一收单线下交易查询接口
