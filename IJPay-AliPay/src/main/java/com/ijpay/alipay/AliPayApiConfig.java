@@ -31,6 +31,7 @@ public class AliPayApiConfig implements Serializable {
     private String charset;
     private String signType;
     private String format;
+    private boolean certModel;
     private String appCertPath;
     private String aliPayCertPath;
     private String aliPayRootCertPath;
@@ -43,12 +44,23 @@ public class AliPayApiConfig implements Serializable {
         return new AliPayApiConfig();
     }
 
+    /**
+     * 普通公钥方式
+     *
+     * @return AliPayApiConfig 支付宝配置
+     */
     public AliPayApiConfig build() {
         this.alipayClient = new DefaultAlipayClient(getServiceUrl(), getAppId(), getPrivateKey(), getFormat(),
                 getCharset(), getAliPayPublicKey(), getSignType());
         return this;
     }
 
+    /**
+     * 证书模式
+     *
+     * @return AliPayApiConfig 支付宝配置
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
     public AliPayApiConfig buildByCert() throws AlipayApiException {
         return build(getAppCertPath(), getAliPayCertPath(), getAliPayRootCertPath());
     }
@@ -58,7 +70,7 @@ public class AliPayApiConfig implements Serializable {
      * @param aliPayCertPath     支付宝公钥证书文件路径
      * @param aliPayRootCertPath 支付宝CA根证书文件路径
      * @return {@link AliPayApiConfig}  支付宝支付配置
-     * @throws AlipayApiException
+     * @throws AlipayApiException 支付宝 Api 异常
      */
     public AliPayApiConfig build(String appCertPath, String aliPayCertPath, String aliPayRootCertPath) throws AlipayApiException {
         CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
@@ -72,6 +84,7 @@ public class AliPayApiConfig implements Serializable {
         certAlipayRequest.setAlipayPublicCertPath(aliPayCertPath);
         certAlipayRequest.setRootCertPath(aliPayRootCertPath);
         this.alipayClient = new DefaultAlipayClient(certAlipayRequest);
+        this.certModel = true;
         return this;
     }
 
@@ -91,16 +104,10 @@ public class AliPayApiConfig implements Serializable {
     }
 
     public String getAliPayPublicKey() {
-        if (StrUtil.isEmpty(aliPayPublicKey)) {
-            throw new IllegalStateException("aliPayPublicKey 未被赋值");
-        }
         return aliPayPublicKey;
     }
 
     public AliPayApiConfig setAliPayPublicKey(String aliPayPublicKey) {
-        if (StrUtil.isEmpty(aliPayPublicKey)) {
-            throw new IllegalArgumentException("aliPayPublicKey 值不能为 null");
-        }
         this.aliPayPublicKey = aliPayPublicKey;
         return this;
     }
@@ -196,6 +203,15 @@ public class AliPayApiConfig implements Serializable {
 
     public AliPayApiConfig setAliPayRootCertPath(String aliPayRootCertPath) {
         this.aliPayRootCertPath = aliPayRootCertPath;
+        return this;
+    }
+
+    public boolean isCertModel() {
+        return certModel;
+    }
+
+    public AliPayApiConfig setCertModel(boolean certModel) {
+        this.certModel = certModel;
         return this;
     }
 
