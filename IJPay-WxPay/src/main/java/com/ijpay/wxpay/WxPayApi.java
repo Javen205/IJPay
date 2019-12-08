@@ -181,6 +181,28 @@ public class WxPayApi {
     }
 
     /**
+     * V3 接口统一执行入口
+     *
+     * @param method    {@link RequestMethod} 请求方法
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @param params    Get 接口请求参数
+     * @return {@link String} 请求返回的结果
+     * @throws Exception 接口执行异常
+     */
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, Map<String, String> params) throws Exception {
+        long timestamp = System.currentTimeMillis() / 1000;
+        String authType = "WECHATPAY2-SHA256-RSA2048";
+        String nonceStr = PayKit.generateStr();
+        urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
+        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
+    }
+
+    /**
      * 获取验签秘钥API
      *
      * @param mch_id     商户号

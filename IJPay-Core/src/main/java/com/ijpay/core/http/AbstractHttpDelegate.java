@@ -29,6 +29,7 @@ import java.util.Map;
 public abstract class AbstractHttpDelegate {
     static final String OS = System.getProperty("os.name") + "/" + System.getProperty("os.version");
     static final String VERSION = System.getProperty("java.version");
+
     /**
      * get 请求
      *
@@ -48,20 +49,8 @@ public abstract class AbstractHttpDelegate {
      * @return {@link String} 请求返回的结果
      */
     public String get(String url, String authorization, Map<String, Object> paramMap) {
-        String userAgent = String.format(
-                "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
-                getClass().getPackage().getImplementationVersion(),
-                OS,
-                VERSION == null ? "Unknown" : VERSION);
-
-        Map<String, String> headers = new HashMap<>(3);
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
-        headers.put("Authorization", authorization);
-        headers.put("User-Agent", userAgent);
-
-        return HttpUtil.createGet(url)
-                .addHeaders(headers)
+        return HttpRequest.get(url)
+                .addHeaders(getHeaders(authorization))
                 .form(paramMap)
                 .execute()
                 .body();
@@ -108,21 +97,11 @@ public abstract class AbstractHttpDelegate {
      * @param jsonData 请求参数
      * @return {@link String} 请求返回的结果
      */
-    public String post(String url, String authorization,String jsonData) {
-        String userAgent = String.format(
-                "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
-                getClass().getPackage().getImplementationVersion(),
-                OS,
-                VERSION == null ? "Unknown" : VERSION);
-        Map<String, String> headers = new HashMap<>(3);
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
-        headers.put("Authorization", authorization);
-        headers.put("User-Agent", userAgent);
+    public String post(String url, String authorization, String jsonData) {
 
-        return HttpUtil.createPost(url)
-                .addHeaders(headers)
-                .form(jsonData)
+        return HttpRequest.post(url)
+                .addHeaders(getHeaders(authorization))
+                .body(jsonData)
                 .execute()
                 .body();
     }
@@ -191,5 +170,20 @@ public abstract class AbstractHttpDelegate {
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(clientStore, certPass.toCharArray());
         return kmf.getKeyManagers();
+    }
+
+    private Map<String, String> getHeaders(String authorization) {
+        String userAgent = String.format(
+                "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
+                getClass().getPackage().getImplementationVersion(),
+                OS,
+                VERSION == null ? "Unknown" : VERSION);
+
+        Map<String, String> headers = new HashMap<>(4);
+        headers.put("Content-Type", "application/json");
+        headers.put("Accept", "application/json");
+        headers.put("Authorization", authorization);
+        headers.put("User-Agent", userAgent);
+        return headers;
     }
 }
