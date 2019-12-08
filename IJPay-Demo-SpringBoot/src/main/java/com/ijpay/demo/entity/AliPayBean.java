@@ -24,6 +24,9 @@ public class AliPayBean {
     private String appId;
     private String privateKey;
     private String publicKey;
+    private String appCertPath;
+    private String aliPayCertPath;
+    private String aliPayRootCertPath;
     private String serverUrl;
     private String domain;
 
@@ -51,6 +54,30 @@ public class AliPayBean {
         this.publicKey = publicKey;
     }
 
+    public String getAppCertPath() {
+        return appCertPath;
+    }
+
+    public void setAppCertPath(String appCertPath) {
+        this.appCertPath = appCertPath;
+    }
+
+    public String getAliPayCertPath() {
+        return aliPayCertPath;
+    }
+
+    public void setAliPayCertPath(String aliPayCertPath) {
+        this.aliPayCertPath = aliPayCertPath;
+    }
+
+    public String getAliPayRootCertPath() {
+        return aliPayRootCertPath;
+    }
+
+    public void setAliPayRootCertPath(String aliPayRootCertPath) {
+        this.aliPayRootCertPath = aliPayRootCertPath;
+    }
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -70,9 +97,15 @@ public class AliPayBean {
 
     @Override
     public String toString() {
-        return "AliPayBean [appId=" + appId + ", privateKey=" + privateKey + ", publicKey=" + publicKey + ", serverUrl="
-                + serverUrl + ", domain=" + domain + "]";
+        return "AliPayBean{" +
+                "appId='" + appId + '\'' +
+                ", privateKey='" + privateKey + '\'' +
+                ", publicKey='" + publicKey + '\'' +
+                ", appCertPath='" + appCertPath + '\'' +
+                ", aliPayCertPath='" + aliPayCertPath + '\'' +
+                ", aliPayRootCertPath='" + aliPayRootCertPath + '\'' +
+                ", serverUrl='" + serverUrl + '\'' +
+                ", domain='" + domain + '\'' +
+                '}';
     }
-
-
 }
