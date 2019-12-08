@@ -1,8 +1,11 @@
 package com.ijpay.wxpay;
 
 import com.ijpay.core.enums.PayModel;
+import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.HttpKit;
+import com.ijpay.core.kit.PayKit;
+import com.ijpay.core.kit.RsaKit;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
@@ -96,20 +99,6 @@ public class WxPayApi {
     /**
      * 发起请求
      *
-     * @param apiUrl        接口 URL
-     *                      通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                      或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
-     * @param authorization 授权认证信息 通过 {@link com.ijpay.core.kit.PayKit#getAuthorization(String, String, String, String, String, String)}} 来获取
-     * @param params        接口请求参数
-     * @return {@link String} 请求返回的结果
-     */
-    public static String executionByGet(String apiUrl, String authorization, Map<String, Object> params) {
-        return doGet(apiUrl, authorization, params);
-    }
-
-    /**
-     * 发起请求
-     *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
      *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
@@ -135,6 +124,60 @@ public class WxPayApi {
      */
     public static String execution(String apiUrl, Map<String, String> params, InputStream certFile, String certPass) {
         return doPostSSL(apiUrl, params, certFile, certPass);
+    }
+
+    /**
+     * V3 接口统一执行入口
+     *
+     * @param method    {@link RequestMethod} 请求方法
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @param nonceStr  随机字符库
+     * @param timestamp 时间戳
+     * @param authType  认证类型
+     * @return {@link String} 请求返回的结果
+     * @throws Exception 接口执行异常
+     */
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, String nonceStr, long timestamp, String authType) throws Exception {
+        // 构建签名参数
+        String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
+        // 获取商户私钥
+        String key = PayKit.getPrivateKey(keyPath);
+        // 生成签名
+        String signature = RsaKit.encryptByPrivateKey(buildSignMessage, key);
+        // 根据平台规则生成请求头 authorization
+        String authorization = PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
+
+        if (method == RequestMethod.GET) {
+            return doGet(urlPrefix.concat(urlSuffix), authorization, null);
+        } else if (method == RequestMethod.POST) {
+            return doPost(urlPrefix.concat(urlSuffix), authorization, body);
+        }
+        return null;
+    }
+
+    /**
+     * V3 接口统一执行入口
+     *
+     * @param method    {@link RequestMethod} 请求方法
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @return {@link String} 请求返回的结果
+     * @throws Exception 接口执行异常
+     */
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body) throws Exception {
+        long timestamp = System.currentTimeMillis() / 1000;
+        String authType = "WECHATPAY2-SHA256-RSA2048";
+        String nonceStr = PayKit.generateStr();
+        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
     }
 
     /**
@@ -1073,16 +1116,16 @@ public class WxPayApi {
         return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
     }
 
-    public static String userServiceState(String authorization, Map<String, Object> params) {
-        return executionByGet(getReqUrl(WxApiType.USER_SERVICE_STATE), authorization, params);
-    }
-
     public static String doGet(String url, Map<String, Object> params) {
         return HttpKit.getDelegate().get(url, params);
     }
 
     public static String doGet(String url, String authorization, Map<String, Object> params) {
         return HttpKit.getDelegate().get(url, authorization, params);
+    }
+
+    public static String doPost(String url, String authorization, String data) {
+        return HttpKit.getDelegate().post(url, authorization, data);
     }
 
     public static String doPost(String url, Map<String, String> params) {

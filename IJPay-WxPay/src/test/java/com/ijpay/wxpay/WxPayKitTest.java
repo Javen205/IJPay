@@ -2,15 +2,11 @@ package com.ijpay.wxpay;
 
 
 import com.ijpay.core.enums.RequestMethod;
-import com.ijpay.core.kit.PayKit;
-import com.ijpay.core.kit.RsaKit;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiType;
+import com.ijpay.wxpay.enums.WxDomain;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class WxPayKitTest {
 
@@ -43,51 +39,17 @@ public class WxPayKitTest {
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
 
     @Test
-    public void payKit() {
+    public void v3Execution() {
         try {
             String mchId = "mchId";
             // 商户API证书序列号
             // 使用证书解析工具 https://myssl.com/cert_decode.html 查看
             String serialNo = "serialNo";
-            // 商户私钥
-            String key = PayKit.getPrivateKey(keyPath);
-            String nonceStr = PayKit.generateStr();
-            long timestamp = System.currentTimeMillis() / 1000;
             String body = "";
-            String authType = "WECHATPAY2-SHA256-RSA2048";
-
-            Map<String, String> params = new HashMap<>();
-            params.put("service_id", "500001");
-            params.put("appid", "500001");
-            params.put("openid", "500001");
-
-            String url = WxApiType.USER_SERVICE_STATE.getType().concat("?").concat(PayKit.createLinkString(params, true));
-
-            String buildSignMessage = PayKit.buildSignMessage(RequestMethod.GET, url, timestamp, nonceStr, body);
-
-            System.out.println(buildSignMessage);
-
-            String signature = RsaKit.encryptByPrivateKey(buildSignMessage, key);
-
-            String authorization = PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
-            System.out.println(authorization);
-
-            Map<String, Object> temp = new HashMap<String, Object>(params.size());
-            temp.putAll(params);
-            String result = WxPayApi.userServiceState(authorization, temp);
+            String result = WxPayApi.v3Execution(RequestMethod.GET, WxDomain.CHINA.toString(), WxApiType.GET_CERTIFICATES.toString(), mchId, serialNo, keyPath, body);
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-
-    @Test
-    public void test() throws Exception {
-
-        String key = PayKit.getPrivateKey(keyPath);
-
-        System.out.println(key);
     }
 }
