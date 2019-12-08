@@ -306,7 +306,7 @@ public class AliPayController extends AliPayApiController {
             AlipayDataDataserviceBillDownloadurlQueryModel model = new AlipayDataDataserviceBillDownloadurlQueryModel();
             model.setBillType("trade");
             model.setBillDate(para);
-            String resultStr = AliPayApi.billDownloadurlQuery(model);
+            String resultStr = AliPayApi.billDownloadUrlQuery(model);
             renderText(resultStr);
         } catch (AlipayApiException e) {
             e.printStackTrace();
