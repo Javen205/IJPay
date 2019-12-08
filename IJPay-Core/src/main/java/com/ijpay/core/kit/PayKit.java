@@ -9,8 +9,9 @@ import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.enums.RequestMethod;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
+import java.security.cert.*;
 import java.util.*;
 
 /**
@@ -210,6 +211,25 @@ public class PayKit {
     }
 
     /**
+     * 构造签名串
+     *
+     * @param timestamp 应答时间戳
+     * @param nonceStr  应答随机串
+     * @param body      应答报文主体
+     * @return 应答待签名字符串
+     */
+    public static String buildSignMessage(String timestamp, String nonceStr, String body) {
+        return new StringBuffer()
+                .append(timestamp)
+                .append("\n")
+                .append(nonceStr)
+                .append("\n")
+                .append(body)
+                .append("\n")
+                .toString();
+    }
+
+    /**
      * 获取授权认证信息
      *
      * @param mchId     商户号
@@ -244,5 +264,26 @@ public class PayKit {
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
         return RsaKit.getPrivateKeyStr(RsaKit.loadPrivateKey(privateKey));
+    }
+
+    /**
+     * 获取证书
+     *
+     * @param inputStream 证书文件
+     * @return {@link X509Certificate} 获取证书
+     */
+    public static X509Certificate getCertificate(InputStream inputStream) throws IOException {
+        try {
+            CertificateFactory cf = CertificateFactory.getInstance("X509");
+            X509Certificate cert = (X509Certificate) cf.generateCertificate(inputStream);
+            cert.checkValidity();
+            return cert;
+        } catch (CertificateExpiredException e) {
+            throw new RuntimeException("证书已过期", e);
+        } catch (CertificateNotYetValidException e) {
+            throw new RuntimeException("证书尚未生效", e);
+        } catch (CertificateException e) {
+            throw new RuntimeException("无效的证书", e);
+        }
     }
 }

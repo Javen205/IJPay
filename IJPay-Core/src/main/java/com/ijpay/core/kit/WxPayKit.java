@@ -3,6 +3,7 @@ package com.ijpay.core.kit;
 import cn.hutool.core.util.StrUtil;
 import com.ijpay.core.enums.SignType;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +79,7 @@ public class WxPayKit {
      * @param params     参数
      * @param partnerKey 支付密钥
      * @param signType   {@link SignType}
-     * @return
+     * @return {@link Boolean} 验证签名结果
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
         String sign = params.get("sign");
@@ -118,7 +119,7 @@ public class WxPayKit {
      * @return 签名后的 Map
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType) {
-        return buildSign(params,partnerKey,signType,true);
+        return buildSign(params, partnerKey, signType, true);
     }
 
     /**
@@ -131,7 +132,7 @@ public class WxPayKit {
      * @return 签名后的 Map
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType, boolean haveSignType) {
-        if(haveSignType){
+        if (haveSignType) {
             params.put(FIELD_SIGN_TYPE, signType.getType());
         }
         String sign = createSign(params, partnerKey, signType);
@@ -173,7 +174,7 @@ public class WxPayKit {
      * @param productId 商品ID
      * @param timeStamp 时间戳
      * @param nonceStr  随机字符串
-     * @return
+     * @return {String}
      */
     public static String bizPayUrl(String sign, String appId, String mchId, String productId, String timeStamp, String nonceStr) {
         String rules = "weixin://wxpay/bizpayurl?sign=Temp&appid=Temp&mch_id=Temp&product_id=Temp&time_stamp=Temp&nonce_str=Temp";
@@ -191,7 +192,7 @@ public class WxPayKit {
      * @param timeStamp  时间戳
      * @param nonceStr   随机字符串
      * @param signType   签名类型
-     * @return
+     * @return {String}
      */
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId, String timeStamp, String nonceStr, SignType signType) {
         HashMap<String, String> map = new HashMap<String, String>(5);
@@ -211,7 +212,7 @@ public class WxPayKit {
      * @param appId      公众账号ID
      * @param mchId      商户号
      * @param productId  商品ID
-     * @return
+     * @return {String}
      */
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId) {
         String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
@@ -326,5 +327,23 @@ public class WxPayKit {
         String packageSign = createSign(packageParams, partnerKey, signType);
         packageParams.put("paySign", packageSign);
         return packageParams;
+    }
+
+    /**
+     * v3 接口验证签名
+     *
+     * @param request   {@link HttpServletRequest } request
+     * @param publicKey 公钥 key
+     * @return {@link Boolean} 验证签名结果
+     * @throws Exception 异常信息
+     */
+    public boolean verifyV3Notify(HttpServletRequest request, String publicKey) throws Exception {
+        String timestamp = request.getHeader("Wechatpay-Timestamp");
+        String nonceStr = request.getHeader("Wechatpay-Nonce");
+        String signature = request.getHeader("Wechatpay-Signature");
+        String body = HttpKit.readData(request);
+        String buildSignMessage = PayKit.buildSignMessage(timestamp, nonceStr, body);
+        String signatureStr = RsaKit.encryptByPublicKey(buildSignMessage, publicKey);
+        return signatureStr.equals(signature);
     }
 }

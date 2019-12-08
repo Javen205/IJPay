@@ -1,6 +1,7 @@
 package com.ijpay.wxpay;
 
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.kit.PayKit;
@@ -10,6 +11,8 @@ import com.ijpay.wxpay.enums.WxDomain;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +46,20 @@ public class WxPayKitTest {
     }
 
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
+    String publicKeyPath = "/Users/Javen/cert/apiclient_key.pem";
     String mchId = "mchId";
     // 商户API证书序列号
     // 使用证书解析工具 https://myssl.com/cert_decode.html 查看
     String serialNo = "serialNo";
     String body = "";
+
+
+    @Test
+    public void getCertificate() throws IOException {
+        X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(keyPath));
+        System.out.println(certificate.getPublicKey());
+        System.out.println(certificate.getSerialNumber());
+    }
 
     @Test
     public void v3Execution() {
