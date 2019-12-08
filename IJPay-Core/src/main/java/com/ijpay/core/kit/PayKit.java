@@ -192,7 +192,7 @@ public class PayKit {
      * @param timestamp 获取发起请求时的系统当前时间戳
      * @param nonceStr  随机字符串
      * @param body      请求报文主体
-     * @return
+     * @return 待签名字符串
      */
     public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
         return new StringBuffer()
@@ -218,7 +218,7 @@ public class PayKit {
      * @param timestamp 时间戳
      * @param signature 签名值
      * @param authType  认证类型，目前为WECHATPAY2-SHA256-RSA2048
-     * @return
+     * @return 请求头 Authorization
      */
     public static String getAuthorization(String mchId, String serialNo, String nonceStr, String timestamp, String signature, String authType) {
         Map<String, String> params = new HashMap<>(5);
@@ -227,7 +227,7 @@ public class PayKit {
         params.put("nonce_str", nonceStr);
         params.put("timestamp", timestamp);
         params.put("signature", signature);
-        return authType.concat(" ").concat(createLinkString(params, ",", false,true));
+        return authType.concat(" ").concat(createLinkString(params, ",", false, true));
     }
 
     /**
@@ -235,7 +235,7 @@ public class PayKit {
      *
      * @param apiClientKeyPath apiclient_key.pem 路径
      * @return 商户私钥
-     * @throws Exception
+     * @throws Exception 解析 key 异常
      */
     public static String getPrivateKey(String apiClientKeyPath) throws Exception {
         String originalKey = FileUtil.readUtf8String(apiClientKeyPath);
