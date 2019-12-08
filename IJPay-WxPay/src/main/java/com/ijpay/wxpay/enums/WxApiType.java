@@ -298,7 +298,10 @@ public enum WxApiType {
      * 小微商户开发配置查询
      */
     QUERY_SUB_DEV_CONFIG("/secapi/mch/querysubdevconfig"),
-
+    /**
+     * 获取平台证书列表
+     */
+    GET_CERTIFICATES("/v3/certificates"),
     /**
      * 查询用户支付分开启状态
      */
@@ -328,6 +331,11 @@ public enum WxApiType {
     }
 
     public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
         return type;
     }
 }

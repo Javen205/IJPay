@@ -43,4 +43,9 @@ public enum WxDomain {
     public String getType() {
         return domain;
     }
+
+    @Override
+    public String toString() {
+        return domain;
+    }
 }
