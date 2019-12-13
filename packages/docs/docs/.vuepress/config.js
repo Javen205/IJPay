@@ -128,6 +128,7 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             children: [
                 'alipay/',
                 'alipay/init',
+                'alipay/extension',
             ]
         },
         {

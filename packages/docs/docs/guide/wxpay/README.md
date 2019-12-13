@@ -37,6 +37,18 @@ IJPay 中支持的支付方式以及支付工具
 IJPay 中常用支付方式涉及到的 [Model](https://gitee.com/javen205/IJPay/blob/master/IJPay-WxPay/src/main/java/com/ijpay/wxpay/model)
 都是使用 `builder` 模式来构建，**其中 Model 每个字段与官方接口文档保持一致**，同时支持商户模式、服务商模式。
 
+ ::: warning
+ 为什么要使用 Lombok 来构建接口的请求参数？
+
+1、使用 Lombok 来构建请求参数是为了方便，不用写太多的冗余 get set。
+
+2、避免手动设置误写参数导致的低级错误。
+
+外界对 Lombok 的评价也不太一致，喜欢的非常喜欢不喜欢的就使劲吐槽，那么 IJPay 中有其他的替代方案吗？
+
+当然是有的，最简单粗暴的方法使用 Map 来构建请求参数，再使用 `WxPayKit.buildSign` 来构建签名即可。 IJPay 1.x 版本就是这么做的  
+ :::
+
 ## 扩展 Model
 
 由于支付方式的不同涉及到的接口非常多，如果某些接口的 Model 在 IJPay 没有提供封装，大家可以继承 [BaseModel](https://gitee.com/javen205/IJPay/blob/master/IJPay-Core/src/main/java/com/ijpay/core/model/BaseModel.java) 

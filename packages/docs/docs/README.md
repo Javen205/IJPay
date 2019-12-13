@@ -31,12 +31,14 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 <dependency>
     <groupId>com.github.javen205</groupId>
     <artifactId>IJPay-All</artifactId>
-    <version>latest-version</version>
+    <version>latest-version</version> 
 </dependency>
 ```
 
 ::: tip
- 当然，不同的支付方式也可以单独添加相关依赖 [了解更多](./guide/maven.md)
+ 2.3.2 版本开始 IJPay-All 中不会自动下载银联支付相关依赖，如有银联支付需求请单独手动添加 IJPay-UnionPay 相关依赖。
+ 
+ 当然，不同的支付方式也可以单独添加相关依赖 [了解更多](./guide/maven.md) 
 :::
 
 ### 全民云计算
@@ -75,21 +77,21 @@ export default {
    
     this.$notify({
       offset: 50,
-      title: '请为 IJPay 投票',
-      message: '2019 年度中国开源软件评选来了！希望你能够为 IJPay 投一票(点击消息再点击「投票赢奖品」) 截止日期：2019 年 12 月 6 日 24 点',
+      title: 'IJPay VIP 服务',
+      message: 'IJPay VIP 服务可提供一对一在线答疑，加入 VIP 为您节省更多时间去陪恋人、家人以及朋友 :) 交流群：723992875',
       type: 'success',
-      showClose: false,
+      showClose: true,
       duration: 0,
       onClick: function() {
         // Notification.closeAll();
-        window.open("https://www.oschina.net/p/ijpay");
+        window.open("https://javen205.gitee.io/ijpay/guide/donate/");
       }
     });
     
     this.$notify({
       offset: 200,
-      title: 'TNWX 微信系开发脚手架，Start 支持一下',
-      message: '同时支持微信公众号、微信支付、微信小游戏(微信小程序、微信企业号敬请期待)。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
+      title: 'TNWX 微信系开发脚手架',
+      message: '同时支持微信公众号、微信小程序、微信企业号、微信支付、微信小游戏。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
       type: 'success',
       showClose: true,
       duration: 0,

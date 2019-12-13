@@ -5,7 +5,10 @@
 ::: tip IJPay 中支付宝支付需要配置的参数如下：
 - appId: 应用编号
 - privateKey: 应用私钥
-- publicKey: 支付宝公钥，通过应用公钥上传到支付宝开放平台换取支付宝公钥。
+- publicKey: 支付宝公钥，通过应用公钥上传到支付宝开放平台换取支付宝公钥(如果是证书模式，公钥与私钥在CSR目录)。
+- appCertPath: 应用公钥证书 (证书模式必须)
+- aliPayCertPath: 支付宝公钥证书 (证书模式必须)
+- aliPayRootCertPath: 支付宝根证书 (证书模式必须)
 - serverUrl: 支付宝支付网关
 - domain: 外网访问项目的域名，支付通知中会使用
 :::
