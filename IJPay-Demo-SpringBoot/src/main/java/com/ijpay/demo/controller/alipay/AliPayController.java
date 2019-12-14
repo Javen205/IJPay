@@ -181,7 +181,7 @@ public class AliPayController extends AbstractAliPayApiController {
         String body = "我是测试数据-By Javen";
         String subject = "Javen Wap支付测试";
         String totalAmount = "1";
-        String passbackParams = "1";
+        String passBackParams = "1";
         String returnUrl = aliPayBean.getDomain() + RETURN_URL;
         String notifyUrl = aliPayBean.getDomain() + NOTIFY_URL;
 
@@ -189,7 +189,7 @@ public class AliPayController extends AbstractAliPayApiController {
         model.setBody(body);
         model.setSubject(subject);
         model.setTotalAmount(totalAmount);
-        model.setPassbackParams(passbackParams);
+        model.setPassbackParams(passBackParams);
         String outTradeNo = StringUtils.getOutTradeNo();
         System.out.println("wap outTradeNo>" + outTradeNo);
         model.setOutTradeNo(outTradeNo);

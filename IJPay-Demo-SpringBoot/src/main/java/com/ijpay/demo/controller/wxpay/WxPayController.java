@@ -1,5 +1,6 @@
 package com.ijpay.demo.controller.wxpay;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.zxing.BarcodeFormat;
@@ -790,7 +791,7 @@ public class WxPayController extends AbstractWxPayApiController {
         String returnCode = params.get("return_code");
         // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
         if (WxPayKit.codeIsOk(returnCode)) {
-            String reqInfo = params.get("req_info");
+            String reqInfo = Base64.decodeStr(params.get("req_info"));
             String decryptData = WxPayKit.decryptData(reqInfo, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey());
             log.info("退款通知解密后的数据=" + decryptData);
             // 更新订单信息

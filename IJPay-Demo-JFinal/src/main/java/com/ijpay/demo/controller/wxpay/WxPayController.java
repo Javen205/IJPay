@@ -760,7 +760,7 @@ public class WxPayController extends WxPayApiController {
         String returnCode = params.get("return_code");
         // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
         if (WxPayKit.codeIsOk(returnCode)) {
-            String reqInfo = params.get("req_info");
+            String reqInfo = Base64Kit.decodeToStr(params.get("req_info"));
             String decryptData = WxPayKit.decryptData(reqInfo, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey());
             log.info("退款通知解密后的数据=" + decryptData);
             // 更新订单信息
