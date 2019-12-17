@@ -23,7 +23,7 @@
         <div class="weui-wepay-pay__inner">
             <h1 class="weui-wepay-pay__title">付款金额(元)</h1>
             <div class="weui-wepay-pay__inputs"> <strong class="weui-wepay-pay__strong">￥</strong>
-                <input id="paymoney" type="number" class="weui-wepay-pay__input" placeholder="请输入金额"></div>
+                <input id="paymoney" type="text" class="weui-wepay-pay__input" placeholder="请输入金额"></div>
             <div class="weui-wepay-pay__intro">向商家询问支付金额</div>
         </div>
     </div>
@@ -80,10 +80,10 @@
 		
 		$(".paynum").each(function(){
 			$(this).click(function(){
-				if(($paymoney.val()).indexOf(".") != -1 && ($paymoney.val()).substring(($paymoney.val()).indexOf(".") + 1, ($paymoney.val()).length).length == 2){
+				if(($paymoney.val()).indexOf(".") !== -1 && ($paymoney.val()).substring(($paymoney.val()).indexOf(".") + 1, ($paymoney.val()).length).length === 2){
 					return;
 				}
-				if($.trim($paymoney.val()) == "0"){
+				if($.trim($paymoney.val()) === "0"){
 					return;
 				}
 				$paymoney.val($paymoney.val() + $(this).text());
@@ -95,25 +95,25 @@
 		});
 		
 		$("#pay-zero").click(function(){
-			if(($paymoney.val()).indexOf(".") != -1 && ($paymoney.val()).substring(($paymoney.val()).indexOf(".") + 1, ($paymoney.val()).length).length == 2){
+			if(($paymoney.val()).indexOf(".") !== -1 && ($paymoney.val()).substring(($paymoney.val()).indexOf(".") + 1, ($paymoney.val()).length).length === 2){
 				return;
 			}
-			if($.trim($paymoney.val()) == "0"){
+			if($.trim($paymoney.val()) === "0"){
 				return;
 			}
 			$paymoney.val($paymoney.val() + $(this).text());
 		});
 		
 		$("#pay-float").click(function(){
-			if($.trim($paymoney.val()) == ""){
+			if($.trim($paymoney.val()) === ""){
 				return;
 			}
 		
-			if(($paymoney.val()).indexOf(".") != -1){
+			if(($paymoney.val()).indexOf(".") !== -1){
 				return;
 			}
 			
-			if(($paymoney.val()).indexOf(".") != -1){
+			if(($paymoney.val()).indexOf(".") !== -1){
 				return;
 			}
 			

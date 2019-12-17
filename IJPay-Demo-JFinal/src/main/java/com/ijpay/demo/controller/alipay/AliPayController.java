@@ -11,7 +11,6 @@ import com.ijpay.alipay.AliPayApi;
 import com.ijpay.alipay.AliPayApiConfig;
 import com.ijpay.alipay.AliPayApiConfigKit;
 import com.ijpay.core.kit.PayKit;
-import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.demo.vo.AjaxResult;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Prop;
@@ -275,7 +274,7 @@ public class AliPayController extends AliPayApiController {
     public void uniTransfer() {
         String totalAmount = "1";
         AlipayFundTransUniTransferModel model = new AlipayFundTransUniTransferModel();
-        model.setOutBizNo(WxPayKit.generateStr());
+        model.setOutBizNo(PayKit.generateStr());
         model.setTransAmount(totalAmount);
         model.setProductCode("TRANS_ACCOUNT_NO_PWD");
         model.setBizScene("DIRECT_TRANSFER");
