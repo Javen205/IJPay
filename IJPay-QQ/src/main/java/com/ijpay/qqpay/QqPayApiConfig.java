@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * <p>IJPay 交流群: 723992875</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
+ * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
  *
  * <p>QQ 钱包支付常用配置</p>
  *

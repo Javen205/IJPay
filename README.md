@@ -115,7 +115,7 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 
 ## 开源推荐
 
-- `TNW` 微信公众号开发脚手架：https://gitee.com/javen205/TNW
+- `TNWX` 微信系开发脚手架：https://gitee.com/javen205/TNWX
 - SpringBoot 微服务高效开发 `mica` 工具集：https://gitee.com/596392912/mica
 - `Avue` 一款基于 vue 可配置化的神奇框架：https://gitee.com/smallweigit/avue
 - `pig` 宇宙最强微服务（架构师必备）：https://gitee.com/log4j/pig

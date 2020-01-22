@@ -1,13 +1,13 @@
 # 微信系开发脚手架
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/tnw" target="blank"><img src="https://gitee.com/javen205/TNWX/raw/master/assets/img/logo.png" width="410" alt="TNW Logo" /></a>
+  <a href="https://www.npmjs.com/package/tnwx" target="blank"><img src="https://gitee.com/javen205/TNWX/raw/master/assets/img/logo.png" width="410" alt="TNWX Logo" /></a>
 </p>
  <p align="center">
  <a href="https://www.npmjs.com/package/tnwx" target="_blank"><img src="https://img.shields.io/npm/l/tnwx.svg?style=flat-square" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/tnwx" target="_blank"><img src="https://img.shields.io/npm/v/tnwx.svg?style=flat-square" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/package/tnwx" target="_blank"><img src="https://img.shields.io/npm/dt/tnwx.svg?style=flat-square" alt="NPM Downloads" /></a>
-<a href="https://github.com/Javen205/donate" target="_blank"><img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg?style=flat-square" alt="Donate"/></a>
+ <a href="https://www.npmjs.com/package/tnwx" target="_blank"><img src="https://img.shields.io/npm/v/tnwx.svg?style=flat-square" alt="NPM Version" /></a>
+ <a href="https://www.npmjs.com/package/tnwx" target="_blank"><img src="https://img.shields.io/npm/dt/tnwx.svg?style=flat-square" alt="NPM Downloads" /></a>
+ <a href="https://github.com/Javen205/donate" target="_blank"><img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg?style=flat-square" alt="Donate"/></a>
 </p>
 
 ## 简介

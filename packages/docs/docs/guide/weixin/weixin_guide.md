@@ -5,7 +5,7 @@ weixin_guide 是基于 jfinal_weixin SDK 开发的实战项目。
 
 ## 开源推荐
 
- [**TNW 微信公众号开发脚手架，支持任何 Node.js 的服务端框架**](htts://gitee.com/javen205/TNW)
+ [**TNWX 微信公众号开发脚手架，支持任何 Node.js 的服务端框架**](htts://gitee.com/javen205/TNWX)
 
 [**Android 微信、支付App支付SDK**](http://gitee.com/javen205/JPay)
 

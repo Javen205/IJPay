@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * <p>IJPay 交流群: 723992875</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNW</p>
+ * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
  *
  * <p>微信支付 Demo</p>
  *
@@ -124,7 +124,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-H5支付")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1000")
                 .spbill_create_ip(ip)
@@ -188,7 +188,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-公众号支付")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1000")
                 .spbill_create_ip(ip)
@@ -302,7 +302,7 @@ public class WxPayController extends AbstractWxPayApiController {
                     .mch_id(wxPayApiConfig.getMchId())
                     .nonce_str(WxPayKit.generateStr())
                     .body("IJPay 让支付触手可及-扫码支付模式一")
-                    .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                    .attach("Node.js 版:https://gitee.com/javen205/TNWX")
                     .out_trade_no(WxPayKit.generateStr())
                     .total_fee("1")
                     .spbill_create_ip(ip)
@@ -373,7 +373,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-扫码支付模式二")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWXX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1")
                 .spbill_create_ip(ip)
@@ -436,7 +436,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-刷卡支付")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWXX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1")
                 .spbill_create_ip(ip)
@@ -493,7 +493,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-App支付")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWXX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1000")
                 .spbill_create_ip(ip)
@@ -549,7 +549,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .mch_id(wxPayApiConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body("IJPay 让支付触手可及-小程序支付")
-                .attach("Node.js 版:https://gitee.com/javen205/TNW")
+                .attach("Node.js 版:https://gitee.com/javen205/TNWXX")
                 .out_trade_no(WxPayKit.generateStr())
                 .total_fee("1000")
                 .spbill_create_ip(ip)

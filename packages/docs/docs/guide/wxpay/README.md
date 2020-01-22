@@ -93,7 +93,7 @@ Map<String, String> params = UnifiedOrderModel
     .mch_id(wxPayBean.getMchId())
     .nonce_str(WxPayKit.generateStr())
     .body("IJPay 让支付触手可及")
-    .attach("Node.js 版:https://gitee.com/javen205/TNW")
+    .attach("Node.js 版:https://gitee.com/javen205/TNWX")
     .out_trade_no(WxPayKit.generateStr())
     .total_fee("1000")
     .spbill_create_ip(ip)

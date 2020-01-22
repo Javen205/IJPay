@@ -52,7 +52,7 @@ public class IndexController extends Controller {
         map.put("IJPay", "https://gitee.com/javen205/IJPay");
         map.put("IJPay Doc", "https://javen205.gitee.io/ijpay");
         map.put("author", "https://javen.blog.csdn.net");
-        map.put("TNW", "微信公众号开发脚手架 https://gitee.com/javen205/TNW");
+        map.put("TNWX", "微信公众号开发脚手架 https://gitee.com/javen205/TNWX");
 
         log.info(JsonKit.toJson(map));
 
