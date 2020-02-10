@@ -132,5 +132,5 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 - [微信支付分接口文档](https://pay.weixin.qq.com/wiki/doc/apiv3/payscore.php?chapter=21_2&index=1)
 - [支付宝开发平台](https://docs.open.alipay.com)
 - [QQ 钱包开发文档](https://qpay.qq.com/buss/doc.shtml)
-- [京东支付](https://qpay.qq.com/buss/doc.shtml)
+- [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
