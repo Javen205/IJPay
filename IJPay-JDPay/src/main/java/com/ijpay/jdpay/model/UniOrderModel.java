@@ -42,6 +42,7 @@ public class UniOrderModel extends JdBaseModel {
    private String specCardNo;
    private String specId;
    private String specName;
+   private String userId;
    private String tradeType;
    private String expireTime;
    private String orderGoodsNum;
