@@ -37,6 +37,11 @@
             <artifactId>IJPay-QQ</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-PayPal</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -20,6 +20,7 @@
         <module>IJPay-QQ</module>
         <module>IJPay-UnionPay</module>
         <module>IJPay-JDPay</module>
+        <module>IJPay-PayPal</module>
     </modules>
 
     <licenses>
