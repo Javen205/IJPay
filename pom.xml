@@ -52,8 +52,8 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
-        <junit.version>4.12</junit.version>
-        <hutool.version>5.0.7</hutool.version>
+        <junit.version>4.13</junit.version>
+        <hutool.version>5.1.2</hutool.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -76,6 +76,11 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-http</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-json</artifactId>
             <version>${hutool.version}</version>
         </dependency>
         <!-- huTool 工具包 End -->
