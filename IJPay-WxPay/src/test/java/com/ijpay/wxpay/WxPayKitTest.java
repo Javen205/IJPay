@@ -2,8 +2,10 @@ package com.ijpay.wxpay;
 
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiType;
@@ -11,6 +13,8 @@ import com.ijpay.wxpay.enums.WxDomain;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,18 +50,39 @@ public class WxPayKitTest {
 
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
     String certPath = "/Users/Javen/cert/apiclient_cert.pem";
-    String mchId = "商户号";
+    String mchId = "xxx";
     // 商户API证书序列号
     // 使用证书解析工具 https://myssl.com/cert_decode.html 查看
     // openssl x509 -in apiclient_cert.pem -noout -serial 查看
     String serialNo = "xxx";
     String body = "";
+    String apiKey3 = "api key 3";
+    String saveCertPath = "/Users/Javen/cert/platform_cert.pem";
 
 
     @Test
     public void getCertificate() {
         // 获取证书序列号
         X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(certPath));
+        System.out.println(certificate.getSerialNumber().toString(16).toUpperCase());
+    }
+
+    @Test
+    public void platformCert() throws Exception {
+        AesUtil aesUtil = new AesUtil(apiKey3.getBytes(StandardCharsets.UTF_8));
+        // 平台证书密文解密
+        // encrypt_certificate 中的  associated_data nonce  ciphertext
+        String publicKey = aesUtil.decryptToString(
+                "certificate".getBytes(StandardCharsets.UTF_8),
+                "80d28946a64a".getBytes(StandardCharsets.UTF_8),
+                "DwAqW4+4TeUaOEylfKEXhw+XqGh/YTRhUmLw/tBfQ5nM9DZ9d+9aGEghycwV1jwo52vXb/t6ueBvBRHRIW5JgDRcXmTHw9IMTrIK6HxTt2qiaGTWJU9whsF+GGeQdA7gBCHZm3AJUwrzerAGW1mclXBTvXqaCl6haE7AOHJ2g4RtQThi3nxOI63/yc3WaiAlSR22GuCpy6wJBfljBq5Bx2xXDZXlF2TNbDIeodiEnJEG2m9eBWKuvKPyUPyClRXG1fdOkKnCZZ6u+ipb4IJx28n3MmhEtuc2heqqlFUbeONaRpXv6KOZmH/IdEL6nqNDP2D7cXutNVCi0TtSfC7ojnO/+PKRu3MGO2Z9q3zyZXmkWHCSms/C3ACatPUKHIK+92MxjSQDc1E/8faghTc9bDgn8cqWpVKcL3GHK+RfuYKiMcdSkUDJyMJOwEXMYNUdseQMJ3gL4pfxuQu6QrVvJ17q3ZjzkexkPNU4PNSlIBJg+KX61cyBTBumaHy/EbHiP9V2GeM729a0h5UYYJVedSo1guIGjMZ4tA3WgwQrlpp3VAMKEBLRJMcnHd4pH5YQ/4hiUlHGEHttWtnxKFwnJ6jHr3OmFLV1FiUUOZEDAqR0U1KhtGjOffnmB9tymWF8FwRNiH2Tee/cCDBaHhNtfPI5129SrlSR7bZc+h7uzz9z+1OOkNrWHzAoWEe3XVGKAywpn5HGbcL+9nsEVZRJLvV7aOxAZBkxhg8H5Fjt1ioTJL+qXgRzse1BX1iiwfCR0fzEWT9ldDTDW0Y1b3tb419MhdmTQB5FsMXYOzqp5h+Tz1FwEGsa6TJsmdjJQSNz+7qPSg5D6C2gc9/6PkysSu/6XfsWXD7cQkuZ+TJ/Xb6Q1Uu7ZB90SauA8uPQUIchW5zQ6UfK5dwMkOuEcE/141/Aw2rlDqjtsE17u1dQ6TCax/ZQTDQ2MDUaBPEaDIMPcgL7fCeijoRgovkBY92m86leZvQ+HVbxlFx5CoPhz4a81kt9XJuEYOztSIKlm7QNfW0BvSUhLmxDNCjcxqwyydtKbLzA+EBb2gG4ORiH8IOTbV0+G4S6BqetU7RrO+/nKt21nXVqXUmdkhkBakLN8FUcHygyWnVxbA7OI2RGnJJUnxqHd3kTbzD5Wxco4JIQsTOV6KtO5c960oVYUARZIP1SdQhqwELm27AktEN7kzg/ew/blnTys/eauGyw78XCROb9F1wbZBToUZ7L+8/m/2tyyyqNid+sC9fYqJoIOGfFOe6COWzTI/XPytCHwgHeUxmgk7NYfU0ukR223RPUOym6kLzSMMBKCivnNg68tbLRJHEOpQTXFBaFFHt2qpceJpJgw5sKFqx3eQnIFuyvA1i8s2zKLhULZio9hpsDJQREOcNeHVjEZazdCGnbe3Vjg7uqOoVHdE/YbNzJNQEsB3/erYJB+eGzyFwFmdAHenG5RE6FhCutjszwRiSvW9F7wvRK36gm7NnVJZkvlbGwh0UHr0pbcrOmxT81xtNSvMzT0VZNLTUX2ur3AGLwi2ej8BIC0H41nw4ToxTnwtFR1Xy55+pUiwpB7JzraA08dCXdFdtZ72Tw/dNBy5h1P7EtQYiKzXp6rndfOEWgNOsan7e1XRpCnX7xoAkdPvy40OuQ5gNbDKry5gVDEZhmEk/WRuGGaX06CG9m7NfErUsnQYrDJVjXWKYuARd9R7W0aa5nUXqz/Pjul/LAatJgWhZgFBGXhNr9iAoade/0FPpBj0QWa8SWqKYKiOqXqhfhppUq35FIa0a1Vvxcn3E38XYpVZVTDEXcEcD0RLCu/ezdOa6vRcB7hjgXFIRZQAka0aXnQxwOZwE2Rt3yWXqc+Q1ah2oOrg8Lg3ETc644X9QP4FxOtDwz/A=="
+        );
+        System.out.println("平台证书公钥明文：" + publicKey);
+        // 保存证书
+        FileWriter writer = new FileWriter(saveCertPath);
+        writer.write(publicKey);
+        // 获取平台证书序列号
+        X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
         System.out.println(certificate.getSerialNumber().toString(16).toUpperCase());
     }
 
@@ -106,8 +131,8 @@ public class WxPayKitTest {
             fee.put("fee_count", 1);
             feesList.add(fee);
             params.put("fees", feesList);
-            params.put("risk_amount",29900);
-            params.put("attach",PayKit.urlEncode("IJPay 测试先享后付"));
+            params.put("risk_amount", 29900);
+            params.put("attach", PayKit.urlEncode("IJPay 测试先享后付"));
 
             body = JSONUtil.toJsonStr(params);
 
