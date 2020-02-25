@@ -253,12 +253,12 @@ public class PayKit {
     /**
      * 获取商户私钥
      *
-     * @param apiClientKeyPath apiclient_key.pem 路径
+     * @param keyPath 商户私钥证书路径
      * @return 商户私钥
      * @throws Exception 解析 key 异常
      */
-    public static String getPrivateKey(String apiClientKeyPath) throws Exception {
-        String originalKey = FileUtil.readUtf8String(apiClientKeyPath);
+    public static String getPrivateKey(String keyPath) throws Exception {
+        String originalKey = FileUtil.readUtf8String(keyPath);
         String privateKey = originalKey
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
@@ -272,7 +272,7 @@ public class PayKit {
      * @param inputStream 证书文件
      * @return {@link X509Certificate} 获取证书
      */
-    public static X509Certificate getCertificate(InputStream inputStream) throws IOException {
+    public static X509Certificate getCertificate(InputStream inputStream) {
         try {
             CertificateFactory cf = CertificateFactory.getInstance("X509");
             X509Certificate cert = (X509Certificate) cf.generateCertificate(inputStream);
