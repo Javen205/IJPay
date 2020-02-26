@@ -9,7 +9,7 @@ features:
 - title: 开箱即用
   details: 不依赖任何第三方 MVC 框架，仅仅作为工具使用，简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 - title: 渠道丰富
-  details: 支持微信支付、QQ钱包支付、支付宝支付、银联支付、京东支付等。
+  details: 支持微信支付(支持 Api v3)、QQ钱包支付、支付宝支付、银联支付、京东支付等。
 footer: Apache License 2.0 | Copyright © 2019-present Javen
 ---
 
@@ -78,7 +78,7 @@ export default {
     this.$notify({
       offset: 50,
       title: 'IJPay VIP 服务',
-      message: 'IJPay VIP 服务可提供一对一在线答疑，加入 VIP 为您节省更多时间去陪恋人、家人以及朋友 :) 交流群：723992875',
+      message: 'VIP 服务可提供一对一在线答疑，加入 VIP 为您节省更多时间去陪恋人、家人以及朋友 :) 交流群：723992875',
       type: 'success',
       showClose: true,
       duration: 0,
@@ -91,7 +91,7 @@ export default {
     this.$notify({
       offset: 200,
       title: 'TNWX 微信系开发脚手架',
-      message: '同时支持微信公众号、微信小程序、微信企业号、微信支付、微信小游戏。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
+      message: '同时支持微信公众号、微信小程序、企业微信、企业微信开放平台、微信支付、微信小游戏。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
       type: 'success',
       showClose: true,
       duration: 0,
