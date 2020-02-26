@@ -15,6 +15,10 @@ package com.ijpay.core.enums;
  */
 public enum RequestMethod {
     /**
+     * 上传实质是 post 请求
+     */
+    UPLOAD("POST"),
+    /**
      * post 请求
      */
     POST("POST"),

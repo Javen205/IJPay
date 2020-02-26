@@ -1,11 +1,13 @@
 package com.ijpay.core.http;
 
+import cn.hutool.http.ContentType;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.ssl.SSLSocketFactoryBuilder;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -98,9 +100,18 @@ public abstract class AbstractHttpDelegate {
      * @return {@link String} 请求返回的结果
      */
     public String post(String url, String authorization, String jsonData) {
-
         return HttpRequest.post(url)
                 .addHeaders(getHeaders(authorization))
+                .body(jsonData)
+                .execute()
+                .body();
+    }
+
+    public String upload(String url, String authorization, String jsonData, File file) {
+
+        return HttpRequest.post(url)
+                .form("file", file)
+                .addHeaders(getUploadHeaders(authorization))
                 .body(jsonData)
                 .execute()
                 .body();
@@ -182,6 +193,21 @@ public abstract class AbstractHttpDelegate {
         Map<String, String> headers = new HashMap<>(4);
         headers.put("Content-Type", "application/json");
         headers.put("Accept", "application/json");
+        headers.put("Authorization", authorization);
+        headers.put("User-Agent", userAgent);
+        return headers;
+    }
+
+    private Map<String, String> getUploadHeaders(String authorization) {
+        String userAgent = String.format(
+                "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
+                getClass().getPackage().getImplementationVersion(),
+                OS,
+                VERSION == null ? "Unknown" : VERSION);
+
+        Map<String, String> headers = new HashMap<>(4);
+        headers.put("Content-Type", ContentType.MULTIPART.toString());
+        headers.put("Accept", ContentType.JSON.toString());
         headers.put("Authorization", authorization);
         headers.put("User-Agent", userAgent);
         return headers;

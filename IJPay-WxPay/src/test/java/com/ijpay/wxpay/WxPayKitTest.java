@@ -3,6 +3,7 @@ package com.ijpay.wxpay;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.kit.AesUtil;
@@ -14,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -90,6 +92,26 @@ public class WxPayKitTest {
     public void v3Execution() {
         try {
             String result = WxPayApi.v3Execution(RequestMethod.GET, WxDomain.CHINA.toString(), WxApiType.GET_CERTIFICATES.toString(), mchId, serialNo, keyPath, body);
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void v3Upload() {
+        // TODO 签名异常
+        try {
+            String filePath = "/Users/Javen/Documents/pic/cat.png";
+            File file = FileUtil.newFile(filePath);
+            String sha256 = SecureUtil.sha256(file);
+            HashMap<Object, Object> map = new HashMap<>();
+            map.put("filename", file.getName());
+            map.put("sha256", sha256);
+            body = JSONUtil.toJsonStr(map);
+            System.out.println(body);
+
+            String result = WxPayApi.v3Upload(WxDomain.CHINA.toString(), WxApiType.UPLOAD_MEDIA.toString(), mchId, serialNo, keyPath, body, file);
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();

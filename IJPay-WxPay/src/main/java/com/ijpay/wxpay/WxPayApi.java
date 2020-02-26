@@ -10,6 +10,7 @@ import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,10 +140,11 @@ public class WxPayApi {
      * @param nonceStr  随机字符库
      * @param timestamp 时间戳
      * @param authType  认证类型
+     * @param file      文件
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, String nonceStr, long timestamp, String authType) throws Exception {
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, String nonceStr, long timestamp, String authType, File file) throws Exception {
         // 构建签名参数
         String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
         // 获取商户私钥
@@ -156,6 +158,8 @@ public class WxPayApi {
             return doGet(urlPrefix.concat(urlSuffix), authorization, null);
         } else if (method == RequestMethod.POST) {
             return doPost(urlPrefix.concat(urlSuffix), authorization, body);
+        } else if (method == RequestMethod.UPLOAD) {
+            return doUpload(urlPrefix.concat(urlSuffix), authorization, body, file);
         }
         return null;
     }
@@ -177,7 +181,27 @@ public class WxPayApi {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
-        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
+        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, null);
+    }
+
+    /**
+     * V3 接口统一执行入口
+     *
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @param file      文件
+     * @return {@link String} 请求返回的结果
+     * @throws Exception 接口执行异常
+     */
+    public static String v3Upload(String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, File file) throws Exception {
+        long timestamp = System.currentTimeMillis() / 1000;
+        String authType = "WECHATPAY2-SHA256-RSA2048";
+        String nonceStr = PayKit.generateStr();
+        return v3Execution(RequestMethod.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, file);
     }
 
     /**
@@ -199,7 +223,7 @@ public class WxPayApi {
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
         urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
-        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
+        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, null);
     }
 
     /**
@@ -1148,6 +1172,10 @@ public class WxPayApi {
 
     public static String doPost(String url, String authorization, String data) {
         return HttpKit.getDelegate().post(url, authorization, data);
+    }
+
+    public static String doUpload(String url, String authorization, String data, File file) {
+        return HttpKit.getDelegate().upload(url, authorization, data, file);
     }
 
     public static String doPost(String url, Map<String, String> params) {

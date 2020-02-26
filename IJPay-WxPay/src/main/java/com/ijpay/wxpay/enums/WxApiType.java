@@ -303,6 +303,10 @@ public enum WxApiType {
      */
     GET_CERTIFICATES("/v3/certificates"),
     /**
+     * 上传资源
+     */
+    UPLOAD_MEDIA("/v3/merchant/media/upload"),
+    /**
      * 查询用户支付分开启状态
      */
     USER_SERVICE_STATE("/v3/payscore/user-service-state"),
@@ -319,6 +323,7 @@ public enum WxApiType {
      */
     COMPLETE_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/complete"),
     CANCEL1_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/cancel");
+
 
 
     /**
