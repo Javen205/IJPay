@@ -1,6 +1,7 @@
 package com.ijpay.core.kit;
 
 import cn.hutool.core.util.StrUtil;
+import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
 import javax.servlet.http.HttpServletRequest;
@@ -327,6 +328,56 @@ public class WxPayKit {
         String packageSign = createSign(packageParams, partnerKey, signType);
         packageParams.put("paySign", packageSign);
         return packageParams;
+    }
+
+    /**
+     * 构建 v3 接口所需的 Authorization
+     *
+     * @param method    {@link RequestMethod} 请求方法
+     * @param urlSuffix 可通过 {@link WxPayKit} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @param nonceStr  随机字符库
+     * @param timestamp 时间戳
+     * @param authType  认证类型
+     * @return {@link String} 返回 v3 所需的 Authorization
+     * @throws Exception 异常信息
+     */
+    public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
+                                            String serialNo, String keyPath, String body, String nonceStr,
+                                            long timestamp, String authType) throws Exception {
+        // 构建签名参数
+        String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
+        // 获取商户私钥
+        String key = PayKit.getPrivateKey(keyPath);
+        // 生成签名
+        String signature = RsaKit.encryptByPrivateKey(buildSignMessage, key);
+        // 根据平台规则生成请求头 authorization
+        return PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
+    }
+
+    /**
+     * 构建 v3 接口所需的 Authorization
+     *
+     * @param method    {@link RequestMethod} 请求方法
+     * @param urlSuffix 可通过 {@link WxPayKit} 来获取，URL挂载参数需要自行拼接
+     * @param mchId     商户Id
+     * @param serialNo  商户 API 证书序列号
+     * @param keyPath   apiclient_key.pem 证书路径
+     * @param body      接口请求参数
+     * @return {@link String} 返回 v3 所需的 Authorization
+     * @throws Exception 异常信息
+     */
+    public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
+                                            String serialNo, String keyPath, String body) throws Exception {
+
+        long timestamp = System.currentTimeMillis() / 1000;
+        String authType = "WECHATPAY2-SHA256-RSA2048";
+        String nonceStr = PayKit.generateStr();
+
+        return buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body,nonceStr, timestamp, authType);
     }
 
     /**
