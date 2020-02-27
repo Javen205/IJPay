@@ -1,7 +1,10 @@
 package com.ijpay.core.http;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.ssl.SSLSocketFactoryBuilder;
 
@@ -52,7 +55,7 @@ public abstract class AbstractHttpDelegate {
      */
     public String get(String url, String authorization, Map<String, Object> paramMap) {
         return HttpRequest.get(url)
-                .addHeaders(getHeaders(authorization))
+                .addHeaders(getHeaders(authorization, null))
                 .form(paramMap)
                 .execute()
                 .body();
@@ -95,26 +98,90 @@ public abstract class AbstractHttpDelegate {
     /**
      * post 请求
      *
-     * @param url      请求url
-     * @param jsonData 请求参数
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
      * @return {@link String} 请求返回的结果
      */
-    public String post(String url, String authorization, String jsonData) {
+    public String postBySafe(String url, String authorization, String serialNumber, String jsonData) {
+        return postBySafeToResponse(url, authorization, serialNumber, jsonData).body();
+    }
+
+    /**
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    public HttpResponse postBySafeToResponse(String url, String authorization, String serialNumber, String jsonData) {
         return HttpRequest.post(url)
-                .addHeaders(getHeaders(authorization))
+                .addHeaders(getHeaders(authorization, serialNumber))
                 .body(jsonData)
+                .execute();
+    }
+
+    /**
+     * delete 请求
+     *
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
+     * @return {@link Integer} 请求返回的结果
+     */
+    public Integer delete(String url, String authorization, String serialNumber, String jsonData) {
+        return deleteToResponse(url, authorization, serialNumber, jsonData).getStatus();
+    }
+
+    /**
+     * delete 请求
+     *
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    public HttpResponse deleteToResponse(String url, String authorization, String serialNumber, String jsonData) {
+        return HttpRequest.delete(url)
+                .addHeaders(getHeaders(authorization, serialNumber))
+                .body(jsonData)
+                .execute();
+    }
+
+    public String upload(String url, String authorization, String serialNumber, String jsonData, File file) {
+
+        return HttpRequest.post(url)
+                .addHeaders(getUploadHeaders(authorization, serialNumber))
+                .form("file", file)
+                .form("meta", jsonData)
                 .execute()
                 .body();
     }
 
-    public String upload(String url, String authorization, String jsonData, File file) {
+    public String upload(String url, String data, String certPath, String certPass, String filePath) {
+        try {
+            File file = FileUtil.newFile(filePath);
+            return HttpRequest.post(url)
+                    .setSSLSocketFactory(SSLSocketFactoryBuilder
+                            .create()
+                            .setProtocol(SSLSocketFactoryBuilder.TLSv1)
+                            .setKeyManagers(getKeyManager(certPass, certPath, null))
+                            .setSecureRandom(new SecureRandom())
+                            .build()
+                    )
+                    .header("Content-Type", "multipart/form-data;boundary=\"boundary\"")
+                    .form("file", file)
+                    .form("meta", data)
+//                    .body(data)
+                    .execute()
+                    .body();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-        return HttpRequest.post(url)
-                .form("file", file)
-                .addHeaders(getUploadHeaders(authorization))
-                .body(jsonData)
-                .execute()
-                .body();
     }
 
     /**
@@ -183,33 +250,35 @@ public abstract class AbstractHttpDelegate {
         return kmf.getKeyManagers();
     }
 
-    private Map<String, String> getHeaders(String authorization) {
+    private Map<String, String> getBaseHeaders(String authorization) {
         String userAgent = String.format(
                 "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
                 getClass().getPackage().getImplementationVersion(),
                 OS,
                 VERSION == null ? "Unknown" : VERSION);
 
-        Map<String, String> headers = new HashMap<>(4);
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
+        Map<String, String> headers = new HashMap<>(3);
+        headers.put("Accept", ContentType.JSON.toString());
         headers.put("Authorization", authorization);
         headers.put("User-Agent", userAgent);
         return headers;
     }
 
-    private Map<String, String> getUploadHeaders(String authorization) {
-        String userAgent = String.format(
-                "WeChatPay-IJPay-HttpClient/%s (%s) Java/%s",
-                getClass().getPackage().getImplementationVersion(),
-                OS,
-                VERSION == null ? "Unknown" : VERSION);
+    private Map<String, String> getHeaders(String authorization, String serialNumber) {
+        Map<String, String> headers = getBaseHeaders(authorization);
+        headers.put("Content-Type", ContentType.JSON.toString());
+        if (StrUtil.isNotEmpty(serialNumber)) {
+            headers.put("Wechatpay-Serial", serialNumber);
+        }
+        return headers;
+    }
 
-        Map<String, String> headers = new HashMap<>(4);
-        headers.put("Content-Type", ContentType.MULTIPART.toString());
-        headers.put("Accept", ContentType.JSON.toString());
-        headers.put("Authorization", authorization);
-        headers.put("User-Agent", userAgent);
+    private Map<String, String> getUploadHeaders(String authorization, String serialNumber) {
+        Map<String, String> headers = getBaseHeaders(authorization);
+        headers.put("Content-Type", "multipart/form-data;boundary=\"boundary\"");
+        if (StrUtil.isNotEmpty(serialNumber)) {
+            headers.put("Wechatpay-Serial", serialNumber);
+        }
         return headers;
     }
 }
