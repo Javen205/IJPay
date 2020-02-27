@@ -6,6 +6,7 @@ import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
@@ -52,6 +53,8 @@ public class WxPayKitTest {
 
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
     String certPath = "/Users/Javen/cert/apiclient_cert.pem";
+    String certPath2 = "/Users/Javen/cert/apiclient_cert.p12";
+    
     String mchId = "xxx";
     // 商户API证书序列号
     // 使用证书解析工具 https://myssl.com/cert_decode.html 查看
@@ -89,9 +92,80 @@ public class WxPayKitTest {
     }
 
     @Test
-    public void v3Execution() {
+    public void v3Get() {
+        // 获取平台证书列表
         try {
-            String result = WxPayApi.v3Execution(RequestMethod.GET, WxDomain.CHINA.toString(), WxApiType.GET_CERTIFICATES.toString(), mchId, serialNo, keyPath, body);
+            String result = WxPayApi.v3Execution(
+                    RequestMethod.GET,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.GET_CERTIFICATES.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    body
+            );
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void v3Delete() {
+        // 创建/查询/更新/删除投诉通知回调
+        try {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("url", "https://qq.com");
+            String result = WxPayApi.v3Execution(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    JSONUtil.toJsonStr(hashMap)
+            );
+            System.out.println(result);
+
+            result = WxPayApi.v3Execution(
+                    RequestMethod.DELETE,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    ""
+            );
+            // 如果返回的为 204 表示删除成功
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void upload() {
+        //TODO 待测试 证书上传文件
+        try {
+            String filePath = "/Users/Javen/Documents/pic/cat.png";
+
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("mch_id", mchId);
+            hashMap.put("media_hash", PayKit.md5(FileUtil.readUtf8String(filePath)).toLowerCase());
+            hashMap.put("sign_type", SignType.HMACSHA256.toString());
+
+            String sign = WxPayKit.createSign(hashMap, apiKey3, SignType.HMACSHA256);
+            hashMap.put("sign", sign);
+
+            System.out.println(hashMap);
+
+            String result = WxPayApi.execution(
+                    WxDomain.CHINA.toString().concat(WxApiType.MCH_UPLOAD_MEDIA.toString()),
+                    hashMap,
+                    certPath2,
+                    mchId,
+                    filePath
+            );
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,18 +174,29 @@ public class WxPayKitTest {
 
     @Test
     public void v3Upload() {
-        // TODO 签名异常
+        // v3 接口上传文件
         try {
             String filePath = "/Users/Javen/Documents/pic/cat.png";
+            
             File file = FileUtil.newFile(filePath);
             String sha256 = SecureUtil.sha256(file);
+
             HashMap<Object, Object> map = new HashMap<>();
             map.put("filename", file.getName());
             map.put("sha256", sha256);
             body = JSONUtil.toJsonStr(map);
+
             System.out.println(body);
 
-            String result = WxPayApi.v3Upload(WxDomain.CHINA.toString(), WxApiType.UPLOAD_MEDIA.toString(), mchId, serialNo, keyPath, body, file);
+            String result = WxPayApi.v3Upload(
+                    WxDomain.CHINA.toString(),
+                    WxApiType.MERCHANT_UPLOAD_MEDIA.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    body,
+                    file
+            );
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,15 +204,23 @@ public class WxPayKitTest {
     }
 
     @Test
-    public void userServiceState() {
+    public void payScoreUserServiceState() {
         try {
-
             Map<String, String> params = new HashMap<>();
             params.put("service_id", "500001");
             params.put("appid", "wxd678efh567hg6787");
             params.put("openid", "oUpF8uMuAJO_M2pxb1Q9zNjWeS6o");
 
-            String result = WxPayApi.v3Execution(RequestMethod.GET, WxDomain.CHINA.toString(), WxApiType.USER_SERVICE_STATE.toString(), mchId, serialNo, keyPath, body, params);
+            String result = WxPayApi.v3Execution(
+                    RequestMethod.GET,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.PAY_SCORE_USER_SERVICE_STATE.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    body,
+                    params
+            );
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,7 +253,15 @@ public class WxPayKitTest {
 
             System.out.println(body);
 
-            String result = WxPayApi.v3Execution(RequestMethod.POST, WxDomain.CHINA.toString(), WxApiType.PAY_AFTER_ORDERS.toString(), mchId, serialNo, keyPath, body);
+            String result = WxPayApi.v3Execution(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.PAY_AFTER_ORDERS.toString(),
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    body
+            );
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
