@@ -46,4 +46,8 @@ public enum ReceiverType {
         return type;
     }
 
+    @Override
+    public String toString() {
+        return type;
+    }
 }

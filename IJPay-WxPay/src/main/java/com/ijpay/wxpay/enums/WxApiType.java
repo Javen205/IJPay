@@ -299,17 +299,96 @@ public enum WxApiType {
      */
     QUERY_SUB_DEV_CONFIG("/secapi/mch/querysubdevconfig"),
     /**
+     * 小微商户图片上传
+     */
+    MCH_UPLOAD_MEDIA("/secapi/mch/uploadmedia"),
+    /**
      * 获取平台证书列表
      */
     GET_CERTIFICATES("/v3/certificates"),
+
     /**
-     * 上传资源
+     * 营销专用-图片上传
      */
-    UPLOAD_MEDIA("/v3/merchant/media/upload"),
+    MARKETING_UPLOAD_MEDIA("/v3/marketing/favor/media/image-upload"),
+    /**
+     * 通用接口-图片上传
+     */
+    MERCHANT_UPLOAD_MEDIA("/v3/merchant/media/upload"),
+    /**
+     * 通用接口-视频上传
+     */
+    MERCHANT_VIDEO_UPLOAD("/v3/merchant/media/video_upload"),
+
+    /**
+     * 创建/查询支付分订单
+     */
+    PAY_SCORE_SERVICE_ORDER("/v3/payscore/serviceorder"),
+    /**
+     * 取消支付分订单
+     */
+    PAY_SCORE_SERVICE_ORDER_CANCEL("/v3/payscore/serviceorder/%s/cancel"),
+    /**
+     * 修改支付分订单金额
+     */
+    PAY_SCORE_SERVICE_ORDER_MODIFY("/v3/payscore/serviceorder/%s/modify"),
+    /**
+     * 完结支付分订单
+     */
+    PAY_SCORE_SERVICE_ORDER_COMPLETE("/v3/payscore/serviceorder/%s/complete"),
+    /**
+     * 支付分订单收款
+     */
+    PAY_SCORE_SERVICE_ORDER_PAY("/v3/payscore/serviceorder/%s/pay"),
+    /**
+     * 同步服务订单信息
+     */
+    PAY_SCORE_SERVICE_ORDER_SYNC("/v3/payscore/payafter-orders/%s/sync"),
     /**
      * 查询用户支付分开启状态
      */
-    USER_SERVICE_STATE("/v3/payscore/user-service-state"),
+    PAY_SCORE_USER_SERVICE_STATE("/v3/payscore/user-service-state"),
+
+    /**
+     * 特约商户进件-提交申请单
+     */
+    APPLY_4_SUB("/v3/applyment4sub/applyment"),
+    /**
+     * 特约商户进件-查询申请单状态
+     */
+    GET_APPLY_STATE("/v3/applyment4sub/applyment/business_code/%s"),
+    /**
+     * 特约商户进件-修改结算帐号
+     */
+    MODIFY_SETTLEMENT("/v3/apply4sub/sub_merchants/%s/modify-settlement"),
+    /**
+     * 特约商户进件-查询结算账户
+     */
+    GET_SETTLEMENT("/v3/apply4sub/sub_merchants/%s/settlement"),
+
+    /**
+     * 商户开户意愿确认-提交申请单 OR 查询申请单审核结果
+     */
+    MER_OPEN_APPLY_SUBMIT_OR_RESULT("/v3/apply4subject/applyment"),
+    /**
+     * 商户开户意愿确认-撤销申请单
+     */
+    MER_OPEN_APPLY_CANCEL("/v3/apply4subject/applyment/%s/cancel"),
+    /**
+     * 商户开户意愿确认-获取商户开户意愿确认状态
+     */
+    GET_MER_OPEN_APPLY_STATE("/v3/apply4subject/applyment/merchants/%s/state"),
+
+    /**
+     * 商业支付投诉-查询投诉信息
+     */
+    MERCHANT_SERVICE_COMPLAINTS("/v3/merchant-service/complaints"),
+    /**
+     * 商业支付投诉-创建/查询/更新/删除投诉通知回调
+     */
+    MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS("/v3/merchant-service/complaint-notifications"),
+
+
     /**
      * 创建先享后付订单 OR 查询先享后付订单
      */
@@ -323,7 +402,6 @@ public enum WxApiType {
      */
     COMPLETE_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/complete"),
     CANCEL1_PAY_AFTER_ORDERS("/v3/payscore/payafter-orders/out_order_no/cancel");
-
 
 
     /**
