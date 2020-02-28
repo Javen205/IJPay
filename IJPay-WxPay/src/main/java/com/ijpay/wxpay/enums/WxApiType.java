@@ -390,6 +390,113 @@ public enum WxApiType {
 
 
     /**
+     * 代金券-创建代金券批次
+     */
+    CREATE_COUPON_STOCKS("/v3/marketing/favor/coupon-stocks"),
+    /**
+     * 代金券-激活代金券批次
+     */
+    START_COUPON_STOCKS("/v3/marketing/favor/stocks/%s/start"),
+    /**
+     * 代金券-发放代金券
+     */
+    COUPON_SEND("/v3/marketing/favor/users/%s/coupons"),
+    /**
+     * 代金券-暂停代金券批次
+     */
+    PAUSE_COUPON_STOCKS("/v3/marketing/favor/stocks/%s/pause"),
+    /**
+     * 代金券-重启代金券批次
+     */
+    RESTART_COUPON_STOCKS("/v3/marketing/favor/stocks/%s/restart"),
+    /**
+     * 代金券-条件查询批次列表
+     */
+    QUERY_COUPON_STOCKS("/v3/marketing/favor/stocks"),
+    /**
+     * 代金券-查询批次详情
+     */
+    QUERY_COUPON_STOCKS_INFO("/v3/marketing/favor/stocks/%s"),
+    /**
+     * 代金券-查询代金券详情
+     */
+    QUERY_COUPON_INFO("/v3/marketing/favor/users/%s/coupons/%s"),
+    /**
+     * 代金券-查询代金券可用商户
+     */
+    QUERY_COUPON_MERCHANTS("/v3/marketing/favor/stocks/%s/merchants"),
+    /**
+     * 代金券-查询代金券可用单品
+     */
+    QUERY_COUPON_ITEMS("/v3/marketing/favor/stocks/%s/items"),
+    /**
+     * 代金券-根据商户号查用户的券
+     */
+    QUERY_USER_COUPON("/v3/marketing/favor/users/%s/coupons"),
+    /**
+     * 代金券-下载批次核销明细
+     */
+    COUPON_STOCKS_USER_FLOW_DOWNLOAD("/v3/marketing/favor/stocks/%s/use-flow"),
+    /**
+     * 代金券-下载批次退款明细
+     */
+    COUPON_STOCKS_REFUND_FLOW_DOWNLOAD("/v3/marketing/favor/stocks/%s/refund-flow"),
+    /**
+     * 代金券-设置消息通知地址
+     */
+    SETTING_COUPON_CALLBACKS("/v3/marketing/favor/callbacks"),
+    /**
+     * 商家券-创建商家券
+     */
+    CREATE_BUSINESS_COUPON("/v3/marketing/busifavor/stocks"),
+    /**
+     * 商家券-查询商家券批次详情
+     */
+    QUERY_BUSINESS_COUPON_STOCKS_INFO("/v3/marketing/busifavor/stocks/%s"),
+    /**
+     * 商家券-查询商家券批次详情
+     */
+    USE_BUSINESS_COUPON("/v3/marketing/busifavor/coupons/use"),
+    /**
+     * 商家券-根据过滤条件查询用户券
+     */
+    QUERY_BUSINESS_USER_COUPON("/v3/marketing/busifavor/users/%s/coupons"),
+    /**
+     * 商家券-查询用户单张券详情
+     */
+    QUERY_BUSINESS_USER_COUPON_INFO("/v3/marketing/busifavor/users/%s/coupons/%s/appids/%s"),
+    /**
+     * 商家券-上传预存code
+     */
+    BUSINESS_COUPON_UPLOAD_CODE("/v3/marketing/busifavor/stocks/%/couponcodes"),
+    /**
+     * 商家券-设置/查询商家券事件通知地址
+     */
+    BUSINESS_COUPON_CALLBACKS("/v3/marketing/busifavor/callbacks"),
+
+    /**
+     * 支付有礼-创建全场满额送活动
+     */
+    PAY_GIFT_ACTIVITY("/v3/marketing/paygiftactivity/unique-threshold-activity"),
+    /**
+     * 支付有礼-查询活动详情接口
+     */
+    PAY_GIFT_ACTIVITY_INFO("/v3/marketing/paygiftactivity/activities/%s"),
+    /**
+     * 支付有礼-查询活动发券商户号
+     */
+    PAY_GIFT_ACTIVITY_QUERY_MER("/v3/marketing/paygiftactivity/activities/%s/merchants"),
+    /**
+     * 支付有礼-查询活动指定商品列表
+     */
+    PAY_GIFT_ACTIVITY_QUERY_GOODS("/v3/marketing/paygiftactivity/activities/%s/goods"),
+    /**
+     * 支付有礼-终止活动
+     */
+    PAY_GIFT_ACTIVITY_TERMINATE("/v3/marketing/paygiftactivity/activities/%s/terminate"),
+
+
+    /**
      * 创建先享后付订单 OR 查询先享后付订单
      */
     PAY_AFTER_ORDERS("/v3/payscore/payafter-orders"),
