@@ -107,7 +107,8 @@ public class WxPayApi {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String execution(String apiUrl, Map<String, String> params, String certPath, String certPass) {
+    public static String execution(String apiUrl, Map<String, String> params,
+                                   String certPath, String certPass) {
         return doPostSSL(apiUrl, params, certPath, certPass);
     }
 
@@ -122,11 +123,13 @@ public class WxPayApi {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String execution(String apiUrl, Map<String, String> params, InputStream certFile, String certPass) {
+    public static String execution(String apiUrl, Map<String, String> params,
+                                   InputStream certFile, String certPass) {
         return doPostSSL(apiUrl, params, certFile, certPass);
     }
 
-    public static String execution(String apiUrl, Map<String, String> params, String certPath, String certPass, String filePath) {
+    public static String execution(String apiUrl, Map<String, String> params,
+                                   String certPath, String certPass, String filePath) {
         return doUploadSSL(apiUrl, params, certPath, certPass, filePath);
     }
 
@@ -152,7 +155,8 @@ public class WxPayApi {
                                      String nonceStr, long timestamp, String authType,
                                      File file) throws Exception {
         // 构建 Authorization
-        String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
+        String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
+                keyPath, body, nonceStr, timestamp, authType);
 
         if (method == RequestMethod.GET) {
             return doGet(urlPrefix.concat(urlSuffix), authorization, null);
@@ -179,7 +183,8 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body) throws Exception {
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
+                                     String serialNo, String keyPath, String body) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
@@ -195,17 +200,21 @@ public class WxPayApi {
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
      * @param keyPath   apiclient_key.pem 证书路径
-     * @param body      接口请求参数
      * @param params    Get 接口请求参数
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, Map<String, String> params) throws Exception {
+    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
+                                     String mchId, String serialNo, String keyPath,
+                                     Map<String, String> params) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
-        urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
-        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, null);
+        if (null != params && !params.keySet().isEmpty()) {
+            urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
+        }
+        System.out.println(urlSuffix);
+        return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, "", nonceStr, timestamp, authType, null);
     }
 
     /**
