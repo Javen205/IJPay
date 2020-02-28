@@ -495,6 +495,103 @@ public enum WxApiType {
      */
     PAY_GIFT_ACTIVITY_TERMINATE("/v3/marketing/paygiftactivity/activities/%s/terminate"),
 
+    /**
+     * 点金计划-特约商户管理
+     */
+    CHANGE_GOLD_PLAN_STATUS("/v3/goldplan/merchants/changegoldplanstatus"),
+
+
+    /**
+     * 电商收付通-二级商户进件
+     */
+    E_COMMERCE_APPLY("/v3/ecommerce/applyments"),
+    /**
+     * 电商收付通-查询进件申请状态
+     */
+    E_COMMERCE_APPLY_STATE("/v3/ecommerce/applyments/s%"),
+    /**
+     * 电商收付通-通过业务申请编号查询申请状态
+     */
+    E_COMMERCE_APPLY_STATE_BY_NO("/v3/ecommerce/applyments/out-request-no/s%"),
+
+    /**
+     * 合单下单-APP支付
+     */
+    COMBINE_TRANSACTIONS_APP("/v3/combine-transactions/app"),
+    /**
+     * 合单下单-JS支付
+     */
+    COMBINE_TRANSACTIONS_JS("/v3/combine-transactions/jsapi"),
+    /**
+     * 合单下单-合单查询订单
+     */
+    COMBINE_TRANSACTIONS_QUERY("/v3/combine-transactions/out-trade-no/s%"),
+    /**
+     * 合单下单-合单关闭订单
+     */
+    COMBINE_TRANSACTIONS_CLOSE("/v3/combine-transactions/out-trade-no/s%/close"),
+
+    /**
+     * 电商收付通-补差接口-请求补差
+     */
+    CREATE_SUBSIDIES("v3/ecommerce/subsidies/create"),
+    /**
+     * 电商收付通-补差接口-请求补差回退
+     */
+    RETURN_SUBSIDIES("/v3/ecommerce/subsidies/return"),
+    /**
+     * 电商收付通-补差接口-取消补差
+     */
+    CANCEL_SUBSIDIES("/v3/ecommerce/subsidies/cancel"),
+    /**
+     * 电商收付通-分账接口-请求分账/查询分账结果
+     */
+    PROFIT_SHARING_ORDERS("/v3/ecommerce/profitsharing/orders"),
+    /**
+     * 电商收付通-分账接口-查询分账回退结果
+     */
+    PROFIT_SHARING_RETURN_ORDERS("/v3/ecommerce/profitsharing/returnorders"),
+    /**
+     * 电商收付通-分账接口-完结分账
+     */
+    PROFIT_SHARING_FINISH_ORDER("/v3/ecommerce/profitsharing/finish-order"),
+    /**
+     * 电商收付通-退款接口-退款申请
+     */
+    E_COMMERCE_REFUNDS("/v3/ecommerce/refunds/apply"),
+    /**
+     * 电商收付通-退款接口-通过微信支付退款单号查询退款
+     */
+    QUERY_REFUND("/v3/ecommerce/refunds/id/s%"),
+    /**
+     * 电商收付通-退款接口-通过商户退款单号查询退款
+     */
+    QUERY_REFUNDS_BY_REFUND_NO("/v3/ecommerce/refunds/out-refund-no/s%"),
+    /**
+     * 电商收付通-余额查询接口
+     */
+    QUERY_BALANCE("/v3/ecommerce/fund/balance/s%"),
+    /**
+     * 电商收付通-提现接口-账户余额提现
+     */
+    WITHDRAW("/v3/ecommerce/fund/withdraw"),
+    /**
+     * 电商收付通-提现接口-提现状态查询
+     */
+    QUERY_WITHDRAW("/v3/ecommerce/fund/withdraw/s%"),
+    /**
+     * 电商收付通-提现接口-按日下载提现异常文件
+     */
+    WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/s%"),
+    /**
+     * 电商收付通-账单接口-申请交易账单
+     */
+    TRADE_BILL("/v3/bill/tradebill"),
+    /**
+     * 电商收付通-账单接口-申请资金账单
+     */
+    FUND_FLOW_BILL("/v3/bill/fundflowbill"),
+
 
     /**
      * 创建先享后付订单 OR 查询先享后付订单
