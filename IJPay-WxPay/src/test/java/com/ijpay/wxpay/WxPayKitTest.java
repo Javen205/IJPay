@@ -54,7 +54,7 @@ public class WxPayKitTest {
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
     String certPath = "/Users/Javen/cert/apiclient_cert.pem";
     String certPath2 = "/Users/Javen/cert/apiclient_cert.p12";
-    
+
     String mchId = "xxx";
     // 商户API证书序列号
     // 使用证书解析工具 https://myssl.com/cert_decode.html 查看
@@ -177,7 +177,7 @@ public class WxPayKitTest {
         // v3 接口上传文件
         try {
             String filePath = "/Users/Javen/Documents/pic/cat.png";
-            
+
             File file = FileUtil.newFile(filePath);
             String sha256 = SecureUtil.sha256(file);
 
@@ -218,7 +218,6 @@ public class WxPayKitTest {
                     mchId,
                     serialNo,
                     keyPath,
-                    body,
                     params
             );
             System.out.println(result);
@@ -261,6 +260,27 @@ public class WxPayKitTest {
                     serialNo,
                     keyPath,
                     body
+            );
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void payGiftActivity() {
+        // 支付有礼-终止活动
+        try {
+            String urlSuffix = String.format(WxApiType.PAY_GIFT_ACTIVITY_TERMINATE.toString(), "10028001");
+            System.out.println(urlSuffix);
+            String result = WxPayApi.v3Execution(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    urlSuffix,
+                    mchId,
+                    serialNo,
+                    keyPath,
+                    ""
             );
             System.out.println(result);
         } catch (Exception e) {
