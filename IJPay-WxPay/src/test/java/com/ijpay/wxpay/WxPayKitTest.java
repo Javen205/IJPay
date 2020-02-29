@@ -3,6 +3,7 @@ package com.ijpay.wxpay;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.RequestMethod;
@@ -53,7 +54,7 @@ public class WxPayKitTest {
 
     String keyPath = "/Users/Javen/cert/apiclient_key.pem";
     String certPath = "/Users/Javen/cert/apiclient_cert.pem";
-    String certPath2 = "/Users/Javen/cert/apiclient_cert.p12";
+    String certP12Path = "/Users/Javen/cert/apiclient_cert.p12";
 
     String mchId = "xxx";
     // 商户API证书序列号
@@ -61,8 +62,8 @@ public class WxPayKitTest {
     // openssl x509 -in apiclient_cert.pem -noout -serial 查看
     String serialNo = "xxx";
     String body = "";
-    String apiKey3 = "api key 3";
-    String saveCertPath = "/Users/Javen/cert/platform_cert.pem";
+    String apiKey3 = "api key 3";// 测试时apiKey3与apiKey相同
+    String platformCertPath = "/Users/Javen/cert/platform_cert.pem";
 
 
     @Test
@@ -84,7 +85,7 @@ public class WxPayKitTest {
         );
         System.out.println("平台证书公钥明文：" + publicKey);
         // 保存证书
-        FileWriter writer = new FileWriter(saveCertPath);
+        FileWriter writer = new FileWriter(platformCertPath);
         writer.write(publicKey);
         // 获取平台证书序列号
         X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
@@ -95,7 +96,7 @@ public class WxPayKitTest {
     public void v3Get() {
         // 获取平台证书列表
         try {
-            String result = WxPayApi.v3Execution(
+            Map<String, Object> result = WxPayApi.v3Execution(
                     RequestMethod.GET,
                     WxDomain.CHINA.toString(),
                     WxApiType.GET_CERTIFICATES.toString(),
@@ -104,7 +105,18 @@ public class WxPayKitTest {
                     keyPath,
                     body
             );
-            System.out.println(result);
+
+            String serialNumber = MapUtil.getStr(result, "serialNumber");
+            String body = MapUtil.getStr(result, "body");
+            int status = MapUtil.getInt(result, "status");
+
+            System.out.println("serialNumber:" + serialNumber);
+            System.out.println("status:" + status);
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(result, platformCertPath);
+
+            System.out.println("verifySignature:" + verifySignature + "\nbody:" + body);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +128,7 @@ public class WxPayKitTest {
         try {
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("url", "https://qq.com");
-            String result = WxPayApi.v3Execution(
+            Map<String, Object> result = WxPayApi.v3Execution(
                     RequestMethod.POST,
                     WxDomain.CHINA.toString(),
                     WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
@@ -136,6 +148,9 @@ public class WxPayKitTest {
                     keyPath,
                     ""
             );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(result, platformCertPath);
+            System.out.println("verifySignature:" + verifySignature);
             // 如果返回的为 204 表示删除成功
             System.out.println(result);
         } catch (Exception e) {
@@ -162,7 +177,7 @@ public class WxPayKitTest {
             String result = WxPayApi.execution(
                     WxDomain.CHINA.toString().concat(WxApiType.MCH_UPLOAD_MEDIA.toString()),
                     hashMap,
-                    certPath2,
+                    certP12Path,
                     mchId,
                     filePath
             );
@@ -188,7 +203,7 @@ public class WxPayKitTest {
 
             System.out.println(body);
 
-            String result = WxPayApi.v3Upload(
+            Map<String, Object> result = WxPayApi.v3Upload(
                     WxDomain.CHINA.toString(),
                     WxApiType.MERCHANT_UPLOAD_MEDIA.toString(),
                     mchId,
@@ -197,6 +212,9 @@ public class WxPayKitTest {
                     body,
                     file
             );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(result, platformCertPath);
+            System.out.println("verifySignature:" + verifySignature);
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,7 +229,7 @@ public class WxPayKitTest {
             params.put("appid", "wxd678efh567hg6787");
             params.put("openid", "oUpF8uMuAJO_M2pxb1Q9zNjWeS6o");
 
-            String result = WxPayApi.v3Execution(
+            Map<String, Object> result = WxPayApi.v3Execution(
                     RequestMethod.GET,
                     WxDomain.CHINA.toString(),
                     WxApiType.PAY_SCORE_USER_SERVICE_STATE.toString(),
@@ -252,7 +270,7 @@ public class WxPayKitTest {
 
             System.out.println(body);
 
-            String result = WxPayApi.v3Execution(
+            Map<String, Object> result = WxPayApi.v3Execution(
                     RequestMethod.POST,
                     WxDomain.CHINA.toString(),
                     WxApiType.PAY_AFTER_ORDERS.toString(),
@@ -273,7 +291,7 @@ public class WxPayKitTest {
         try {
             String urlSuffix = String.format(WxApiType.PAY_GIFT_ACTIVITY_TERMINATE.toString(), "10028001");
             System.out.println(urlSuffix);
-            String result = WxPayApi.v3Execution(
+            Map<String, Object> result = WxPayApi.v3Execution(
                     RequestMethod.POST,
                     WxDomain.CHINA.toString(),
                     urlSuffix,

@@ -1,10 +1,13 @@
 package com.ijpay.core.kit;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.security.PublicKey;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -334,10 +337,10 @@ public class WxPayKit {
      * 构建 v3 接口所需的 Authorization
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlSuffix 可通过 {@link WxPayKit} 来获取，URL挂载参数需要自行拼接
+     * @param urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
-     * @param keyPath   apiclient_key.pem 证书路径
+     * @param keyPath   key.pem 证书路径
      * @param body      接口请求参数
      * @param nonceStr  随机字符库
      * @param timestamp 时间戳
@@ -362,10 +365,10 @@ public class WxPayKit {
      * 构建 v3 接口所需的 Authorization
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlSuffix 可通过 {@link WxPayKit} 来获取，URL挂载参数需要自行拼接
+     * @param urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
-     * @param keyPath   apiclient_key.pem 证书路径
+     * @param keyPath   key.pem 证书路径
      * @param body      接口请求参数
      * @return {@link String} 返回 v3 所需的 Authorization
      * @throws Exception 异常信息
@@ -377,24 +380,89 @@ public class WxPayKit {
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
 
-        return buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body,nonceStr, timestamp, authType);
+        return buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
     }
 
     /**
-     * v3 接口验证签名
+     * 验证签名
      *
-     * @param request   {@link HttpServletRequest } request
-     * @param publicKey 公钥 key
-     * @return {@link Boolean} 验证签名结果
+     * @param map      接口请求返回的 Map
+     * @param certPath 平台证书路径
+     * @return 签名结果
      * @throws Exception 异常信息
      */
-    public boolean verifyV3Notify(HttpServletRequest request, String publicKey) throws Exception {
-        String timestamp = request.getHeader("Wechatpay-Timestamp");
-        String nonceStr = request.getHeader("Wechatpay-Nonce");
-        String signature = request.getHeader("Wechatpay-Signature");
-        String body = HttpKit.readData(request);
-        String buildSignMessage = PayKit.buildSignMessage(timestamp, nonceStr, body);
-        String signatureStr = RsaKit.encryptByPublicKey(buildSignMessage, publicKey);
-        return signatureStr.equals(signature);
+    public static boolean verifySignature(Map<String, Object> map, String certPath) throws Exception {
+        String signature = (String) map.get("signature");
+        String body = (String) map.get("body");
+        String nonceStr = (String) map.get("nonceStr");
+        String timestamp = (String) map.get("timestamp");
+        return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+    }
+
+    /**
+     * 验证签名
+     *
+     * @param map             接口请求返回的 Map
+     * @param certInputStream 平台证书输入流
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(Map<String, Object> map, InputStream certInputStream) throws Exception {
+        String signature = (String) map.get("signature");
+        String body = (String) map.get("body");
+        String nonceStr = (String) map.get("nonceStr");
+        String timestamp = (String) map.get("timestamp");
+        return verifySignature(signature, body, nonceStr, timestamp, certInputStream);
+    }
+
+    /**
+     * 验证签名
+     *
+     * @param signature 待验证的签名
+     * @param body      应答主体
+     * @param nonce     随机串
+     * @param timestamp 时间戳
+     * @param publicKey 微信支付平台公钥
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(String signature, String body, String nonce, String timestamp, String publicKey) throws Exception {
+        String buildSignMessage = PayKit.buildSignMessage(timestamp, nonce, body);
+        return RsaKit.checkByPublicKey(buildSignMessage, signature, publicKey);
+    }
+
+    /**
+     * 验证签名
+     *
+     * @param signature 待验证的签名
+     * @param body      应答主体
+     * @param nonce     随机串
+     * @param timestamp 时间戳
+     * @param publicKey {@link PublicKey} 微信支付平台公钥
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(String signature, String body, String nonce, String timestamp, PublicKey publicKey) throws Exception {
+        String buildSignMessage = PayKit.buildSignMessage(timestamp, nonce, body);
+        return RsaKit.checkByPublicKey(buildSignMessage, signature, publicKey);
+    }
+
+    /**
+     * 验证签名
+     *
+     * @param signature       待验证的签名
+     * @param body            应答主体
+     * @param nonce           随机串
+     * @param timestamp       时间戳
+     * @param certInputStream 微信支付平台证书输入流
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(String signature, String body, String nonce, String timestamp, InputStream certInputStream) throws Exception {
+        String buildSignMessage = PayKit.buildSignMessage(timestamp, nonce, body);
+        // 获取证书
+        X509Certificate certificate = PayKit.getCertificate(certInputStream);
+        PublicKey publicKey = certificate.getPublicKey();
+        return RsaKit.checkByPublicKey(buildSignMessage, signature, publicKey);
     }
 }

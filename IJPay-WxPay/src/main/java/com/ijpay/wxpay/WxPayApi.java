@@ -150,20 +150,20 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
-                                     String mchId, String serialNo, String keyPath, String body,
-                                     String nonceStr, long timestamp, String authType,
-                                     File file) throws Exception {
+    public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
+                                                  String mchId, String serialNo, String keyPath, String body,
+                                                  String nonceStr, long timestamp, String authType,
+                                                  File file) throws Exception {
         // 构建 Authorization
         String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
                 keyPath, body, nonceStr, timestamp, authType);
 
         if (method == RequestMethod.GET) {
-            return doGet(urlPrefix.concat(urlSuffix), authorization, null);
+            return doGet(urlPrefix.concat(urlSuffix), authorization, serialNo, null);
         } else if (method == RequestMethod.POST) {
             return doPost(urlPrefix.concat(urlSuffix), authorization, serialNo, body);
         } else if (method == RequestMethod.DELETE) {
-            return doDelete(urlPrefix.concat(urlSuffix), authorization, serialNo, body).toString();
+            return doDelete(urlPrefix.concat(urlSuffix), authorization, serialNo, body);
         } else if (method == RequestMethod.UPLOAD) {
             return doUpload(urlPrefix.concat(urlSuffix), authorization, serialNo, body, file);
         }
@@ -183,8 +183,8 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
-                                     String serialNo, String keyPath, String body) throws Exception {
+    public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
+                                                  String serialNo, String keyPath, String body) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
@@ -204,9 +204,9 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
-                                     String mchId, String serialNo, String keyPath,
-                                     Map<String, String> params) throws Exception {
+    public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
+                                                  String mchId, String serialNo, String keyPath,
+                                                  Map<String, String> params) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
@@ -230,7 +230,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      * @throws Exception 接口执行异常
      */
-    public static String v3Upload(String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, File file) throws Exception {
+    public static Map<String, Object> v3Upload(String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, File file) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
         String nonceStr = PayKit.generateStr();
@@ -1177,19 +1177,19 @@ public class WxPayApi {
         return HttpKit.getDelegate().get(url, params);
     }
 
-    public static String doGet(String url, String authorization, Map<String, Object> params) {
-        return HttpKit.getDelegate().get(url, authorization, params);
+    public static Map<String, Object> doGet(String url, String authorization, String serialNumber, Map<String, Object> params) {
+        return HttpKit.getDelegate().get(url, authorization, serialNumber, params);
     }
 
-    public static String doPost(String url, String authorization, String serialNumber, String data) {
+    public static Map<String, Object> doPost(String url, String authorization, String serialNumber, String data) {
         return HttpKit.getDelegate().postBySafe(url, authorization, serialNumber, data);
     }
 
-    public static Integer doDelete(String url, String authorization, String serialNumber, String data) {
+    public static Map<String, Object> doDelete(String url, String authorization, String serialNumber, String data) {
         return HttpKit.getDelegate().delete(url, authorization, serialNumber, data);
     }
 
-    public static String doUpload(String url, String authorization, String serialNumber, String data, File file) {
+    public static Map<String, Object> doUpload(String url, String authorization, String serialNumber, String data, File file) {
         return HttpKit.getDelegate().upload(url, authorization, serialNumber, data, file);
     }
 
