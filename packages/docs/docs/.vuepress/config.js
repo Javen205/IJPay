@@ -12,9 +12,9 @@ module.exports = ctx => ( {
         //     description: 'IJPay 让支付触手可及'
         // }
     },
-    markdown: {
-        lineNumbers: true,
-    },
+    // markdown: {
+    //     lineNumbers: true,
+    // },
     head: [
         ['link', { rel: 'icon', href: '/logo.png' }],
         ['link', { rel: 'manifest', href: '/manifest.json' }],

@@ -1,4 +1,10 @@
-# 微信支付API v3
+# 微信支付 API v3
+
+:::tip
+**IJPay 从 2.4.0 开始支持微信支付 API v3 相关接口**
+:::
+
+## v2 与 v3 区别
 
 相较于的之前微信支付API，主要区别是：
 
@@ -8,7 +14,15 @@
 - 不再要求HTTPS客户端证书
 - 使用AES-256-GCM，对回调中的关键信息进行加密保护
 
-更多介绍情况官方文档 [WeChatPay-API-v3](https://wechatpay-api.gitbook.io/wechatpay-api-v3/)
+更多证书和签名的详细内容请参官方文档 [WeChatPay-API-v3](https://wechatpay-api.gitbook.io/wechatpay-api-v3/)
+
+## API密钥设置
+
+API密钥的详细内容请参见：[API证书及密钥](https://kf.qq.com/faq/180830E36vyQ180830AZFZvu.html)
+
+## 下载API证书
+
+请在商户平台下载证书。具体操作请参见：[如何获取API证书](https://kf.qq.com/faq/161222NneAJf161222U7fARv.html)
 
 ## 获取证书序列号
 
@@ -23,6 +37,26 @@ String serialNo  = certificate.getSerialNumber().toString(16).toUpperCase();
 - 使用证书解析工具 [https://myssl.com/cert_decode.html](https://myssl.com/cert_decode.html)
 :::
 
+## 构建 Authorization
+
+```java
+String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);                                                                                                                                          
+// 或者
+String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body);
+```     
+
+参数说明
+
+- method    请求方法 RequestMethod
+- urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
+- mchId     商户Id
+- serialNo  商户 API 证书序列号
+- keyPath   key.pem 证书路径
+- body      接口请求参数
+- nonceStr  随机字符库
+- timestamp 时间戳
+- authType  认证类型
+
 ## 调用 v3 接口
 
 获取平台证书列表为例
@@ -31,17 +65,42 @@ String serialNo  = certificate.getSerialNumber().toString(16).toUpperCase();
 String keyPath = "/Users/Javen/cert/apiclient_key.pem";// 私钥证书
 String mchId = "商户号";
 String serialNo = "公钥证书序列号";
-String body = ""; // 请求报文主体,没有查询参数。  
+String body = ""; // 请求报文主体,没有查询参数。 
+String platformCertPath = "";//微信平台证书 验证签名时需要使用 
 
-try {
-    String result = WxPayApi.v3Execution(RequestMethod.GET, WxDomain.CHINA.toString(), WxApiType.GET_CERTIFICATES.toString(), mchId, serialNo, keyPath, body);
-    System.out.println(result);
-} catch (Exception e) {
-    e.printStackTrace();
+@Test
+public void v3Get() {
+    // 获取平台证书列表
+    try {
+        Map<String, Object> result = WxPayApi.v3Execution(
+                RequestMethod.GET,
+                WxDomain.CHINA.toString(),
+                WxApiType.GET_CERTIFICATES.toString(),
+                mchId,
+                serialNo,
+                keyPath,
+                body
+        );
+
+        String serialNumber = MapUtil.getStr(result, "serialNumber");
+        String body = MapUtil.getStr(result, "body");
+        int status = MapUtil.getInt(result, "status");
+
+        System.out.println("serialNumber:" + serialNumber);
+        System.out.println("status:" + status);
+        // 根据证书序列号查询对应的证书来验证签名结果
+        boolean verifySignature = WxPayKit.verifySignature(result, platformCertPath);
+
+        System.out.println("verifySignature:" + verifySignature + "\nbody:" + body);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 }
+
 ``` 
 
-返回数据格式 
+返回数据 body 格式 
 
 ```json
 {
@@ -59,7 +118,19 @@ try {
     }
   ]
 }
-```    
+```  
+
+## 验证签名
+
+根据证书序列号查询对应微信平台的证书来验证签名结果
+
+```java
+WxPayKit.verifySignature(Map<String, Object> map, String certPath);
+```                      
+:::tip
+- map v3 接口返回的结果
+- certPath 微信支付平台证书
+:::
 
 ## 证书和回调报文解密
 
