@@ -95,22 +95,22 @@ public class PayKit {
     public static String createLinkString(Map<String, String> params, String connStr, boolean encode, boolean quotes) {
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = params.get(key);
             // 拼接时，不包括最后一个&字符
             if (i == keys.size() - 1) {
                 if (quotes) {
-                    content.append(key + "=" + '"' + (encode ? urlEncode(value) : value) + '"');
+                    content.append(key).append("=").append('"').append(encode ? urlEncode(value) : value).append('"');
                 } else {
-                    content.append(key + "=" + (encode ? urlEncode(value) : value));
+                    content.append(key).append("=").append(encode ? urlEncode(value) : value);
                 }
             } else {
                 if (quotes) {
-                    content.append(key + "=" + '"' + (encode ? urlEncode(value) : value) + '"' + connStr);
+                    content.append(key).append("=").append('"').append(encode ? urlEncode(value) : value).append('"').append(connStr);
                 } else {
-                    content.append(key + "=" + (encode ? urlEncode(value) : value) + connStr);
+                    content.append(key).append("=").append(encode ? urlEncode(value) : value).append(connStr);
                 }
             }
         }
@@ -196,7 +196,7 @@ public class PayKit {
      * @return 待签名字符串
      */
     public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
-        return new StringBuffer()
+        return new StringBuilder()
                 .append(method.toString())
                 .append("\n")
                 .append(url)
@@ -219,7 +219,7 @@ public class PayKit {
      * @return 应答待签名字符串
      */
     public static String buildSignMessage(String timestamp, String nonceStr, String body) {
-        return new StringBuffer()
+        return new StringBuilder()
                 .append(timestamp)
                 .append("\n")
                 .append(nonceStr)
