@@ -50,15 +50,29 @@ public abstract class AbstractHttpDelegate {
      *
      * @param url           请求url
      * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
      * @param paramMap      请求参数
-     * @return {@link String} 请求返回的结果
+     * @return {@link Map} 请求返回的结果
      */
-    public String get(String url, String authorization, Map<String, Object> paramMap) {
+    public Map<String, Object> get(String url, String authorization, String serialNumber, Map<String, Object> paramMap) {
+        HttpResponse httpResponse = getToResponse(url, authorization, serialNumber, paramMap);
+        return buildResMap(httpResponse);
+    }
+
+    /**
+     * get 请求
+     *
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param paramMap      请求参数
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    private HttpResponse getToResponse(String url, String authorization, String serialNumber, Map<String, Object> paramMap) {
         return HttpRequest.get(url)
-                .addHeaders(getHeaders(authorization, null))
+                .addHeaders(getHeaders(authorization, serialNumber))
                 .form(paramMap)
-                .execute()
-                .body();
+                .execute();
     }
 
 
@@ -102,10 +116,11 @@ public abstract class AbstractHttpDelegate {
      * @param authorization 授权信息
      * @param serialNumber  公钥证书序列号
      * @param jsonData      请求参数
-     * @return {@link String} 请求返回的结果
+     * @return {@link Map} 请求返回的结果
      */
-    public String postBySafe(String url, String authorization, String serialNumber, String jsonData) {
-        return postBySafeToResponse(url, authorization, serialNumber, jsonData).body();
+    public Map<String, Object> postBySafe(String url, String authorization, String serialNumber, String jsonData) {
+        HttpResponse httpResponse = postBySafeToResponse(url, authorization, serialNumber, jsonData);
+        return buildResMap(httpResponse);
     }
 
     /**
@@ -115,7 +130,7 @@ public abstract class AbstractHttpDelegate {
      * @param jsonData      请求参数
      * @return {@link HttpResponse} 请求返回的结果
      */
-    public HttpResponse postBySafeToResponse(String url, String authorization, String serialNumber, String jsonData) {
+    private HttpResponse postBySafeToResponse(String url, String authorization, String serialNumber, String jsonData) {
         return HttpRequest.post(url)
                 .addHeaders(getHeaders(authorization, serialNumber))
                 .body(jsonData)
@@ -129,10 +144,11 @@ public abstract class AbstractHttpDelegate {
      * @param authorization 授权信息
      * @param serialNumber  公钥证书序列号
      * @param jsonData      请求参数
-     * @return {@link Integer} 请求返回的结果
+     * @return {@link Map}  请求返回的结果
      */
-    public Integer delete(String url, String authorization, String serialNumber, String jsonData) {
-        return deleteToResponse(url, authorization, serialNumber, jsonData).getStatus();
+    public Map<String, Object> delete(String url, String authorization, String serialNumber, String jsonData) {
+        HttpResponse httpResponse = deleteToResponse(url, authorization, serialNumber, jsonData);
+        return buildResMap(httpResponse);
     }
 
     /**
@@ -144,21 +160,67 @@ public abstract class AbstractHttpDelegate {
      * @param jsonData      请求参数
      * @return {@link HttpResponse} 请求返回的结果
      */
-    public HttpResponse deleteToResponse(String url, String authorization, String serialNumber, String jsonData) {
+    private HttpResponse deleteToResponse(String url, String authorization, String serialNumber, String jsonData) {
         return HttpRequest.delete(url)
                 .addHeaders(getHeaders(authorization, serialNumber))
                 .body(jsonData)
                 .execute();
     }
 
-    public String upload(String url, String authorization, String serialNumber, String jsonData, File file) {
+    /**
+     * 上传文件
+     *
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
+     * @param file          上传的文件
+     * @return {@link Map}  请求返回的结果
+     */
+    public Map<String, Object> upload(String url, String authorization, String serialNumber, String jsonData, File file) {
+        HttpResponse httpResponse = uploadToResponse(url, authorization, serialNumber, jsonData, file);
+        return buildResMap(httpResponse);
+    }
 
+    /**
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param jsonData      请求参数
+     * @param file          上传的文件
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    private HttpResponse uploadToResponse(String url, String authorization, String serialNumber, String jsonData, File file) {
         return HttpRequest.post(url)
                 .addHeaders(getUploadHeaders(authorization, serialNumber))
                 .form("file", file)
                 .form("meta", jsonData)
-                .execute()
-                .body();
+                .execute();
+    }
+
+    /**
+     * 构建返回参数
+     *
+     * @param httpResponse {@link HttpResponse}
+     * @return {@link Map}
+     */
+    private Map<String, Object> buildResMap(HttpResponse httpResponse) {
+        Map<String, Object> map = new HashMap<>();
+        String timestamp = httpResponse.header("Wechatpay-Timestamp");
+        String nonceStr = httpResponse.header("Wechatpay-Nonce");
+        String serialNo = httpResponse.header("Wechatpay-Serial");
+        String signature = httpResponse.header("Wechatpay-Signature");
+        String body = httpResponse.body();
+        int status = httpResponse.getStatus();
+
+        map.put("timestamp", timestamp);
+        map.put("nonceStr", nonceStr);
+        map.put("serialNumber", serialNo);
+        map.put("signature", signature);
+        map.put("body", body);
+        map.put("status", status);
+
+        return map;
     }
 
     public String upload(String url, String data, String certPath, String certPass, String filePath) {
