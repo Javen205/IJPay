@@ -5,16 +5,14 @@ import cn.hutool.core.util.StrUtil;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -49,7 +47,7 @@ public class RsaKit {
     /**
      * 生成公钥和私钥
      *
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     public static Map<String, String> getKeys() throws Exception {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
@@ -77,7 +75,7 @@ public class RsaKit {
      *
      * @param modulus  模
      * @param exponent 公钥指数
-     * @return
+     * @return {@link RSAPublicKey}
      */
     public static RSAPublicKey getPublicKey(String modulus, String exponent) {
         try {
@@ -99,7 +97,7 @@ public class RsaKit {
      *
      * @param modulus  模
      * @param exponent 指数
-     * @return
+     * @return {@link RSAPrivateKey}
      */
     public static RSAPrivateKey getPrivateKey(String modulus, String exponent) {
         try {
@@ -120,12 +118,20 @@ public class RsaKit {
      * @param data      需要加密的数据
      * @param publicKey 公钥
      * @return 加密后的数据
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     public static String encryptByPublicKey(String data, String publicKey) throws Exception {
         return encryptByPublicKey(data, publicKey, "RSA/ECB/PKCS1Padding");
     }
 
+    /**
+     * 公钥加密
+     *
+     * @param data      需要加密的数据
+     * @param publicKey 公钥
+     * @return 加密后的数据
+     * @throws Exception 异常信息
+     */
     public static String encryptByPublicKeyByWx(String data, String publicKey) throws Exception {
         return encryptByPublicKey(data, publicKey, "RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING");
     }
@@ -137,10 +143,10 @@ public class RsaKit {
      * @param publicKey 公钥
      * @param fillMode  填充模式
      * @return 加密后的数据
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     public static String encryptByPublicKey(String data, String publicKey, String fillMode) throws Exception {
-        byte[] dataByte = data.getBytes("UTF-8");
+        byte[] dataByte = data.getBytes(StandardCharsets.UTF_8);
         byte[] keyBytes = Base64.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -175,7 +181,7 @@ public class RsaKit {
      * @param data       需要加密的数据
      * @param privateKey 私钥
      * @return 加密后的数据
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     public static String encryptByPrivateKey(String data, String privateKey) throws Exception {
         PKCS8EncodedKeySpec priPkcs8 = new PKCS8EncodedKeySpec(Base64.decode(privateKey));
@@ -184,7 +190,7 @@ public class RsaKit {
         java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
 
         signature.initSign(priKey);
-        signature.update(data.getBytes("UTF-8"));
+        signature.update(data.getBytes(StandardCharsets.UTF_8));
         byte[] signed = signature.sign();
         return StrUtil.str(Base64.encode(signed));
     }
@@ -196,7 +202,7 @@ public class RsaKit {
      * @param sign      签名
      * @param publicKey 公钥
      * @return 验证结果
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     public static boolean checkByPublicKey(String data, String sign, String publicKey) throws Exception {
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -204,22 +210,46 @@ public class RsaKit {
         PublicKey pubKey = keyFactory.generatePublic(new X509EncodedKeySpec(encodedKey));
         java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
         signature.initVerify(pubKey);
-        signature.update(data.getBytes("UTF-8"));
-        return signature.verify(Base64.decode(sign.getBytes("UTF-8")));
+        signature.update(data.getBytes(StandardCharsets.UTF_8));
+        return signature.verify(Base64.decode(sign.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * 公钥验证签名
+     *
+     * @param data      需要加密的数据
+     * @param sign      签名
+     * @param publicKey 公钥
+     * @return 验证结果
+     * @throws Exception 异常信息
+     */
+    public static boolean checkByPublicKey(String data, String sign, PublicKey publicKey) throws Exception {
+        java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
+        signature.initVerify(publicKey);
+        signature.update(data.getBytes(StandardCharsets.UTF_8));
+        return signature.verify(Base64.decode(sign.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
      * 私钥解密
      *
-     * @param data
-     * @param privateKey
-     * @return
-     * @throws Exception
+     * @param data       需要解密的数据
+     * @param privateKey 私钥
+     * @return 解密后的数据
+     * @throws Exception 异常信息
      */
     public static String decryptByPrivateKey(String data, String privateKey) throws Exception {
         return decryptByPrivateKey(data, privateKey, "RSA/ECB/PKCS1Padding");
     }
 
+    /**
+     * 私钥解密
+     *
+     * @param data       需要解密的数据
+     * @param privateKey 私钥
+     * @return 解密后的数据
+     * @throws Exception 异常信息
+     */
     public static String decryptByPrivateKeyByWx(String data, String privateKey) throws Exception {
         return decryptByPrivateKey(data, privateKey, "RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING");
     }
@@ -227,11 +257,11 @@ public class RsaKit {
     /**
      * 私钥解密
      *
-     * @param data
-     * @param privateKey
+     * @param data       需要解密的数据
+     * @param privateKey 私钥
      * @param fillMode   填充模式
-     * @return
-     * @throws Exception
+     * @return 解密后的数据
+     * @throws Exception 异常信息
      */
     public static String decryptByPrivateKey(String data, String privateKey, String fillMode) throws Exception {
         byte[] encryptedData = Base64.decode(data);
@@ -264,40 +294,10 @@ public class RsaKit {
     }
 
     /**
-     * 获取模数和密钥
-     *
-     * @return
-     */
-    public static Map<String, String> getModulusAndKeys() {
-
-        Map<String, String> map = new HashMap<String, String>(3);
-
-        try {
-            InputStream in = RsaKit.class.getResourceAsStream("/rsa.properties");
-            Properties prop = new Properties();
-            prop.load(in);
-
-            String modulus = prop.getProperty("modulus");
-            String publicKey = prop.getProperty("publicKey");
-            String privateKey = prop.getProperty("privateKey");
-
-            in.close();
-
-            map.put("modulus", modulus);
-            map.put("publicKey", publicKey);
-            map.put("privateKey", privateKey);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return map;
-    }
-
-    /**
      * 从字符串中加载公钥
      *
      * @param publicKeyStr 公钥数据字符串
-     * @throws Exception 加载公钥时产生的异常
+     * @throws Exception 异常信息
      */
     public static PublicKey loadPublicKey(String publicKeyStr) throws Exception {
         try {
@@ -318,9 +318,9 @@ public class RsaKit {
      * 从字符串中加载私钥<br>
      * 加载时使用的是PKCS8EncodedKeySpec（PKCS#8编码的Key指令）。
      *
-     * @param privateKeyStr
-     * @return
-     * @throws Exception
+     * @param privateKeyStr 私钥
+     * @return {@link PrivateKey}
+     * @throws Exception 异常信息
      */
     public static PrivateKey loadPrivateKey(String privateKeyStr) throws Exception {
         try {
