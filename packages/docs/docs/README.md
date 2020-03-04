@@ -65,6 +65,13 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 // import { Notification } from 'element-ui';
 export default {
   mounted () {
+    // 统计
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?6a929f536123c72265ba5e8d9467ab5f";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+    
+    // 替换 latest-version
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "https://img.shields.io/maven-central/v/com.github.javen205/IJPay.json", false);
     xmlHttp.send(null);
@@ -74,7 +81,7 @@ export default {
         codeNodeList[i].innerHTML = codeNodeList[i].innerHTML.replace('latest-version', versionInfo);
     }
     
-   
+    // 通知
     this.$notify({
       offset: 50,
       title: 'IJPay VIP 服务',

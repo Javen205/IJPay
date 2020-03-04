@@ -1,9 +1,5 @@
 # 微信支付 API v3
 
-:::tip
-**IJPay 从 2.4.0 开始支持微信支付 API v3 相关接口**
-:::
-
 ## v2 与 v3 区别
 
 相较于的之前微信支付API，主要区别是：
@@ -61,7 +57,7 @@ String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, ser
 
 获取平台证书列表为例
 
-```java 
+```java {28}
 String keyPath = "/Users/Javen/cert/apiclient_key.pem";// 私钥证书
 String mchId = "商户号";
 String serialNo = "公钥证书序列号";
@@ -126,6 +122,10 @@ public void v3Get() {
 
 ```java
 WxPayKit.verifySignature(Map<String, Object> map, String certPath);
+WxPayKit.verifySignature(Map<String, Object> map, InputStream certInputStream)  
+WxPayKit.verifySignature(String signature, String body, String nonce, String timestamp, String publicKey) 
+WxPayKit.verifySignature(String signature, String body, String nonce, String timestamp, PublicKey publicKey)
+WxPayKit.verifySignature(String signature, String body, String nonce, String timestamp, InputStream certInputStream)
 ```                      
 :::tip
 - map v3 接口返回的结果
