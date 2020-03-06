@@ -70,6 +70,17 @@ public class WxPayV3Controller {
             // 获取证书序列号
             X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getCertPath()));
             serialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+
+            System.out.println("输出证书信息:\n" + certificate.toString());
+            // 输出关键信息，截取部分并进行标记
+            System.out.println("证书序列号:" + certificate.getSerialNumber().toString(16));
+            System.out.println("版本号:" + certificate.getVersion());
+            System.out.println("签发者：" + certificate.getIssuerDN());
+            System.out.println("有效起始日期：" + certificate.getNotBefore());
+            System.out.println("有效终止日期：" + certificate.getNotAfter());
+            System.out.println("主体名：" + certificate.getSubjectDN());
+            System.out.println("签名算法：" + certificate.getSigAlgName());
+            System.out.println("签名：" + certificate.getSignature().toString());
         }
         return serialNo;
     }
