@@ -58,6 +58,9 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
  	<a target="_blank" href="https://www.t-io.org?from=IJPay">
  	    <img src="https://res.t-io.org/img/logo/t-io.png" width="60" height="40" alt="jetbrains">
  	</a>
+ 	<a target="_blank" href="https://w.url.cn/s/ApeggTn">
+        <img src="https://yungouos.oss-cn-shanghai.aliyuncs.com/YunGouOS/logo/merchant/logo-system.png" width="100" height="60" alt="jetbrains">
+    </a>
  </p>
 
 
