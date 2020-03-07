@@ -196,6 +196,22 @@ public class RsaKit {
     }
 
     /**
+     * 私钥签名
+     *
+     * @param data       需要加密的数据
+     * @param privateKey 私钥
+     * @return 加密后的数据
+     * @throws Exception 异常信息
+     */
+    public static String encryptByPrivateKey(String data, PrivateKey privateKey) throws Exception {
+        java.security.Signature signature = java.security.Signature.getInstance("SHA256WithRSA");
+        signature.initSign(privateKey);
+        signature.update(data.getBytes(StandardCharsets.UTF_8));
+        byte[] signed = signature.sign();
+        return StrUtil.str(Base64.encode(signed));
+    }
+
+    /**
      * 公钥验证签名
      *
      * @param data      需要加密的数据
