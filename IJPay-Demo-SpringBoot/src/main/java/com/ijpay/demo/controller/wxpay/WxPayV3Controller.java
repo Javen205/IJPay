@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
@@ -267,6 +268,25 @@ public class WxPayV3Controller {
             );
             System.out.println(result);
             return JSONUtil.toJsonStr(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping("/cipher")
+    @ResponseBody
+    public String cipher() {
+        try {
+            // 敏感信息加密
+            X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getPlatformCertPath()));
+            String encrypt = PayKit.rsaEncryptOAEP("IJPay", certificate);
+            System.out.println(encrypt);
+            // 敏感信息解密
+            String encryptStr = "";
+            PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath());
+            String decrypt = PayKit.rsaDecryptOAEP(encryptStr, privateKey);
+            System.out.println(decrypt);
         } catch (Exception e) {
             e.printStackTrace();
         }
