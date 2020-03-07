@@ -9,7 +9,13 @@ features:
 - title: 开箱即用
   details: 不依赖任何第三方 MVC 框架，仅仅作为工具使用，简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 - title: 渠道丰富
-  details: 支持微信支付(支持 Api v3)、QQ钱包支付、支付宝支付、银联支付、京东支付等。
+  details: 支持微信支付、QQ钱包支付、支付宝支付、银联支付、京东支付等。
+- title: 极简入门
+  details: IJPay 一直以简洁至上、开箱即用为核心，提供完整示例简单修改配置即可使用。交流群：723992875  
+- title: 微信支付
+  details: 支持多应用多商户，支持普通商户模式与服务商商模式当然也支持境外、同时支持 Api-v3 与 Api-v2 版本的接口。
+- title: 支付宝支付
+  details: 支持多应用，签名同时支持普通公钥方式与公钥证书方式
 footer: Apache License 2.0 | Copyright © 2019-present Javen
 ---
 
