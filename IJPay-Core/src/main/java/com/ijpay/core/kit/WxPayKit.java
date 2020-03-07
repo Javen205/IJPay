@@ -6,6 +6,7 @@ import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
 import java.io.InputStream;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -354,9 +355,9 @@ public class WxPayKit {
         // 构建签名参数
         String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
         // 获取商户私钥
-        String key = PayKit.getPrivateKey(keyPath);
+        PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
         // 生成签名
-        String signature = RsaKit.encryptByPrivateKey(buildSignMessage, key);
+        String signature = RsaKit.encryptByPrivateKey(buildSignMessage, privateKey);
         // 根据平台规则生成请求头 authorization
         return PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
     }
