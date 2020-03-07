@@ -1,5 +1,6 @@
 package com.ijpay.core.kit;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
@@ -9,8 +10,17 @@ import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.enums.RequestMethod;
 
-import java.io.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.cert.*;
 import java.util.*;
 
@@ -254,16 +264,28 @@ public class PayKit {
      * 获取商户私钥
      *
      * @param keyPath 商户私钥证书路径
-     * @return 商户私钥
-     * @throws Exception 解析 key 异常
+     * @return {@link String} 商户私钥
+     * @throws Exception 异常信息
      */
-    public static String getPrivateKey(String keyPath) throws Exception {
+    public static String getPrivateKeyStr(String keyPath) throws Exception {
+        return RsaKit.getPrivateKeyStr(getPrivateKey(keyPath));
+    }
+
+    /**
+     * 获取商户私钥
+     *
+     * @param keyPath 商户私钥证书路径
+     * @return {@link PrivateKey} 商户私钥
+     * @throws Exception 异常信息
+     */
+    public static PrivateKey getPrivateKey(String keyPath) throws Exception {
         String originalKey = FileUtil.readUtf8String(keyPath);
         String privateKey = originalKey
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
-        return RsaKit.getPrivateKeyStr(RsaKit.loadPrivateKey(privateKey));
+
+        return RsaKit.loadPrivateKey(privateKey);
     }
 
     /**
@@ -284,6 +306,54 @@ public class PayKit {
             throw new RuntimeException("证书尚未生效", e);
         } catch (CertificateException e) {
             throw new RuntimeException("无效的证书", e);
+        }
+    }
+
+    /**
+     * 公钥加密
+     *
+     * @param data        待加密数据
+     * @param certificate 平台公钥证书
+     * @return 加密后的数据
+     * @throws Exception 异常信息
+     */
+    public static String rsaEncryptOAEP(String data, X509Certificate certificate) throws Exception {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, certificate.getPublicKey());
+
+            byte[] dataByte = data.getBytes(StandardCharsets.UTF_8);
+            byte[] cipherData = cipher.doFinal(dataByte);
+            return Base64.encode(cipherData);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            throw new RuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
+        } catch (InvalidKeyException e) {
+            throw new IllegalArgumentException("无效的证书", e);
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            throw new IllegalBlockSizeException("加密原串的长度不能超过214字节");
+        }
+    }
+
+    /**
+     * 私钥解密
+     *
+     * @param cipherText 加密字符
+     * @param privateKey 私钥
+     * @return 解密后的数据
+     * @throws Exception 异常信息
+     */
+    public static String rsaDecryptOAEP(String cipherText, PrivateKey privateKey) throws Exception {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            byte[] data = Base64.decode(cipherText);
+            return new String(cipher.doFinal(data), StandardCharsets.UTF_8);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException e) {
+            throw new RuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
+        } catch (InvalidKeyException e) {
+            throw new IllegalArgumentException("无效的私钥", e);
+        } catch (BadPaddingException | IllegalBlockSizeException e) {
+            throw new BadPaddingException("解密失败");
         }
     }
 }
