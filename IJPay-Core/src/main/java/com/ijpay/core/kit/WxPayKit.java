@@ -145,7 +145,7 @@ public class WxPayKit {
         return params;
     }
 
-    public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
+    public static StringBuffer forEachMap(Map<String, String> params, String prefix, String suffix) {
         return PayKit.forEachMap(params, prefix, suffix);
     }
 

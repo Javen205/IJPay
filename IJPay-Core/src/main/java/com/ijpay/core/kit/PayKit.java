@@ -105,7 +105,7 @@ public class PayKit {
     public static String createLinkString(Map<String, String> params, String connStr, boolean encode, boolean quotes) {
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
-        StringBuilder content = new StringBuilder();
+        StringBuffer content = new StringBuffer();
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = params.get(key);
@@ -151,8 +151,8 @@ public class PayKit {
      * @param suffix xml 后缀
      * @return
      */
-    public static StringBuilder forEachMap(Map<String, String> params, String prefix, String suffix) {
-        StringBuilder xml = new StringBuilder();
+    public static StringBuffer forEachMap(Map<String, String> params, String prefix, String suffix) {
+        StringBuffer xml = new StringBuffer();
         if (StrUtil.isNotEmpty(prefix)) {
             xml.append(prefix);
         }
@@ -180,7 +180,7 @@ public class PayKit {
      * @return xml 字符串
      */
     public static String toXml(Map<String, String> params) {
-        StringBuilder xml = forEachMap(params, "<xml>", "</xml>");
+        StringBuffer xml = forEachMap(params, "<xml>", "</xml>");
         return xml.toString();
     }
 
@@ -206,7 +206,7 @@ public class PayKit {
      * @return 待签名字符串
      */
     public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
-        return new StringBuilder()
+        return new StringBuffer()
                 .append(method.toString())
                 .append("\n")
                 .append(url)
@@ -229,7 +229,7 @@ public class PayKit {
      * @return 应答待签名字符串
      */
     public static String buildSignMessage(String timestamp, String nonceStr, String body) {
-        return new StringBuilder()
+        return new StringBuffer()
                 .append(timestamp)
                 .append("\n")
                 .append(nonceStr)

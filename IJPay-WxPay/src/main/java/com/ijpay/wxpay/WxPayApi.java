@@ -187,7 +187,7 @@ public class WxPayApi {
                                                   String serialNo, String keyPath, String body) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
-        String nonceStr = PayKit.generateStr();
+        String nonceStr = WxPayKit.generateStr();
         return v3Execution(method, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, null);
     }
 
@@ -209,7 +209,7 @@ public class WxPayApi {
                                                   Map<String, String> params) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
-        String nonceStr = PayKit.generateStr();
+        String nonceStr = WxPayKit.generateStr();
         if (null != params && !params.keySet().isEmpty()) {
             urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
         }
@@ -233,7 +233,7 @@ public class WxPayApi {
     public static Map<String, Object> v3Upload(String urlPrefix, String urlSuffix, String mchId, String serialNo, String keyPath, String body, File file) throws Exception {
         long timestamp = System.currentTimeMillis() / 1000;
         String authType = "WECHATPAY2-SHA256-RSA2048";
-        String nonceStr = PayKit.generateStr();
+        String nonceStr = WxPayKit.generateStr();
         return v3Execution(RequestMethod.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType, file);
     }
 
