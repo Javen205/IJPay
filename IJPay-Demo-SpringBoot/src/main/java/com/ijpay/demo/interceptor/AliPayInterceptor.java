@@ -30,7 +30,7 @@ public class AliPayInterceptor implements HandlerInterceptor {
             HandlerMethod method = (HandlerMethod) handler;
             Object controller = method.getBean();
             if (!(controller instanceof AbstractAliPayApiController)) {
-                throw new RuntimeException("控制器需要继承 AliPayApiController");
+                throw new RuntimeException("控制器需要继承 AbstractAliPayApiController");
             }
             AliPayApiConfigKit.setThreadLocalAliPayApiConfig(((AbstractAliPayApiController) controller).getApiConfig());
             return true;

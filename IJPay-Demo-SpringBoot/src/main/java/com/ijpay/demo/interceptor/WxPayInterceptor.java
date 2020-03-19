@@ -29,7 +29,7 @@ public class WxPayInterceptor implements HandlerInterceptor {
             HandlerMethod method = (HandlerMethod) handler;
             Object controller = method.getBean();
             if (!(controller instanceof AbstractWxPayApiController)) {
-                throw new RuntimeException("控制器需要继承 AliPayApiController");
+                throw new RuntimeException("控制器需要继承 AbstractWxPayApiController");
             }
             WxPayApiConfigKit.setThreadLocalWxPayApiConfig(((AbstractWxPayApiController) controller).getApiConfig());
             return true;

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @PropertySource("classpath:/wxpay_v3.properties")
-@ConfigurationProperties(prefix = "wxpay")
+@ConfigurationProperties(prefix = "v3")
 public class WxPayV3Bean {
     private String keyPath;
     private String certPath;

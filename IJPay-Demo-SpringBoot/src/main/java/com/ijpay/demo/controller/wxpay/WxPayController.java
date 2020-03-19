@@ -607,7 +607,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .desc("IJPay 让支付触手可及-企业付款")
                 .spbill_create_ip(ip)
                 .build()
-                .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256,false);
+                .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256, false);
 
         // 提现
         String transfers = WxPayApi.transfers(params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
@@ -638,7 +638,7 @@ public class WxPayController extends AbstractWxPayApiController {
                     .mch_id(wxPayApiConfig.getMchId())
                     .appid(wxPayApiConfig.getAppId())
                     .build()
-                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256,false);
+                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256, false);
 
             return WxPayApi.getTransferInfo(params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
         } catch (Exception e) {
@@ -800,6 +800,42 @@ public class WxPayController extends AbstractWxPayApiController {
             xml.put("return_code", "SUCCESS");
             xml.put("return_msg", "OK");
             return WxPayKit.toXml(xml);
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/sendRedPack", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String sendRedPack(HttpServletRequest request, @RequestParam("openId") String openId) {
+        try {
+            String ip = IpKit.getRealIp(request);
+            if (StrKit.isBlank(ip)) {
+                ip = "127.0.0.1";
+            }
+
+            WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
+
+            Map<String, String> params = SendReadPackModel.builder()
+                    .nonce_str(WxPayKit.generateStr())
+                    .mch_billno(WxPayKit.generateStr())
+                    .mch_id(wxPayApiConfig.getMchId())
+                    .wxappid(wxPayApiConfig.getAppId())
+                    .send_name("IJPay 红包测试")
+                    .re_openid(openId)
+                    .total_amount("1000")
+                    .total_num("1")
+                    .wishing("感谢您使用 IJPay")
+                    .client_ip(ip)
+                    .act_name("感恩回馈活动")
+                    .remark("点 start 送红包，快来抢!")
+                    .build()
+                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);
+            String result = WxPayApi.sendRedPack(params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
+            System.out.println("发送红包结果:" + result);
+            Map<String, String> map = WxPayKit.xmlToMap(result);
+            return JSON.toJSONString(map);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
