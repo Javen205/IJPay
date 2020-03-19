@@ -156,4 +156,18 @@ writer.write(publicKey);
 // 获取平台证书序列号
 X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
 System.out.println(certificate.getSerialNumber().toString(16).toUpperCase());
+```       
+
+## 敏感信息加解密
+
+```java
+ // 敏感信息加密
+X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getPlatformCertPath()));
+String encrypt = PayKit.rsaEncryptOAEP("IJPay", certificate);
+System.out.println(encrypt);
+// 敏感信息解密
+String encryptStr = "";
+PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath());
+String decrypt = PayKit.rsaDecryptOAEP(encryptStr, privateKey);
+System.out.println(decrypt);
 ```
