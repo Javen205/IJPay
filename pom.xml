@@ -7,7 +7,7 @@
 
     <groupId>com.github.javen205</groupId>
     <artifactId>IJPay</artifactId>
-    <version>2.4.2</version>
+    <version>2.5.0</version>
     <name>IJPay</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)</description>
     <url>https://github.com/Javen205/IJPay</url>
@@ -53,7 +53,7 @@
     <properties>
         <jdk.version>1.7</jdk.version>
         <junit.version>4.13</junit.version>
-        <hutool.version>5.2.0</hutool.version>
+        <hutool.version>5.2.4</hutool.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
