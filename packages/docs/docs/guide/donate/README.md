@@ -7,22 +7,27 @@ IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修�
 
 如果您的项目开发周期短不想耗更多的时间与精力在踩坑与填坑的路上，那么请考虑一下 IJPay 提供的 VIP 服务。
 
-亦或者研发团队没有聚合支付开发经验，实在为技术感到头疼，那么请考虑一下 IJPay 提供的 VIP 服务。
+亦或者研发团队没有聚合支付开发经验，不太想折腾，那么请考虑一下 IJPay 提供的 VIP 服务。
 
 同时也鼓励用户与 IJPay 「亲密接触」。
 
-一对一在线技术支持： 限时优惠 **¥ 299** 元。**赞助时请备注联系方式，或者 [加群:723992875](http://shang.qq.com/wpa/qunwpa?idkey=44c2b0331f1bdca6c9d404e863edd83973fa97224b79778db79505fc592f00bc)联系群主**
+一对一在线技术支持： 
 
-**如果付款出现金额限制，请点击赞赏码下方「前往赞助」选择其他赞助方式**
+- 单支付渠道 **¥ 299** 元
+- 全支付渠道 **¥ 699** 元
+- 单支付渠道远程协助 **¥ 399** 元
+- 全支付渠道远程协助 **¥ 999** 元
 
  # 请作者喝一杯咖啡
  
    如果你觉得 IJPay 对你有帮助，可以请作者喝一杯咖啡~，在此表示感谢 ^_^
-
- 
+   
  <p align="center">
      <a target="_blank" href="https://github.com/Javen205/donate">
-            <img :src="$withBase('/wxpay.jpeg')" width="260px"></img>
+         <img :src="$withBase('/wxpay.jpeg')" width="260px"/>
+     </a>
+     <a target="_blank" href="https://github.com/Javen205/donate">
+        <img :src="$withBase('/wxpay.png')" width="260px"/>
      </a>
      <br/>
      <br/>
