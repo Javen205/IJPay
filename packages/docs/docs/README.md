@@ -42,8 +42,6 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 ```
 
 ::: tip
- 2.3.2 版本开始 IJPay-All 中不会自动下载银联支付相关依赖，如有银联支付需求请单独手动添加 IJPay-UnionPay 相关依赖。
- 
  当然，不同的支付方式也可以单独添加相关依赖 [了解更多](./guide/maven.md) 
 :::
 

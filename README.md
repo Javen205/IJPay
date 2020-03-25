@@ -138,3 +138,4 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 - [QQ 钱包开发文档](https://qpay.qq.com/buss/doc.shtml)
 - [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
+- [银联条码支付综合前置平台](https://up.95516.com/open/openapi?code=unionpay&sdk=IJPay)
