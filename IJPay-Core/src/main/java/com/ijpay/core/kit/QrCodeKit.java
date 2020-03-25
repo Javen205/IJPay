@@ -45,7 +45,7 @@ public class QrCodeKit {
      */
     public static boolean encode(String contents, BarcodeFormat barcodeFormat, Integer margin,
                                  ErrorCorrectionLevel errorLevel, String format, int width, int height, String saveImgFilePath) {
-        Boolean bool = false;
+        boolean bool = false;
         BufferedImage bufImg;
         Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>(3);
         // 指定纠错等级
@@ -127,7 +127,7 @@ public class QrCodeKit {
      * @return {boolean}
      */
     public static boolean writeToFile(BufferedImage bufImg, String format, String saveImgFilePath) {
-        Boolean bool = false;
+        boolean bool = false;
         try {
             bool = ImageIO.write(bufImg, format, new File(saveImgFilePath));
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class QrCodeKit {
 
     public static void main(String[] args) {
         String saveImgFilePath = "/Users/Javen/Documents/dev/IJPay/qrCode.png";
-        Boolean encode = encode("https://gitee.com/javen205/IJPay", BarcodeFormat.QR_CODE, 3,
+        boolean encode = encode("https://gitee.com/javen205/IJPay", BarcodeFormat.QR_CODE, 3,
                 ErrorCorrectionLevel.H, "png", 200, 200, saveImgFilePath);
         if (encode) {
             Result result = decode(saveImgFilePath);

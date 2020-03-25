@@ -73,11 +73,7 @@ public class XmlHelper {
     private static XmlHelper create(InputSource inputSource) {
         try {
             return new XmlHelper(inputSource);
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new RuntimeException(e);
         }
     }

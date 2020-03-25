@@ -32,8 +32,7 @@ public class BaseModel {
     public Map<String, String> toMap() {
         String[] fieldNames = getFiledNames(this);
         HashMap<String, String> map = new HashMap<String, String>(fieldNames.length);
-        for (int i = 0; i < fieldNames.length; i++) {
-            String name = fieldNames[i];
+        for (String name : fieldNames) {
             String value = (String) getFieldValueByName(name, this);
             if (StrUtil.isNotEmpty(value)) {
                 map.put(name, value);
@@ -94,8 +93,8 @@ public class BaseModel {
                     .append(firstLetter)
                     .append(fieldName.substring(1))
                     .toString();
-            Method method = obj.getClass().getMethod(getter, new Class[]{});
-            return method.invoke(obj, new Object[]{});
+            Method method = obj.getClass().getMethod(getter);
+            return method.invoke(obj);
         } catch (Exception e) {
             return null;
         }
