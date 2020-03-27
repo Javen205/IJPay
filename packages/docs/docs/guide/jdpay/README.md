@@ -2,7 +2,7 @@
 
 ## 官方参考文档
 
-- [京东支付](https://qpay.qq.com/buss/doc.shtml)
+- [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
 
 ##  支付方式与支付工具

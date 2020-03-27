@@ -40,7 +40,7 @@ module.exports = ctx => ( {
                 sidebar: {
                     '/guide/': getGuideSidebar('客户端','微信系开发脚手架',
                         'IJPay 让支付触手可及','获取支付配置','支付宝支付','微信支付',
-                        'QQ 钱包支付','银联支付','京东支付','赞助'),
+                        'QQ 钱包支付','银联支付','京东支付','赞助','插件工具'),
                 },
             },
             // '/en/': {
@@ -86,7 +86,7 @@ module.exports = ctx => ( {
     ]
 })
 
-function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,groupH,groupI,groupK) {
+function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,groupH,groupI,groupK,groupL) {
     return [
         {
             title: groupA,
@@ -167,6 +167,13 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             collapsable: false,
             children: [
                 'donate/',
+            ]
+        },
+        {
+            title: groupL,
+            collapsable: false,
+            children: [
+                'tools/frp/',
             ]
         },
     ]
