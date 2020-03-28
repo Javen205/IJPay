@@ -51,6 +51,7 @@ public class WxPayV3Controller {
     WxPayV3Bean wxPayV3Bean;
 
     String serialNo;
+    String platSerialNo;
 
 
     @RequestMapping("")
@@ -60,10 +61,16 @@ public class WxPayV3Controller {
         return ("欢迎使用 IJPay 中的微信支付 Api-v3 -By Javen  <br/><br>  交流群：723992875");
     }
 
-    @RequestMapping("/getCertificate")
+    @RequestMapping("/getSerialNumber")
     @ResponseBody
-    public String getCertificate() {
+    public String serialNumber() {
         return getSerialNumber();
+    }
+
+    @RequestMapping("/getPlatSerialNumber")
+    @ResponseBody
+    public String platSerialNumber() {
+        return getPlatSerialNumber();
     }
 
     private String getSerialNumber() {
@@ -72,18 +79,29 @@ public class WxPayV3Controller {
             X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getCertPath()));
             serialNo = certificate.getSerialNumber().toString(16).toUpperCase();
 
-            System.out.println("输出证书信息:\n" + certificate.toString());
-            // 输出关键信息，截取部分并进行标记
-            System.out.println("证书序列号:" + certificate.getSerialNumber().toString(16));
-            System.out.println("版本号:" + certificate.getVersion());
-            System.out.println("签发者：" + certificate.getIssuerDN());
-            System.out.println("有效起始日期：" + certificate.getNotBefore());
-            System.out.println("有效终止日期：" + certificate.getNotAfter());
-            System.out.println("主体名：" + certificate.getSubjectDN());
-            System.out.println("签名算法：" + certificate.getSigAlgName());
-            System.out.println("签名：" + certificate.getSignature().toString());
+//            System.out.println("输出证书信息:\n" + certificate.toString());
+//            // 输出关键信息，截取部分并进行标记
+//            System.out.println("证书序列号:" + certificate.getSerialNumber().toString(16));
+//            System.out.println("版本号:" + certificate.getVersion());
+//            System.out.println("签发者：" + certificate.getIssuerDN());
+//            System.out.println("有效起始日期：" + certificate.getNotBefore());
+//            System.out.println("有效终止日期：" + certificate.getNotAfter());
+//            System.out.println("主体名：" + certificate.getSubjectDN());
+//            System.out.println("签名算法：" + certificate.getSigAlgName());
+//            System.out.println("签名：" + certificate.getSignature().toString());
         }
+        System.out.println("serialNo:" + serialNo);
         return serialNo;
+    }
+
+    private String getPlatSerialNumber() {
+        if (StrUtil.isEmpty(platSerialNo)) {
+            // 获取平台证书序列号
+            X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getPlatformCertPath()));
+            platSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+        }
+        System.out.println("platSerialNo:" + platSerialNo);
+        return platSerialNo;
     }
 
     @RequestMapping("/platformCert")
@@ -265,6 +283,31 @@ public class WxPayV3Controller {
                     getSerialNumber(),
                     wxPayV3Bean.getKeyPath(),
                     ""
+            );
+            System.out.println(result);
+            return JSONUtil.toJsonStr(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping("/sensitive")
+    @ResponseBody
+    public String sensitive() {
+        // 带有敏感信息接口
+        try {
+            String body = "处理请求参数";
+
+            Map<String, Object> result = WxPayApi.v3Execution(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.APPLY_4_SUB.toString(),
+                    wxPayV3Bean.getMchId(),
+                    getSerialNumber(),
+                    getPlatSerialNumber(),
+                    wxPayV3Bean.getKeyPath(),
+                    body
             );
             System.out.println(result);
             return JSONUtil.toJsonStr(result);
