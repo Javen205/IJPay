@@ -33,10 +33,6 @@ String serialNo  = certificate.getSerialNumber().toString(16).toUpperCase();
 - 使用证书解析工具 [https://myssl.com/cert_decode.html](https://myssl.com/cert_decode.html)
 :::
 
-:::warning 
-如果接口包含感信息时，序列号必须为 **平台公钥证书** 的序列号
-:::
-
 ## 构建 Authorization
 
 ```java
@@ -50,7 +46,7 @@ String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, ser
 - method    请求方法 RequestMethod
 - urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
 - mchId     商户Id
-- serialNo  商户 API 证书序列号，如果接口中包含敏感信息时序列号为平台公钥证书的序列号
+- serialNo  商户 API 证书序列号
 - keyPath   key.pem 证书路径
 - body      接口请求参数
 - nonceStr  随机字符库
@@ -119,6 +115,40 @@ public void v3Get() {
   ]
 }
 ```  
+
+## 接口含有敏感信息
+
+:::warning 
+如果接口包含感信息时，必须传入 **平台公钥证书** 的序列号
+:::
+
+```java{13,14}
+@RequestMapping("/sensitive")
+@ResponseBody
+public String sensitive() {
+    // 带有敏感信息接口
+    try {
+        String body = "处理请求参数";
+
+        Map<String, Object> result = WxPayApi.v3Execution(
+                RequestMethod.POST,
+                WxDomain.CHINA.toString(),
+                WxApiType.APPLY_4_SUB.toString(),
+                wxPayV3Bean.getMchId(),
+                getSerialNumber(),
+                getPlatSerialNumber(),
+                wxPayV3Bean.getKeyPath(),
+                body
+        );
+        System.out.println(result);
+        return JSONUtil.toJsonStr(result);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+```
+
 
 ## 验证签名
 
