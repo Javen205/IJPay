@@ -592,6 +592,30 @@ public enum WxApiType {
      */
     FUND_FLOW_BILL("/v3/bill/fundflowbill"),
 
+    /**
+     * 银行特约商户违规信息查询
+     */
+    GET_VIOLATION("/risk/getviolation"),
+    /**
+     * 事前-风险商户核查接口
+     */
+    QUERY_MCH_RISK("/mchrisk/querymchrisk"),
+    /**
+     * 事后-风险商户处理结果同步接口
+     */
+    SYNC_MCH_RISK_RESULT("/mchrisk/syncmchriskresult"),
+    /**
+     * 间联模式查询商户审核状态开放接口
+     */
+    BANK_QUERY_MCH_AUDIT_INFO("/mchrisk/bankquerymchauditinfo"),
+    /**
+     * 渠道商查询商户审核信息
+     */
+    CHANNEL_QUERY_MCH_AUDIT_INFO("/mchrisk/channelquerymchauditinfo"),
+    /**
+     * 设置风险通知回调链接
+     */
+    SET_MCH_RISK_CALLBACK("/mchrisk/setmchriskcallback"),
 
     /**
      * 创建先享后付订单 OR 查询先享后付订单
