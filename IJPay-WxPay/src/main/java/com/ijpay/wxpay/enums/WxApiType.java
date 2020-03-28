@@ -352,7 +352,7 @@ public enum WxApiType {
     /**
      * 特约商户进件-提交申请单
      */
-    APPLY_4_SUB("/v3/applyment4sub/applyment"),
+    APPLY_4_SUB("/v3/applyment4sub/applyment/"),
     /**
      * 特约商户进件-查询申请单状态
      */
