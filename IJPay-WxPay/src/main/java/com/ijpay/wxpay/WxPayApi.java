@@ -1250,6 +1250,75 @@ public class WxPayApi {
         return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
     }
 
+    /**
+     * 发放企业红包
+     *
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendWorkWxRedPack(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certPath, certPass);
+    }
+
+    /**
+     * 发放企业红包
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certFile, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryWorkWxRedPack(Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params);
+    }
+
+    /**
+     * 向员工付款
+     *
+     * @param params   请求参数
+     * @param certPath 证书文件目录
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String trans2pocket(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass);
+    }
+
+    /**
+     * 向员工付款
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String trans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryTrans2pocket(Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params);
+    }
+
+
     public static String doGet(String url, Map<String, Object> params) {
         return HttpKit.getDelegate().get(url, params);
     }

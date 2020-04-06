@@ -116,6 +116,21 @@ public class WxPayKit {
     }
 
     /**
+     * 生成签名
+     *
+     * @param params   需要签名的参数
+     * @param secret   企业微信支付应用secret
+     * @return 签名后的数据
+     */
+    public static String createSign(Map<String, String> params, String secret) {
+        // 生成签名前先去除sign
+        params.remove(FIELD_SIGN);
+        String tempStr = PayKit.createLinkString(params);
+        String stringSignTemp = tempStr + "&secret=" + secret;
+        return md5(stringSignTemp).toUpperCase();
+    }
+
+    /**
      * 构建签名
      *
      * @param params     需要签名的参数

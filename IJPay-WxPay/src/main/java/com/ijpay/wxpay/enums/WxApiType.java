@@ -618,6 +618,24 @@ public enum WxApiType {
     SET_MCH_RISK_CALLBACK("/mchrisk/setmchriskcallback"),
 
     /**
+     * 向员工付款
+     */
+    PAY_WWS_TRANS_2_POCKET("/mmpaymkttransfers/promotion/paywwsptrans2pocket"),
+    /**
+     * 查询向员工付款记录
+     */
+    QUERY_WWS_TRANS_2_POCKET("/mmpaymkttransfers/promotion/querywwsptrans2pocket"),
+    /**
+     * 发放企业红包
+     */
+    SEND_WORK_WX_RED_PACK("/mmpaymkttransfers/sendworkwxredpack"),
+    /**
+     * 查询企业红包记录
+     */
+    QUERY_WORK_WX_RED_PACK("/mmpaymkttransfers/queryworkwxredpack"),
+    
+
+    /**
      * 创建先享后付订单 OR 查询先享后付订单
      */
     PAY_AFTER_ORDERS("/v3/payscore/payafter-orders"),
