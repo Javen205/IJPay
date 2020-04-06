@@ -104,7 +104,7 @@ public class WxPayApi {
      *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
      *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -410,7 +410,7 @@ public class WxPayApi {
      * 撤销订单
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -435,7 +435,7 @@ public class WxPayApi {
      *
      * @param isSandbox 是否是沙盒环境
      * @param params    请求参数
-     * @param certPath  证书文件目录
+     * @param certPath  证书文件路径
      * @param certPass  证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -523,7 +523,7 @@ public class WxPayApi {
      * 企业付款到零钱
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -547,7 +547,7 @@ public class WxPayApi {
      * 查询企业付款到零钱
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -571,7 +571,7 @@ public class WxPayApi {
      * 企业付款到银行
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -595,7 +595,7 @@ public class WxPayApi {
      * 查询企业付款到银行
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -619,7 +619,7 @@ public class WxPayApi {
      * 获取 RSA 加密公钥
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -774,7 +774,7 @@ public class WxPayApi {
      * 请求单次分账
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -798,7 +798,7 @@ public class WxPayApi {
      * 请求多次分账
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -852,7 +852,7 @@ public class WxPayApi {
      * 完结分账
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -876,7 +876,7 @@ public class WxPayApi {
      * 分账回退
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -910,7 +910,7 @@ public class WxPayApi {
      * 发放代金券
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -954,7 +954,7 @@ public class WxPayApi {
      * 拉取订单评价数据
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1008,7 +1008,7 @@ public class WxPayApi {
      * 撤销订单
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1090,7 +1090,7 @@ public class WxPayApi {
      * 下载资金账单
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1134,7 +1134,7 @@ public class WxPayApi {
      * 刷脸支付撤销订单
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1158,7 +1158,7 @@ public class WxPayApi {
      * 发放普通红包
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1182,7 +1182,7 @@ public class WxPayApi {
      * 发放裂变红包
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1206,7 +1206,7 @@ public class WxPayApi {
      * 查询红包记录
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1230,7 +1230,7 @@ public class WxPayApi {
      * 小程序发放红包接口
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1254,7 +1254,7 @@ public class WxPayApi {
      * 发放企业红包
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1277,18 +1277,32 @@ public class WxPayApi {
     /**
      * 查询向员工付款记录
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String queryWorkWxRedPack(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params);
+    public static String queryWorkWxRedPack(Map<String, String> params, String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certPath, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certFile, certPass);
     }
 
     /**
      * 向员工付款
      *
      * @param params   请求参数
-     * @param certPath 证书文件目录
+     * @param certPath 证书文件路径
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
@@ -1311,11 +1325,25 @@ public class WxPayApi {
     /**
      * 查询向员工付款记录
      *
-     * @param params 请求参数
+     * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String queryTrans2pocket(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params);
+    public static String queryTrans2pocket(Map<String, String> params,String certPath, String certPass) {
+        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
+        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass);
     }
 
 
