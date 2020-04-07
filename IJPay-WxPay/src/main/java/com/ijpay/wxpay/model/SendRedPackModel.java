@@ -22,7 +22,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class SendReadPackModel extends BaseModel {
+public class SendRedPackModel extends BaseModel {
     private String nonce_str;
     private String sign;
     private String mch_billno;

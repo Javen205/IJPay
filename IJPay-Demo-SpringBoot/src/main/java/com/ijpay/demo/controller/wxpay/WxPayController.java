@@ -815,7 +815,7 @@ public class WxPayController extends AbstractWxPayApiController {
 
             WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
 
-            Map<String, String> params = SendReadPackModel.builder()
+            Map<String, String> params = SendRedPackModel.builder()
                     .nonce_str(WxPayKit.generateStr())
                     .mch_billno(WxPayKit.generateStr())
                     .mch_id(wxPayApiConfig.getMchId())
