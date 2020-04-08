@@ -1,6 +1,5 @@
 package com.ijpay.demo.controller.wxpay;
 
-import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.zxing.BarcodeFormat;
@@ -607,7 +606,7 @@ public class WxPayController extends AbstractWxPayApiController {
                 .desc("IJPay 让支付触手可及-企业付款")
                 .spbill_create_ip(ip)
                 .build()
-                .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256, false);
+                .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5, false);
 
         // 提现
         String transfers = WxPayApi.transfers(params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
@@ -638,7 +637,7 @@ public class WxPayController extends AbstractWxPayApiController {
                     .mch_id(wxPayApiConfig.getMchId())
                     .appid(wxPayApiConfig.getAppId())
                     .build()
-                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.HMACSHA256, false);
+                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5, false);
 
             return WxPayApi.getTransferInfo(params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
         } catch (Exception e) {
@@ -791,7 +790,7 @@ public class WxPayController extends AbstractWxPayApiController {
         String returnCode = params.get("return_code");
         // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
         if (WxPayKit.codeIsOk(returnCode)) {
-            String reqInfo = Base64.decodeStr(params.get("req_info"));
+            String reqInfo = params.get("req_info");
             String decryptData = WxPayKit.decryptData(reqInfo, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey());
             log.info("退款通知解密后的数据=" + decryptData);
             // 更新订单信息
