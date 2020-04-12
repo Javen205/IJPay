@@ -21,7 +21,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class UnifiedOrderModelModel extends BaseModel {
+public class UnifiedOrderModel extends BaseModel {
     private String service;
     private String version;
     private String charset;
