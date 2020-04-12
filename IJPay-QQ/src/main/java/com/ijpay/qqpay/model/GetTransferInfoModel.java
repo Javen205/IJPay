@@ -14,14 +14,15 @@
 package com.ijpay.qqpay.model;
 
 import com.ijpay.core.model.BaseModel;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
+@Setter
 public class GetTransferInfoModel extends BaseModel {
     private String  mch_id;
     private String  nonce_str;

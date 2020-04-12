@@ -7,11 +7,12 @@
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
  *
- * <p>云闪付-授权码查询 openId</p>
+ * <p>云闪付-商户进件</p>
  *
  * @author Javen
  */
 package com.ijpay.unionpay.model;
+
 
 import com.ijpay.core.model.BaseModel;
 import lombok.*;
@@ -20,16 +21,33 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AuthCodeToOpenIdModel extends BaseModel {
-    private String service;
-    private String version;
+public class ApplyModel extends BaseModel {
+    /**
+     * 合作伙伴 ID 即机构号
+     */
+    private String partner;
+    /**
+     * 服务名称
+     */
+    private String serviceName;
+    /**
+     * 支持 MD5 和RSA，默认为MD5
+     */
+    private String signType;
+    /**
+     * 字符集，默认为UTF-8
+     */
     private String charset;
-    private String sign_type;
-    private String mch_id;
-    private String sub_appid;
-    private String auth_code;
-    private String nonce_str;
-    private String sign;
-    private String sign_agentno;
-    private String groupno;
+    /**
+     * 请求数据
+     */
+    private String data;
+    /**
+     * 数据类型
+     */
+    private String dataType;
+    /**
+     * 数据签名
+     */
+    private String dataSign;
 }

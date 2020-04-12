@@ -13,14 +13,15 @@
  */
 package com.ijpay.jdpay.model;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
+@Setter
 public class UserRelationModel extends JdBaseModel {
     private String version;
     private String merchant;

@@ -1,5 +1,13 @@
+package com.ijpay.qqpay.model;
+
+import com.ijpay.core.model.BaseModel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
- * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
+ * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付等常用的支付方式以及各种常用的接口。</p>
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
@@ -11,17 +19,11 @@
  *
  * @author Javen
  */
-package com.ijpay.qqpay.model;
-
-import com.ijpay.core.model.BaseModel;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
+@Setter
 public class DownloadTransferBillModel extends BaseModel {
     private String mch_id;
     private String nonce_str;

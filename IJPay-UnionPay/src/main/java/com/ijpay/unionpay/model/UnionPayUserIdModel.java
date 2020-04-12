@@ -14,14 +14,12 @@
 package com.ijpay.unionpay.model;
 
 import com.ijpay.core.model.BaseModel;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
+@Setter
 public class UnionPayUserIdModel extends BaseModel {
     private String service;
     private String version;
