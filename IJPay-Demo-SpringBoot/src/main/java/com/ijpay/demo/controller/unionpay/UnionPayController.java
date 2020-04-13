@@ -258,7 +258,7 @@ public class UnionPayController {
                 ip = "127.0.0.1";
             }
 
-            Map<String, String> params = UnifiedOrderModelModel.builder()
+            Map<String, String> params = UnifiedOrderModel.builder()
                     .service(ServiceEnum.NATIVE.toString())
                     .mch_id(unionPayBean.getMachId())
                     .out_trade_no(WxPayKit.generateStr())
@@ -298,7 +298,7 @@ public class UnionPayController {
                 ip = "127.0.0.1";
             }
 
-            Map<String, String> params = UnifiedOrderModelModel.builder()
+            Map<String, String> params = UnifiedOrderModel.builder()
                     .service(ServiceEnum.WEI_XIN_JS_PAY.toString())
                     .mch_id(unionPayBean.getMachId())
                     .is_raw("1")
@@ -343,7 +343,7 @@ public class UnionPayController {
                 ip = "127.0.0.1";
             }
 
-            Map<String, String> params = UnifiedOrderModelModel.builder()
+            Map<String, String> params = UnifiedOrderModel.builder()
                     .service(ServiceEnum.WEI_XIN_APP_PAY.toString())
                     .mch_id(unionPayBean.getMachId())
                     .appid(appId)
@@ -399,7 +399,7 @@ public class UnionPayController {
                 ip = "127.0.0.1";
             }
 
-            Map<String, String> params = UnifiedOrderModelModel.builder()
+            Map<String, String> params = UnifiedOrderModel.builder()
                     .service(ServiceEnum.ALI_PAY_JS_PAY.toString())
                     .mch_id(unionPayBean.getMachId())
                     .out_trade_no(WxPayKit.generateStr())
@@ -470,7 +470,7 @@ public class UnionPayController {
                 ip = "127.0.0.1";
             }
 
-            Map<String, String> params = UnifiedOrderModelModel.builder()
+            Map<String, String> params = UnifiedOrderModel.builder()
                     .service(ServiceEnum.UNION_JS_PAY.toString())
                     .mch_id(unionPayBean.getMachId())
                     .out_trade_no(WxPayKit.generateStr())
