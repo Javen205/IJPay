@@ -56,8 +56,9 @@ IJPay 中常用支付方式涉及到的 [Model](https://gitee.com/javen205/IJPay
 
 ```java{5}
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
+@Setter
 public class CloseOrderModel extends BaseModel {
     // 属性字段名称与接口参数保持一致 
     private String appid;
