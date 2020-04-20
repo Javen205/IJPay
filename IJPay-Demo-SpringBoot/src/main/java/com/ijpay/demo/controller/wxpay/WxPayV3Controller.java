@@ -45,7 +45,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/v3")
 public class WxPayV3Controller {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     WxPayV3Bean wxPayV3Bean;

@@ -45,7 +45,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/wxPay")
 public class WxPayController extends AbstractWxPayApiController {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     WxPayBean wxPayBean;
@@ -240,7 +240,7 @@ public class WxPayController extends AbstractWxPayApiController {
             //生成二维码保存的路径
             String name = "payQRCode1.png";
             log.info(ResourceUtils.getURL("classpath:").getPath());
-            Boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H,
+            boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H,
                     "png", 200, 200,
                     ResourceUtils.getURL("classpath:").getPath().concat("static").concat(File.separator).concat(name));
             if (encode) {
@@ -326,9 +326,9 @@ public class WxPayController extends AbstractWxPayApiController {
                 prepayParams.put("return_code", "SUCCESS");
                 prepayParams.put("appid", appId);
                 prepayParams.put("mch_id", mchId);
-                prepayParams.put("nonceStr", System.currentTimeMillis() + "");
+                prepayParams.put("nonce_str", System.currentTimeMillis() + "");
                 prepayParams.put("prepay_id", prepayId);
-                String prepaySign = null;
+                String prepaySign;
                 if (sign.equals(packageSign)) {
                     prepayParams.put("result_code", "SUCCESS");
                 } else {

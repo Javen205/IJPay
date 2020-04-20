@@ -214,7 +214,7 @@ public class WxPayController extends WxPayApiController {
             log.info(qrCodeUrl);
             //生成二维码保存的路径
             String name = "payQRCode1.png";
-            Boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+            boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
                     PathKit.getWebRootPath() + File.separator + name);
             if (encode) {
                 //在页面上显示
@@ -296,7 +296,7 @@ public class WxPayController extends WxPayApiController {
                 prepayParams.put("return_code", "SUCCESS");
                 prepayParams.put("appid", appId);
                 prepayParams.put("mch_id", mchId);
-                prepayParams.put("nonceStr", System.currentTimeMillis() + "");
+                prepayParams.put("nonce_str", System.currentTimeMillis() + "");
                 prepayParams.put("prepay_id", prepayId);
                 String prepaySign = null;
                 if (sign.equals(packageSign)) {
