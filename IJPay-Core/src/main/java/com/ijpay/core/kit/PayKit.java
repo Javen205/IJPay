@@ -103,9 +103,9 @@ public class PayKit {
     }
 
     public static String createLinkString(Map<String, String> params, String connStr, boolean encode, boolean quotes) {
-        List<String> keys = new ArrayList<String>(params.keySet());
+        List<String> keys = new ArrayList<>(params.keySet());
         Collections.sort(keys);
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = params.get(key);
@@ -149,7 +149,7 @@ public class PayKit {
      * @param params 需要遍历的 Map
      * @param prefix xml 前缀
      * @param suffix xml 后缀
-     * @return
+     * @return xml 字符串
      */
     public static StringBuffer forEachMap(Map<String, String> params, String prefix, String suffix) {
         StringBuffer xml = new StringBuffer();
@@ -206,18 +206,13 @@ public class PayKit {
      * @return 待签名字符串
      */
     public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
-        return new StringBuffer()
-                .append(method.toString())
-                .append("\n")
-                .append(url)
-                .append("\n")
-                .append(timestamp)
-                .append("\n")
-                .append(nonceStr)
-                .append("\n")
-                .append(body)
-                .append("\n")
-                .toString();
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(method.toString());
+        arrayList.add(url);
+        arrayList.add(String.valueOf(timestamp));
+        arrayList.add(nonceStr);
+        arrayList.add(body);
+        return buildSignMessage(arrayList);
     }
 
     /**
@@ -229,14 +224,54 @@ public class PayKit {
      * @return 应答待签名字符串
      */
     public static String buildSignMessage(String timestamp, String nonceStr, String body) {
-        return new StringBuffer()
-                .append(timestamp)
-                .append("\n")
-                .append(nonceStr)
-                .append("\n")
-                .append(body)
-                .append("\n")
-                .toString();
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(timestamp);
+        arrayList.add(nonceStr);
+        arrayList.add(body);
+        return buildSignMessage(arrayList);
+    }
+
+    /**
+     * 构造签名串
+     *
+     * @param signMessage 待签名的参数
+     * @return 构造后带待签名串
+     */
+    public static String buildSignMessage(ArrayList<String> signMessage) {
+        if (signMessage == null || signMessage.size() <= 0) return null;
+        StringBuilder sbf = new StringBuilder();
+        for (String str : signMessage) {
+            sbf.append(str).append("\n");
+        }
+        return sbf.toString();
+    }
+
+    /**
+     * v3 接口创建签名
+     *
+     * @param signMessage 待签名的参数
+     * @param keyPath     key.pem 证书路径
+     * @return 生成 v3 签名
+     * @throws Exception 异常信息
+     */
+    public static String createSign(ArrayList<String> signMessage, String keyPath) throws Exception {
+        return createSign(buildSignMessage(signMessage), keyPath);
+    }
+
+    /**
+     * v3 接口创建签名
+     *
+     * @param signMessage 待签名的参数
+     * @param keyPath     key.pem 证书路径
+     * @return 生成 v3 签名
+     * @throws Exception 异常信息
+     */
+    public static String createSign(String signMessage, String keyPath) throws Exception {
+        if (StrUtil.isEmpty(signMessage)) return null;
+        // 获取商户私钥
+        PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
+        // 生成签名
+        return RsaKit.encryptByPrivateKey(signMessage, privateKey);
     }
 
     /**

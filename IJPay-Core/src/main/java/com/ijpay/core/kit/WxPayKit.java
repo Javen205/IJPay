@@ -6,7 +6,6 @@ import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
 import java.io.InputStream;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -215,7 +214,7 @@ public class WxPayKit {
      * @return {String}
      */
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId, String timeStamp, String nonceStr, SignType signType) {
-        HashMap<String, String> map = new HashMap<String, String>(5);
+        HashMap<String, String> map = new HashMap<>(5);
         map.put("appid", appId);
         map.put("mch_id", mchId);
         map.put("time_stamp", StrUtil.isEmpty(timeStamp) ? Long.toString(System.currentTimeMillis() / 1000) : timeStamp);
@@ -237,7 +236,7 @@ public class WxPayKit {
     public static String bizPayUrl(String partnerKey, String appId, String mchId, String productId) {
         String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
         String nonceStr = WxPayKit.generateStr();
-        HashMap<String, String> map = new HashMap<String, String>(5);
+        HashMap<String, String> map = new HashMap<>(5);
         map.put("appid", appId);
         map.put("mch_id", mchId);
         map.put("time_stamp", timeStamp);
@@ -283,7 +282,7 @@ public class WxPayKit {
      * @return 再次签名后的 Map
      */
     public static Map<String, String> prepayIdCreateSign(String prepayId, String appId, String partnerKey, SignType signType) {
-        Map<String, String> packageParams = new HashMap<String, String>(6);
+        Map<String, String> packageParams = new HashMap<>(6);
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
@@ -309,7 +308,7 @@ public class WxPayKit {
      * @return 再次签名后的 Map
      */
     public static Map<String, String> appPrepayIdCreateSign(String appId, String partnerId, String prepayId, String partnerKey, SignType signType) {
-        Map<String, String> packageParams = new HashMap<String, String>(8);
+        Map<String, String> packageParams = new HashMap<>(8);
         packageParams.put("appid", appId);
         packageParams.put("partnerid", partnerId);
         packageParams.put("prepayid", prepayId);
@@ -335,7 +334,7 @@ public class WxPayKit {
      * @return 再次签名后的 Map
      */
     public static Map<String, String> miniAppPrepayIdCreateSign(String appId, String prepayId, String partnerKey, SignType signType) {
-        Map<String, String> packageParams = new HashMap<String, String>(6);
+        Map<String, String> packageParams = new HashMap<>(6);
         packageParams.put("appId", appId);
         packageParams.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
         packageParams.put("nonceStr", String.valueOf(System.currentTimeMillis()));
@@ -369,10 +368,7 @@ public class WxPayKit {
                                             long timestamp, String authType) throws Exception {
         // 构建签名参数
         String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
-        // 获取商户私钥
-        PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
-        // 生成签名
-        String signature = RsaKit.encryptByPrivateKey(buildSignMessage, privateKey);
+        String signature = PayKit.createSign(buildSignMessage,keyPath);
         // 根据平台规则生成请求头 authorization
         return PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
     }
