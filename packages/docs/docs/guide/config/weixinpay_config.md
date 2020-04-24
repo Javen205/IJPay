@@ -16,7 +16,7 @@
 - mchId: 微信支付商户号
 - partnerKey: API 密钥，微信商户后台配置
 - certPath: `apiclient_cert.p12` 证书绝对路径，在微信商户后台下载
-- domain: 外网访问项目的域名，支付通知中会使用
+- domain: 外网访问项目的域名，支付通知、回调中会使用
 :::
 
 ## 服务商模式
@@ -30,11 +30,26 @@
 - subMchId: 子商户号
 - partnerKey: API 密钥，服务商微信商户后台配置
 - certPath: `apiclient_cert.p12` 证书绝对路径，在服务商微信商户后台下载
-- domain: 外网访问项目的域名，支付通知中会使用
+- domain: 外网访问项目的域名，支付通知、回调中会使用
 :::
 
 以上配置并非全部必须，可以根据实际情况来决定。服务商模式下接口请求参数
 `openid` 与 `sub_openid` 可以二选一，如果使用了 `openid` 即使用服务商下的应用进行授权就需要提供服务商的应用配置 `appId` 以及 `appSecret`，
 反之就使用子商户对应的应用配置
+
+## v3 版本配置说明
+
+::: tip IJPay 中微信支付需要配置的参数如下：
+- keyPath= apiclient_key.pem  商户 key 绝对路径
+- certPath= capiclient_cert.pem 商户证书绝对路径
+- certP12Path= apiclient_cert.p12 备用参数 v3 暂未使用到
+- platformCertPath= wx_cert.pem  微信平台证书绝对路径，证书需要通过接口获取，请参考 [v3 文档](../wxpay/api-v3.md)
+- mchId= 微信商户号
+- apiKey3= Api-v3 密钥
+- apiKey= Api 密钥 备用参数 v3 暂未使用到
+- domain= 外网访问项目的域名，支付通知、回调中会使用
+:::
+
+
 
 

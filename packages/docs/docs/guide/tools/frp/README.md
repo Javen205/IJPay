@@ -191,4 +191,11 @@ http {
 		}
 	}
 }
-```
+```     
+
+## 购买测试服务器
+
+- [阿里云主机低至 2 折](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=b1hkzv2x)
+- [腾讯云服务器首年 88](https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
+- [华为云购买享受红利](https://activity.huaweicloud.com/discount_area_v5/index.html?&fromuser=aHcxMTc2NTU3MQ==&utm_source=aHcxMTc2NTU3MQ==&utm_medium=cps&utm_campaign=201905)
+ 

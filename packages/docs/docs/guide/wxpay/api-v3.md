@@ -33,6 +33,19 @@ String serialNo  = certificate.getSerialNumber().toString(16).toUpperCase();
 - 使用证书解析工具 [https://myssl.com/cert_decode.html](https://myssl.com/cert_decode.html)
 :::
 
+## 创建签名
+
+```java
+// 构建签名参数
+String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
+// 构建签名参数，也可通过列表传入待签名的参数
+String buildSignMessage = PayKit.buildSignMessage(ArrayList<String> signMessage)
+// 创建签名
+String signature = PayKit.createSign(buildSignMessage,keyPath);
+// 创建签名，整合版
+String signature = PayKit.createSign(ArrayList<String> signMessage, String keyPath)
+```
+
 ## 构建 Authorization
 
 ```java
