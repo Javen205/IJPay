@@ -3,6 +3,7 @@ package com.ijpay.jdpay;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -38,7 +39,7 @@ public class JdPayApiConfigKit {
         return CFG_MAP.put(jdPayApiConfig.getAppId(), jdPayApiConfig);
     }
 
-    public static JdPayApiConfig setThreadLocalJdPayApiConfig(JdPayApiConfig jdPayApiConfig) {
+    public static JdPayApiConfig setThreadLocalApiConfig(JdPayApiConfig jdPayApiConfig) {
         if (StrUtil.isNotEmpty(jdPayApiConfig.getAppId())) {
             setThreadLocalAppId(jdPayApiConfig.getAppId());
         }
@@ -47,6 +48,21 @@ public class JdPayApiConfigKit {
 
     public static JdPayApiConfig removeApiConfig(JdPayApiConfig jdPayApiConfig) {
         return removeApiConfig(jdPayApiConfig.getAppId());
+    }
+
+    /**
+     * 移除所有支付配置
+     *
+     * @return 是否移除成功
+     */
+    public static boolean removeAllApiConfig() {
+        Set<String> keySet = CFG_MAP.keySet();
+        for (String str : keySet) {
+            System.out.println(str);
+            CFG_MAP.remove(str);
+        }
+        removeThreadLocalAppId();
+        return true;
     }
 
     public static JdPayApiConfig removeApiConfig(String appId) {
@@ -72,7 +88,7 @@ public class JdPayApiConfigKit {
         return appId;
     }
 
-    public static JdPayApiConfig getJdPayApiConfig() {
+    public static JdPayApiConfig getApiConfig() {
         String appId = getAppId();
         return getApiConfig(appId);
     }

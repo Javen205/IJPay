@@ -4,6 +4,7 @@ package com.ijpay.unionpay;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -47,6 +48,21 @@ public class UnionPayApiConfigKit {
 
     public static UnionPayApiConfig removeApiConfig(UnionPayApiConfig UnionPayApiConfig) {
         return removeApiConfig(UnionPayApiConfig.getMchId());
+    }
+
+    /**
+     * 移除所有支付配置
+     *
+     * @return 是否移除成功
+     */
+    public static boolean removeAllApiConfig() {
+        Set<String> keySet = CFG_MAP.keySet();
+        for (String str : keySet) {
+            System.out.println(str);
+            CFG_MAP.remove(str);
+        }
+        removeThreadLocalMchId();
+        return true;
     }
 
     public static UnionPayApiConfig removeApiConfig(String mchId) {

@@ -3,6 +3,7 @@ package com.ijpay.qqpay;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -38,7 +39,7 @@ public class QqPayApiConfigKit {
         return CFG_MAP.put(qqPayApiConfig.getAppId(), qqPayApiConfig);
     }
 
-    public static QqPayApiConfig setThreadLocalQqPayApiConfig(QqPayApiConfig qqPayApiConfig) {
+    public static QqPayApiConfig setThreadLocalApiConfig(QqPayApiConfig qqPayApiConfig) {
         if (StrUtil.isNotEmpty(qqPayApiConfig.getAppId())) {
             setThreadLocalAppId(qqPayApiConfig.getAppId());
         }
@@ -47,6 +48,21 @@ public class QqPayApiConfigKit {
 
     public static QqPayApiConfig removeApiConfig(QqPayApiConfig qqPayApiConfig) {
         return removeApiConfig(qqPayApiConfig.getAppId());
+    }
+
+    /**
+     * 移除所有支付配置
+     *
+     * @return 是否移除成功
+     */
+    public static boolean removeAllApiConfig() {
+        Set<String> keySet = CFG_MAP.keySet();
+        for (String str : keySet) {
+            System.out.println(str);
+            CFG_MAP.remove(str);
+        }
+        removeThreadLocalAppId();
+        return true;
     }
 
     public static QqPayApiConfig removeApiConfig(String appId) {
@@ -72,7 +88,7 @@ public class QqPayApiConfigKit {
         return appId;
     }
 
-    public static QqPayApiConfig getQqPayApiConfig() {
+    public static QqPayApiConfig getApiConfig() {
         String appId = getAppId();
         return getApiConfig(appId);
     }
