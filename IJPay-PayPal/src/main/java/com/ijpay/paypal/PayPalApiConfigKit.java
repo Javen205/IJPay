@@ -3,6 +3,7 @@ package com.ijpay.paypal;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,46 +18,46 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Javen
  */
 public class PayPalApiConfigKit {
-    private static final ThreadLocal<String> TL = new ThreadLocal<String>();
+    private static final ThreadLocal<String> TL = new ThreadLocal<>();
 
-    private static final Map<String, PayPalApiConfig> CFG_MAP = new ConcurrentHashMap<String, PayPalApiConfig>();
+    private static final Map<String, PayPalApiConfig> CFG_MAP = new ConcurrentHashMap<>();
     private static final String DEFAULT_CFG_KEY = "_default_key_";
 
     /**
      * <p>向缓存中设置 PayPalApiConfig </p>
      * <p>每个 clientId 只需添加一次，相同 clientId 将被覆盖</p>
      *
-     * @param payPalApiConfig PayPal 支付配置
+     * @param config PayPal 支付配置
      * @return {@link PayPalApiConfig}
      */
-    public static PayPalApiConfig putApiConfig(PayPalApiConfig payPalApiConfig) {
+    public static PayPalApiConfig putApiConfig(PayPalApiConfig config) {
         if (CFG_MAP.size() == 0) {
-            CFG_MAP.put(DEFAULT_CFG_KEY, payPalApiConfig);
+            CFG_MAP.put(DEFAULT_CFG_KEY, config);
         }
-        return CFG_MAP.put(payPalApiConfig.getClientId(), payPalApiConfig);
+        return CFG_MAP.put(config.getClientId(), config);
     }
 
     /**
      * 向当前线程中设置 {@link PayPalApiConfig}
      *
-     * @param payPalApiConfig {@link PayPalApiConfig} PayPal 支付配置
+     * @param config {@link PayPalApiConfig} PayPal 支付配置
      * @return {@link PayPalApiConfig}
      */
-    public static PayPalApiConfig setThreadLocalPayPalApiConfig(PayPalApiConfig payPalApiConfig) {
-        if (StrUtil.isNotEmpty(payPalApiConfig.getClientId())) {
-            setThreadLocalClientId(payPalApiConfig.getClientId());
+    public static PayPalApiConfig setThreadLocalApiConfig(PayPalApiConfig config) {
+        if (StrUtil.isNotEmpty(config.getClientId())) {
+            setThreadLocalClientId(config.getClientId());
         }
-        return putApiConfig(payPalApiConfig);
+        return putApiConfig(config);
     }
 
     /**
      * 通过 PayPalApiConfig 移除支付配置
      *
-     * @param payPalApiConfig {@link PayPalApiConfig} PayPal 支付配置
+     * @param config {@link PayPalApiConfig} PayPal 支付配置
      * @return {@link PayPalApiConfig}
      */
-    public static PayPalApiConfig removeApiConfig(PayPalApiConfig payPalApiConfig) {
-        return removeApiConfig(payPalApiConfig.getClientId());
+    public static PayPalApiConfig removeApiConfig(PayPalApiConfig config) {
+        return removeApiConfig(config.getClientId());
     }
 
     /**
@@ -67,6 +68,21 @@ public class PayPalApiConfigKit {
      */
     public static PayPalApiConfig removeApiConfig(String clientId) {
         return CFG_MAP.remove(clientId);
+    }
+
+    /**
+     * 移除所有支付配置
+     *
+     * @return 是否移除成功
+     */
+    public static boolean removeAllApiConfig() {
+        Set<String> keySet = CFG_MAP.keySet();
+        for (String str : keySet) {
+            System.out.println(str);
+            CFG_MAP.remove(str);
+        }
+        removeThreadLocalClientId();
+        return true;
     }
 
     /**
@@ -106,9 +122,8 @@ public class PayPalApiConfigKit {
      *
      * @return {@link PayPalApiConfig}
      */
-    public static PayPalApiConfig getPayPalApiConfig() {
-        String clientId = getClientId();
-        return getApiConfig(clientId);
+    public static PayPalApiConfig getApiConfig() {
+        return getApiConfig(getClientId());
     }
 
     /**
@@ -120,7 +135,7 @@ public class PayPalApiConfigKit {
     public static PayPalApiConfig getApiConfig(String clientId) {
         PayPalApiConfig cfg = CFG_MAP.get(clientId);
         if (cfg == null) {
-            throw new IllegalStateException("需事先调用 PayPalApiConfigKit.putApiConfig(payPalApiConfig) 将 clientId 对应的 payPalApiConfig 对象存入，才可以使用 PayPalApiConfigKit.getPayPalApiConfig() 的系列方法");
+            throw new IllegalStateException("需事先调用 PayPalApiConfigKit.putApiConfig(payPalApiConfig) 将 clientId 对应的 payPalApiConfig 对象存入，才可以使用 PayPalApiConfigKit.getApiConfig() 的系列方法");
         }
         return cfg;
     }
