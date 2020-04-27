@@ -34,6 +34,12 @@
             <artifactId>javase</artifactId>
             <version>3.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- 开源多维码生成工具 -->
     </dependencies>
 
