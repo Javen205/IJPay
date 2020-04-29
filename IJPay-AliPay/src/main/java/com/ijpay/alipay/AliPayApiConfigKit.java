@@ -3,7 +3,6 @@ package com.ijpay.alipay;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -58,21 +57,6 @@ public class AliPayApiConfigKit {
      */
     public static AliPayApiConfig removeApiConfig(AliPayApiConfig aliPayApiConfig) {
         return removeApiConfig(aliPayApiConfig.getAppId());
-    }
-
-    /**
-     * 移除所有支付配置
-     *
-     * @return 是否移除成功
-     */
-    public static boolean removeAllApiConfig() {
-        Set<String> keySet = CFG_MAP.keySet();
-        for (String str : keySet) {
-            System.out.println(str);
-            CFG_MAP.remove(str);
-        }
-        removeThreadLocalAppId();
-        return true;
     }
 
     /**
