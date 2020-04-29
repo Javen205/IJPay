@@ -112,7 +112,7 @@ public class PayPalApi {
     }
 
     /**
-     * 确认订单
+     * 查询确认的订单
      *
      * @param config    {@link PayPalApiConfig} 支付配置
      * @param captureId 订单号
@@ -139,7 +139,7 @@ public class PayPalApi {
     }
 
     /**
-     * 退款
+     * 查询退款
      *
      * @param config {@link PayPalApiConfig} 支付配置
      * @param id     订单号
