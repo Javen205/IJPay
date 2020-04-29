@@ -511,6 +511,10 @@ public class WxPayController extends AbstractWxPayApiController {
         if (!WxPayKit.codeIsOk(returnCode)) {
             return new AjaxResult().addError(returnMsg);
         }
+        String resultCode = result.get("result_code");
+        if (!WxPayKit.codeIsOk(resultCode)) {
+            return new AjaxResult().addError(returnMsg);
+        }
         // 以下字段在 return_code 和 result_code 都为 SUCCESS 的时候有返回
         String prepayId = result.get("prepay_id");
 
