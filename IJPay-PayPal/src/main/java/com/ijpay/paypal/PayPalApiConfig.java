@@ -19,10 +19,21 @@ import java.io.Serializable;
 public class PayPalApiConfig implements Serializable {
 
     private static final long serialVersionUID = -6012811778236113584L;
-
+    /**
+     * 应用编号
+     */
     private String clientId;
-    private String clientSecret;
+    /**
+     * 应用密钥
+     */
+    private String secret;
+    /**
+     * 是否是沙箱环境
+     */
     private boolean sandBox;
+    /**
+     * 域名
+     */
     private String domain;
 
     public String getClientId() {
@@ -33,12 +44,12 @@ public class PayPalApiConfig implements Serializable {
         this.clientId = clientId;
     }
 
-    public String getClientSecret() {
-        return clientSecret;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
     public boolean isSandBox() {

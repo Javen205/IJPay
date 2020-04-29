@@ -51,7 +51,7 @@ public class PayPalApi {
         Map<String, String> headers = new HashMap<>(3);
         headers.put("Accept", ContentType.JSON.toString());
         headers.put("Content-Type", ContentType.FORM_URLENCODED.toString());
-        headers.put("Authorization", "Basic ".concat(Base64.encode((config.getClientId().concat(":").concat(config.getClientSecret())).getBytes(StandardCharsets.UTF_8))));
+        headers.put("Authorization", "Basic ".concat(Base64.encode((config.getClientId().concat(":").concat(config.getSecret())).getBytes(StandardCharsets.UTF_8))));
         Map<String, Object> params = new HashMap<>(1);
         params.put("grant_type", "client_credentials");
         return post(getReqUrl(PayPalApiUrl.GET_TOKEN, config.isSandBox()), params, headers);
