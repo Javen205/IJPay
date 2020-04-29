@@ -80,7 +80,6 @@ public class PayPalApi {
     public static IJPayHttpResponse updateOrder(PayPalApiConfig config, String id, String data) {
         AccessToken accessToken = AccessTokenKit.get(config.getClientId());
         String url = getReqUrl(PayPalApiUrl.CHECKOUT_ORDERS, config.isSandBox()).concat("/").concat(id);
-        System.out.println(url);
         return patch(url, data, getBaseHeaders(accessToken));
     }
 
