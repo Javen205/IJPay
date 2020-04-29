@@ -46,7 +46,7 @@
 
 **特别说明：** 
 - 不依赖任何第三方 MVC 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
-- 微信支付支持多商户多应用，支持普通商户模式与服务商商模式当然也支持境外商户模式、同时支持 Api-v3 与 Api-v2 版本的接口。
+- 微信支付支持多商户多应用，普通商户模式与服务商商模式当然也支持境外商户、同时支持 Api-v3 与 Api-v2 版本的接口。
 - 支付宝支付支持多商户多应用，签名同时支持普通公钥方式与公钥证书方式
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
@@ -139,3 +139,4 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 - [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
 - [银联条码支付综合前置平台](https://up.95516.com/open/openapi?code=unionpay&sdk=IJPay)
+- [PayPal 开发文档](https://developer.paypal.com/docs/api/overview)
