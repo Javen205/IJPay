@@ -70,6 +70,88 @@ public class PayPalApi {
     }
 
     /**
+     * 更新订单
+     *
+     * @param config {@link PayPalApiConfig} 支付配置
+     * @param id     订单号
+     * @param data   请求参数
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse updateOrder(PayPalApiConfig config, String id, String data) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = getReqUrl(PayPalApiUrl.CHECKOUT_ORDERS, config.isSandBox()).concat("/").concat(id);
+        System.out.println(url);
+        return patch(url, data, getBaseHeaders(accessToken));
+    }
+
+    /**
+     * 查询订单
+     *
+     * @param config  {@link PayPalApiConfig} 支付配置
+     * @param orderId 订单号
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse queryOrder(PayPalApiConfig config, String orderId) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = getReqUrl(PayPalApiUrl.CHECKOUT_ORDERS, config.isSandBox()).concat("/").concat(orderId);
+        return get(url, null, getBaseHeaders(accessToken));
+    }
+
+    /**
+     * 确认订单
+     *
+     * @param config {@link PayPalApiConfig} 支付配置
+     * @param id     订单号
+     * @param data   请求参数
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse captureOrder(PayPalApiConfig config, String id, String data) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = String.format(getReqUrl(PayPalApiUrl.CAPTURE_ORDER, config.isSandBox()), id);
+        return post(url, data, getBaseHeaders(accessToken));
+    }
+
+    /**
+     * 确认订单
+     *
+     * @param config    {@link PayPalApiConfig} 支付配置
+     * @param captureId 订单号
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse captureQuery(PayPalApiConfig config, String captureId) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = String.format(getReqUrl(PayPalApiUrl.CAPTURE_QUERY, config.isSandBox()), captureId);
+        return get(url, null, getBaseHeaders(accessToken));
+    }
+
+    /**
+     * 退款
+     *
+     * @param config    {@link PayPalApiConfig} 支付配置
+     * @param captureId 订单号
+     * @param data      请求参数
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse refund(PayPalApiConfig config, String captureId, String data) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = String.format(getReqUrl(PayPalApiUrl.REFUND, config.isSandBox()), captureId);
+        return post(url, data, getBaseHeaders(accessToken));
+    }
+
+    /**
+     * 退款
+     *
+     * @param config {@link PayPalApiConfig} 支付配置
+     * @param id     订单号
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse refundQuery(PayPalApiConfig config, String id) {
+        AccessToken accessToken = AccessTokenKit.get(config.getClientId());
+        String url = String.format(getReqUrl(PayPalApiUrl.REFUND_QUERY, config.isSandBox()), id);
+        return get(url, null, getBaseHeaders(accessToken));
+    }
+
+    /**
      * post 请求
      *
      * @param url     请求 url
@@ -82,6 +164,18 @@ public class PayPalApi {
     }
 
     /**
+     * get 请求
+     *
+     * @param url     请求 url
+     * @param params  {@link Map} 请求参数
+     * @param headers {@link Map} 请求头
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse get(String url, Map<String, Object> params, Map<String, String> headers) {
+        return HttpKit.getDelegate().get(url, params, headers);
+    }
+
+    /**
      * post 请求
      *
      * @param url     请求 url
@@ -91,6 +185,18 @@ public class PayPalApi {
      */
     public static IJPayHttpResponse post(String url, String data, Map<String, String> headers) {
         return HttpKit.getDelegate().post(url, data, headers);
+    }
+
+    /**
+     * patch 请求
+     *
+     * @param url     请求 url
+     * @param data    {@link String} 请求参数
+     * @param headers {@link Map} 请求头
+     * @return {@link IJPayHttpResponse} 请求返回的结果
+     */
+    public static IJPayHttpResponse patch(String url, String data, Map<String, String> headers) {
+        return HttpKit.getDelegate().patch(url, data, headers);
     }
 
     public static Map<String, String> getBaseHeaders(AccessToken accessToken) {

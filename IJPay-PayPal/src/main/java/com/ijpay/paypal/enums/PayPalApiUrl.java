@@ -29,7 +29,23 @@ public enum PayPalApiUrl {
     /**
      * 订单
      */
-    CHECKOUT_ORDERS("/v2/checkout/orders");
+    CHECKOUT_ORDERS("/v2/checkout/orders"),
+    /**
+     * 确认订单
+     */
+    CAPTURE_ORDER("/v2/checkout/orders/%s/capture"),
+    /**
+     * 查询已确认订单
+     */
+    CAPTURE_QUERY("/v2/payments/captures/%s"),
+    /**
+     * 退款
+     */
+    REFUND("/v2/payments/captures/%s/refund"),
+    /**
+     * 退款查询
+     */
+    REFUND_QUERY("/v2/payments/refunds/%s");
 
     /**
      * 类型
