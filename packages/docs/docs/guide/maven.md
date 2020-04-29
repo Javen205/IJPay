@@ -84,7 +84,22 @@ QQ 支付
     <artifactId>IJPay-UnionPay</artifactId>
     <version>latest-version</version>
 </dependency>
-```       
+```  
+
+
+::: tip
+PayPal 支付
+:::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-PayPal</artifactId>
+    <version>latest-version</version>
+</dependency>
+```     
 
 ## 更多依赖方式
 
