@@ -401,7 +401,7 @@ public class WxPayController extends AbstractWxPayApiController {
         String qrCodeUrl = result.get("code_url");
         String name = "payQRCode2.png";
 
-        Boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
+        boolean encode = QrCodeKit.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 3, ErrorCorrectionLevel.H, "png", 200, 200,
                 request.getSession().getServletContext().getRealPath("/") + File.separator + name);
         if (encode) {
             //在页面上显示

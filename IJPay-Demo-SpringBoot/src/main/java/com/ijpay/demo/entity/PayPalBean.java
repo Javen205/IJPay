@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "paypal")
 public class PayPalBean {
     private String clientId;
-    private String clientSecret;
-    private String mode;
+    private String secret;
+    private Boolean sandBox;
     private String domain;
 
     public String getClientId() {
@@ -34,20 +34,20 @@ public class PayPalBean {
         this.clientId = clientId;
     }
 
-    public String getClientSecret() {
-        return clientSecret;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
-    public String getMode() {
-        return mode;
+    public Boolean getSandBox() {
+        return sandBox;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setSandBox(Boolean sandBox) {
+        this.sandBox = sandBox;
     }
 
     public String getDomain() {
@@ -62,8 +62,8 @@ public class PayPalBean {
     public String toString() {
         return "PayPalBean{" +
                 "clientId='" + clientId + '\'' +
-                ", clientSecret='" + clientSecret + '\'' +
-                ", mode='" + mode + '\'' +
+                ", secret='" + secret + '\'' +
+                ", sandBox=" + sandBox +
                 ", domain='" + domain + '\'' +
                 '}';
     }

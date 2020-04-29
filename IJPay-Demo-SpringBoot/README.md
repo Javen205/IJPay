@@ -7,11 +7,7 @@ IJPay 一直以简洁至上、开箱即用为核心。提供的 IJPay-Demo 也�
 
 如果项目周期短不想投入过多时间和精力在接入上面或者实在为技术感到头疼，那么请考虑一下 IJPay 提供的 VIP 服务。
 
-提供一对一技术支持费用： ¥ 299 元。
-
-付款时请备注联系方式或者加群: 
-[723992875](http://shang.qq.com/wpa/qunwpa?idkey=44c2b0331f1bdca6c9d404e863edd83973fa97224b79778db79505fc592f00bc)
-联系群主
+[IJPay VIP 服务说明](https://javen205.gitee.io/ijpay/guide/donate)
 
 
 ## IJPay-Demo 使用步骤
