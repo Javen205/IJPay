@@ -67,10 +67,10 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
  	<a target="_blank" href="https://www.jetbrains.com/?from=IJPay">
  	    <img src="assets/img/jetbrains.png" height="100" alt="jetbrains">
  	</a>
- 	<a left="100" target="_blank" href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=b1hkzv2x">
+ 	<a left="100" target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=b1hkzv2x">
         <img src="assets/img/aliYun.jpg" height="100" alt="">
     </a>
-    <a left="100" target="_blank" href="https://cloud.tencent.com/act/cps/redirect?redirect=1048&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console">
+    <a left="100" target="_blank" href="https://cloud.tencent.com/act/cps/redirect?redirect=1054&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console">
         <img src="assets/img/tencent_11.jpg" height="100" alt="">
     </a>
  </p>
