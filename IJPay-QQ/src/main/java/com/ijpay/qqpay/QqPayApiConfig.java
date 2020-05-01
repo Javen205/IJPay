@@ -21,6 +21,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class QqPayApiConfig implements Serializable {
     private static final long serialVersionUID = 8365822256469245771L;
     

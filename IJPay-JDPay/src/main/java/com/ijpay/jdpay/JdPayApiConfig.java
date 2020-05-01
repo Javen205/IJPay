@@ -21,7 +21,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class JdPayApiConfig implements Serializable {
     private static final long serialVersionUID = -9044503427692786302L;
     

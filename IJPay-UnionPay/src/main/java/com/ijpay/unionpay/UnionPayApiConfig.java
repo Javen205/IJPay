@@ -20,7 +20,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class UnionPayApiConfig implements Serializable {
     private static final long serialVersionUID = -9025648880068727445L;
 
