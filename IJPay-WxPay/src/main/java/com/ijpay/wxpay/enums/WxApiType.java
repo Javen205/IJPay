@@ -320,7 +320,7 @@ public enum WxApiType {
      */
     MERCHANT_VIDEO_UPLOAD("/v3/merchant/media/video_upload"),
 
-    
+
     /**
      * 创建/查询支付分订单
      */
@@ -646,7 +646,17 @@ public enum WxApiType {
     /**
      * 查询先享卡订单
      */
-    DISCOUNT_CARD_ORDER_TRADE_NO("/v3/discount-card/orders/out-trade-no/%s");
+    DISCOUNT_CARD_ORDER_TRADE_NO("/v3/discount-card/orders/out-trade-no/%s"),
+
+
+    /**
+     * 服务人员注册
+     */
+    SMART_GUIDE_GUIDES("/v3/smartguide/guides"),
+    /**
+     * 服务人员分配
+     */
+    SMART_GUIDE_GUIDES_ASSIGN("/v3/smartguide/guides/%s/assign");
 
     /**
      * 类型
