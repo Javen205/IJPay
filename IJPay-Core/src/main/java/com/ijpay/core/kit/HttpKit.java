@@ -5,6 +5,8 @@ import com.ijpay.core.http.AbstractHttpDelegate;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -54,6 +56,26 @@ public class HttpKit {
                 }
             }
         }
+    }
+
+    /**
+     * 将同步通知的参数转化为Map
+     *
+     * @param request {@link HttpServletRequest}
+     * @return 转化后的 Map
+     */
+    public static Map<String, String> toMap(HttpServletRequest request) {
+        Map<String, String> params = new HashMap<>();
+        Map<String, String[]> requestParams = request.getParameterMap();
+        for (String name : requestParams.keySet()) {
+            String[] values = requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+            }
+            params.put(name, valueStr);
+        }
+        return params;
     }
 }
 
