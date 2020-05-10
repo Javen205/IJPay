@@ -73,10 +73,6 @@ public enum XPayUrl {
      */
     WX_BILL_INFO("/api/pay/wxpay/getWxBillInfo"),
     /**
-     * 发起微信结算
-     */
-    SEND_WX_CASH("/api/pay/wxpay/sendWxCash"),
-    /**
      * 下载对账单
      */
     DOWNLOAD_BILL("/api/pay/wxpay/downloadBill"),
