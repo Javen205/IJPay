@@ -5,16 +5,15 @@
     <parent>
         <artifactId>IJPay</artifactId>
         <groupId>com.github.javen205</groupId>
-        <version>2.6.1</version>
+        <version>2.6.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
 
-    <artifactId>IJPay-UnionPay</artifactId>
+    <artifactId>IJPay-XPay</artifactId>
     <name>${project.artifactId}</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)-银联支付</description>
+    <description>IJPay 让支付触手可及(Easy Pay Library)-XPay</description>
     <url>https://github.com/javen205/IJPay</url>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -22,12 +21,10 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-Core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
-
 </project>
