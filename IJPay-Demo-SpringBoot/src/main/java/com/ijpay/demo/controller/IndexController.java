@@ -82,4 +82,9 @@ public class IndexController {
         return "id>" + xx;
     }
 
+    @RequestMapping("/toXPay")
+    public String toXPay() {
+        return "xpay.html";
+    }
+
 }

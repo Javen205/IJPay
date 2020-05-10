@@ -5,7 +5,7 @@
     <parent>
         <artifactId>IJPay</artifactId>
         <groupId>com.github.javen205</groupId>
-        <version>2.6.0</version>
+        <version>2.6.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -45,6 +45,11 @@
         <dependency>
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-PayPal</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-XPay</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

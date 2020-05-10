@@ -79,14 +79,14 @@ export default {
     s.parentNode.insertBefore(hm, s);
     
     // 替换 latest-version
-    let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "https://img.shields.io/maven-central/v/com.github.javen205/IJPay.json", false);
-    xmlHttp.send(null);
-    let versionInfo = JSON.parse(xmlHttp.responseText).value.replace('v', '');
-    let codeNodeList = document.querySelectorAll('code');
-    for (let i = 0; i < codeNodeList.length; i++) {
-        codeNodeList[i].innerHTML = codeNodeList[i].innerHTML.replace('latest-version', versionInfo);
-    }
+    // let xmlHttp = new XMLHttpRequest();
+    // xmlHttp.open("GET", "https://img.shields.io/maven-central/v/com.github.javen205/IJPay.json", false);
+    // xmlHttp.send(null);
+    // let versionInfo = JSON.parse(xmlHttp.responseText).value.replace('v', '');
+    // let codeNodeList = document.querySelectorAll('code');
+    // for (let i = 0; i < codeNodeList.length; i++) {
+    //     codeNodeList[i].innerHTML = codeNodeList[i].innerHTML.replace('latest-version', versionInfo);
+    // }
     
     // 通知
     this.$notify({
