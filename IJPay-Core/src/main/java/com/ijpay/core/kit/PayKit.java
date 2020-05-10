@@ -2,6 +2,7 @@ package com.ijpay.core.kit;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
@@ -39,10 +40,23 @@ import java.util.*;
  */
 public class PayKit {
 
+    /**
+     * 生成16进制的 sha256 字符串
+     *
+     * @param data 数据
+     * @param key  密钥
+     * @return sha256 字符串
+     */
     public static String hmacSha256(String data, String key) {
         return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data, CharsetUtil.UTF_8);
     }
 
+    /**
+     * 生成16进制 MD5 字符串
+     *
+     * @param data 数据
+     * @return MD5 字符串
+     */
     public static String md5(String data) {
         return SecureUtil.md5(data);
     }
@@ -69,8 +83,24 @@ public class PayKit {
         return SecureUtil.aes(md5(key).toLowerCase().getBytes()).encryptBase64(data.getBytes());
     }
 
+    /**
+     * 简化的UUID，去掉了横线，使用性能更好的 ThreadLocalRandom 生成UUID
+     *
+     * @return 简化的 UUID，去掉了横线
+     */
     public static String generateStr() {
         return IdUtil.fastSimpleUUID();
+    }
+
+    /**
+     * 雪花算法
+     *
+     * @param workerId     终端ID
+     * @param dataCenterId 数据中心ID
+     * @return {@link Snowflake}
+     */
+    public static Snowflake getSnowflake(long workerId, long dataCenterId) {
+        return IdUtil.getSnowflake(workerId, dataCenterId);
     }
 
     /**
