@@ -1,5 +1,5 @@
 <p align="center">
-	<a target="_blank" href="https://javen205.gitee.io/ijpay"><img src="assets/img/logo.png"></a>
+	<a target="_blank" href="https://javen205.gitee.io/ijpay"><img alt="" src="assets/img/logo.png"/></a>
 </p>
 
 <p align="center">
@@ -8,39 +8,41 @@
 
 <p align="center">
      <a target="_blank" href="https://gitee.com/javen205/IJPay">
-     	<img src="https://gitee.com/javen205/IJPay/badge/star.svg?theme=white" ></img>
+     	<img alt="" src="https://gitee.com/Javen205/IJPay/badge/star.svg?theme=gvp"/>
      </a>
      <a target="_blank" href="https://github.com/Javen205/IJPay">
-        <img src="https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars" ></img>
+        <img alt="" src="https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars"/>
      </a>
      <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">
-        <img src="https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg" ></img>
+        <img alt="" src="https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg"/>
      </a>
      <a target="_blank" href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">
-        <img src="https://img.shields.io/badge/JDK-1.7+-green.svg" ></img>
+        <img alt="" src="https://img.shields.io/badge/JDK-1.7+-green.svg"/>
      </a>
      <a target="_blank" href="https://travis-ci.org/Javen205/IJPay">
-        <img src="https://travis-ci.org/Javen205/IJPay.svg?branch=master" ></img>
+        <img alt="" src="https://travis-ci.org/Javen205/IJPay.svg?branch=master"/>
      </a>
      <a target="_blank" href="https://www.codacy.com/app/Javen205/IJPay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Javen205/IJPay&amp;utm_campaign=Badge_Grade">
-        <img src="https://api.codacy.com/project/badge/Grade/b76239f6b2c84564b30a815aea71e8a7" ></img>
+        <img alt="" src="https://api.codacy.com/project/badge/Grade/b76239f6b2c84564b30a815aea71e8a7"/>
      </a>
      <a target="_blank" href="https://github.com/Javen205/IJPay/release">
-        <img src="https://img.shields.io/github/release/Javen205/IJPay.svg" ></img>
+        <img alt="" src="https://img.shields.io/github/release/Javen205/IJPay.svg"/>
      </a>
      <a target="_blank" href="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay">
-        <img src="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg" ></img>
+        <img alt="" src="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg"/>
      </a> 
-     <a target="_blank" href="https://javen205.github.io">
-        <img src="https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg" ></img>
+     <a target="_blank" href="https://javen205.gitee.io/ijpay/guide/donate">
+        <img alt="" src="https://img.shields.io/badge/IJPay%20Author-Javen-ff69b4.svg"/>
      </a>
      <a target="_blank" href="https://github.com/Javen205/donate">
-        <img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg" ></img>
+        <img alt="" src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg"/>
      </a> 
      <a target="_blank" href="https://gitter.im/Javen205/IJPay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
-        <img src="https://badges.gitter.im/Javen205/IJPay.svg" ></img>
+        <img alt="" src="https://badges.gitter.im/Javen205/IJPay.svg"/>
      </a>
-
+     <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=44c2b0331f1bdca6c9d404e863edd83973fa97224b79778db79505fc592f00bc">
+         <img alt="" src="https://img.shields.io/badge/IJPay%20%E4%BA%A4%E6%B5%81%E7%BE%A4-723992875-fba7f9.svg"/>
+     </a>
 </p>
 
 
@@ -56,9 +58,8 @@ GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
 JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.com/javen205/IJPay)
 
 
-
-- IJPay 是 [JPay](https://github.com/Javen205/JPay) 后台接口 SDK 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
-- [JPay](https://github.com/Javen205/JPay) 是简易而不简单的 Android 支付 SDK，JPay 是对微信 App 支付、支付宝 App 支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
+- IJPay 是 [JPay](https://gitee.com/Javen205/JPay) 后台接口 SDK 不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
+- [JPay](https://gitee.com/Javen205/JPay) 是简易而不简单的 Android 支付 SDK，JPay 是对微信 App 支付、支付宝 App 支付的二次封装,对外提供一个相对简单的接口以及支付结果的回调。
 - IOS 支付 SDK，敬请关注。
 
 ### 赞助商与活动推广
@@ -75,11 +76,13 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
     </a>
  </p>
 
+### 微信个人商户
+
+了解更多戳→ [提供稳定异步通知，最低费率 0.38%](https://gitee.com/javen205/IJPay/tree/xpay)
+
 ### 接入文档
 
-
-[IJPay 让支付触手可及](https://javen205.gitee.io/ijpay/)
-
+[IJPay 让支付触手可及](https://javen205.gitee.io/ijpay)
 
 ### 效果图&示例
 
