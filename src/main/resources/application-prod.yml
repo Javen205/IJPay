@@ -1,0 +1,11 @@
+server:
+  port: 80
+spring:
+  thymeleaf:
+    cache: true
+
+xpay:
+  key: 密钥
+  mchId: 商户ID
+  serverUrl: 网关
+  domain: 域名
