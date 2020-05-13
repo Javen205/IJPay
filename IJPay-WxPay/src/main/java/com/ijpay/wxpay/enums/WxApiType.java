@@ -656,7 +656,20 @@ public enum WxApiType {
     /**
      * 服务人员分配
      */
-    SMART_GUIDE_GUIDES_ASSIGN("/v3/smartguide/guides/%s/assign");
+    SMART_GUIDE_GUIDES_ASSIGN("/v3/smartguide/guides/%s/assign"),
+
+    /**
+     * 报关接口-订单附加信息提交接口
+     */
+    CUSTOM_DECLARE_ORDER("/cgi-bin/mch/customs/customdeclareorder"),
+    /**
+     * 报关接口-订单附加信息查询接口
+     */
+    CUSTOM_DECLARE_QUERY("/cgi-bin/mch/customs/customdeclarequery"),
+    /**
+     * 报关接口-订单附加信息重推接口
+     */
+    CUSTOM_DECLARE_RE_DECLARE("/cgi-bin/mch/newcustoms/customdeclareredeclare");
 
     /**
      * 类型
