@@ -81,10 +81,4 @@ public class IndexController {
     public String param2(@RequestParam(value = "id", required = false, defaultValue = "2") Integer xx) {
         return "id>" + xx;
     }
-
-    @RequestMapping("/toXPay")
-    public String toXPay() {
-        return "xpay.html";
-    }
-
 }
