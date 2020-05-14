@@ -48,7 +48,7 @@ public class PayController {
     private PayBean payBean;
 
     @Autowired
-    public void setPayBean (PayBean payBean) {
+    public void setPayBean(PayBean payBean) {
         this.payBean = payBean;
     }
 
@@ -68,22 +68,22 @@ public class PayController {
      */
     @RequestMapping(value = "/microPay", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public AjaxResult microPay(@RequestParam("auth_code") String auth_code, @RequestParam("total_fee") String total_fee) {
+    public AjaxResult microPay(@RequestParam("auth_code") String authCode, @RequestParam("total_fee") String totalFee) {
         try {
-            if (StrUtil.isBlank(total_fee)) {
+            if (StrUtil.isBlank(totalFee)) {
                 return new AjaxResult().addError("支付金额不能为空");
             }
 
-            if (StrUtil.isBlank(auth_code)) {
+            if (StrUtil.isBlank(authCode)) {
                 return new AjaxResult().addError("auth_code 参数错误");
             }
 
             Map<String, String> params = XPayModel.builder()
                     .out_trade_no(PayKit.getSnowflake(1, 1).nextIdStr())
-                    .total_fee(total_fee)
+                    .total_fee(totalFee)
                     .mch_id(payBean.getMchId())
                     .body("IJPay-刷卡支付")
-                    .auth_code(auth_code)
+                    .auth_code(authCode)
                     .build()
                     .createSign(payBean.getKey(), SignType.MD5, false);
 
@@ -174,7 +174,7 @@ public class PayController {
             Integer status = jsonObject.getInt("code");
             if (status == 0) {
                 return new AjaxResult().success(jsonObject.getStr("data"));
-            }else {
+            } else {
                 return new AjaxResult().success(jsonObject.getStr("msg"));
             }
         } catch (Exception e) {
@@ -243,39 +243,39 @@ public class PayController {
     @RequestMapping(value = "/jsPay", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public AjaxResult jsPay(HttpServletRequest request, @RequestParam("total_fee") String totalFee) {
-       try {
-           String openId = (String) request.getSession().getAttribute("openId");
+        try {
+            String openId = (String) request.getSession().getAttribute("openId");
 
-           if (StrUtil.isEmpty(openId)){
-               return new AjaxResult().addError("请重新获取 openId");
-           }
+            if (StrUtil.isEmpty(openId)) {
+                return new AjaxResult().addError("请重新获取 openId");
+            }
 
-           Map<String, String> params = XPayModel.builder()
-                   .out_trade_no(PayKit.getSnowflake(1, 1).nextIdStr())
-                   .total_fee(totalFee)
-                   .mch_id(payBean.getMchId())
-                   .body("IJPay 公众号支付")
-                   .openId(openId)
-                   .build()
-                   .createSign(payBean.getKey(), SignType.MD5, false);
+            Map<String, String> params = XPayModel.builder()
+                    .out_trade_no(PayKit.getSnowflake(1, 1).nextIdStr())
+                    .total_fee(totalFee)
+                    .mch_id(payBean.getMchId())
+                    .body("IJPay 公众号支付")
+                    .openId(openId)
+                    .build()
+                    .createSign(payBean.getKey(), SignType.MD5, false);
 
-           params.put("attach", "附加参数");
-           params.put("notify_url", payBean.getDomain().concat(notifyUrl));
+            params.put("attach", "附加参数");
+            params.put("notify_url", payBean.getDomain().concat(notifyUrl));
 
-           IJPayHttpResponse result = XPayApi.exePost(payBean.getServerUrl(), XPayUrl.JS_API_PAY, params);
-           String body = result.getBody();
-           log.info("jsPay body {}", body);
-           JSONObject jsonObject = JSONUtil.parseObj(body);
-           Integer status = jsonObject.getInt("code");
-           if (status == 0) {
-               return new AjaxResult().success(jsonObject.getStr("data"));
-           } else {
-               return new AjaxResult().addError(jsonObject.getStr("msg"));
-           }
-       }catch (Exception e){
-           e.printStackTrace();
-       }
-       return null;
+            IJPayHttpResponse result = XPayApi.exePost(payBean.getServerUrl(), XPayUrl.JS_API_PAY, params);
+            String body = result.getBody();
+            log.info("jsPay body {}", body);
+            JSONObject jsonObject = JSONUtil.parseObj(body);
+            Integer status = jsonObject.getInt("code");
+            if (status == 0) {
+                return new AjaxResult().success(jsonObject.getStr("data"));
+            } else {
+                return new AjaxResult().addError(jsonObject.getStr("msg"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -353,7 +353,7 @@ public class PayController {
                 .out_trade_no(PayKit.getSnowflake(1, 1).nextIdStr())
                 .total_fee("0.01")
                 .mch_id(payBean.getMchId())
-                .body("IJPay 收银台")
+                .body("IJPay 刷脸支付")
                 .openId(openId)
                 .face_code(faceCode)
                 .build()
@@ -377,7 +377,7 @@ public class PayController {
                 .out_trade_no(PayKit.getSnowflake(1, 1).nextIdStr())
                 .total_fee("0.01")
                 .mch_id(payBean.getMchId())
-                .body("IJPay 收银台")
+                .body("IJPay APP支付")
                 .build()
                 .createSign(payBean.getKey(), SignType.MD5, false);
 
@@ -393,15 +393,15 @@ public class PayController {
      */
     @RequestMapping(value = "/refund", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public String refund(@RequestParam("orderId") String orderId) {
+    public String refund(@RequestParam("orderId") String orderId, @RequestParam("money") String money) {
         Map<String, String> params = XPayModel.builder()
                 .out_trade_no(orderId)
                 .mch_id(payBean.getMchId())
-                .money("0.01")
+                .money(money)
                 .build()
                 .createSign(payBean.getKey(), SignType.MD5, false);
 
-        params.put("refund_desc", "IJPay 测试退款");
+        params.put("refund_desc", "IJPay 服务退款");
 
         IJPayHttpResponse result = XPayApi.exePost(payBean.getServerUrl(), XPayUrl.REFUND_ORDER, params);
         return result.getBody();
