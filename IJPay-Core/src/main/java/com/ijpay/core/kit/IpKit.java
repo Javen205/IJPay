@@ -26,6 +26,12 @@ public class IpKit {
             ip = request.getRemoteAddr();
         }
 
+        // 对于通过多个代理的情况，第一个 IP 为客户端真实 IP，多个IP按照','分割
+        if (ip != null && ip.length() > 15) {
+            if (ip.indexOf(",") > 0) {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
         return ip;
     }
 
