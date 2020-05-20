@@ -75,9 +75,7 @@ public class xxHttpKit extends AbstractHttpDelegate {
 
 在 IJPay 中如何快捷的获取异步通知中的数据呢？ 在 [HttpKit](https://gitee.com/javen205/IJPay/blob/master/IJPay-Core/src/main/java/com/ijpay/core/kit/HttpKit.java) 中提供了 readData 方法 `HttpKit.readData(HttpServletRequest request)`
 
-
-
-
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 
 
 

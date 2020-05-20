@@ -81,5 +81,5 @@ AccessToken accessToken = AccessTokenKit.get(config.getClientId(),true);
  
 - [IJPay-Demo-SpringBoot](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
 
-
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 

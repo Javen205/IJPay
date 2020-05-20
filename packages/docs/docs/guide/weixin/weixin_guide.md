@@ -48,5 +48,5 @@ weixin_guide 是基于 jfinal_weixin SDK 开发的实战项目。
 
 `详见请见`：[项目运行截图](http://gitee.com/javen205/weixin_guide/wikis/%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C%E5%9B%BE)
 
-
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 

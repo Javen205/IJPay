@@ -16,6 +16,12 @@ features:
   details: 支持多应用多商户，支持普通商户模式与服务商商模式当然也支持境外、同时支持 Api-v3 与 Api-v2 版本的接口。
 - title: 支付宝支付
   details: 支持多应用，签名同时支持普通公钥方式与公钥证书方式
+- title: 银联支付
+  details: 全渠道扫码支付、微信 App 支付、公众号&小程序支付、银联 JS 支付、支付宝服务窗支付
+- title: PayPal 支付
+  details: 自动管理 AccessToken，极速接入各种常用的支付方式
+- title: 个人微信支付
+  details: 微信个人商户，最低费率 0.38%，官方直连的异步回调通知
 footer: Apache License 2.0 | Copyright © 2019-present Javen
 ---
 
@@ -90,29 +96,44 @@ export default {
     
     // 通知
     this.$notify({
-      offset: 50,
-      title: 'IJPay VIP 服务',
-      message: 'VIP 服务可提供一对一在线答疑，加入 VIP 为您节省更多时间去陪恋人、家人以及朋友 :) 交流群：723992875',
-      type: 'success',
-      showClose: true,
-      duration: 0,
-      onClick: function() {
-        // Notification.closeAll();
-        window.open("https://javen205.gitee.io/ijpay/guide/donate/");
-      }
-    });
+          offset: 50,
+          title: '在线客服答疑',
+          message: '按问题付费或者加入 VIP，提供在线一对一技术支持。交流群：723992875',
+          type: 'success',
+          showClose: true,
+          duration: 0,
+          onClick: function() {
+            // Notification.closeAll();
+            window.open("https://javen205.gitee.io/ijpay/guide/donate/");
+          }
+        });
+    // this.$notify({
+    //   offset: 50,
+    //   title: 'IJPay VIP 服务',
+    //   message: 'VIP 服务可提供一对一在线答疑，加入 VIP 为您节省更多时间去陪恋人、家人以及朋友 :) 交流群：723992875',
+    //   type: 'success',
+    //   showClose: true,
+    //   duration: 0,
+    //   onClick: function() {
+    //     // Notification.closeAll();
+    //     window.open("https://javen205.gitee.io/ijpay/guide/donate/");
+    //   }
+    // });
     
-    this.$notify({
-      offset: 200,
-      title: 'TNWX 微信系开发脚手架',
-      message: '同时支持微信公众号、微信小程序、企业微信、企业微信开放平台、微信支付、微信小游戏。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
-      type: 'success',
-      showClose: true,
-      duration: 0,
-      onClick: function() {
-        window.open("https://gitee.com/Javen205/TNWX");
-      }
-    });
+    // this.$notify({
+    //   offset: 200,
+    //   title: 'TNWX 微信系开发脚手架',
+    //   message: '同时支持微信公众号、微信小程序、企业微信、企业微信开放平台、微信支付、微信小游戏。可接入到任何 Node.js 框架(Express、Nest、Egg、Koa 等)',
+    //   type: 'success',
+    //   showClose: true,
+    //   duration: 0,
+    //   onClick: function() {
+    //     window.open("https://gitee.com/Javen205/TNWX");
+    //   }
+    // });
   }
 }
 </script>
+
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

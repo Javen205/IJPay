@@ -195,3 +195,5 @@ IJPay 默认 Http 客户端是使用 [HuTool](https://hutool.cn) 中的 Http 客
      }
 ``` 
 
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
+

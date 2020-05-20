@@ -20,7 +20,12 @@ IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修�
 
 交流群：723992875
 
-直接扫下方二维码付款并备注联系方式(Q号或者微信号)即可快速加入 VIP。
+直接扫下方二维码付款并备注联系方式(Q号、手机号或者微信号)即可快速加入 VIP。
+
+::: tip 按问题付费答疑
+如果你只有某个疑难问题需要技术支持，可以戳 [在线客服](tencent://message/?uin=572839485&amp;Site=%E5%AE%A2%E6%9C%8D&amp;Menu=yes)，
+不要问在不在，请直接发问题以及红包 
+:::
 
  # 请作者喝一杯咖啡
  
@@ -40,6 +45,9 @@ IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修�
      <br/>
      <a target="_blank" href="https://github.com/Javen205/donate">前往赞助</a>
  </p>
+ 
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
+
  
  
  

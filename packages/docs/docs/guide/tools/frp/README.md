@@ -198,3 +198,5 @@ http {
 - [阿里云主机低至2折](https://www.aliyun.com/minisite/goods?userCode=b1hkzv2x)
 - [腾讯云服务器限时秒杀](https://cloud.tencent.com/act/cps/redirect?redirect=1054&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
 - [华为云购买享受红利](https://activity.huaweicloud.com/discount_area_v5/index.html?&fromuser=aHcxMTc2NTU3MQ==&utm_source=aHcxMTc2NTU3MQ==&utm_medium=cps&utm_campaign=201905)
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

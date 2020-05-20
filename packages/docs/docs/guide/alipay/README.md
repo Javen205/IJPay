@@ -147,4 +147,6 @@ public static AlipayTradeCloseResponse tradeCloseToResponse(AlipayTradeCloseMode
  
 - [IJPay-Demo](https://gitee.com/javen205/IJPay-Demo)
 
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
+
 

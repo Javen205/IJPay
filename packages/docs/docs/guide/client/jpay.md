@@ -249,3 +249,5 @@ JPay.getIntance(mContext).toAliPay(orderInfo, new JPay.AliPayListener() {
 
 [Android Studio 上传aar(Library)到JCenter](http://javen.blog.csdn.net/article/details/60336189)
 
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

@@ -50,6 +50,6 @@
 - domain= 外网访问项目的域名，支付通知、回调中会使用
 :::
 
-
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 
 

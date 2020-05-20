@@ -141,3 +141,5 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 - [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
 - [银联条码支付综合前置平台](https://up.95516.com/open/openapi?code=unionpay&sdk=IJPay)
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

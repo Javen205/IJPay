@@ -17,8 +17,7 @@
 [精通 JFinal 视频教程](https://www.bilibili.com/video/av40732021?from=IJPay)
 
 
-
-
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 
 
 

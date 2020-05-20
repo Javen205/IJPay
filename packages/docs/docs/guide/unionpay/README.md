@@ -82,3 +82,5 @@ public AjaxResult microPay(HttpServletRequest request, HttpServletResponse respo
 ## 完整示例
  
 - [IJPay-Demo-SpringBoot](https://gitee.com/javen205/IJPay/blob/master/IJPay-Demo-SpringBoot/src/main/java/com/ijpay/demo/controller/unionpay/UnionPayController.java)
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

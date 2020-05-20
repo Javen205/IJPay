@@ -56,3 +56,5 @@ $ yarn add tnwx
 - `Avue` 一款基于 vue 可配置化的神奇框架：https://gitee.com/smallweigit/avue
 - `pig` 宇宙最强微服务（架构师必备）：https://gitee.com/log4j/pig
 - `SpringBlade` 完整的线上解决方案（企业开发必备）：https://gitee.com/smallc/SpringBlade
+
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />

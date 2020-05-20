@@ -21,6 +21,7 @@ IJPay 中支持的支付方式以及支付工具
 
 使用方式与[微信支付](../wxpay)一致。
 
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 
 
 
