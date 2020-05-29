@@ -110,9 +110,22 @@ public class WxPayApi {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String execution(String apiUrl, Map<String, String> params,
-                                   String certPath, String certPass) {
+    public static String execution(String apiUrl, Map<String, String> params, String certPath, String certPass) {
         return doPostSsl(apiUrl, params, certPath, certPass);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certPath 证书文件路径
+     * @return {@link String} 请求返回的结果
+     */
+    public static String execution(String apiUrl, Map<String, String> params, String certPath) {
+        return doPostSsl(apiUrl, params, certPath);
     }
 
     /**
@@ -126,9 +139,22 @@ public class WxPayApi {
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
-    public static String execution(String apiUrl, Map<String, String> params,
-                                   InputStream certFile, String certPass) {
+    public static String execution(String apiUrl, Map<String, String> params, InputStream certFile, String certPass) {
         return doPostSsl(apiUrl, params, certFile, certPass);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certFile 证书文件输入流
+     * @return {@link String} 请求返回的结果
+     */
+    public static String execution(String apiUrl, Map<String, String> params, InputStream certFile) {
+        return doPostSsl(apiUrl, params, certFile);
     }
 
     public static String execution(String apiUrl, Map<String, String> params,
@@ -1494,13 +1520,38 @@ public class WxPayApi {
         return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certPath, certPass);
     }
 
+    public static String doPostSsl(String url, Map<String, String> params, InputStream certFile, String certPass) {
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass);
+    }
+
+    public static String doPostSsl(String url, Map<String, String> params, String certPath) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doPostSsl(url, params, certPath, certPass);
+    }
+
+    public static String doPostSsl(String url, Map<String, String> params, InputStream certFile) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doPostSsl(url, params, certFile, certPass);
+    }
+
     public static String doUploadSsl(String url, Map<String, String> params, String certPath, String certPass, String filePath) {
         return HttpKit.getDelegate().upload(url, WxPayKit.toXml(params), certPath, certPass, filePath);
     }
 
-    public static String doPostSsl(String url, Map<String, String> params, InputStream certFile, String certPass) {
-        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass);
+    public static String doUploadSsl(String url, Map<String, String> params, String certPath, String filePath) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doUploadSsl(url, params, certPath, certPass, filePath);
     }
+
 
     private static final String OS = System.getProperty("os.name") + "/" + System.getProperty("os.version");
     private static final String VERSION = System.getProperty("java.version");
