@@ -9,7 +9,7 @@ package com.ijpay.xpay.enums;
  *
  * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
  *
- * <p>微信官方个人支付渠道，有稳定的异步通知，加企鹅(572839485)了解更多</p>
+ * <p>微信、支付宝官方个人支付渠道，官方直连的异步回调通知，加企鹅(572839485)了解更多</p>
  * 
  * <p> XPay 相关接口</p>
  *
@@ -24,6 +24,10 @@ public enum XPayUrl {
      * 扫码支付
      */
     NATIVE_PAY("/api/pay/wxpay/nativeApi"),
+    /**
+     * 支付宝扫码支付
+     */
+    ALI_PAY_NATIVE_PAY("/api/pay/alipay/nativeAp"),
     /**
      * 小程序支付
      */
@@ -45,6 +49,10 @@ public enum XPayUrl {
      */
     WAP_PAY("/api/pay/wxpay/wapPay"),
     /**
+     * 支付宝 H5 支付
+     */
+    ALI_PAY_WAP_PAY("/api/pay/alipay/wapPay"),
+    /**
      * APP 支付
      */
     APP_PAY("/api/pay/wxpay/apppay"),
@@ -53,9 +61,17 @@ public enum XPayUrl {
      */
     REFUND_ORDER("/api/pay/wxpay/refundOrder"),
     /**
+     * 支付宝退款
+     */
+    ALI_PAY_REFUND_ORDER("/api/pay/alipay/refundOrder"),
+    /**
      * 查询退款
      */
     REFUND_QUERY("/api/pay/wxpay/getRefundResult"),
+    /**
+     * 支付宝查询退款
+     */
+    ALI_PAY_REFUND_QUERY("/api/pay/alipay/getRefundResult"),
     /**
      * 查询投诉
      */
@@ -87,7 +103,11 @@ public enum XPayUrl {
     /**
      * 查询微信授权信息
      */
-    GET_BASE_OAUTH_INFO("/api/wxlogin/getBaseOauthInfo");
+    GET_BASE_OAUTH_INFO("/api/wxlogin/getBaseOauthInfo"),
+    /**
+     * 查询订单
+     */
+    GET_ORDER_INFO("/api/system/order/getPayOrderInfo");
 
     /**
      * 接口 url
