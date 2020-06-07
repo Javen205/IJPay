@@ -199,6 +199,11 @@ public class PayPalApi {
     }
 
     public static Map<String, String> getBaseHeaders(AccessToken accessToken) {
+        return getBaseHeaders(accessToken, PayKit.generateStr(), null, null);
+    }
+
+    public static Map<String, String> getBaseHeaders(AccessToken accessToken, String payPalRequestId,
+                                                     String payPalPartnerAttributionId, String prefer) {
         if (accessToken == null ||
                 StrUtil.isEmpty(accessToken.getTokenType()) ||
                 StrUtil.isEmpty(accessToken.getAccessToken())) {
@@ -207,7 +212,15 @@ public class PayPalApi {
         Map<String, String> headers = new HashMap<>(3);
         headers.put("Content-Type", ContentType.JSON.toString());
         headers.put("Authorization", accessToken.getTokenType().concat(" ").concat(accessToken.getAccessToken()));
-        headers.put("PayPal-Request-Id", PayKit.generateStr());
+        if (StrUtil.isNotEmpty(payPalRequestId)) {
+            headers.put("PayPal-Request-Id", payPalRequestId);
+        }
+        if (StrUtil.isNotEmpty(payPalPartnerAttributionId)) {
+            headers.put("PayPal-Partner-Attribution-Id", payPalPartnerAttributionId);
+        }
+        if (StrUtil.isNotEmpty(prefer)) {
+            headers.put("Prefer", prefer);
+        }
         return headers;
     }
 }
