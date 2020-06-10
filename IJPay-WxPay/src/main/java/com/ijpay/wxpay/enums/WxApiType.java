@@ -359,9 +359,13 @@ public enum WxApiType {
      */
     APPLY_4_SUB("/v3/applyment4sub/applyment/"),
     /**
-     * 特约商户进件-查询申请单状态
+     * 特约商户进件-通过业务申请编号查询申请状态
      */
     GET_APPLY_STATE("/v3/applyment4sub/applyment/business_code/%s"),
+    /**
+     * 特约商户进件-通过申请单号查询申请状态
+     */
+    GET_APPLY_STATE_BY_ID("/v3/applyment4sub/applyment/applyment_id/%s"),
     /**
      * 特约商户进件-修改结算帐号
      */
@@ -509,7 +513,7 @@ public enum WxApiType {
     /**
      * 电商收付通-二级商户进件
      */
-    E_COMMERCE_APPLY("/v3/ecommerce/applyments"),
+    E_COMMERCE_APPLY("/v3/ecommerce/applyments/"),
     /**
      * 电商收付通-查询进件申请状态
      */
