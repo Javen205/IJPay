@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:/wxpay_v3.properties")
 @ConfigurationProperties(prefix = "v3")
 public class WxPayV3Bean {
+    private String appId;
     private String keyPath;
     private String certPath;
     private String certP12Path;
@@ -29,6 +30,14 @@ public class WxPayV3Bean {
     private String apiKey;
     private String apiKey3;
     private String domain;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
     public String getKeyPath() {
         return keyPath;

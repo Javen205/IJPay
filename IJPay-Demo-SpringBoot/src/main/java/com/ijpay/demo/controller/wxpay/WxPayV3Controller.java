@@ -19,14 +19,22 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
+import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.AesUtil;
+import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
+import com.ijpay.wxpay.WxPayApiConfigKit;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
+import com.ijpay.wxpay.model.v3.Amount;
+import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +42,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/v3")
@@ -126,6 +134,45 @@ public class WxPayV3Controller {
             // 获取平台证书序列号
             X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
             return certificate.getSerialNumber().toString(16).toUpperCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping("/pushOrder")
+    @ResponseBody
+    public String pushOrder() {
+        try {
+
+            DateTime dateTime = new DateTime(new Date(System.currentTimeMillis() + 1000 * 60 * 3), DateTimeZone.forTimeZone(TimeZone.getDefault()));
+            String dateStr = dateTime.toString();
+            String subDateStr = dateStr.substring(0, dateStr.indexOf(".")).concat(dateStr.substring(dateStr.indexOf(".") + 4));
+            log.info("dateTime {} subDateStr {} ", dateStr, subDateStr);
+
+            UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
+                    .setAppid(wxPayV3Bean.getAppId())
+                    .setMchid(wxPayV3Bean.getMchId())
+                    .setDescription("IJPay 让支付触手可及")
+                    .setOut_trade_no(PayKit.generateStr())
+                    .setTime_expire(subDateStr)
+                    .setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
+                    .setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
+                    .setAmount(new Amount().setTotal(100));
+
+            log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
+            IJPayHttpResponse response = WxPayApi.v3(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.NATIVE_PAY.toString(),
+                    wxPayV3Bean.getMchId(),
+                    getSerialNumber(),
+                    null,
+                    wxPayV3Bean.getKeyPath(),
+                    JSONUtil.toJsonStr(unifiedOrderModel)
+            );
+            log.info("统一下单响应 {}", response);
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -332,6 +379,30 @@ public class WxPayV3Controller {
             System.out.println(decrypt);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/payNotify", method = {org.springframework.web.bind.annotation.RequestMethod.POST, org.springframework.web.bind.annotation.RequestMethod.GET})
+    @ResponseBody
+    public String payNotify(HttpServletRequest request) {
+        String xmlMsg = HttpKit.readData(request);
+        log.info("支付通知=" + xmlMsg);
+        Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
+
+        String returnCode = params.get("return_code");
+
+        // 注意重复通知的情况，同一订单号可能收到多次通知，请注意一定先判断订单状态
+        // 注意此处签名方式需与统一下单的签名类型一致
+        if (WxPayKit.verifyNotify(params, WxPayApiConfigKit.getWxPayApiConfig().getPartnerKey(), SignType.HMACSHA256)) {
+            if (WxPayKit.codeIsOk(returnCode)) {
+                // 更新订单信息
+                // 发送通知等
+                Map<String, String> xml = new HashMap<String, String>(2);
+                xml.put("return_code", "SUCCESS");
+                xml.put("return_msg", "OK");
+                return WxPayKit.toXml(xml);
+            }
         }
         return null;
     }

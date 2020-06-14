@@ -268,7 +268,9 @@ public class PayKit {
      * @return 构造后带待签名串
      */
     public static String buildSignMessage(ArrayList<String> signMessage) {
-        if (signMessage == null || signMessage.size() <= 0) return null;
+        if (signMessage == null || signMessage.size() <= 0) {
+            return null;
+        }
         StringBuilder sbf = new StringBuilder();
         for (String str : signMessage) {
             sbf.append(str).append("\n");
@@ -297,7 +299,9 @@ public class PayKit {
      * @throws Exception 异常信息
      */
     public static String createSign(String signMessage, String keyPath) throws Exception {
-        if (StrUtil.isEmpty(signMessage)) return null;
+        if (StrUtil.isEmpty(signMessage)) {
+            return null;
+        }
         // 获取商户私钥
         PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
         // 生成签名

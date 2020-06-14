@@ -673,7 +673,44 @@ public enum WxApiType {
     /**
      * 报关接口-订单附加信息重推接口
      */
-    CUSTOM_DECLARE_RE_DECLARE("/cgi-bin/mch/newcustoms/customdeclareredeclare");
+    CUSTOM_DECLARE_RE_DECLARE("/cgi-bin/mch/newcustoms/customdeclareredeclare"),
+
+    /**
+     * APP 下单 API
+     */
+    APP_PAY("/v3/pay/transactions/app"),
+    PARTNER_APP_PAY("/v3/pay/partner/transactions/app"),
+    /**
+     * JS API 下单 API
+     */
+    JS_API_PAY("/v3/pay/transactions/jsapi"),
+    PARTNER_JS_API_PAY("/v3/pay/partner/transactions/jsapi"),
+    /**
+     * Native 下单 API
+     */
+    NATIVE_PAY("/v3/pay/transactions/native"),
+    PARTNER_NATIVE_PAY("/v3/pay/partner/transactions/native"),
+    /**
+     * H5 下单 API
+     */
+    H5_PAY("/v3/pay/transactions/h5"),
+    PARTNER_H5_PAY("/v3/pay/partner/transactions/h5"),
+    /**
+     * 微信支付订单号查询
+     */
+    ORDER_QUERY_BY_ID("/v3/pay/transactions/id/%s"),
+    PARTNER_ORDER_QUERY_BY_ID("/v3/pay/partner/transactions/id/%s"),
+    /**
+     * 商户订单号查询
+     */
+    ORDER_QUERY_BY_NO("/v3/pay/transactions/out-trade-no/%s"),
+    PARTNER_ORDER_QUERY_BY_NO("/v3/pay/partner/transactions/out-trade-no/%s"),
+    /**
+     * 关闭订单
+     */
+    CLOSE_ORDER_BY_NO("/v3/pay/transactions/out-trade-no/%s/close"),
+    PARTNER_CLOSE_ORDER_BY_NO("/v3/pay/partner/transactions/out-trade-no/%s/close"),
+    ;
 
     /**
      * 类型
