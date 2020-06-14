@@ -15,6 +15,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -49,6 +50,36 @@ public class PayKit {
      */
     public static String hmacSha256(String data, String key) {
         return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data, CharsetUtil.UTF_8);
+    }
+
+    /**
+     * SHA1加密文件，生成16进制SHA1字符串<br>
+     *
+     * @param dataFile 被加密文件
+     * @return SHA1 字符串
+     */
+    public static String sha1(File dataFile) {
+        return SecureUtil.sha1(dataFile);
+    }
+
+    /**
+     * SHA1加密，生成16进制SHA1字符串<br>
+     *
+     * @param data 数据
+     * @return SHA1 字符串
+     */
+    public static String sha1(InputStream data) {
+        return SecureUtil.sha1(data);
+    }
+
+    /**
+     * SHA1加密，生成16进制SHA1字符串<br>
+     *
+     * @param data 数据
+     * @return SHA1 字符串
+     */
+    public static String sha1(String data) {
+        return SecureUtil.sha1(data);
     }
 
     /**
