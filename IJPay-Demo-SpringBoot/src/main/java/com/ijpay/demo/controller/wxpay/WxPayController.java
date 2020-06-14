@@ -727,28 +727,35 @@ public class WxPayController extends AbstractWxPayApiController {
      */
     @RequestMapping(value = "/refund", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public String refund(@RequestParam("transactionId") String transactionId,
-                         @RequestParam("out_trade_no") String outTradeNo) {
+    public String refund(@RequestParam(value = "transactionId", required = false) String transactionId,
+                         @RequestParam(value = "outTradeNo", required = false) String outTradeNo) {
+        try {
+            log.info("transactionId: {} outTradeNo:{}", transactionId, outTradeNo);
 
-        if (StrKit.isBlank(outTradeNo) && StrKit.isBlank(transactionId)) {
-            return "transactionId、out_trade_no二选一";
+            if (StrKit.isBlank(outTradeNo) && StrKit.isBlank(transactionId)) {
+                return "transactionId、out_trade_no二选一";
+            }
+            WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
+
+            Map<String, String> params = RefundModel.builder()
+                    .appid(wxPayApiConfig.getAppId())
+                    .mch_id(wxPayApiConfig.getMchId())
+                    .nonce_str(WxPayKit.generateStr())
+                    .transaction_id(transactionId)
+                    .out_trade_no(outTradeNo)
+                    .out_refund_no(WxPayKit.generateStr())
+                    .total_fee("1")
+                    .refund_fee("1")
+                    .notify_url(refundNotifyUrl)
+                    .build()
+                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);
+            String refundStr = WxPayApi.orderRefund(false, params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
+            log.info("refundStr: {}", refundStr);
+            return refundStr;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
-
-        Map<String, String> params = RefundModel.builder()
-                .appid(wxPayApiConfig.getAppId())
-                .mch_id(wxPayApiConfig.getMchId())
-                .nonce_str(WxPayKit.generateStr())
-                .transaction_id(transactionId)
-                .out_trade_no(outTradeNo)
-                .out_refund_no(WxPayKit.generateStr())
-                .total_fee("1")
-                .refund_fee("1")
-                .notify_url(refundNotifyUrl)
-                .build()
-                .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);
-
-        return WxPayApi.orderRefund(false, params, wxPayApiConfig.getCertPath(), wxPayApiConfig.getMchId());
+        return null;
     }
 
     /**
