@@ -593,13 +593,17 @@ public enum WxApiType {
      */
     WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/%s"),
     /**
-     * 电商收付通-账单接口-申请交易账单
+     * 申请交易账单
      */
     TRADE_BILL("/v3/bill/tradebill"),
     /**
-     * 电商收付通-账单接口-申请资金账单
+     * 申请资金账单
      */
     FUND_FLOW_BILL("/v3/bill/fundflowbill"),
+    /**
+     * 下载账单
+     */
+    BILL_DOWNLOAD("/v3/billdownload/file"),
 
     /**
      * 银行特约商户违规信息查询
