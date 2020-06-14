@@ -2,10 +2,15 @@ package com.ijpay.core.kit;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -117,8 +122,8 @@ public class WxPayKit {
     /**
      * 生成签名
      *
-     * @param params   需要签名的参数
-     * @param secret   企业微信支付应用secret
+     * @param params 需要签名的参数
+     * @param secret 企业微信支付应用secret
      * @return 签名后的数据
      */
     public static String createSign(Map<String, String> params, String secret) {
@@ -368,7 +373,7 @@ public class WxPayKit {
                                             long timestamp, String authType) throws Exception {
         // 构建签名参数
         String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
-        String signature = PayKit.createSign(buildSignMessage,keyPath);
+        String signature = PayKit.createSign(buildSignMessage, keyPath);
         // 根据平台规则生成请求头 authorization
         return PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
     }
@@ -403,6 +408,7 @@ public class WxPayKit {
      * @return 签名结果
      * @throws Exception 异常信息
      */
+    @Deprecated
     public static boolean verifySignature(Map<String, Object> map, String certPath) throws Exception {
         String signature = (String) map.get("signature");
         String body = (String) map.get("body");
@@ -414,11 +420,28 @@ public class WxPayKit {
     /**
      * 验证签名
      *
+     * @param response 接口请求返回的 {@link IJPayHttpResponse}
+     * @param certPath 平台证书路径
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(IJPayHttpResponse response, String certPath) throws Exception {
+        String timestamp = response.getHeader("Wechatpay-Timestamp");
+        String nonceStr = response.getHeader("Wechatpay-Nonce");
+        String signature = response.getHeader("Wechatpay-Signature");
+        String body = response.getBody();
+        return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+    }
+
+    /**
+     * 验证签名
+     *
      * @param map             接口请求返回的 Map
      * @param certInputStream 平台证书输入流
      * @return 签名结果
      * @throws Exception 异常信息
      */
+    @Deprecated
     public static boolean verifySignature(Map<String, Object> map, InputStream certInputStream) throws Exception {
         String signature = (String) map.get("signature");
         String body = (String) map.get("body");
@@ -476,5 +499,47 @@ public class WxPayKit {
         X509Certificate certificate = PayKit.getCertificate(certInputStream);
         PublicKey publicKey = certificate.getPublicKey();
         return RsaKit.checkByPublicKey(buildSignMessage, signature, publicKey);
+    }
+
+    /**
+     * v3 支付异步通知验证签名
+     *
+     * @param serialNo  证书序列号
+     * @param body      异步通知密文
+     * @param signature 签名
+     * @param nonce     随机字符串
+     * @param timestamp 时间戳
+     * @param key       api 密钥
+     * @param certPath  平台证书路径
+     * @return 异步通知明文
+     * @throws Exception 异常信息
+     */
+    public static String verifyNotify(String serialNo, String body, String signature, String nonce,
+                                      String timestamp, String key, String certPath) throws Exception {
+        BufferedInputStream inputStream = FileUtil.getInputStream(certPath);
+        // 获取平台证书序列号
+        X509Certificate certificate = PayKit.getCertificate(inputStream);
+        String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
+        System.out.println(serialNumber);
+        // 验证证书序列号
+        if (serialNumber.equals(serialNo)) {
+            boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp, certificate.getPublicKey());
+            if (verifySignature) {
+                JSONObject resultObject = JSONUtil.parseObj(body);
+                JSONObject resource = resultObject.getJSONObject("resource");
+                String cipherText = resource.getStr("ciphertext");
+                String nonceStr = resource.getStr("nonce");
+                String associatedData = resource.getStr("associated_data");
+
+                AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
+                // 密文解密
+                return aesUtil.decryptToString(
+                        associatedData.getBytes(StandardCharsets.UTF_8),
+                        nonceStr.getBytes(StandardCharsets.UTF_8),
+                        cipherText
+                );
+            }
+        }
+        return null;
     }
 }
