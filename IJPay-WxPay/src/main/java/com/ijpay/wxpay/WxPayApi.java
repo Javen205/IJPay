@@ -1599,10 +1599,10 @@ public class WxPayApi {
             return null;
         }
         Map<String, Object> map = new HashMap<>(6);
-        String timestamp = response.header("Wechatpay-Timestamp");
-        String nonceStr = response.header("Wechatpay-Nonce");
-        String serialNo = response.header("Wechatpay-Serial");
-        String signature = response.header("Wechatpay-Signature");
+        String timestamp = response.getHeader("Wechatpay-Timestamp");
+        String nonceStr = response.getHeader("Wechatpay-Nonce");
+        String serialNo = response.getHeader("Wechatpay-Serial");
+        String signature = response.getHeader("Wechatpay-Signature");
         String body = response.getBody();
         int status = response.getStatus();
         map.put("timestamp", timestamp);

@@ -52,7 +52,7 @@ public class IJPayHttpResponse implements Serializable {
         this.headers = headers;
     }
 
-    public String header(String name) {
+    public String getHeader(String name) {
         List<String> values = this.headerList(name);
         return CollectionUtil.isEmpty(values) ? null : values.get(0);
     }
