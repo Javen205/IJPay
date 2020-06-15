@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -322,8 +321,13 @@ public class WxPayKit {
         packageParams.put("nonceStr", nonceStr);
         packageParams.put("package", packageStr);
         packageParams.put("signType", SignType.RSA.toString());
+        ArrayList<String> list = new ArrayList<>();
+        list.add(appId);
+        list.add(timeStamp);
+        list.add(nonceStr);
+        list.add(packageStr);
         String packageSign = PayKit.createSign(
-                PayKit.buildSignMessage((ArrayList<String>) Arrays.asList(appId, timeStamp, nonceStr, packageStr)),
+                PayKit.buildSignMessage(list),
                 keyPath
         );
         packageParams.put("paySign", packageSign);
@@ -378,9 +382,13 @@ public class WxPayKit {
         packageParams.put("timeStamp", timeStamp);
         packageParams.put("nonceStr", nonceStr);
         packageParams.put("signType", SignType.RSA.toString());
-
+        ArrayList<String> list = new ArrayList<>();
+        list.add(appId);
+        list.add(timeStamp);
+        list.add(nonceStr);
+        list.add(prepayId);
         String packageSign = PayKit.createSign(
-                PayKit.buildSignMessage((ArrayList<String>) Arrays.asList(appId, timeStamp, nonceStr, prepayId)),
+                PayKit.buildSignMessage(list),
                 keyPath
         );
         packageParams.put("sign", packageSign);
