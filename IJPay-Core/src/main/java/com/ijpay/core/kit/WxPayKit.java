@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -302,6 +304,33 @@ public class WxPayKit {
     }
 
     /**
+     * JS 调起支付签名
+     *
+     * @param appId    应用编号
+     * @param prepayId 预付订单号
+     * @param keyPath  key.pem 证书路径
+     * @return 唤起支付需要的参数
+     * @throws Exception 错误信息
+     */
+    public static Map<String, String> jsApiCreateSign(String appId, String prepayId, String keyPath) throws Exception {
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+        String nonceStr = String.valueOf(System.currentTimeMillis());
+        String packageStr = "prepay_id=" + prepayId;
+        Map<String, String> packageParams = new HashMap<>(6);
+        packageParams.put("appId", appId);
+        packageParams.put("timeStamp", timeStamp);
+        packageParams.put("nonceStr", nonceStr);
+        packageParams.put("package", packageStr);
+        packageParams.put("signType", SignType.RSA.toString());
+        String packageSign = PayKit.createSign(
+                PayKit.buildSignMessage((ArrayList<String>) Arrays.asList(appId, timeStamp, nonceStr, packageStr)),
+                keyPath
+        );
+        packageParams.put("paySign", packageSign);
+        return packageParams;
+    }
+
+    /**
      * <p>APP 支付-预付订单再次签名</p>
      * <p>注意此处签名方式需与统一下单的签名类型一致</p>
      *
@@ -324,6 +353,36 @@ public class WxPayKit {
             signType = SignType.MD5;
         }
         String packageSign = createSign(packageParams, partnerKey, signType);
+        packageParams.put("sign", packageSign);
+        return packageParams;
+    }
+
+    /**
+     * App 调起支付签名
+     *
+     * @param appId     应用编号
+     * @param partnerId 商户编号
+     * @param prepayId  预付订单号
+     * @param keyPath   key.pem 证书路径
+     * @return 唤起支付需要的参数
+     * @throws Exception 错误信息
+     */
+    public static Map<String, String> appCreateSign(String appId, String partnerId, String prepayId, String keyPath) throws Exception {
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+        String nonceStr = String.valueOf(System.currentTimeMillis());
+        Map<String, String> packageParams = new HashMap<>(8);
+        packageParams.put("appId", appId);
+        packageParams.put("partnerid", partnerId);
+        packageParams.put("prepayid", prepayId);
+        packageParams.put("package", "Sign=WXPay");
+        packageParams.put("timeStamp", timeStamp);
+        packageParams.put("nonceStr", nonceStr);
+        packageParams.put("signType", SignType.RSA.toString());
+
+        String packageSign = PayKit.createSign(
+                PayKit.buildSignMessage((ArrayList<String>) Arrays.asList(appId, timeStamp, nonceStr, prepayId)),
+                keyPath
+        );
         packageParams.put("sign", packageSign);
         return packageParams;
     }
