@@ -20,6 +20,7 @@ import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.model.v3.Amount;
+import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -38,10 +39,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -206,11 +204,10 @@ public class WxPayV3Controller {
         return null;
     }
 
-    @RequestMapping("/pushOrder")
+    @RequestMapping("/nativePay")
     @ResponseBody
-    public String pushOrder() {
+    public String nativePay() {
         try {
-
             DateTime dateTime = new DateTime(new Date(System.currentTimeMillis() + 1000 * 60 * 3), DateTimeZone.forTimeZone(TimeZone.getDefault()));
             String dateStr = dateTime.toString();
             String subDateStr = dateStr.substring(0, dateStr.indexOf(".")).concat(dateStr.substring(dateStr.indexOf(".") + 4));
@@ -238,6 +235,60 @@ public class WxPayV3Controller {
                     JSONUtil.toJsonStr(unifiedOrderModel)
             );
             log.info("统一下单响应 {}", response);
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping("/jsApiPay")
+    @ResponseBody
+    public String jsApiPay(@RequestParam(value = "openId", required = false, defaultValue = "o-_-itxuXeGW3O1cxJ7FXNmq8Wf8") String openId) {
+        try {
+            DateTime dateTime = new DateTime(new Date(System.currentTimeMillis() + 1000 * 60 * 3), DateTimeZone.forTimeZone(TimeZone.getDefault()));
+            String dateStr = dateTime.toString();
+            String subDateStr = dateStr.substring(0, dateStr.indexOf(".")).concat(dateStr.substring(dateStr.indexOf(".") + 4));
+            log.info("dateTime {} subDateStr {} ", dateStr, subDateStr);
+
+            UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
+                    .setAppid(wxPayV3Bean.getAppId())
+                    .setMchid(wxPayV3Bean.getMchId())
+                    .setDescription("IJPay 让支付触手可及")
+                    .setOut_trade_no(PayKit.generateStr())
+                    .setTime_expire(subDateStr)
+                    .setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
+                    .setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
+                    .setAmount(new Amount().setTotal(1))
+                    .setPayer(new Payer().setOpenid(openId));
+
+            log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
+            IJPayHttpResponse response = WxPayApi.v3(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.JS_API_PAY.toString(),
+                    wxPayV3Bean.getMchId(),
+                    getSerialNumber(),
+                    null,
+                    wxPayV3Bean.getKeyPath(),
+                    JSONUtil.toJsonStr(unifiedOrderModel)
+            );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
+            log.info("统一下单响应 {}", response);
+
+            if (verifySignature) {
+                String body = response.getBody();
+                JSONObject jsonObject = JSONUtil.parseObj(body);
+                String prepayId = jsonObject.getStr("prepay_id");
+                Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
+                log.info("唤起支付参数:{}", map);
+                return JSONUtil.toJsonStr(map);
+            }
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
@@ -422,6 +473,7 @@ public class WxPayV3Controller {
 
     /**
      * 申请交易账单
+     *
      * @param billDate 2020-06-14 当天账单后一天出，不然会出现「账单日期格式不正确」错误
      * @return 交易账单下载地址
      */
@@ -430,11 +482,15 @@ public class WxPayV3Controller {
     public String tradeBill(@RequestParam(value = "billDate", required = false) String billDate) {
         try {
             if (StrUtil.isEmpty(billDate)) {
-                billDate = DateUtil.format(new Date(), "YYYY-MM-dd");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.DATE, -1);
+                billDate = DateUtil.format(calendar.getTime(), "YYYY-MM-dd");
             }
             Map<String, String> params = new HashMap<>(12);
             params.put("bill_date", billDate);
             params.put("bill_type", "ALL");
+            params.put("tar_type", "GZIP");
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
@@ -446,6 +502,9 @@ public class WxPayV3Controller {
                     wxPayV3Bean.getKeyPath(),
                     params
             );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(result, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
             log.info("result:{}", result);
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
@@ -456,6 +515,7 @@ public class WxPayV3Controller {
 
     /**
      * 申请资金账单
+     *
      * @param billDate 2020-06-14 当天账单后一天出，不然会出现「账单日期格式不正确」错误
      * @return 资金账单下载地址
      */
@@ -464,7 +524,10 @@ public class WxPayV3Controller {
     public String fundFlowBill(@RequestParam(value = "billDate", required = false) String billDate) {
         try {
             if (StrUtil.isEmpty(billDate)) {
-                billDate = DateUtil.format(new Date(), "YYYY-MM-dd");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.DATE, -1);
+                billDate = DateUtil.format(calendar.getTime(), "YYYY-MM-dd");
             }
             Map<String, String> params = new HashMap<>(12);
             params.put("bill_date", billDate);
@@ -480,6 +543,9 @@ public class WxPayV3Controller {
                     wxPayV3Bean.getKeyPath(),
                     params
             );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(result, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
             log.info("result:{}", result);
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
@@ -490,11 +556,15 @@ public class WxPayV3Controller {
 
     @RequestMapping("/billDownload")
     @ResponseBody
-    public String billDownload(@RequestParam(value = "token") String token) {
+    public String billDownload(@RequestParam(value = "token") String token,
+                               @RequestParam(value = "tarType", required = false) String tarType) {
         try {
-           
+
             Map<String, String> params = new HashMap<>(12);
             params.put("token", token);
+            if (StrUtil.isNotEmpty(tarType)) {
+                params.put("tartype", tarType);
+            }
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
