@@ -482,7 +482,15 @@ public enum WxApiType {
      * 商家券-设置/查询商家券事件通知地址
      */
     BUSINESS_COUPON_CALLBACKS("/v3/marketing/busifavor/callbacks"),
-
+    /**
+     * 关联订单信息
+     */
+    BUSINESS_COUPON_ASSOCIATE("/v3/marketing/busifavor/coupons/associate"),
+    /**
+     * 取消关联订单信息
+     */
+    BUSINESS_COUPON_DISASSOCIATE("/v3/marketing/busifavor/coupons/disassociate"),
+    
     /**
      * 支付有礼-创建全场满额送活动
      */
