@@ -532,6 +532,14 @@ public enum WxApiType {
      */
     COMBINE_TRANSACTIONS_JS("/v3/combine-transactions/jsapi"),
     /**
+     * 合单下单-H5支付
+     */
+    COMBINE_TRANSACTIONS_H5("/v3/combine-transactions/h5"),
+    /**
+     * 合单下单-Native支付
+     */
+    COMBINE_TRANSACTIONS_NATIVE("/v3/combine-transactions/native"),
+    /**
      * 合单下单-合单查询订单
      */
     COMBINE_TRANSACTIONS_QUERY("/v3/combine-transactions/out-trade-no/%s"),
