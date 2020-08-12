@@ -459,6 +459,10 @@ public enum WxApiType {
      */
     CREATE_BUSINESS_COUPON("/v3/marketing/busifavor/stocks"),
     /**
+     * 发放消费卡
+     */
+    SEND_BUSINESS_COUPON("/v3/marketing/busifavor/coupons/%s/send"),
+    /**
      * 商家券-查询商家券批次详情
      */
     QUERY_BUSINESS_COUPON_STOCKS_INFO("/v3/marketing/busifavor/stocks/%s"),
@@ -490,7 +494,7 @@ public enum WxApiType {
      * 取消关联订单信息
      */
     BUSINESS_COUPON_DISASSOCIATE("/v3/marketing/busifavor/coupons/disassociate"),
-    
+
     /**
      * 支付有礼-创建全场满额送活动
      */
