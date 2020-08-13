@@ -685,6 +685,10 @@ public enum WxApiType {
      * 服务人员分配
      */
     SMART_GUIDE_GUIDES_ASSIGN("/v3/smartguide/guides/%s/assign"),
+    /**
+     * 服务人员信息更新
+     */
+    SMART_GUIDE_GUIDES_UPDATE("/v3/smartguide/guides/%s"),
 
     /**
      * 报关接口-订单附加信息提交接口
