@@ -325,6 +325,19 @@ public class PayKit {
      * v3 接口创建签名
      *
      * @param signMessage 待签名的参数
+     * @param privateKey  商户私钥
+     * @return 生成 v3 签名
+     * @throws Exception 异常信息
+     */
+    public static String createSign(ArrayList<String> signMessage, PrivateKey privateKey) throws Exception {
+        return createSign(buildSignMessage(signMessage), privateKey);
+    }
+
+
+    /**
+     * v3 接口创建签名
+     *
+     * @param signMessage 待签名的参数
      * @param keyPath     key.pem 证书路径
      * @return 生成 v3 签名
      * @throws Exception 异常信息
@@ -335,6 +348,22 @@ public class PayKit {
         }
         // 获取商户私钥
         PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
+        // 生成签名
+        return RsaKit.encryptByPrivateKey(signMessage, privateKey);
+    }
+
+    /**
+     * v3 接口创建签名
+     *
+     * @param signMessage 待签名的参数
+     * @param privateKey  商户私钥
+     * @return 生成 v3 签名
+     * @throws Exception 异常信息
+     */
+    public static String createSign(String signMessage, PrivateKey privateKey) throws Exception {
+        if (StrUtil.isEmpty(signMessage)) {
+            return null;
+        }
         // 生成签名
         return RsaKit.encryptByPrivateKey(signMessage, privateKey);
     }
