@@ -15,6 +15,7 @@ import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
+import com.ijpay.core.utils.DateTimeZoneUtil;
 import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxApiType;
@@ -23,7 +24,6 @@ import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -208,17 +208,13 @@ public class WxPayV3Controller {
     @ResponseBody
     public String nativePay() {
         try {
-            DateTime dateTime = new DateTime(new Date(System.currentTimeMillis() + 1000 * 60 * 3), DateTimeZone.forTimeZone(TimeZone.getDefault()));
-            String dateStr = dateTime.toString();
-            String subDateStr = dateStr.substring(0, dateStr.indexOf(".")).concat(dateStr.substring(dateStr.indexOf(".") + 4));
-            log.info("dateTime {} subDateStr {} ", dateStr, subDateStr);
-
+            String timeExpire = DateTimeZoneUtil.dateToTimeZone(System.currentTimeMillis() + 1000 * 60 * 3);
             UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
                     .setAppid(wxPayV3Bean.getAppId())
                     .setMchid(wxPayV3Bean.getMchId())
                     .setDescription("IJPay 让支付触手可及")
                     .setOut_trade_no(PayKit.generateStr())
-                    .setTime_expire(subDateStr)
+                    .setTime_expire(timeExpire)
                     .setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
                     .setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
                     .setAmount(new Amount().setTotal(1));
@@ -249,17 +245,13 @@ public class WxPayV3Controller {
     @ResponseBody
     public String jsApiPay(@RequestParam(value = "openId", required = false, defaultValue = "o-_-itxuXeGW3O1cxJ7FXNmq8Wf8") String openId) {
         try {
-            DateTime dateTime = new DateTime(new Date(System.currentTimeMillis() + 1000 * 60 * 3), DateTimeZone.forTimeZone(TimeZone.getDefault()));
-            String dateStr = dateTime.toString();
-            String subDateStr = dateStr.substring(0, dateStr.indexOf(".")).concat(dateStr.substring(dateStr.indexOf(".") + 4));
-            log.info("dateTime {} subDateStr {} ", dateStr, subDateStr);
-
+            String timeExpire = DateTimeZoneUtil.dateToTimeZone(System.currentTimeMillis() + 1000 * 60 * 3);
             UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
                     .setAppid(wxPayV3Bean.getAppId())
                     .setMchid(wxPayV3Bean.getMchId())
                     .setDescription("IJPay 让支付触手可及")
                     .setOut_trade_no(PayKit.generateStr())
-                    .setTime_expire(subDateStr)
+                    .setTime_expire(timeExpire)
                     .setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
                     .setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
                     .setAmount(new Amount().setTotal(1))

@@ -19,7 +19,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.version>2.6.3</ijapy.version>
+        <ijapy.version>2.6.4</ijapy.version>
         <enjoy.version>4.3</enjoy.version>
     </properties>
 
@@ -63,11 +63,6 @@
             <groupId>com.jfinal</groupId>
             <artifactId>enjoy</artifactId>
             <version>${enjoy.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.10.6</version>
         </dependency>
     </dependencies>
 
