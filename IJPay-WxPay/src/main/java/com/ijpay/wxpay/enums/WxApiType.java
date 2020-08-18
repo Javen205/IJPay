@@ -504,6 +504,10 @@ public enum WxApiType {
      */
     PAY_GIFT_ACTIVITY("/v3/marketing/paygiftactivity/unique-threshold-activity"),
     /**
+     * 支付有礼-获取支付有礼活动列表
+     */
+    PAY_GIFT_ACTIVITY_GET("/v3/marketing/paygiftactivity/activities"),
+    /**
      * 支付有礼-查询活动详情接口
      */
     PAY_GIFT_ACTIVITY_INFO("/v3/marketing/paygiftactivity/activities/%s"),
@@ -519,6 +523,15 @@ public enum WxApiType {
      * 支付有礼-终止活动
      */
     PAY_GIFT_ACTIVITY_TERMINATE("/v3/marketing/paygiftactivity/activities/%s/terminate"),
+    /**
+     * 支付有礼-新增活动发券商户号
+     */
+    PAY_GIFT_ACTIVITY_ADD_MERCHANTS("/v3/marketing/paygiftactivity/activities/%s/merchants/add"),
+    /**
+     * 支付有礼-删除活动发券商户号
+     */
+    PAY_GIFT_ACTIVITY_DELETE_MERCHANTS("/v3/marketing/paygiftactivity/activities/%s/merchants/delete"),
+
 
     /**
      * 点金计划-特约商户管理
