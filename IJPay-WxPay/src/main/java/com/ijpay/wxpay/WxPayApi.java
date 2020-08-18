@@ -1579,6 +1579,18 @@ public class WxPayApi {
     /**
      * get 请求
      *
+     * @param url     请求url
+     * @param params  请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse get(String url, Map<String, Object> params, Map<String, String> headers) {
+        return HttpKit.getDelegate().get(url, params, headers);
+    }
+
+    /**
+     * get 请求
+     *
      * @param url           请求url
      * @param authorization 授权信息
      * @param serialNumber  公钥证书序列号
@@ -1586,7 +1598,19 @@ public class WxPayApi {
      * @return {@link IJPayHttpResponse}    请求返回的结果
      */
     public static IJPayHttpResponse get(String url, String authorization, String serialNumber, Map<String, Object> params) {
-        return HttpKit.getDelegate().get(url, params, getHeaders(authorization, serialNumber));
+        return get(url, params, getHeaders(authorization, serialNumber));
+    }
+
+    /**
+     * post 请求
+     *
+     * @param url     请求url
+     * @param data    请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse post(String url, String data, Map<String, String> headers) {
+        return HttpKit.getDelegate().post(url, data, headers);
     }
 
     /**
@@ -1599,7 +1623,19 @@ public class WxPayApi {
      * @return {@link IJPayHttpResponse}    请求返回的结果
      */
     public static IJPayHttpResponse post(String url, String authorization, String serialNumber, String data) {
-        return HttpKit.getDelegate().post(url, data, getHeaders(authorization, serialNumber));
+        return post(url, data, getHeaders(authorization, serialNumber));
+    }
+
+    /**
+     * delete 请求
+     *
+     * @param url     请求url
+     * @param data    请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse delete(String url, String data, Map<String, String> headers) {
+        return HttpKit.getDelegate().delete(url, data, headers);
     }
 
     /**
@@ -1612,7 +1648,19 @@ public class WxPayApi {
      * @return {@link IJPayHttpResponse}    请求返回的结果
      */
     public static IJPayHttpResponse delete(String url, String authorization, String serialNumber, String data) {
-        return HttpKit.getDelegate().delete(url, data, getHeaders(authorization, serialNumber));
+        return delete(url, data, getHeaders(authorization, serialNumber));
+    }
+
+    /**
+     * upload 请求
+     *
+     * @param url     请求url
+     * @param params  请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse upload(String url, Map<String, Object> params, Map<String, String> headers) {
+        return HttpKit.getDelegate().post(url, params, headers);
     }
 
     /**
@@ -1629,7 +1677,7 @@ public class WxPayApi {
         Map<String, Object> paramMap = new HashMap<>(2);
         paramMap.put("file", file);
         paramMap.put("meta", data);
-        return HttpKit.getDelegate().post(url, paramMap, getUploadHeaders(authorization, serialNumber));
+        return upload(url, paramMap, getUploadHeaders(authorization, serialNumber));
     }
 
     public static String doPost(String url, Map<String, String> params) {
