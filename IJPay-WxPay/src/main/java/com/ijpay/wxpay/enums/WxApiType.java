@@ -621,6 +621,22 @@ public enum WxApiType {
      */
     QUERY_WITHDRAW("/v3/ecommerce/fund/withdraw/%s"),
     /**
+     * 电商收付通-提现接口-商户提现单号查询
+     */
+    QUERY_WITHDRAW_BY_OUT_REQUEST_NO("/v3/ecommerce/fund/withdraw/out-request-no/%s"),
+    /**
+     * 电商收付通-提现接口-电商平台提现
+     */
+    MERCHANT_WITHDRAW("/v3/merchant/fund/withdraw"),
+    /**
+     * 电商收付通-提现接口-微信支付提现单号查询
+     */
+    QUERY_MERCHANT_WITHDRAW("/v3/ecommerce/fund/withdraw/%s"),
+    /**
+     * 电商收付通-提现接口-商户提现单号查询
+     */
+    QUERY_MERCHANT_WITHDRAW_BY_OUT_REQUEST_NO("/v3/merchant/fund/withdraw/out-request-no/%s"),
+    /**
      * 电商收付通-提现接口-按日下载提现异常文件
      */
     WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/%s"),
