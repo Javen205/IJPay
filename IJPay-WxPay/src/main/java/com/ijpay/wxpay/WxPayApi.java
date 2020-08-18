@@ -202,6 +202,8 @@ public class WxPayApi {
             return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
         } else if (method == RequestMethod.UPLOAD) {
             return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+        } else if (method == RequestMethod.PUT) {
+            return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
         }
         return null;
     }
@@ -244,6 +246,8 @@ public class WxPayApi {
             return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
         } else if (method == RequestMethod.UPLOAD) {
             return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+        } else if (method == RequestMethod.PUT) {
+            return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
         }
         return null;
     }
@@ -1675,7 +1679,7 @@ public class WxPayApi {
      */
     public static IJPayHttpResponse upload(String url, String authorization, String serialNumber, String data, File file) {
         Map<String, Object> paramMap = new HashMap<>(2);
-        paramMap.put("file", file)  ;
+        paramMap.put("file", file);
         paramMap.put("meta", data);
         return upload(url, paramMap, getUploadHeaders(authorization, serialNumber));
     }
