@@ -601,6 +601,18 @@ public enum WxApiType {
      */
     QUERY_BALANCE("/v3/ecommerce/fund/balance/%s"),
     /**
+     * 查询二级商户账户日终余额
+     */
+    QUERY_END_DAY_BALANCE("/v3/ecommerce/fund/enddaybalance/%s"),
+    /**
+     * 查询电商平台账户实时余额
+     */
+    QUERY_MERCHANT_BALANCE("/v3/merchant/fund/balance/%s"),
+    /**
+     * 查询电商平台账户日终余额
+     */
+    QUERY_MERCHANT_END_DAY_BALANCE("/v3/merchant/fund/dayendbalance/%s"),
+    /**
      * 电商收付通-提现接口-账户余额提现
      */
     WITHDRAW("/v3/ecommerce/fund/withdraw"),
