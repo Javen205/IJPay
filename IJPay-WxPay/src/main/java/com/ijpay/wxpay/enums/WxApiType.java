@@ -770,6 +770,14 @@ public enum WxApiType {
      */
     CLOSE_ORDER_BY_NO("/v3/pay/transactions/out-trade-no/%s/close"),
     PARTNER_CLOSE_ORDER_BY_NO("/v3/pay/partner/transactions/out-trade-no/%s/close"),
+    /**
+     * 委托营销-建立合作关系
+     */
+    PARTNERSHIPS_BUILD("/v3/marketing/partnerships/build"),
+    /**
+     * 委托营销-终止合作关系
+     */
+    PARTNERSHIPS_TERMINATE("/v3/marketing/partnerships/terminate"),
     ;
 
     /**
