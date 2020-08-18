@@ -1675,9 +1675,35 @@ public class WxPayApi {
      */
     public static IJPayHttpResponse upload(String url, String authorization, String serialNumber, String data, File file) {
         Map<String, Object> paramMap = new HashMap<>(2);
-        paramMap.put("file", file);
+        paramMap.put("file", file)  ;
         paramMap.put("meta", data);
         return upload(url, paramMap, getUploadHeaders(authorization, serialNumber));
+    }
+
+
+    /**
+     * put 请求
+     *
+     * @param url     请求url
+     * @param data    请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse put(String url, String data, Map<String, String> headers) {
+        return HttpKit.getDelegate().put(url, data, headers);
+    }
+
+    /**
+     * put 请求
+     *
+     * @param url           请求url
+     * @param authorization 授权信息
+     * @param serialNumber  公钥证书序列号
+     * @param data          请求参数
+     * @return {@link IJPayHttpResponse}    请求返回的结果
+     */
+    public static IJPayHttpResponse put(String url, String authorization, String serialNumber, String data) {
+        return put(url, data, getHeaders(authorization, serialNumber));
     }
 
     public static String doPost(String url, Map<String, String> params) {

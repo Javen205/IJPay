@@ -194,6 +194,40 @@ public abstract class AbstractHttpDelegate {
     }
 
     /**
+     * put 请求
+     *
+     * @param url      请求url
+     * @param paramMap 请求参数
+     * @param headers  请求头
+     * @return {@link IJPayHttpResponse}  请求返回的结果
+     */
+    public IJPayHttpResponse put(String url, Map<String, Object> paramMap, Map<String, String> headers) {
+        IJPayHttpResponse response = new IJPayHttpResponse();
+        HttpResponse httpResponse = putToResponse(url, headers, paramMap);
+        response.setBody(httpResponse.body());
+        response.setStatus(httpResponse.getStatus());
+        response.setHeaders(httpResponse.headers());
+        return response;
+    }
+
+    /**
+     * put 请求
+     *
+     * @param url     请求url
+     * @param data    请求参数
+     * @param headers 请求头
+     * @return {@link IJPayHttpResponse}  请求返回的结果
+     */
+    public IJPayHttpResponse put(String url, String data, Map<String, String> headers) {
+        IJPayHttpResponse response = new IJPayHttpResponse();
+        HttpResponse httpResponse = putToResponse(url, headers, data);
+        response.setBody(httpResponse.body());
+        response.setStatus(httpResponse.getStatus());
+        response.setHeaders(httpResponse.headers());
+        return response;
+    }
+
+    /**
      * 上传文件
      *
      * @param url      请求url
@@ -383,6 +417,37 @@ public abstract class AbstractHttpDelegate {
                 .form(paramMap)
                 .execute();
     }
+
+    /**
+     * put 请求
+     *
+     * @param url     请求url
+     * @param headers 请求头
+     * @param data    请求参数
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    private HttpResponse putToResponse(String url, Map<String, String> headers, String data) {
+        return HttpRequest.put(url)
+                .addHeaders(headers)
+                .body(data)
+                .execute();
+    }
+
+    /**
+     * put 请求
+     *
+     * @param url      请求url
+     * @param headers  请求头
+     * @param paramMap 请求参数
+     * @return {@link HttpResponse} 请求返回的结果
+     */
+    private HttpResponse putToResponse(String url, Map<String, String> headers, Map<String, Object> paramMap) {
+        return HttpRequest.put(url)
+                .addHeaders(headers)
+                .form(paramMap)
+                .execute();
+    }
+
 
     private KeyManager[] getKeyManager(String certPass, String certPath, InputStream certFile) throws Exception {
         KeyStore clientStore = KeyStore.getInstance("PKCS12");
