@@ -463,6 +463,10 @@ public enum WxApiType {
      */
     SEND_BUSINESS_COUPON("/v3/marketing/busifavor/coupons/%s/send"),
     /**
+     * H5 发券
+     */
+    H5_SEND_COUPON("/busifavor/getcouponinfo"),
+    /**
      * 商家券-查询商家券批次详情
      */
     QUERY_BUSINESS_COUPON_STOCKS_INFO("/v3/marketing/busifavor/stocks/%s"),

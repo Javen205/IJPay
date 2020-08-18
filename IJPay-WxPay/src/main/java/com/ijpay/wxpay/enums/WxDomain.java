@@ -33,7 +33,12 @@ public enum WxDomain {
     /**
      * 获取公钥
      */
-    FRAUD("https://fraud.mch.weixin.qq.com");
+    FRAUD("https://fraud.mch.weixin.qq.com"),
+    /**
+     * 活动
+     */
+    ACTION("https://action.weixin.qq.com"),
+    ;
 
 
     /**
