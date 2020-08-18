@@ -23,7 +23,6 @@ import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,10 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -287,6 +289,36 @@ public class WxPayV3Controller {
         }
         return null;
     }
+
+
+    @RequestMapping("/put")
+    @ResponseBody
+    public String put() {
+        try {
+            Map<String,String> params = new HashMap<>();
+            params.put("url","https://gitee.com/javen205/IJPay");
+
+            IJPayHttpResponse response = WxPayApi.v3(
+                    RequestMethod.PUT,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    wxPayV3Bean.getMchId(),
+                    getSerialNumber(),
+                    null,
+                    wxPayV3Bean.getKeyPath(),
+                    JSONUtil.toJsonStr(params)
+            );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
+            log.info("响应 {}", response);
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @RequestMapping("/getParams")
     @ResponseBody
