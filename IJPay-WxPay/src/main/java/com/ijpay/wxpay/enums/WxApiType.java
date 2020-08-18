@@ -534,9 +534,17 @@ public enum WxApiType {
 
 
     /**
-     * 点金计划-特约商户管理
+     * 点金计划-点金计划管理
      */
     CHANGE_GOLD_PLAN_STATUS("/v3/goldplan/merchants/changegoldplanstatus"),
+    /**
+     * 点金计划-商家小票管理
+     */
+    CHANGE_CUSTOM_PAGE_STATUS("/v3/goldplan/merchants/changecustompagestatus"),
+    /**
+     * 点金计划-同业过滤标签管理
+     */
+    SET_ADVERTISING_INDUSTRY_FILTER("/v3/goldplan/merchants/set-advertising-industry-filter"),
 
 
     /**
