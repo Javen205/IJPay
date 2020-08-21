@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.version>2.7</ijapy.version>
+        <ijapy.version>2.7.0</ijapy.version>
         <jfinal.version>4.4</jfinal.version>
     </properties>
 
