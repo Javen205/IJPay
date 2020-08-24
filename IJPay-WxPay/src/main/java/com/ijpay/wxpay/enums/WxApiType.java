@@ -610,6 +610,14 @@ public enum WxApiType {
      */
     PROFIT_SHARING_FINISH_ORDER("/v3/ecommerce/profitsharing/finish-order"),
     /**
+     * 添加分账接收方
+     */
+    PROFIT_SHARING_RECEIVERS_ADD("/v3/ecommerce/profitsharing/receivers/add"),
+    /**
+     * 删除分账接收方
+     */
+    PROFIT_SHARING_RECEIVERS_DELETE("/v3/ecommerce/profitsharing/receivers/delete"),
+    /**
      * 电商收付通-退款接口-退款申请
      */
     E_COMMERCE_REFUNDS("/v3/ecommerce/refunds/apply"),
