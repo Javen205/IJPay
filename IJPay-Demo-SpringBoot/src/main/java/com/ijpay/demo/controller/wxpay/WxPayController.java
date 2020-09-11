@@ -581,6 +581,30 @@ public class WxPayController extends AbstractWxPayApiController {
         return new AjaxResult().success(jsonStr);
     }
 
+    @RequestMapping(value = "/queryOrder", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String queryOrder(@RequestParam(value = "transactionId", required = false) String transactionId, @RequestParam(value = "outTradeNo", required = false) String outTradeNo) {
+        try {
+            WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
+
+            Map<String, String> params = OrderQueryModel.builder()
+                    .appid(wxPayApiConfig.getAppId())
+                    .mch_id(wxPayApiConfig.getMchId())
+                    .transaction_id(transactionId)
+                    .out_order_no(outTradeNo)
+                    .nonce_str(WxPayKit.generateStr())
+                    .build()
+                    .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);
+            log.info("请求参数：{}", WxPayKit.toXml(params));
+            String query = WxPayApi.orderQuery(params);
+            log.info("查询结果: {}", query);
+            return query;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "系统错误";
+        }
+    }
+
     /**
      * 企业付款到零钱
      */
