@@ -814,7 +814,29 @@ public enum WxApiType {
     /**
      * 智慧商圈-商圈积分同步
      */
-    BUSINESSCIRCLE_POINTS_NOTIFY("/v3/businesscircle/points/notify"),
+    BUSINESS_CIRCLE_POINTS_NOTIFY("/v3/businesscircle/points/notify"),
+
+
+    /**
+     * 连锁品牌-分账-查询分账
+     */
+    BRAND_PROFIT_SHARING_ORDERS("/v3/brand/profitsharing/orders"),
+    /**
+     * 连锁品牌-分账回退-查询分账回退
+     */
+    BRAND_PROFIT_SHARING_RETURN_ORDERS("/v3/brand/profitsharing/returnorders"),
+    /**
+     * 连锁品牌-完结分账
+     */
+    BRAND_PROFIT_SHARING_FINISH_ORDER("/v3/brand/profitsharing/finish-order"),
+    /**
+     * 连锁品牌-添加分账接收方
+     */
+    BRAND_PROFIT_SHARING_RECEIVERS_ADD("/v3/brand/profitsharing/receivers/add"),
+    /**
+     * 连锁品牌-删除分账接收方
+     */
+    BRAND_PROFIT_SHARING_RECEIVERS_delete("/v3/brand/profitsharing/receivers/delete"),
     ;
 
     /**
