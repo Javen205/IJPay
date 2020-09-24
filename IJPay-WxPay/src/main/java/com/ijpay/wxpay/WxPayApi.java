@@ -1335,15 +1335,15 @@ public class WxPayApi {
         return execution(getReqUrl(WxApiType.DOWNLOAD_FUND_FLOW), params, certFile, certPass);
     }
 
-	/**
-	 * 刷脸设备获取设备调用凭证
-	 *
-	 * @param params 请求参数
-	 * @return {@link String} 请求返回的结果
-	 */
-	public static String getAuthInfo(Map<String, String> params) {
-    	return execution("https://payapp.weixin.qq.com/face/get_wxpayface_authinfo", params);
-	}
+    /**
+     * 刷脸设备获取设备调用凭证
+     *
+     * @param params 请求参数
+     * @return {@link String} 请求返回的结果
+     */
+    public static String getAuthInfo(Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.GET_AUTH_INFO, WxDomain.PAYAPP, false), params);
+    }
 
     /**
      * 刷脸支付
