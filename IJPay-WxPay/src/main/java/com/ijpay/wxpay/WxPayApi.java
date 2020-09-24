@@ -1342,7 +1342,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getAuthInfo(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.GET_AUTH_INFO, WxDomain.PAYAPP, false), params);
+        return execution(getReqUrl(WxApiType.GET_AUTH_INFO, WxDomain.PAY_APP, false), params);
     }
 
     /**
