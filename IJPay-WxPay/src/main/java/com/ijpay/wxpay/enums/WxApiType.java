@@ -243,6 +243,10 @@ public enum WxApiType {
      */
     PARTNER_DELETE_ENTRUST_CONTRACT("/papay/partner/deletecontract"),
     /**
+     * 刷脸获取调用凭证
+     */
+    GET_AUTH_INFO("/face/get_wxpayface_authinfo"),
+    /**
      * 刷脸支付
      */
     FACE_PAY("/pay/facepay"),
