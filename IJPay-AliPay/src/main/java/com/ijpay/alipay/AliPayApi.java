@@ -39,7 +39,22 @@ public class AliPayApi {
      * 支付宝提供给商户的服务接入网关URL(新)
      */
     private static final String GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
+    
+    public static <T extends AlipayResponse> T doExecute(AlipayRequest<T> request) throws AlipayApiException {
+        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
+            return certificateExecute(request);
+        } else {
+            return execute(request);
+        }
+    }
 
+    public static <T extends AlipayResponse> T doExecute(AlipayRequest<T> request, String authToken) throws AlipayApiException {
+        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
+            return certificateExecute(request, authToken);
+        } else {
+            return execute(request, authToken);
+        }
+    }
 
     public static <T extends AlipayResponse> T execute(AlipayRequest<T> request) throws AlipayApiException {
         return AliPayApiConfigKit.getAliPayApiConfig().getAliPayClient().execute(request);
@@ -252,11 +267,7 @@ public class AliPayApi {
         // 填充业务参数
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -274,11 +285,7 @@ public class AliPayApi {
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
         request.putOtherTextParam("app_auth_token", appAuthToken);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -294,11 +301,7 @@ public class AliPayApi {
         AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -352,11 +355,7 @@ public class AliPayApi {
     public static AlipayFundTransToaccountTransferResponse transferToResponse(AlipayFundTransToaccountTransferModel model) throws AlipayApiException {
         AlipayFundTransToaccountTransferRequest request = new AlipayFundTransToaccountTransferRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -382,11 +381,7 @@ public class AliPayApi {
     public static AlipayFundTransOrderQueryResponse transferQueryToResponse(AlipayFundTransOrderQueryModel model) throws AlipayApiException {
         AlipayFundTransOrderQueryRequest request = new AlipayFundTransOrderQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -403,11 +398,7 @@ public class AliPayApi {
         if (!StringUtils.isEmpty(appAuthToken)) {
             request.putOtherTextParam("app_auth_token", appAuthToken);
         }
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -424,11 +415,7 @@ public class AliPayApi {
         if (!StringUtils.isEmpty(appAuthToken)) {
             request.putOtherTextParam("app_auth_token", appAuthToken);
         }
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -445,11 +432,7 @@ public class AliPayApi {
         if (!StringUtils.isEmpty(appAuthToken)) {
             request.putOtherTextParam("app_auth_token", appAuthToken);
         }
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
 
@@ -463,11 +446,7 @@ public class AliPayApi {
     public static AlipayTradeQueryResponse tradeQueryToResponse(AlipayTradeQueryModel model) throws AlipayApiException {
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -509,11 +488,7 @@ public class AliPayApi {
             throws AlipayApiException {
         AlipayTradeCancelRequest request = new AlipayTradeCancelRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -541,11 +516,7 @@ public class AliPayApi {
     public static AlipayTradeCloseResponse tradeCloseToResponse(AlipayTradeCloseModel model) throws AlipayApiException {
         AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -560,11 +531,7 @@ public class AliPayApi {
         AlipayTradeCreateRequest request = new AlipayTradeCreateRequest();
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -593,11 +560,7 @@ public class AliPayApi {
     public static AlipayTradeRefundResponse tradeRefundToResponse(AlipayTradeRefundModel model) throws AlipayApiException {
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -624,11 +587,7 @@ public class AliPayApi {
     public static AlipayTradePageRefundResponse tradeRefundToResponse(AlipayTradePageRefundModel model) throws AlipayApiException {
         AlipayTradePageRefundRequest request = new AlipayTradePageRefundRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -655,11 +614,7 @@ public class AliPayApi {
     public static AlipayTradeFastpayRefundQueryResponse tradeRefundQueryToResponse(AlipayTradeFastpayRefundQueryModel model) throws AlipayApiException {
         AlipayTradeFastpayRefundQueryRequest request = new AlipayTradeFastpayRefundQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -698,11 +653,7 @@ public class AliPayApi {
     public static AlipayDataDataserviceBillDownloadurlQueryResponse billDownloadUrlQueryToResponse(AlipayDataDataserviceBillDownloadurlQueryModel model) throws AlipayApiException {
         AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -717,11 +668,7 @@ public class AliPayApi {
         AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
         request.setBizModel(model);
         request.putOtherTextParam("app_auth_token", appAuthToken);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -748,11 +695,7 @@ public class AliPayApi {
     public static AlipayTradeOrderSettleResponse tradeOrderSettleToResponse(AlipayTradeOrderSettleModel model) throws AlipayApiException {
         AlipayTradeOrderSettleRequest request = new AlipayTradeOrderSettleRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -861,11 +804,7 @@ public class AliPayApi {
     public static AlipayFundAuthOrderFreezeResponse authOrderFreezeToResponse(AlipayFundAuthOrderFreezeModel model) throws AlipayApiException {
         AlipayFundAuthOrderFreezeRequest request = new AlipayFundAuthOrderFreezeRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -878,11 +817,7 @@ public class AliPayApi {
     public static AlipayFundAuthOrderUnfreezeResponse authOrderUnfreezeToResponse(AlipayFundAuthOrderUnfreezeModel model) throws AlipayApiException {
         AlipayFundAuthOrderUnfreezeRequest request = new AlipayFundAuthOrderUnfreezeRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -895,11 +830,7 @@ public class AliPayApi {
     public static AlipayFundAuthOrderVoucherCreateResponse authOrderVoucherCreateToResponse(AlipayFundAuthOrderVoucherCreateModel model) throws AlipayApiException {
         AlipayFundAuthOrderVoucherCreateRequest request = new AlipayFundAuthOrderVoucherCreateRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -912,11 +843,7 @@ public class AliPayApi {
     public static AlipayFundAuthOperationCancelResponse authOperationCancelToResponse(AlipayFundAuthOperationCancelModel model) throws AlipayApiException {
         AlipayFundAuthOperationCancelRequest request = new AlipayFundAuthOperationCancelRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -929,11 +856,7 @@ public class AliPayApi {
     public static AlipayFundAuthOperationDetailQueryResponse authOperationDetailQueryToResponse(AlipayFundAuthOperationDetailQueryModel model) throws AlipayApiException {
         AlipayFundAuthOperationDetailQueryRequest request = new AlipayFundAuthOperationDetailQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -946,11 +869,7 @@ public class AliPayApi {
     public static AlipayFundCouponOrderAppPayResponse fundCouponOrderAppPayToResponse(AlipayFundCouponOrderAppPayModel model) throws AlipayApiException {
         AlipayFundCouponOrderAppPayRequest request = new AlipayFundCouponOrderAppPayRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -963,11 +882,7 @@ public class AliPayApi {
     public static AlipayFundCouponOrderPagePayResponse fundCouponOrderPagePayToResponse(AlipayFundCouponOrderPagePayModel model) throws AlipayApiException {
         AlipayFundCouponOrderPagePayRequest request = new AlipayFundCouponOrderPagePayRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -980,11 +895,7 @@ public class AliPayApi {
     public static AlipayFundCouponOrderAgreementPayResponse fundCouponOrderAgreementPayToResponse(AlipayFundCouponOrderAgreementPayModel model) throws AlipayApiException {
         AlipayFundCouponOrderAgreementPayRequest request = new AlipayFundCouponOrderAgreementPayRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -997,11 +908,7 @@ public class AliPayApi {
     public static AlipayFundCouponOrderDisburseResponse fundCouponOrderDisburseToResponse(AlipayFundCouponOrderDisburseModel model) throws AlipayApiException {
         AlipayFundCouponOrderDisburseRequest request = new AlipayFundCouponOrderDisburseRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1014,11 +921,7 @@ public class AliPayApi {
     public static AlipayFundCouponOrderRefundResponse fundCouponOrderRefundToResponse(AlipayFundCouponOrderRefundModel model) throws AlipayApiException {
         AlipayFundCouponOrderRefundRequest request = new AlipayFundCouponOrderRefundRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1031,11 +934,7 @@ public class AliPayApi {
     public static AlipayFundCouponOperationQueryResponse fundCouponOperationQueryToResponse(AlipayFundCouponOperationQueryModel model) throws AlipayApiException {
         AlipayFundCouponOperationQueryRequest request = new AlipayFundCouponOperationQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1060,11 +959,7 @@ public class AliPayApi {
     public static AlipayOpenAuthTokenAppResponse openAuthTokenAppToResponse(AlipayOpenAuthTokenAppModel model) throws AlipayApiException {
         AlipayOpenAuthTokenAppRequest request = new AlipayOpenAuthTokenAppRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1077,11 +972,7 @@ public class AliPayApi {
     public static AlipayOpenAuthTokenAppQueryResponse openAuthTokenAppQueryToResponse(AlipayOpenAuthTokenAppQueryModel model) throws AlipayApiException {
         AlipayOpenAuthTokenAppQueryRequest request = new AlipayOpenAuthTokenAppQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1094,11 +985,7 @@ public class AliPayApi {
     public static AlipayCommerceCityfacilitatorVoucherGenerateResponse voucherGenerateToResponse(AlipayCommerceCityfacilitatorVoucherGenerateModel model) throws AlipayApiException {
         AlipayCommerceCityfacilitatorVoucherGenerateRequest request = new AlipayCommerceCityfacilitatorVoucherGenerateRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1111,11 +998,7 @@ public class AliPayApi {
     public static AlipayCommerceCityfacilitatorVoucherRefundResponse metroRefundToResponse(AlipayCommerceCityfacilitatorVoucherRefundModel model) throws AlipayApiException {
         AlipayCommerceCityfacilitatorVoucherRefundRequest request = new AlipayCommerceCityfacilitatorVoucherRefundRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1128,11 +1011,7 @@ public class AliPayApi {
     public static AlipayCommerceCityfacilitatorStationQueryResponse stationQueryToResponse(AlipayCommerceCityfacilitatorStationQueryModel model) throws AlipayApiException {
         AlipayCommerceCityfacilitatorStationQueryRequest request = new AlipayCommerceCityfacilitatorStationQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1145,11 +1024,7 @@ public class AliPayApi {
     public static AlipayCommerceCityfacilitatorVoucherBatchqueryResponse voucherBatchqueryToResponse(AlipayCommerceCityfacilitatorVoucherBatchqueryModel model) throws AlipayApiException {
         AlipayCommerceCityfacilitatorVoucherBatchqueryRequest request = new AlipayCommerceCityfacilitatorVoucherBatchqueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     public static void batchTrans(Map<String, String> params, String privateKey, String signType, HttpServletResponse response) throws IOException {
@@ -1193,11 +1068,7 @@ public class AliPayApi {
         AlipayEbppBillGetRequest request = new AlipayEbppBillGetRequest();
         request.setOrderType(orderType);
         request.setMerchantOrderNo(merchantOrderNo);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1210,11 +1081,7 @@ public class AliPayApi {
     public static ZolozIdentificationUserWebInitializeResponse identificationUserWebInitialize(ZolozIdentificationUserWebInitializeModel model) throws AlipayApiException {
         ZolozIdentificationUserWebInitializeRequest request = new ZolozIdentificationUserWebInitializeRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1227,11 +1094,7 @@ public class AliPayApi {
     public static ZolozIdentificationUserWebQueryResponse identificationUserWebInitialize(ZolozIdentificationUserWebQueryModel model) throws AlipayApiException {
         ZolozIdentificationUserWebQueryRequest request = new ZolozIdentificationUserWebQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1244,11 +1107,7 @@ public class AliPayApi {
     public static ZolozAuthenticationCustomerFacemanageCreateResponse authenticationCustomerFaceManageCreate(ZolozAuthenticationCustomerFacemanageCreateModel model) throws AlipayApiException {
         ZolozAuthenticationCustomerFacemanageCreateRequest request = new ZolozAuthenticationCustomerFacemanageCreateRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1261,11 +1120,7 @@ public class AliPayApi {
     public static ZolozAuthenticationCustomerFacemanageDeleteResponse authenticationCustomerFaceManageDelete(ZolozAuthenticationCustomerFacemanageDeleteModel model) throws AlipayApiException {
         ZolozAuthenticationCustomerFacemanageDeleteRequest request = new ZolozAuthenticationCustomerFacemanageDeleteRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1279,15 +1134,7 @@ public class AliPayApi {
     authenticationCustomerFTokenQuery(ZolozAuthenticationCustomerFtokenQueryModel model) throws AlipayApiException {
         ZolozAuthenticationCustomerFtokenQueryRequest request = new ZolozAuthenticationCustomerFtokenQueryRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-                return certificateExecute(request);
-            } else {
-                return execute(request);
-            }
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1300,15 +1147,7 @@ public class AliPayApi {
     public static ZolozAuthenticationSmilepayInitializeResponse authenticationSmilePayInitialize(ZolozAuthenticationSmilepayInitializeModel model) throws AlipayApiException {
         ZolozAuthenticationSmilepayInitializeRequest request = new ZolozAuthenticationSmilepayInitializeRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-                return certificateExecute(request);
-            } else {
-                return execute(request);
-            }
-        }
+        return doExecute(request);
     }
 
     /**
@@ -1321,11 +1160,60 @@ public class AliPayApi {
     public static ZolozAuthenticationCustomerSmilepayInitializeResponse authenticationCustomerSmilePayInitialize(ZolozAuthenticationCustomerSmilepayInitializeModel model) throws AlipayApiException {
         ZolozAuthenticationCustomerSmilepayInitializeRequest request = new ZolozAuthenticationCustomerSmilepayInitializeRequest();
         request.setBizModel(model);
-        if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
-            return certificateExecute(request);
-        } else {
-            return execute(request);
-        }
+        return doExecute(request);
+    }
+
+    /**
+     * 生态激励项目ISV代签约接口
+     *
+     * @return {@link AlipayCommerceAdContractSignResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayCommerceAdContractSignResponse commerceAdContractSign() throws AlipayApiException {
+        AlipayCommerceAdContractSignRequest request = new AlipayCommerceAdContractSignRequest();
+        return doExecute(request);
+    }
+
+    /**
+     * 分账关系绑定
+     *
+     * @param model {@link AlipayTradeRoyaltyRelationBindModel}
+     * @return {@link AlipayTradeRoyaltyRelationBindResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradeRoyaltyRelationBindResponse tradeRoyaltyRelationBind(
+            AlipayTradeRoyaltyRelationBindModel model) throws AlipayApiException {
+        AlipayTradeRoyaltyRelationBindRequest request = new AlipayTradeRoyaltyRelationBindRequest();
+        request.setBizModel(model);
+        return doExecute(request);
+    }
+
+    /**
+     * 分账关系解绑
+     *
+     * @param model {@link AlipayTradeRoyaltyRelationUnbindModel}
+     * @return {@link AlipayTradeRoyaltyRelationUnbindResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradeRoyaltyRelationUnbindResponse tradeRoyaltyRelationUnBind(
+            AlipayTradeRoyaltyRelationUnbindModel model) throws AlipayApiException {
+        AlipayTradeRoyaltyRelationUnbindRequest request = new AlipayTradeRoyaltyRelationUnbindRequest();
+        request.setBizModel(model);
+        return doExecute(request);
+    }
+
+    /**
+     * 分账关系查询
+     *
+     * @param model {@link AlipayTradeRoyaltyRelationBatchqueryModel}
+     * @return {@link AlipayTradeRoyaltyRelationBatchqueryResponse}
+     * @throws AlipayApiException 支付宝 Api 异常
+     */
+    public static AlipayTradeRoyaltyRelationBatchqueryResponse tradeRoyaltyRelationBatchQuery(
+            AlipayTradeRoyaltyRelationBatchqueryModel model) throws AlipayApiException {
+        AlipayTradeRoyaltyRelationBatchqueryRequest request = new AlipayTradeRoyaltyRelationBatchqueryRequest();
+        request.setBizModel(model);
+        return doExecute(request);
     }
 
 }
