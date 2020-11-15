@@ -19,8 +19,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <ijapy.version>2.7.0</ijapy.version>
+        <ijapy.version>2.7.1</ijapy.version>
         <enjoy.version>4.3</enjoy.version>
+        <fastjson.version>1.2.75</fastjson.version>
     </properties>
 
     <dependencies>
@@ -49,8 +50,44 @@
 
         <dependency>
             <groupId>com.github.javen205</groupId>
-            <artifactId>IJPay-All</artifactId>
+            <artifactId>IJPay-WxPay</artifactId>
             <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-AliPay</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-QQ</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-UnionPay</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-JDPay</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-PayPal</artifactId>
+            <version>${ijapy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <dependency>
