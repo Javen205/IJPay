@@ -235,15 +235,16 @@ public abstract class AbstractHttpDelegate {
      * @param certPath 证书路径
      * @param certPass 证书密码
      * @param filePath 上传文件路径
+     * @param protocol 协议
      * @return {@link String}  请求返回的结果
      */
-    public String upload(String url, String data, String certPath, String certPass, String filePath) {
+    public String upload(String url, String data, String certPath, String certPass, String filePath, String protocol) {
         try {
             File file = FileUtil.newFile(filePath);
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
                             .create()
-                            .setProtocol(SSLSocketFactoryBuilder.TLSv1)
+                            .setProtocol(protocol)
                             .setKeyManagers(getKeyManager(certPass, certPath, null))
                             .setSecureRandom(new SecureRandom())
                             .build()
@@ -256,7 +257,48 @@ public abstract class AbstractHttpDelegate {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+    /**
+     * 上传文件
+     *
+     * @param url      请求url
+     * @param data     请求参数
+     * @param certPath 证书路径
+     * @param certPass 证书密码
+     * @param filePath 上传文件路径
+     * @return {@link String}  请求返回的结果
+     */
+    public String upload(String url, String data, String certPath, String certPass, String filePath) {
+        return upload(url, data, certPath, certPass, filePath, SSLSocketFactoryBuilder.TLSv1);
+    }
+
+    /**
+     * post 请求
+     *
+     * @param url      请求url
+     * @param data     请求参数
+     * @param certPath 证书路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, String data, String certPath, String certPass, String protocol) {
+        try {
+            return HttpRequest.post(url)
+                    .setSSLSocketFactory(SSLSocketFactoryBuilder
+                            .create()
+                            .setProtocol(protocol)
+                            .setKeyManagers(getKeyManager(certPass, certPath, null))
+                            .setSecureRandom(new SecureRandom())
+                            .build()
+                    )
+                    .body(data)
+                    .execute()
+                    .body();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -269,12 +311,26 @@ public abstract class AbstractHttpDelegate {
      * @return {@link String} 请求返回的结果
      */
     public String post(String url, String data, String certPath, String certPass) {
+        return post(url, data, certPath, certPass, SSLSocketFactoryBuilder.TLSv1);
+    }
+
+    /**
+     * post 请求
+     *
+     * @param url      请求url
+     * @param data     请求参数
+     * @param certFile 证书文件输入流
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public String post(String url, String data, InputStream certFile, String certPass, String protocol) {
         try {
             return HttpRequest.post(url)
                     .setSSLSocketFactory(SSLSocketFactoryBuilder
                             .create()
-                            .setProtocol(SSLSocketFactoryBuilder.TLSv1)
-                            .setKeyManagers(getKeyManager(certPass, certPath, null))
+                            .setProtocol(protocol)
+                            .setKeyManagers(getKeyManager(certPass, null, certFile))
                             .setSecureRandom(new SecureRandom())
                             .build()
                     )
@@ -296,21 +352,7 @@ public abstract class AbstractHttpDelegate {
      * @return {@link String} 请求返回的结果
      */
     public String post(String url, String data, InputStream certFile, String certPass) {
-        try {
-            return HttpRequest.post(url)
-                    .setSSLSocketFactory(SSLSocketFactoryBuilder
-                            .create()
-                            .setProtocol(SSLSocketFactoryBuilder.TLSv1)
-                            .setKeyManagers(getKeyManager(certPass, null, certFile))
-                            .setSecureRandom(new SecureRandom())
-                            .build()
-                    )
-                    .body(data)
-                    .execute()
-                    .body();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return post(url, data, certFile, certPass, SSLSocketFactoryBuilder.TLSv1);
     }
 
     /**
