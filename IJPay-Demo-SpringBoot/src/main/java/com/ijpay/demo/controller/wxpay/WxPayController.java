@@ -26,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -745,6 +747,68 @@ public class WxPayController extends AbstractWxPayApiController {
         }
         return null;
     }
+
+    /**
+     * 添加分账接收方
+     */
+    @RequestMapping(value = "/profitSharingAddReceiver", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String profitSharingAddReceiver() {
+        try {
+            ReceiverModel receiver = ReceiverModel.builder()
+                    .type("PERSONAL_OPENID")
+                    .account("openid")
+                    .relation_type("PARTNER")
+                    .build();
+
+            Map<String, String> params = ProfitSharingModel.builder()
+                    .mch_id(wxPayBean.getMchId())
+                    .appid(wxPayBean.getAppId())
+                    .nonce_str(WxPayKit.generateStr())
+                    .receiver(JSON.toJSONString(receiver))
+                    .build()
+                    .createSign(wxPayBean.getPartnerKey(), SignType.HMACSHA256);
+            log.info("请求参数:{}", WxPayKit.toXml(params));
+            String result = WxPayApi.profitSharingAddReceiver(params);
+            log.info("请求结果:{}", result);
+            return JSON.toJSONString(WxPayKit.xmlToMap(result));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 请求单次分账
+     */
+    @RequestMapping(value = "/profitSharing", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String profitSharing(@RequestParam(value = "transactionId") String transactionId) {
+        List<ReceiverModel> list = new ArrayList<>();
+
+        list.add(ReceiverModel.builder()
+                .type("PERSONAL_OPENID")
+                .account("openid")
+                .amount(66)
+                .description("IJPay 分账")
+                .build());
+
+        Map<String, String> params = ProfitSharingModel.builder()
+                .mch_id(wxPayBean.getMchId())
+                .appid(wxPayBean.getAppId())
+                .nonce_str(WxPayKit.generateStr())
+                .transaction_id(transactionId)
+                .out_order_no(WxPayKit.generateStr())
+                .receivers(JSON.toJSONString(list))
+                .build()
+                .createSign(wxPayBean.getPartnerKey(), SignType.HMACSHA256);
+
+        log.info("请求参数:{}", WxPayKit.toXml(params));
+        String result = WxPayApi.profitSharing(params, wxPayBean.getCertPath(), wxPayBean.getMchId());
+        log.info("请求结果:{}", result);
+        return JSON.toJSONString(WxPayKit.xmlToMap(result));
+    }
+
 
     /**
      * 微信退款
