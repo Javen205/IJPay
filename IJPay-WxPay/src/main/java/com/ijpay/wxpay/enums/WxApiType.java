@@ -863,6 +863,19 @@ public enum WxApiType {
      * 连锁品牌-删除分账接收方
      */
     BRAND_PROFIT_SHARING_RECEIVERS_delete("/v3/brand/profitsharing/receivers/delete"),
+
+    /**
+     * 预受理领卡
+     */
+    DISCOUNT_CARD("/v3/discount-card/cards"),
+    /**
+     * 增加用户记录
+     */
+    DISCOUNT_CARD_ADD_USER_RECORDS("/v3/discount-card/cards/%s/add-user-records"),
+    /**
+     * 查询先享卡订单
+     */
+    DISCOUNT_CARD_GET("/v3/discount-card/cards/%s"),
     ;
 
     /**
