@@ -571,6 +571,14 @@ public enum WxApiType {
      * 点金计划-同业过滤标签管理
      */
     SET_ADVERTISING_INDUSTRY_FILTER("/v3/goldplan/merchants/set-advertising-industry-filter"),
+    /**
+     * 开通广告展示
+     */
+    GOLD_PLAN_OPEN_ADVERTISING_SHOW("/v3/goldplan/merchants/open-advertising-show"),
+    /**
+     * 关闭广告展示
+     */
+    GOLD_PLAN_CLOSE_ADVERTISING_SHOW("/v3/goldplan/merchants/close-advertising-show"),
 
 
     /**
