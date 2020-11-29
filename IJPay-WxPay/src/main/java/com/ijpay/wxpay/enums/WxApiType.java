@@ -359,6 +359,28 @@ public enum WxApiType {
     PAY_SCORE_PERMISSIONS_TERMINATE("/payscore/users/%s/permissions/%s/terminate"),
 
     /**
+     * 商户预授权
+     */
+    PAY_SCORE_PERMISSIONS("/v3/payscore/permissions"),
+    /**
+     * 查询与用户授权记录（授权协议号）
+     */
+    PAY_SCORE_PERMISSIONS_AUTHORIZATION_CODE("/v3/payscore/permissions/authorization-code/%s"),
+    /**
+     * 解除用户授权关系（授权协议号）
+     */
+    PAY_SCORE_PERMISSIONS_AUTHORIZATION_CODE_TERMINATE("/v3/payscore/permissions/authorization-code/%s/terminate"),
+    /**
+     * 查询与用户授权记录（openid）
+     */
+    PAY_SCORE_PERMISSIONS_OPENID("/v3/payscore/permissions/openid/%s"),
+    /**
+     * 解除用户授权关系（openid）
+     */
+    PAY_SCORE_PERMISSIONS_OPENID_TERMINATE("/v3/payscore/permissions/openid/%s/terminate"),
+
+
+    /**
      * 特约商户进件-提交申请单
      */
     APPLY_4_SUB("/v3/applyment4sub/applyment/"),
