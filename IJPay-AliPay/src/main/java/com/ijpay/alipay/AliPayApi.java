@@ -69,6 +69,18 @@ public class AliPayApi {
 		}
 	}
 	
+	
+	public static <T extends AlipayResponse> T doExecute(AlipayClient alipayClient,Boolean certModel,AlipayRequest<T> request,String authToken) throws AlipayApiException {
+		if (alipayClient == null) {
+			throw new IllegalStateException("aliPayClient 未被初始化");
+		}
+		if (certModel) {
+			return certificateExecute(alipayClient,request,authToken);
+		} else {
+			return execute(alipayClient,request,authToken);
+		}
+	}
+	
 
 	public static <T extends AlipayResponse> T doExecute(AlipayRequest<T> request, String authToken) throws AlipayApiException {
 		if (AliPayApiConfigKit.getAliPayApiConfig().isCertModel()) {
@@ -357,11 +369,7 @@ public class AliPayApi {
 	 */
 	public static void wapPay(AlipayClient alipayClient,HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl, String notifyUrl) throws AlipayApiException, IOException {
 		String form = wapPayStr(alipayClient,model, returnUrl, notifyUrl);
-		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
-		response.setContentType("text/html;charset=" + charset);
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.write(form);
 		out.flush();
@@ -421,9 +429,6 @@ public class AliPayApi {
 	public static void wapPay(AlipayClient alipayClient,HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl, String notifyUrl, String appAuthToken) throws AlipayApiException, IOException {
 		String form = wapPayStr(alipayClient,model, returnUrl, notifyUrl, appAuthToken);
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		PrintWriter out = response.getWriter();
 		out.write(form);
@@ -496,9 +501,6 @@ public class AliPayApi {
 			throws AlipayApiException, IOException {
 		String form = wapPayStr(alipayClient,model, returnUrl, notifyUrl, appAuthToken);
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		OutputStream out = response.getOutputStream();
 		out.write(form.getBytes(charset));
@@ -564,9 +566,6 @@ public class AliPayApi {
 	public static void wapPayByOutputStream(AlipayClient alipayClient,HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl, String notifyUrl) throws AlipayApiException, IOException {
 		String form = wapPayStr(alipayClient,model, returnUrl, notifyUrl);
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		OutputStream out = response.getOutputStream();
 		out.write(form.getBytes(charset));
@@ -803,6 +802,30 @@ public class AliPayApi {
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);
 		return doExecute(alipayClient,certModel,request);
+	}
+	
+	
+	/**
+	 * 统一收单线下交易预创建 <br>
+	 * 适用于：扫码支付等 <br>
+	 *
+	 * @param alipayClient
+	 *            {@link AlipayClient}
+	 * @param certModel
+	 *				是否证书模式	            
+	 * @param model
+	 *            {@link AlipayTradePrecreateModel}
+	 * @param notifyUrl
+	 *            异步通知URL
+	 * @return {@link AlipayTradePrecreateResponse}
+	 * @throws AlipayApiException
+	 *             支付宝 Api 异常
+	 */
+	public static AlipayTradePrecreateResponse tradePrecreatePayToResponse(AlipayClient alipayClient,Boolean certModel,AlipayTradePrecreateModel model, String notifyUrl, String appAuthToken) throws AlipayApiException {
+		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
+		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
+		return doExecute(alipayClient,certModel,request,appAuthToken);
 	}
 
 	/**
