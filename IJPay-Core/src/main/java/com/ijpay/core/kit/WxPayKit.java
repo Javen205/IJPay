@@ -1,6 +1,7 @@
 package com.ijpay.core.kit;
 
-import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.io.resource.Resource;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -8,7 +9,6 @@ import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.enums.SignType;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
@@ -529,7 +529,7 @@ public class WxPayKit {
         String body = (String) map.get("body");
         String nonceStr = (String) map.get("nonceStr");
         String timestamp = (String) map.get("timestamp");
-        return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+        return verifySignature(signature, body, nonceStr, timestamp, getFileStream(certPath));
     }
 
     /**
@@ -545,7 +545,7 @@ public class WxPayKit {
         String nonceStr = response.getHeader("Wechatpay-Nonce");
         String signature = response.getHeader("Wechatpay-Signature");
         String body = response.getBody();
-        return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+        return verifySignature(signature, body, nonceStr, timestamp, getFileStream(certPath));
     }
 
     /**
@@ -631,7 +631,7 @@ public class WxPayKit {
      */
     public static String verifyNotify(String serialNo, String body, String signature, String nonce,
                                       String timestamp, String key, String certPath) throws Exception {
-        BufferedInputStream inputStream = FileUtil.getInputStream(certPath);
+        InputStream inputStream = getFileStream(certPath);
         // 获取平台证书序列号
         X509Certificate certificate = PayKit.getCertificate(inputStream);
         String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
@@ -657,4 +657,15 @@ public class WxPayKit {
         }
         return null;
     }
+
+	/**
+	 * 以流的方式读取文件
+	 *
+	 * @param keyPath 文件相对路径
+	 * @return InputStream
+	 */
+	private static InputStream getFileStream(String keyPath) {
+		Resource resource = new ClassPathResource(keyPath);
+		return resource.getStream();
+	}
 }
