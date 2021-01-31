@@ -33,9 +33,6 @@ import java.util.Map;
  */
 public class WxPayApi {
 
-    private WxPayApi() {
-    }
-
     /**
      * 获取接口请求的 URL
      *

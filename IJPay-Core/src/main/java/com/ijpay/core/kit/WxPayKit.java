@@ -551,6 +551,22 @@ public class WxPayKit {
     /**
      * 验证签名
      *
+     * @param response        接口请求返回的 {@link IJPayHttpResponse}
+     * @param certInputStream 平台证书
+     * @return 签名结果
+     * @throws Exception 异常信息
+     */
+    public static boolean verifySignature(IJPayHttpResponse response, InputStream certInputStream) throws Exception {
+        String timestamp = response.getHeader("Wechatpay-Timestamp");
+        String nonceStr = response.getHeader("Wechatpay-Nonce");
+        String signature = response.getHeader("Wechatpay-Signature");
+        String body = response.getBody();
+        return verifySignature(signature, body, nonceStr, timestamp, certInputStream);
+    }
+
+    /**
+     * 验证签名
+     *
      * @param map             接口请求返回的 Map
      * @param certInputStream 平台证书输入流
      * @return 签名结果
@@ -619,26 +635,26 @@ public class WxPayKit {
     /**
      * v3 支付异步通知验证签名
      *
-     * @param serialNo  证书序列号
-     * @param body      异步通知密文
-     * @param signature 签名
-     * @param nonce     随机字符串
-     * @param timestamp 时间戳
-     * @param key       api 密钥
-     * @param certPath  平台证书路径
+     * @param serialNo        证书序列号
+     * @param body            异步通知密文
+     * @param signature       签名
+     * @param nonce           随机字符串
+     * @param timestamp       时间戳
+     * @param key             api 密钥
+     * @param certInputStream 平台证书
      * @return 异步通知明文
      * @throws Exception 异常信息
      */
     public static String verifyNotify(String serialNo, String body, String signature, String nonce,
-                                      String timestamp, String key, String certPath) throws Exception {
-        BufferedInputStream inputStream = FileUtil.getInputStream(certPath);
+                                      String timestamp, String key, InputStream certInputStream) throws Exception {
         // 获取平台证书序列号
-        X509Certificate certificate = PayKit.getCertificate(inputStream);
+        X509Certificate certificate = PayKit.getCertificate(certInputStream);
         String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
         System.out.println(serialNumber);
         // 验证证书序列号
         if (serialNumber.equals(serialNo)) {
-            boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp, certificate.getPublicKey());
+            boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
+                    certificate.getPublicKey());
             if (verifySignature) {
                 JSONObject resultObject = JSONUtil.parseObj(body);
                 JSONObject resource = resultObject.getJSONObject("resource");
@@ -656,5 +672,24 @@ public class WxPayKit {
             }
         }
         return null;
+    }
+
+    /**
+     * v3 支付异步通知验证签名
+     *
+     * @param serialNo  证书序列号
+     * @param body      异步通知密文
+     * @param signature 签名
+     * @param nonce     随机字符串
+     * @param timestamp 时间戳
+     * @param key       api 密钥
+     * @param certPath  平台证书路径
+     * @return 异步通知明文
+     * @throws Exception 异常信息
+     */
+    public static String verifyNotify(String serialNo, String body, String signature, String nonce,
+                                      String timestamp, String key, String certPath) throws Exception {
+        BufferedInputStream inputStream = FileUtil.getInputStream(certPath);
+        return verifyNotify(serialNo, body, signature, nonce, timestamp, key, inputStream);
     }
 }
