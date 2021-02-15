@@ -51,6 +51,10 @@
 - 微信支付支持多商户多应用，普通商户模式与服务商商模式当然也支持境外商户、同时支持 Api-v3 与 Api-v2 版本的接口。
 - 支付宝支付支持多商户多应用，签名同时支持普通公钥方式与公钥证书方式
 
+
+[![Stargazers over time](https://whnb.wang/img/Javen205/IJPay)](https://javen205.gitee.io/ijpay)
+
+
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
 GitHub：[https://github.com/Javen205/IJPay](https://github.com/Javen205/IJPay)
