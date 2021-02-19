@@ -25,9 +25,6 @@
      <a target="_blank" href="https://www.codacy.com/app/Javen205/IJPay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Javen205/IJPay&amp;utm_campaign=Badge_Grade">
         <img alt="" src="https://api.codacy.com/project/badge/Grade/b76239f6b2c84564b30a815aea71e8a7"/>
      </a>
-     <a target="_blank" href="https://github.com/Javen205/IJPay/release">
-        <img alt="" src="https://img.shields.io/github/release/Javen205/IJPay.svg"/>
-     </a>
      <a target="_blank" href="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay">
         <img alt="" src="https://maven-badges.herokuapp.com/maven-central/com.github.javen205/IJPay/badge.svg"/>
      </a> 
@@ -75,7 +72,7 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
         <img src="assets/img/aliYun.jpg" height="100" alt="">
     </a>
     <a left="100" target="_blank" href="https://curl.qcloud.com/iXclla9J">
-        <img src="assets/img/tencent_11.jpg" height="100" alt="">
+        <img src="assets/img/tencent.jpg" height="100" alt="">
     </a>
  </p>
 
@@ -133,14 +130,8 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 
 ## 官方文档 
 
-- [微信委托扣款 API-服务商模式](https://pay.weixin.qq.com/wiki/doc/api/pap_sl.php?chapter=17_1)
-- [微信委托扣款 API-普通商户模式](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=17_1)
-- [微信刷脸支付 API](https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/backend.html)
-- [微信酒店押金](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=26_1)
-- [微信小微商户](https://pay.weixin.qq.com/index.php/core/affiliate/micro_intro)
-- [微信支付分接口文档](https://pay.weixin.qq.com/wiki/doc/apiv3/payscore.php?chapter=21_2&index=1)
-- [微信支付 V3开发文档](https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/api.shtml)
-- [支付宝开发平台](https://docs.open.alipay.com)
+- [微信支付开发文档](https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/api.shtml)
+- [支付宝开发平台](https://openhome.alipay.com/docCenter/docCenter.htm?from=IJPay)
 - [QQ 钱包开发文档](https://qpay.qq.com/buss/doc.shtml)
 - [京东支付](https://payapi.jd.com)
 - [京东支付聚合支付](https://mpayx.jd.com/statics/doc/docList.html)
