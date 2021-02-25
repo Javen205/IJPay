@@ -1900,9 +1900,6 @@ public class AliPayApi {
 		request.setReturnUrl(returnUrl);
 		String form = pageExecute(alipayClient,request).getBody();
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		PrintWriter out = response.getWriter();
 		out.write(form);
@@ -1971,9 +1968,6 @@ public class AliPayApi {
 		request.putOtherTextParam("app_auth_token", appAuthToken);
 		String form = pageExecute(alipayClient,request).getBody();
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		PrintWriter out = response.getWriter();
 		out.write(form);
@@ -2034,9 +2028,6 @@ public class AliPayApi {
 		request.setReturnUrl(returnUrl);
 		String form = pageExecute(alipayClient,request).getBody();
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		OutputStream out = response.getOutputStream();
 		out.write(form.getBytes(charset));
@@ -2105,9 +2096,6 @@ public class AliPayApi {
 		request.putOtherTextParam("app_auth_token", appAuthToken);
 		String form = pageExecute(alipayClient,request).getBody();
 		String charset="UTF-8";
-		if(!StringUtils.isEmpty(AliPayApiConfigKit.getAliPayApiConfig().getCharset())){
-			charset=AliPayApiConfigKit.getAliPayApiConfig().getCharset();
-		}
 		response.setContentType("text/html;charset=" + charset);
 		OutputStream out = response.getOutputStream();
 		out.write(form.getBytes(charset));
