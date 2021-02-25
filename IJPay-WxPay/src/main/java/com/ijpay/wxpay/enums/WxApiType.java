@@ -707,6 +707,11 @@ public enum WxApiType {
      * 电商收付通-提现接口-按日下载提现异常文件
      */
     WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/%s"),
+    
+    /**
+     * 申请二级商户资金账单API
+     */
+    E_COMMERCE_FUND_FLOW_BILL("/v3/ecommerce/bill/fundflowbill"),
     /**
      * 申请交易账单
      */
