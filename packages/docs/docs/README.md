@@ -55,19 +55,13 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 [阿里云主机低至2折](https://www.aliyun.com/minisite/goods?userCode=b1hkzv2x)
 
-[腾讯云服务器限时秒杀](https://cloud.tencent.com/act/cps/redirect?redirect=1054&cps_key=a21676d22e4b11a883893d54e158c1d3&from=console)
+[腾讯云服务器限时秒杀](https://curl.qcloud.com/iXclla9J)
 
-[华为云购买享受红利](https://activity.huaweicloud.com/discount_area_v5/index.html?&fromuser=aHcxMTc2NTU3MQ==&utm_source=aHcxMTc2NTU3MQ==&utm_medium=cps&utm_campaign=201905)
+[新用户专属福利](https://curl.qcloud.com/3AJFwXAt)
 
 ### 谁在使用？
 
 <p align="left">
-    <a left="100" target="_blank" href="https://pig4cloud.com?from=IJPay">
-        <img src="https://pig4cloud.com/images/123123123.png" width="100" alt="">
-    </a>
- 	<a target="_blank" href="https://www.t-io.org?from=IJPay">
- 	    <img src="https://res.t-io.org/img/logo/t-io.png" width="60" height="40" alt="jetbrains">
- 	</a>
  	<a target="_blank" href="https://w.url.cn/s/ApeggTn">
         <img src="https://yungouos.oss-cn-shanghai.aliyuncs.com/YunGouOS/logo/merchant/logo-system.png" width="100" height="60" alt="jetbrains">
     </a>

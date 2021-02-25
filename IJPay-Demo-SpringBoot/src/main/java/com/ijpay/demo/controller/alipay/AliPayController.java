@@ -360,7 +360,7 @@ public class AliPayController extends AbstractAliPayApiController {
         model.setPayeeInfo(payeeInfo);
 
         try {
-            return AliPayApi.uniTransferToResponse(model,null).getBody();
+            return AliPayApi.uniTransferToResponse(model, null).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -370,7 +370,7 @@ public class AliPayController extends AbstractAliPayApiController {
     @RequestMapping(value = "/uniTransferQuery")
     @ResponseBody
     public String uniTransferQuery(@RequestParam(required = false, name = "outBizNo") String outBizNo,
-                                @RequestParam(required = false, name = "orderId") String orderId) {
+                                   @RequestParam(required = false, name = "orderId") String orderId) {
         AlipayFundTransCommonQueryModel model = new AlipayFundTransCommonQueryModel();
         if (StringUtils.isNotEmpty(outBizNo)) {
             model.setOutBizNo(outBizNo);
@@ -380,7 +380,7 @@ public class AliPayController extends AbstractAliPayApiController {
         }
 
         try {
-            return AliPayApi.transCommonQueryToResponse(model,null).getBody();
+            return AliPayApi.transCommonQueryToResponse(model, null).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -394,7 +394,7 @@ public class AliPayController extends AbstractAliPayApiController {
         model.setAlipayUserId(aliPayUserId);
         model.setAccountType("ACCTRANS_ACCOUNT");
         try {
-            return AliPayApi.accountQueryToResponse(model,null).getBody();
+            return AliPayApi.accountQueryToResponse(model, null).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }

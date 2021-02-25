@@ -593,7 +593,7 @@ public class WxPayController extends AbstractWxPayApiController {
                     .appid(wxPayApiConfig.getAppId())
                     .mch_id(wxPayApiConfig.getMchId())
                     .transaction_id(transactionId)
-                    .out_order_no(outTradeNo)
+                    .out_trade_no(outTradeNo)
                     .nonce_str(WxPayKit.generateStr())
                     .build()
                     .createSign(wxPayApiConfig.getPartnerKey(), SignType.MD5);

@@ -42,7 +42,7 @@
 ::: tip IJPay 中微信支付需要配置的参数如下：
 - keyPath= apiclient_key.pem  商户 key 绝对路径
 - certPath= capiclient_cert.pem 商户证书绝对路径
-- certP12Path= apiclient_cert.p12 备用参数 v3 暂未使用到
+- certP12Path= apiclient_cert.p12 证书绝对路径，v3 暂未使用到，退款 v3 暂未支持需使用 v2 接口
 - platformCertPath= wx_cert.pem  微信平台证书绝对路径，证书需要通过接口获取，请参考 [v3 文档](../wxpay/api-v3.md)
 - mchId= 微信商户号
 - apiKey3= Api-v3 密钥
