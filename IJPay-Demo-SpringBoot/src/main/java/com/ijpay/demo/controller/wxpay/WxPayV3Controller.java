@@ -20,9 +20,7 @@ import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
-import com.ijpay.wxpay.model.v3.Amount;
-import com.ijpay.wxpay.model.v3.Payer;
-import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
+import com.ijpay.wxpay.model.v3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -38,10 +36,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -60,6 +55,7 @@ import java.util.Map;
 @RequestMapping("/v3")
 public class WxPayV3Controller {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final static int OK = 200;
 
     @Resource
     WxPayV3Bean wxPayV3Bean;
@@ -136,8 +132,8 @@ public class WxPayV3Controller {
             return certificate.getSerialNumber().toString(16).toUpperCase();
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
 
@@ -151,8 +147,8 @@ public class WxPayV3Controller {
             return savePlatformCert(associatedData, nonce, cipherText, wxPayV3Bean.getPlatformCertPath());
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/get")
@@ -202,8 +198,8 @@ public class WxPayV3Controller {
             return body;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @RequestMapping("/nativePay")
@@ -239,8 +235,8 @@ public class WxPayV3Controller {
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/jsApiPay")
@@ -270,24 +266,26 @@ public class WxPayV3Controller {
                     wxPayV3Bean.getKeyPath(),
                     JSONUtil.toJsonStr(unifiedOrderModel)
             );
-            // 根据证书序列号查询对应的证书来验证签名结果
-            boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
-            log.info("verifySignature: {}", verifySignature);
             log.info("统一下单响应 {}", response);
 
-            if (verifySignature) {
-                String body = response.getBody();
-                JSONObject jsonObject = JSONUtil.parseObj(body);
-                String prepayId = jsonObject.getStr("prepay_id");
-                Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
-                log.info("唤起支付参数:{}", map);
-                return JSONUtil.toJsonStr(map);
+            if (response.getStatus() == OK) {
+                // 根据证书序列号查询对应的证书来验证签名结果
+                boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+                log.info("verifySignature: {}", verifySignature);
+                if (verifySignature) {
+                    String body = response.getBody();
+                    JSONObject jsonObject = JSONUtil.parseObj(body);
+                    String prepayId = jsonObject.getStr("prepay_id");
+                    Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
+                    log.info("唤起支付参数:{}", map);
+                    return JSONUtil.toJsonStr(map);
+                }
             }
-            return response.getBody();
+            return JSONUtil.toJsonStr(response);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
 
@@ -295,8 +293,8 @@ public class WxPayV3Controller {
     @ResponseBody
     public String put() {
         try {
-            Map<String,String> params = new HashMap<>();
-            params.put("url","https://gitee.com/javen205/IJPay");
+            Map<String, String> params = new HashMap<>();
+            params.put("url", "https://gitee.com/javen205/IJPay");
 
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.PUT,
@@ -315,8 +313,8 @@ public class WxPayV3Controller {
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
 
@@ -343,8 +341,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/delete")
@@ -384,8 +382,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/upload")
@@ -422,8 +420,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/post")
@@ -447,8 +445,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/sensitive")
@@ -472,8 +470,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/cipher")
@@ -491,6 +489,7 @@ public class WxPayV3Controller {
             System.out.println(decrypt);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
         return null;
     }
@@ -533,8 +532,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     /**
@@ -574,8 +573,8 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
         }
-        return null;
     }
 
     @RequestMapping("/billDownload")
@@ -604,6 +603,62 @@ public class WxPayV3Controller {
             return JSONUtil.toJsonStr(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+
+    @RequestMapping("/refund")
+    @ResponseBody
+    public String refund(@RequestParam(required = false) String transactionId,
+                         @RequestParam(required = false) String outTradeNo) {
+        try {
+            String outRefundNo = PayKit.generateStr();
+            log.info("商户退款单号: {}", outRefundNo);
+
+            List<RefundGoodsDetail> list = new ArrayList<>();
+            RefundGoodsDetail refundGoodsDetail = new RefundGoodsDetail()
+                    .setMerchant_goods_id("123")
+                    .setGoods_name("IJPay 测试")
+                    .setUnit_price(1)
+                    .setRefund_amount(1)
+                    .setRefund_quantity(1);
+            list.add(refundGoodsDetail);
+
+            RefundModel refundModel = new RefundModel()
+                    .setOut_refund_no(outRefundNo)
+                    .setReason("IJPay 测试退款")
+                    .setNotify_url(wxPayV3Bean.getDomain().concat("/v3/refundNotify"))
+                    .setAmount(new RefundAmount().setRefund(1).setTotal(1).setCurrency("CNY"))
+                    .setGoods_detail(list);
+
+            if (StrUtil.isNotEmpty(transactionId)) {
+                refundModel.setTransaction_id(transactionId);
+            }
+            if (StrUtil.isNotEmpty(outTradeNo)) {
+                refundModel.setOut_trade_no(outTradeNo);
+            }
+            log.info("退款参数 {}", JSONUtil.toJsonStr(refundModel));
+            IJPayHttpResponse response = WxPayApi.v3(
+                    RequestMethod.POST,
+                    WxDomain.CHINA.toString(),
+                    WxApiType.DOMESTIC_REFUNDS.toString(),
+                    wxPayV3Bean.getMchId(),
+                    getSerialNumber(),
+                    null,
+                    wxPayV3Bean.getKeyPath(),
+                    JSONUtil.toJsonStr(refundModel)
+            );
+            // 根据证书序列号查询对应的证书来验证签名结果
+            boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+            log.info("verifySignature: {}", verifySignature);
+            log.info("退款响应 {}", response);
+
+            if (verifySignature) {
+                return response.getBody();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
         }
         return null;
     }
