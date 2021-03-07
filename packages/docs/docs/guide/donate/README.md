@@ -1,3 +1,13 @@
+# 按问题付费答疑
+
+如果你只有某个疑难问题需要技术支持，可以戳 [在线客服](tencent://message/?uin=572839485&amp;Site=%E5%AE%A2%E6%9C%8D&amp;Menu=yes)，
+
+【限时优惠】知乎在线答疑
+
+<a target="_blank" href="https://www.zhihu.com/people/Javen205">
+   <img :src="$withBase('/zhihu.png')" width="260px"/>
+</a>
+
 # 加入 VIP
 
 IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修改配置即可使用。
@@ -20,35 +30,21 @@ IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修�
 
 交流群：723992875
 
-直接扫下方二维码付款并备注联系方式(Q号、手机号或者微信号)即可快速加入 VIP。
+直接扫下方二维码付款并备注联系方式即可快速加入 VIP。
 
-::: tip 按问题付费答疑
-如果你只有某个疑难问题需要技术支持，可以戳 [在线客服](tencent://message/?uin=572839485&amp;Site=%E5%AE%A2%E6%9C%8D&amp;Menu=yes)，
-不要问在不在，请直接发问题以及红包 
-:::
+# 请作者喝一杯咖啡
 
-::: warning 限时活动
-原价 368 超级礼包现限时活动免费送啦！！！！
-
-邀请好友分别给 [IJPay](https://gitee.com/javen205/IJPay) [TNXW](https://gitee.com/javen205/TNWX)  点点 Star ， 60 个即可免费索取礼包，行动起来吧。
-
-超级礼包：
-- uni-app 前后端分离实现静默授权登录
-- JS-SDK 前后端分离完整的一套解决方案
-- 前后端分离版本的 IJPay 示例
-- 更多案例，等你来发现....
-:::
-
- # 请作者喝一杯咖啡
- 
    如果你觉得 IJPay 对你有帮助，可以请作者喝一杯咖啡~，在此表示感谢 ^_^
-   
+
  <p align="center">
      <a target="_blank" href="https://github.com/Javen205/donate">
-         <img :src="$withBase('/wxpay.jpeg')" width="260px"/>
+         <img :src="$withBase('/wxpay.jpeg')" width="240px"/>
      </a>
      <a target="_blank" href="https://github.com/Javen205/donate">
-        <img :src="$withBase('/wxpay.png')" width="260px"/>
+        <img :src="$withBase('/wxpay.png')" width="240px"/>
+     </a>
+     <a target="_blank" href="https://github.com/Javen205/donate">
+        <img :src="$withBase('/alipay.png')" width="240px"/>
      </a>
      <br/>
      <br/>
@@ -57,9 +53,6 @@ IJPay 一直以简洁至上、开箱即用为核心，提供的示例简单修�
      <br/>
      <a target="_blank" href="https://github.com/Javen205/donate">前往赞助</a>
  </p>
- 
-<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
 
- 
- 
+<Q url="tencent://message/?uin=572839485&Site=%E5%AE%A2%E6%9C%8D&Menu=yes" />
  
