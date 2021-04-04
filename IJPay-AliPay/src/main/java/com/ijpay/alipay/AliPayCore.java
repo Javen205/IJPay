@@ -1,6 +1,9 @@
 package com.ijpay.alipay;
 
 import cn.hutool.crypto.SecureUtil;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayConstants;
+import com.alipay.api.internal.util.AlipaySignature;
 import enums.SignType;
 
 import java.util.*;
@@ -26,12 +29,16 @@ public class AliPayCore {
      * @param signType 签名类型
      * @return 签名结果字符串
      */
-    public static String buildRequestMySign(Map<String, String> params, String key, String signType) {
+    public static String buildRequestMySign(Map<String, String> params, String key, String signType)  throws AlipayApiException {
         // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String preStr = createLinkString(params);
         if (SignType.MD5.getType().equals(signType)) {
             return SecureUtil.md5(preStr.concat(key));
-        }
+        } else if (SignType.RSA2.getType().equals(signType)) {
+			return AlipaySignature.rsa256Sign(preStr, key, AlipayConstants.CHARSET_UTF8);
+		} else if (SignType.RSA.getType().equals(signType)) {
+			return AlipaySignature.rsaSign(preStr, key, AlipayConstants.CHARSET_UTF8);
+		}
         return null;
     }
 
@@ -47,7 +54,13 @@ public class AliPayCore {
         // 除去数组中的空值和签名参数
         Map<String, String> tempMap = paraFilter(params);
         // 生成签名结果
-        String mySign = buildRequestMySign(params, key, signType);
+		String mySign = null;
+		try {
+			mySign = buildRequestMySign(params, key, signType);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+			return null;
+		}
 
         // 签名结果与签名方式加入请求提交参数组中
         tempMap.put("sign", mySign);
@@ -88,16 +101,15 @@ public class AliPayCore {
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
         StringBuffer content = new StringBuffer();
-        for (int i = 0; i < keys.size(); i++) {
-            String key = keys.get(i);
-            String value = params.get(key);
-            // 拼接时，不包括最后一个&字符
-            if (i == keys.size() - 1) {
-                content.append(key + "=" + value);
-            } else {
-                content.append(key + "=" + value + "&");
-            }
-        }
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
+			String value = params.get(key);
+			// 拼接时，不包括最后一个&字符
+			content.append(key).append("=").append(value).append("&");
+		}
+		if (content.lastIndexOf("&") == content.length() - 1) {
+			content.deleteCharAt(content.length() - 1);
+		}
         return content.toString();
     }
 }

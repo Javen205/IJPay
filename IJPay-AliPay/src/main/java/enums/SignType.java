@@ -17,7 +17,9 @@ public enum SignType {
     /**
      * MD5 加密
      */
-    MD5("MD5");
+    MD5("MD5"),
+	RSA2("RSA2"),
+	RSA("RSA");
 
     SignType(String type) {
         this.type = type;
