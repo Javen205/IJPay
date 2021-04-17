@@ -411,11 +411,21 @@ public class PayKit {
      */
     public static PrivateKey getPrivateKey(String keyPath) throws Exception {
         String originalKey = FileUtil.readUtf8String(keyPath);
+        return getPrivateKeyByKeyContent(originalKey);
+    }
+
+    /**
+     * 获取商户私钥
+     *
+     * @param originalKey 私钥文本内容
+     * @return {@link PrivateKey} 商户私钥
+     * @throws Exception 异常信息
+     */
+    public static PrivateKey getPrivateKeyByKeyContent(String originalKey) throws Exception {
         String privateKey = originalKey
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
-
         return RsaKit.loadPrivateKey(privateKey);
     }
 
