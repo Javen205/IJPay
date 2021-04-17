@@ -62,7 +62,7 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 ### 谁在使用？
 
 <p align="left">
- 	<a target="_blank" href="https://w.url.cn/s/ApeggTn">
+ 	<a target="_blank" href="https://dwz.cn/P730KsQg">
         <img src="https://yungouos.oss-cn-shanghai.aliyuncs.com/YunGouOS/logo/merchant/logo-system.png" width="100" height="60" alt="jetbrains">
     </a>
  </p>
