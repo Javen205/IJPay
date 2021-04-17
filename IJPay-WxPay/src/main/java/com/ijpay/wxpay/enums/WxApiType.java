@@ -147,6 +147,10 @@ public enum WxApiType {
      */
     PROFIT_SHARING_FINISH("/secapi/pay/profitsharingfinish"),
     /**
+     * 查询订单待分账金额
+     */
+    PROFIT_SHARING_ORDER_AMOUNT_QUERY("/pay/profitsharingorderamountquery"),
+    /**
      * 分账回退
      */
     PROFIT_SHARING_RETURN("/secapi/pay/profitsharingreturn"),
@@ -707,7 +711,7 @@ public enum WxApiType {
      * 电商收付通-提现接口-按日下载提现异常文件
      */
     WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/%s"),
-    
+
     /**
      * 申请二级商户资金账单API
      */
