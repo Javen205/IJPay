@@ -1874,7 +1874,37 @@ public class AliPayApi {
 		out.flush();
 		out.close();
 	}
-	
+	/**
+	 * 电脑网站支付(PC支付)
+	 *
+	 * @param response
+	 *            {@link HttpServletResponse}
+	 * @param method
+	 * 			  GET/POST GET返回url POST返回form
+	 * 			  https://opensupport.alipay.com/support/helpcenter/192/201602488772?ant_source=antsupport
+	 * @param model
+	 *            {@link AlipayTradePagePayModel}
+	 * @param notifyUrl
+	 *            异步通知URL
+	 * @param returnUrl
+	 *            同步通知URL
+	 * @throws AlipayApiException
+	 *             支付宝 Api 异常
+	 * @throws IOException
+	 *             IO 异常
+	 */
+	public static void tradePage(HttpServletResponse response, String method, AlipayTradePagePayModel model, String notifyUrl, String returnUrl) throws AlipayApiException, IOException {
+		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+		request.setBizModel(model);
+		request.setNotifyUrl(notifyUrl);
+		request.setReturnUrl(returnUrl);
+		String body = pageExecute(request,method).getBody();
+		response.setContentType("text/html;charset=" + AliPayApiConfigKit.getAliPayApiConfig().getCharset());
+		PrintWriter out = response.getWriter();
+		out.write(body);
+		out.flush();
+		out.close();
+	}
 	/**
 	 * 电脑网站支付(PC支付)
 	 *
