@@ -647,31 +647,34 @@ public class WxPayKit {
      */
     public static String verifyNotify(String serialNo, String body, String signature, String nonce,
                                       String timestamp, String key, InputStream certInputStream) throws Exception {
-        // 获取平台证书序列号
-        X509Certificate certificate = PayKit.getCertificate(certInputStream);
-        String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
-        System.out.println(serialNumber);
-        // 验证证书序列号
-        if (serialNumber.equals(serialNo)) {
-            boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
-                    certificate.getPublicKey());
-            if (verifySignature) {
-                JSONObject resultObject = JSONUtil.parseObj(body);
-                JSONObject resource = resultObject.getJSONObject("resource");
-                String cipherText = resource.getStr("ciphertext");
-                String nonceStr = resource.getStr("nonce");
-                String associatedData = resource.getStr("associated_data");
+		// 获取平台证书序列号
+		X509Certificate certificate = PayKit.getCertificate(certInputStream);
+		String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
+		System.out.println(serialNumber);
+		// 验证证书序列号
+		if (serialNumber.equals(serialNo)) {
+			boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
+				certificate.getPublicKey());
+			if (verifySignature) {
+				JSONObject resultObject = JSONUtil.parseObj(body);
+				JSONObject resource = resultObject.getJSONObject("resource");
+				String cipherText = resource.getStr("ciphertext");
+				String nonceStr = resource.getStr("nonce");
+				String associatedData = resource.getStr("associated_data");
 
-                AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
-                // 密文解密
-                return aesUtil.decryptToString(
-                        associatedData.getBytes(StandardCharsets.UTF_8),
-                        nonceStr.getBytes(StandardCharsets.UTF_8),
-                        cipherText
-                );
-            }
-        }
-        return null;
+				AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
+				// 密文解密
+				return aesUtil.decryptToString(
+					associatedData.getBytes(StandardCharsets.UTF_8),
+					nonceStr.getBytes(StandardCharsets.UTF_8),
+					cipherText
+				);
+			} else {
+				throw new Exception("签名错误");
+			}
+		} else {
+			throw new Exception("证书序列号错误");
+		}
     }
 
     /**
