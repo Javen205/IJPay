@@ -846,7 +846,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getPublicKey(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, null, false), params, certPath, certPass);
+        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, WxDomain.FRAUD, false), params, certPath, certPass);
     }
 
     /**
@@ -858,7 +858,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, null, false), params, certFile, certPass);
+        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, WxDomain.FRAUD, false), params, certFile, certPass);
     }
 
     /**
