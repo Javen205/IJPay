@@ -376,12 +376,12 @@ public class WxPayKit {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = String.valueOf(System.currentTimeMillis());
         Map<String, String> packageParams = new HashMap<>(8);
-        packageParams.put("appId", appId);
+        packageParams.put("appid", appId);
         packageParams.put("partnerid", partnerId);
         packageParams.put("prepayid", prepayId);
         packageParams.put("package", "Sign=WXPay");
-        packageParams.put("timeStamp", timeStamp);
-        packageParams.put("nonceStr", nonceStr);
+        packageParams.put("timestamp", timeStamp);
+        packageParams.put("noncestr", nonceStr);
         packageParams.put("signType", SignType.RSA.toString());
         ArrayList<String> list = new ArrayList<>();
         list.add(appId);
