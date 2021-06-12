@@ -120,10 +120,41 @@ public class WxPayApi {
      *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByProtocol(String apiUrl, Map<String, String> params, String certPath, String certPass, String protocol) {
+        return doPostSslByProtocol(apiUrl, params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certPath 证书文件路径
      * @return {@link String} 请求返回的结果
      */
     public static String execution(String apiUrl, Map<String, String> params, String certPath) {
         return doPostSsl(apiUrl, params, certPath);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certPath 证书文件路径
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByProtocol(String apiUrl, Map<String, String> params, String certPath, String protocol) {
+        return doPostSslByProtocol(apiUrl, params, certPath, protocol);
     }
 
     /**
@@ -149,15 +180,50 @@ public class WxPayApi {
      *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByProtocol(String apiUrl, Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return doPostSslByProtocol(apiUrl, params, certFile, certPass, protocol);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certFile 证书文件输入流
      * @return {@link String} 请求返回的结果
      */
     public static String execution(String apiUrl, Map<String, String> params, InputStream certFile) {
         return doPostSsl(apiUrl, params, certFile);
     }
 
+    /**
+     * 发起请求
+     *
+     * @param apiUrl   接口 URL
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     * @param params   接口请求参数
+     * @param certFile 证书文件输入流
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String executionByProtocol(String apiUrl, Map<String, String> params, InputStream certFile, String protocol) {
+        return doPostSslByProtocol(apiUrl, params, certFile, protocol);
+    }
+
     public static String execution(String apiUrl, Map<String, String> params,
                                    String certPath, String certPass, String filePath) {
         return doUploadSsl(apiUrl, params, certPath, certPass, filePath);
+    }
+
+    public static String executionByProtocol(String apiUrl, Map<String, String> params, String certPath, String certPass, String filePath, String protocol) {
+        return doUploadSslByProtocol(apiUrl, params, certPath, certPass, filePath, protocol);
     }
 
 
@@ -670,12 +736,38 @@ public class WxPayApi {
      *
      * @param isSandbox 是否是沙盒环境
      * @param params    请求参数
+     * @param certPath  证书文件路径
+     * @param certPass  证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, String certPath, String certPass, String protocol) {
+        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 申请退款
+     *
+     * @param isSandbox 是否是沙盒环境
+     * @param params    请求参数
      * @param certFile  证书文件的 InputStream
      * @param certPass  证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certFile, certPass);
+    }
+
+    /**
+     * 申请退款
+     *
+     * @param isSandbox 是否是沙盒环境
+     * @param params    请求参数
+     * @param certFile  证书文件的 InputStream
+     * @param certPass  证书密码
+     * @return {@link String} 请求返回的结果
+     */
+    public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1725,8 +1817,16 @@ public class WxPayApi {
         return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certPath, certPass);
     }
 
+    public static String doPostSslByProtocol(String url, Map<String, String> params, String certPath, String certPass, String protocol) {
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certPath, certPass, protocol);
+    }
+
     public static String doPostSsl(String url, Map<String, String> params, InputStream certFile, String certPass) {
         return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass);
+    }
+
+    public static String doPostSslByProtocol(String url, Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return HttpKit.getDelegate().post(url, WxPayKit.toXml(params), certFile, certPass, protocol);
     }
 
     public static String doPostSsl(String url, Map<String, String> params, String certPath) {
@@ -1737,6 +1837,14 @@ public class WxPayApi {
         return doPostSsl(url, params, certPath, certPass);
     }
 
+    public static String doPostSslByProtocol(String url, Map<String, String> params, String certPath, String protocol) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doPostSslByProtocol(url, params, certPath, certPass, protocol);
+    }
+
     public static String doPostSsl(String url, Map<String, String> params, InputStream certFile) {
         if (params.isEmpty() || !params.containsKey("mch_id")) {
             throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
@@ -1745,8 +1853,20 @@ public class WxPayApi {
         return doPostSsl(url, params, certFile, certPass);
     }
 
+    public static String doPostSslByProtocol(String url, Map<String, String> params, InputStream certFile, String protocol) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doPostSslByProtocol(url, params, certFile, certPass, protocol);
+    }
+
     public static String doUploadSsl(String url, Map<String, String> params, String certPath, String certPass, String filePath) {
         return HttpKit.getDelegate().upload(url, WxPayKit.toXml(params), certPath, certPass, filePath);
+    }
+
+    public static String doUploadSslByProtocol(String url, Map<String, String> params, String certPath, String certPass, String filePath, String protocol) {
+        return HttpKit.getDelegate().upload(url, WxPayKit.toXml(params), certPath, certPass, filePath, protocol);
     }
 
     public static String doUploadSsl(String url, Map<String, String> params, String certPath, String filePath) {
@@ -1755,6 +1875,14 @@ public class WxPayApi {
         }
         String certPass = params.get("mch_id");
         return doUploadSsl(url, params, certPath, certPass, filePath);
+    }
+
+    public static String doUploadSslByProtocol(String url, Map<String, String> params, String certPath, String filePath, String protocol) {
+        if (params.isEmpty() || !params.containsKey("mch_id")) {
+            throw new RuntimeException("请求参数中必须包含 mch_id，如接口参考中不包 mch_id， 请使用其他同名构造方法。");
+        }
+        String certPass = params.get("mch_id");
+        return doUploadSslByProtocol(url, params, certPath, certPass, filePath, protocol);
     }
 
 
