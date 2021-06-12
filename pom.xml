@@ -7,7 +7,7 @@
 
     <groupId>com.github.javen205</groupId>
     <artifactId>IJPay</artifactId>
-    <version>2.7.4</version>
+    <version>2.7.5</version>
     <name>IJPay</name>
     <description>IJPay 让支付触手可及(Easy Pay Library)</description>
     <url>https://github.com/Javen205/IJPay</url>
