@@ -51,7 +51,7 @@ public class PayKit {
      * @return sha256 字符串
      */
     public static String hmacSha256(String data, String key) {
-        return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data, CharsetUtil.UTF_8);
+        return SecureUtil.hmac(HmacAlgorithm.HmacSHA256, key).digestHex(data);
     }
 
     /**
