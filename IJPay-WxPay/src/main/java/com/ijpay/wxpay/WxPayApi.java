@@ -849,12 +849,38 @@ public class WxPayApi {
      * 企业付款到零钱
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String transfersByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.TRANSFER, null, false), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 企业付款到零钱
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String transfers(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.TRANSFER, null, false), params, certFile, certPass);
+    }
+
+    /**
+     * 企业付款到零钱
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String transfersByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.TRANSFER, null, false), params, certFile, certPass, protocol);
     }
 
     /**
@@ -897,12 +923,38 @@ public class WxPayApi {
      * 企业付款到银行
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String payBankByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 企业付款到银行
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String payBank(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certFile, certPass);
+    }
+
+    /**
+     * 企业付款到银行
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String payBankByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1494,12 +1546,38 @@ public class WxPayApi {
      * 发放普通红包
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_RED_PACK), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 发放普通红包
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String sendRedPack(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.SEND_RED_PACK), params, certFile, certPass);
+    }
+
+    /**
+     * 发放普通红包
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1518,12 +1596,38 @@ public class WxPayApi {
      * 发放裂变红包
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendGroupRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 发放裂变红包
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String sendGroupRedPack(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certFile, certPass);
+    }
+
+    /**
+     * 发放裂变红包
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendGroupRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1566,12 +1670,38 @@ public class WxPayApi {
      * 小程序发放红包接口
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendMiniProgramRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 小程序发放红包接口
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String sendMiniProgramRedPack(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
+    }
+
+    /**
+     * 小程序发放红包接口
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendMiniProgramRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1590,12 +1720,38 @@ public class WxPayApi {
      * 发放企业红包
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendWorkWxRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 发放企业红包
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String sendWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certFile, certPass);
+    }
+
+    /**
+     * 发放企业红包
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String sendWorkWxRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1614,12 +1770,38 @@ public class WxPayApi {
      * 查询向员工付款记录
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryWorkWxRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String queryWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certFile, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryWorkWxRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1638,12 +1820,38 @@ public class WxPayApi {
      * 向员工付款
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String trans2pocketByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 向员工付款
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String trans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass);
+    }
+
+    /**
+     * 向员工付款
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String trans2pocketByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1662,12 +1870,38 @@ public class WxPayApi {
      * 查询向员工付款记录
      *
      * @param params   请求参数
+     * @param certPath 证书文件路径
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryTrans2pocketByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
      * @param certFile 证书文件的 InputStream
      * @param certPass 证书密码
      * @return {@link String} 请求返回的结果
      */
     public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
         return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass);
+    }
+
+    /**
+     * 查询向员工付款记录
+     *
+     * @param params   请求参数
+     * @param certFile 证书文件的 InputStream
+     * @param certPass 证书密码
+     * @param protocol 协议
+     * @return {@link String} 请求返回的结果
+     */
+    public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+        return executionByProtocol(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
     }
 
     /**
