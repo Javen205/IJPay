@@ -901,6 +901,23 @@ public enum WxApiType {
      * 查询先享卡订单
      */
     DISCOUNT_CARD_GET("/v3/discount-card/cards/%s"),
+
+    /**
+     * 查询车牌服务开通信息
+     */
+    VEHICLE_PARKING_SERVICES_FIND("/v3/vehicle/parking/services/find"),
+    /**
+     * 创建停车入场
+     */
+    VEHICLE_PARKING("/v3/vehicle/parking/parkings"),
+    /**
+     * 扣费受理
+     */
+    VEHICLE_TRANSACTIONS_PARKING("/v3/vehicle/transactions/parking"),
+    /**
+     * 查询订单
+     */
+    VEHICLE_TRANSACTIONS_OUT_TRADE_NO("/v3/vehicle/transactions/out-trade-no/%s"),
     ;
 
     /**
