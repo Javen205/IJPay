@@ -741,7 +741,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, String certPath, String certPass, String protocol) {
-        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass, protocol);
     }
 
     /**
