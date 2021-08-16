@@ -626,7 +626,7 @@ public enum WxApiType {
     /**
      * 电商收付通-补差接口-请求补差
      */
-    CREATE_SUBSIDIES("v3/ecommerce/subsidies/create"),
+    CREATE_SUBSIDIES("/v3/ecommerce/subsidies/create"),
     /**
      * 电商收付通-补差接口-请求补差回退
      */
