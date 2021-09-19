@@ -881,13 +881,21 @@ public enum WxApiType {
 	 */
 	BRAND_PROFIT_SHARING_FINISH_ORDER("/v3/brand/profitsharing/finish-order"),
 	/**
+	 * 查询订单剩余待分金额
+	 */
+	BRAND_PROFIT_SHARING_QUERY("/v3/brand/profitsharing/orders/%s/amounts"),
+	/**
+	 * 查询最大分账比例
+	 */
+	BRAND_PROFIT_SHARING_CONFIGS("/v3/brand/profitsharing/brand-configs/%s"),
+	/**
 	 * 连锁品牌-添加分账接收方
 	 */
 	BRAND_PROFIT_SHARING_RECEIVERS_ADD("/v3/brand/profitsharing/receivers/add"),
 	/**
 	 * 连锁品牌-删除分账接收方
 	 */
-	BRAND_PROFIT_SHARING_RECEIVERS_delete("/v3/brand/profitsharing/receivers/delete"),
+	BRAND_PROFIT_SHARING_RECEIVERS_DELETE("/v3/brand/profitsharing/receivers/delete"),
 
 	/**
 	 * 预受理领卡
@@ -961,6 +969,49 @@ public enum WxApiType {
 	 * 服务商银行来账查询
 	 */
 	MERCHANT_INCOME_RECORDS("/v3/merchantfund/merchant/income-records"),
+
+
+	/**
+	 * 请求分账
+	 */
+	V3_PROFIT_SHARING_ORDERS("/v3/profitsharing/orders"),
+	/**
+	 * 查询分账结果
+	 */
+	V3_PROFIT_SHARING_ORDERS_QUERY("/v3/profitsharing/orders/%s"),
+	/**
+	 * 请求分账回退
+	 */
+	V3_PROFIT_SHARING_RETURN_ORDERS("/v3/profitsharing/return-orders"),
+	/**
+	 * 查询分账回退结果
+	 */
+	V3_PROFIT_SHARING_RETURN_ORDERS_QUERY("/v3/profitsharing/return-orders/%s"),
+	/**
+	 * 解冻剩余资金
+	 */
+	PROFIT_SHARING_UNFREEZE("/v3/profitsharing/orders/unfreeze"),
+	/**
+	 * 查询剩余待分金额
+	 */
+	PROFIT_SHARING_UNFREEZE_QUERY("/v3/profitsharing/transactions/%s/amounts"),
+	/**
+	 * 查询最大分账比例
+	 */
+	PROFIT_SHARING_MERCHANT_CONFIGS("/v3/profitsharing/merchant-configs/%s"),
+	/**
+	 * 添加分账接收方
+	 */
+	V3_PROFIT_SHARING_RECEIVERS_ADD("/v3/profitsharing/receivers/add"),
+	/**
+	 * 删除分账接收方
+	 */
+	V3_PROFIT_SHARING_RECEIVERS_DELETE("/v3/profitsharing/receivers/delete"),
+	/**
+	 * 申请分账账单
+	 */
+	PROFIT_SHARING_BILLS("/v3/profitsharing/bills"),
+
 	;
 
 	/**
