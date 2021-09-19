@@ -1012,6 +1012,31 @@ public enum WxApiType {
 	 */
 	PROFIT_SHARING_BILLS("/v3/profitsharing/bills"),
 
+
+	/**
+	 * 查询投诉单列表
+	 */
+	MERCHANT_SERVICE_COMPLAINTS_V2("/v3/merchant-service/complaints-v2"),
+	/**
+	 * 查询投诉单详情
+	 */
+	MERCHANT_SERVICE_COMPLAINTS_DETAIL("/v3/merchant-service/complaints-v2/%s"),
+	/**
+	 * 查询投诉协商历史
+	 */
+	MERCHANT_SERVICE_COMPLAINTS_NEGOTIATION_HISTORY("/v3/merchant-service/complaints-v2/%s/negotiation-historys"),
+	/**
+	 * 提交回复
+	 */
+	MERCHANT_SERVICE_COMPLAINTS_RESPONSE("/v3/merchant-service/complaints-v2/%s/response"),
+	/**
+	 * 商户上传反馈图片
+	 */
+	MERCHANT_SERVICE_IMAGES_UPLOAD("/v3/merchant-service/images/upload"),
+	/**
+	 * 反馈处理完成
+	 */
+	MERCHANT_SERVICE_COMPLAINTS_COMPLETE("/v3/merchant-service/complaints-v2/%s/complete"),
 	;
 
 	/**
