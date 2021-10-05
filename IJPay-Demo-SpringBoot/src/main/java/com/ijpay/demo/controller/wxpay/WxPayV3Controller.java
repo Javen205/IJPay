@@ -68,6 +68,12 @@ public class WxPayV3Controller {
     @ResponseBody
     public String index() {
         log.info(wxPayV3Bean.toString());
+        try {
+            String absolutePath = PayKit.getAbsolutePath("classpath:/dev/apiclient_cert.p12");
+            log.info("absolutePath:{}", absolutePath);
+        } catch (Exception e) {
+            log.error("文件不存在", e);
+        }
         return ("欢迎使用 IJPay 中的微信支付 Api-v3 -By Javen  <br/><br>  交流群：723992875");
     }
 

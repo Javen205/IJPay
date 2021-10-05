@@ -499,13 +499,23 @@ public class PayKit {
     }
 
     /**
-     * 以流的方式读取文件
+     * 传入 classPath 静态资源路径返回文件输入流
      *
-     * @param keyPath 文件相对路径
+     * @param classPath 静态资源路径
      * @return InputStream
      */
-    public static InputStream getFileToStream(String keyPath) {
-        Resource resource = new ClassPathResource(keyPath);
+    public static InputStream getFileToStream(String classPath) {
+        Resource resource = new ClassPathResource(classPath);
         return resource.getStream();
+    }
+
+    /**
+     * 传入 classPath 静态资源路径返回绝对路径
+     *
+     * @param classPath 静态资源路径
+     * @return 绝对路径
+     */
+    public static String getAbsolutePath(String classPath) {
+        return new ClassPathResource(classPath).getAbsolutePath();
     }
 }
