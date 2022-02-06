@@ -361,6 +361,11 @@ public enum WxApiType {
 	 * 商户解除用户授权关系
 	 */
 	PAY_SCORE_PERMISSIONS_TERMINATE("/payscore/users/%s/permissions/%s/terminate"),
+	/**
+	 * 商户申请获取对账单
+	 */
+	PAY_SCORE_MERCHANT_BILL("/v3/payscore/merchant-bill"),
+
 
 	/**
 	 * 商户预授权
@@ -867,6 +872,10 @@ public enum WxApiType {
 	 */
 	BUSINESS_CIRCLE_POINTS_NOTIFY("/v3/businesscircle/points/notify"),
 
+	/**
+	 * 智慧商圈-商圈积分授权查询
+	 */
+	BUSINESS_CIRCLE_USER_AUTHORIZATIONS("/v3/businesscircle/user-authorizations/%s"),
 
 	/**
 	 * 连锁品牌-分账-查询分账
