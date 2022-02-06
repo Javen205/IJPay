@@ -37,14 +37,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
+            <version>1.7.35</version>
             <scope>provided</scope>
         </dependency>
         <!-- 开源多维码生成工具 -->
         <dependency>
             <groupId>com.github.xkzhangsan</groupId>
             <artifactId>xk-time</artifactId>
-            <version>3.2.2</version>
+            <version>3.2.3</version>
         </dependency>
     </dependencies>
 
