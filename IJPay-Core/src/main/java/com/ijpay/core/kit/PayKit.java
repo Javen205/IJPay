@@ -17,9 +17,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.File;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -517,5 +515,25 @@ public class PayKit {
      */
     public static String getAbsolutePath(String classPath) {
         return new ClassPathResource(classPath).getAbsolutePath();
+    }
+
+    /**
+     * 通过路径获取证书文件的输入流
+     *
+     * @param path 文件路径
+     * @return 文件流
+     * @throws IOException 异常信息
+     */
+    public static InputStream getCertFileInputStream(String path) throws IOException {
+        if (StrUtil.isBlank(path)) {
+            return null;
+        }
+        // 绝对地址
+        File file = new File(path);
+        if (file.exists()) {
+            return new FileInputStream(file);
+        }
+        // 相对地址
+        return getFileToStream(path);
     }
 }
