@@ -415,7 +415,7 @@ public class WxPayController extends AbstractWxPayApiController {
     /**
      * 刷卡支付
      */
-    @RequestMapping(value = "/micropay", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/microPay", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public AjaxResult microPay(HttpServletRequest request, HttpServletResponse response) {
         String authCode = request.getParameter("auth_code");
