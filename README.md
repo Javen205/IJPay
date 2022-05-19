@@ -101,14 +101,14 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 ### 联系方式
 
 [![](https://img.shields.io/badge/IJPay%20%E4%BA%A4%E6%B5%81%E7%BE%A4-723992875-fba7f9.svg)](http://shang.qq.com/wpa/qunwpa?idkey=44c2b0331f1bdca6c9d404e863edd83973fa97224b79778db79505fc592f00bc)
+[![](https://img.shields.io/badge/IJPay%20%E8%87%AA%E7%94%B1%E4%BA%A4%E6%B5%81%E7%BE%A4-864988890-green)](http://shang.qq.com/wpa/qunwpa?idkey=a78ea26744a382f16d2b8471427e68c717e4cb847c5c9ae9b8defa369706c585)
 [![Email](https://img.shields.io/badge/Email-javendev%40126.com-yellowgreen.svg)](http://javen.blog.csdn.net)
-
 
 ### 贡献代码
 
 最后如果该库对你有帮助不妨右上角点点 Star 或者任意赞助支持，我更喜欢你 Fork PR 成为项目贡献者 .
 
-[前往赞助](https://github.com/Javen205/donate)
+[前往赞助](https://javen205.gitee.io/ijpay/guide/donate/)
 
 
 ### 鸣谢
