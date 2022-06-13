@@ -40,6 +40,11 @@ public class AliPayApiConfig implements Serializable {
     private String aliPayRootCertContent;
     private AlipayClient alipayClient;
 
+    /**
+     * 其他附加参数
+     */
+    private Object exParams;
+
     private AliPayApiConfig() {
     }
 
@@ -285,4 +290,12 @@ public class AliPayApiConfig implements Serializable {
         return alipayClient;
     }
 
+    public Object getExParams() {
+        return exParams;
+    }
+
+    public AliPayApiConfig setExParams(Object exParams) {
+        this.exParams = exParams;
+        return this;
+    }
 }
