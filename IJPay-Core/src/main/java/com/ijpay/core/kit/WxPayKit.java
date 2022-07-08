@@ -79,9 +79,39 @@ public class WxPayKit {
      * @return {boolean}
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey) {
-        String sign = params.get("sign");
+        String sign = params.get(FIELD_SIGN);
         String localSign = createSign(params, partnerKey, SignType.MD5);
         return sign.equals(localSign);
+    }
+
+    /**
+     * 支付异步通知时校验 sign
+     *
+     * @param params     参数
+     * @param partnerKey 支付密钥
+     * @param signType   签名类型
+     * @param signKey    签名字符
+     * @return {boolean}
+     */
+    public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType, String signKey) {
+        if (StrUtil.isEmpty(signKey)) {
+            signKey = FIELD_SIGN;
+        }
+        String sign = params.get(signKey);
+        String localSign = createSign(params, partnerKey, signType, signKey);
+        return sign.equals(localSign);
+    }
+
+    /**
+     * 支付异步通知时校验 sign
+     *
+     * @param params     参数
+     * @param partnerKey 支付密钥
+     * @param signKey    签名字符
+     * @return {boolean}
+     */
+    public static boolean verifyNotify(Map<String, String> params, String partnerKey, String signKey) {
+        return verifyNotify(params, partnerKey, SignType.MD5, signKey);
     }
 
     /**
@@ -93,9 +123,7 @@ public class WxPayKit {
      * @return {@link Boolean} 验证签名结果
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
-        String sign = params.get("sign");
-        String localSign = createSign(params, partnerKey, signType);
-        return sign.equals(localSign);
+        return verifyNotify(params, partnerKey, SignType.MD5, null);
     }
 
     /**
@@ -107,11 +135,28 @@ public class WxPayKit {
      * @return 签名后的数据
      */
     public static String createSign(Map<String, String> params, String partnerKey, SignType signType) {
+        return createSign(params, partnerKey, signType, null);
+    }
+
+
+    /**
+     * 生成签名
+     *
+     * @param params     需要签名的参数
+     * @param partnerKey 密钥
+     * @param signType   签名类型
+     * @param signKey    签名字符
+     * @return 签名后的数据
+     */
+    public static String createSign(Map<String, String> params, String partnerKey, SignType signType, String signKey) {
         if (signType == null) {
             signType = SignType.MD5;
         }
+        if (StrUtil.isEmpty(signKey)) {
+            signKey = FIELD_SIGN;
+        }
         // 生成签名前先去除sign
-        params.remove(FIELD_SIGN);
+        params.remove(signKey);
         String tempStr = PayKit.createLinkString(params);
         String stringSignTemp = tempStr + "&key=" + partnerKey;
         if (signType == SignType.MD5) {
@@ -158,11 +203,32 @@ public class WxPayKit {
      * @return 签名后的 Map
      */
     public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType, boolean haveSignType) {
+        return buildSign(params, partnerKey, signType, null, null, haveSignType);
+    }
+
+    /**
+     * 构建签名
+     *
+     * @param params       需要签名的参数
+     * @param partnerKey   密钥
+     * @param signType     签名类型
+     * @param signKey      签名字符串
+     * @param signTypeKey  签名类型字符串
+     * @param haveSignType 签名是否包含签名类型字符串
+     * @return 签名后的 Map
+     */
+    public static Map<String, String> buildSign(Map<String, String> params, String partnerKey, SignType signType, String signKey, String signTypeKey, boolean haveSignType) {
+        if (StrUtil.isEmpty(signKey)) {
+            signKey = FIELD_SIGN;
+        }
         if (haveSignType) {
-            params.put(FIELD_SIGN_TYPE, signType.getType());
+            if (StrUtil.isEmpty(signTypeKey)) {
+                signTypeKey = FIELD_SIGN_TYPE;
+            }
+            params.put(signTypeKey, signType.getType());
         }
         String sign = createSign(params, partnerKey, signType);
-        params.put(FIELD_SIGN, sign);
+        params.put(signKey, sign);
         return params;
     }
 
@@ -647,34 +713,34 @@ public class WxPayKit {
      */
     public static String verifyNotify(String serialNo, String body, String signature, String nonce,
                                       String timestamp, String key, InputStream certInputStream) throws Exception {
-		// 获取平台证书序列号
-		X509Certificate certificate = PayKit.getCertificate(certInputStream);
-		String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
-		System.out.println(serialNumber);
-		// 验证证书序列号
-		if (serialNumber.equals(serialNo)) {
-			boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
-				certificate.getPublicKey());
-			if (verifySignature) {
-				JSONObject resultObject = JSONUtil.parseObj(body);
-				JSONObject resource = resultObject.getJSONObject("resource");
-				String cipherText = resource.getStr("ciphertext");
-				String nonceStr = resource.getStr("nonce");
-				String associatedData = resource.getStr("associated_data");
+        // 获取平台证书序列号
+        X509Certificate certificate = PayKit.getCertificate(certInputStream);
+        String serialNumber = certificate.getSerialNumber().toString(16).toUpperCase();
+        System.out.println(serialNumber);
+        // 验证证书序列号
+        if (serialNumber.equals(serialNo)) {
+            boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
+                    certificate.getPublicKey());
+            if (verifySignature) {
+                JSONObject resultObject = JSONUtil.parseObj(body);
+                JSONObject resource = resultObject.getJSONObject("resource");
+                String cipherText = resource.getStr("ciphertext");
+                String nonceStr = resource.getStr("nonce");
+                String associatedData = resource.getStr("associated_data");
 
-				AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
-				// 密文解密
-				return aesUtil.decryptToString(
-					associatedData.getBytes(StandardCharsets.UTF_8),
-					nonceStr.getBytes(StandardCharsets.UTF_8),
-					cipherText
-				);
-			} else {
-				throw new Exception("签名错误");
-			}
-		} else {
-			throw new Exception("证书序列号错误");
-		}
+                AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
+                // 密文解密
+                return aesUtil.decryptToString(
+                        associatedData.getBytes(StandardCharsets.UTF_8),
+                        nonceStr.getBytes(StandardCharsets.UTF_8),
+                        cipherText
+                );
+            } else {
+                throw new Exception("签名错误");
+            }
+        } else {
+            throw new Exception("证书序列号错误");
+        }
     }
 
     /**

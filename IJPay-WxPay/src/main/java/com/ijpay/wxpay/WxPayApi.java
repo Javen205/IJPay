@@ -9,8 +9,10 @@ import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
+import com.ijpay.wxpay.enums.WxApiEnum;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
+import com.ijpay.wxpay.enums.WxDomainEnum;
 
 import java.io.File;
 import java.io.InputStream;
@@ -36,47 +38,47 @@ public class WxPayApi {
     /**
      * 获取接口请求的 URL
      *
-     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
+     * @param wxApiEnum {@link WxApiEnum} 支付 API 接口枚举
      * @return {@link String} 返回完整的接口请求URL
      */
-    public static String getReqUrl(WxApiType wxApiType) {
-        return getReqUrl(wxApiType, null, false);
+    public static String getReqUrl(WxApiEnum wxApiEnum) {
+        return getReqUrl(wxApiEnum, null, false);
     }
 
     /**
      * 获取接口请求的 URL
      *
-     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
+     * @param wxApiEnum {@link WxApiType} 支付 API 接口枚举
      * @param isSandBox 是否是沙箱环境
      * @return {@link String} 返回完整的接口请求URL
      */
-    public static String getReqUrl(WxApiType wxApiType, boolean isSandBox) {
-        return getReqUrl(wxApiType, null, isSandBox);
+    public static String getReqUrl(WxApiEnum wxApiEnum, boolean isSandBox) {
+        return getReqUrl(wxApiEnum, null, isSandBox);
     }
 
     /**
      * 获取接口请求的 URL
      *
-     * @param wxApiType {@link WxApiType} 支付 API 接口枚举
-     * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
+     * @param wxApiEnum {@link WxApiEnum} 支付 API 接口枚举
+     * @param WxDomainEnumEnum  {@link WxDomainEnum} 支付 API 接口域名枚举
      * @param isSandBox 是否是沙箱环境
      * @return {@link String} 返回完整的接口请求URL
      */
-    public static String getReqUrl(WxApiType wxApiType, WxDomain wxDomain, boolean isSandBox) {
-        if (wxDomain == null) {
-            wxDomain = WxDomain.CHINA;
+    public static String getReqUrl(WxApiEnum wxApiEnum, WxDomainEnum WxDomainEnumEnum, boolean isSandBox) {
+        if (WxDomainEnumEnum == null) {
+            WxDomainEnumEnum = WxDomain.CHINA;
         }
-        return wxDomain.getType()
-                .concat(isSandBox ? WxApiType.SAND_BOX_NEW.getType() : "")
-                .concat(wxApiType.getType());
+        return WxDomainEnumEnum.getDomain()
+                .concat(isSandBox ? WxApiType.SAND_BOX_NEW.getUrl() : "")
+                .concat(wxApiEnum.getUrl());
     }
 
     /**
      * 发起请求
      *
      * @param apiUrl 接口 URL
-     *               通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *               或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *               通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params 接口请求参数
      * @return {@link String} 请求返回的结果
      */
@@ -88,8 +90,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl 接口 URL
-     *               通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *               或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *               通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params 接口请求参数
      * @return {@link String} 请求返回的结果
      */
@@ -101,8 +103,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param certPass 证书密码
@@ -116,8 +118,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param certPass 证书密码
@@ -132,8 +134,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @return {@link String} 请求返回的结果
@@ -146,8 +148,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param protocol 协议
@@ -161,8 +163,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param certPass 证书密码
@@ -176,8 +178,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param certPass 证书密码
@@ -192,8 +194,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @return {@link String} 请求返回的结果
@@ -206,8 +208,8 @@ public class WxPayApi {
      * 发起请求
      *
      * @param apiUrl   接口 URL
-     *                 通过 {@link WxPayApi#getReqUrl(WxApiType)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiType, WxDomain, boolean)} 来获取
+     *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param protocol 协议
@@ -231,7 +233,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -275,7 +277,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -319,7 +321,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -341,7 +343,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -363,7 +365,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -389,7 +391,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -414,7 +416,7 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -435,7 +437,7 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -458,7 +460,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -485,7 +487,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
@@ -504,7 +506,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -525,7 +527,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -547,7 +549,7 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
@@ -567,7 +569,7 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
@@ -587,7 +589,7 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
      * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
@@ -644,12 +646,12 @@ public class WxPayApi {
      * 统一下单
      *
      * @param isSandbox 是否是沙盒环境
-     * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
+     * @param WxDomainEnum  {@link WxDomainEnum} 支付 API 接口域名枚举
      * @param params    请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String pushOrder(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.UNIFIED_ORDER, wxDomain, isSandbox), params);
+    public static String pushOrder(boolean isSandbox, WxDomainEnum WxDomainEnum, Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.UNIFIED_ORDER, WxDomainEnum, isSandbox), params);
     }
 
     /**
@@ -680,8 +682,8 @@ public class WxPayApi {
      * @param params    请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String orderQuery(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.ORDER_QUERY, wxDomain, isSandbox), params);
+    public static String orderQuery(boolean isSandbox, WxDomainEnum WxDomainEnum, Map<String, String> params) {
+        return execution(getReqUrl(WxApiType.ORDER_QUERY, WxDomainEnum, isSandbox), params);
     }
 
     /**

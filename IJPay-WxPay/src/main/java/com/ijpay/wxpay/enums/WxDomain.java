@@ -13,7 +13,7 @@ package com.ijpay.wxpay.enums;
  *
  * @author Javen
  */
-public enum WxDomain {
+public enum WxDomain implements WxDomainEnum{
     /**
      * 中国国内
      */
@@ -54,7 +54,8 @@ public enum WxDomain {
         this.domain = domain;
     }
 
-    public String getType() {
+    @Override
+    public String getDomain() {
         return domain;
     }
 
