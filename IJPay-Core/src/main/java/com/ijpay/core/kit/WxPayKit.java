@@ -123,7 +123,7 @@ public class WxPayKit {
      * @return {@link Boolean} 验证签名结果
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
-        return verifyNotify(params, partnerKey, SignType.MD5, null);
+        return verifyNotify(params, partnerKey, signType, null);
     }
 
     /**
