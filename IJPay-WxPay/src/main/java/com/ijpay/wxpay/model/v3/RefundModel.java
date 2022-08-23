@@ -22,6 +22,10 @@ import java.util.List;
 @Accessors(chain = true)
 public class RefundModel {
     /**
+     * 子商户号
+     */
+    private String sub_mchid;
+    /**
      * 微信支付订单号
      */
     private String transaction_id;
