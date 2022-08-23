@@ -16,8 +16,8 @@
     <url>https://github.com/javen205/IJPay</url>
 
     <properties>
-        <alipay.version>4.31.48.ALL</alipay.version>
-        <fastjson.version>2.0.8.graal</fastjson.version>
+        <alipay.version>4.33.12.ALL</alipay.version>
+        <fastjson.version>2.0.12.graal</fastjson.version>
     </properties>
     
     <dependencies>

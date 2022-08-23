@@ -17,8 +17,8 @@
 
     <properties>
         <zxing.version>3.5.0</zxing.version>
-        <slf4j.api.version>2.0.0-alpha7</slf4j.api.version>
-        <xk.time.version>3.2.3.Mini</xk.time.version>
+        <slf4j.api.version>2.0.0</slf4j.api.version>
+        <xk.time.version>3.2.4</xk.time.version>
     </properties>
     <dependencies>
         <dependency>
