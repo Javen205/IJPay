@@ -26,5 +26,5 @@ public class SettleInfo {
     /**
      * 补差金额
      */
-    private int subsidy_amount;
+    private Integer subsidy_amount;
 }
