@@ -32,17 +32,26 @@ public class WxPayApiConfigKit {
      * @return {WxPayApiConfig} 微信支付配置
      */
     public static WxPayApiConfig putApiConfig(WxPayApiConfig wxPayApiConfig) {
+        return putApiConfig(wxPayApiConfig.getAppId(), wxPayApiConfig);
+    }
+
+    public static WxPayApiConfig putApiConfig(String key, WxPayApiConfig wxPayApiConfig) {
         if (CFG_MAP.size() == 0) {
             CFG_MAP.put(DEFAULT_CFG_KEY, wxPayApiConfig);
         }
-        return CFG_MAP.put(wxPayApiConfig.getAppId(), wxPayApiConfig);
+        return CFG_MAP.put(key, wxPayApiConfig);
     }
 
     public static WxPayApiConfig setThreadLocalWxPayApiConfig(WxPayApiConfig wxPayApiConfig) {
-        if (StrUtil.isNotEmpty(wxPayApiConfig.getAppId())) {
-            setThreadLocalAppId(wxPayApiConfig.getAppId());
+        return setThreadLocalWxPayApiConfig(wxPayApiConfig.getAppId(), wxPayApiConfig);
+    }
+
+    public static WxPayApiConfig setThreadLocalWxPayApiConfig(String key, WxPayApiConfig wxPayApiConfig) {
+        if (StrUtil.isEmpty(key)) {
+            key = wxPayApiConfig.getAppId();
         }
-        return putApiConfig(wxPayApiConfig);
+        setThreadLocalAppId(key);
+        return putApiConfig(key, wxPayApiConfig);
     }
 
     public static WxPayApiConfig removeApiConfig(WxPayApiConfig wxPayApiConfig) {

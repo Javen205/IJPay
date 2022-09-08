@@ -123,7 +123,7 @@ public class WxPayKit {
      * @return {@link Boolean} 验证签名结果
      */
     public static boolean verifyNotify(Map<String, String> params, String partnerKey, SignType signType) {
-        return verifyNotify(params, partnerKey, SignType.MD5, null);
+        return verifyNotify(params, partnerKey, signType, null);
     }
 
     /**
@@ -379,6 +379,19 @@ public class WxPayKit {
      * @throws Exception 错误信息
      */
     public static Map<String, String> jsApiCreateSign(String appId, String prepayId, String keyPath) throws Exception {
+        return jsApiCreateSign(appId, prepayId, PayKit.getPrivateKey(keyPath));
+    }
+
+    /**
+     * JS 调起支付签名
+     *
+     * @param appId      应用编号
+     * @param prepayId   预付订单号
+     * @param privateKey 商户私钥
+     * @return 唤起支付需要的参数
+     * @throws Exception 错误信息
+     */
+    public static Map<String, String> jsApiCreateSign(String appId, String prepayId, PrivateKey privateKey) throws Exception {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = String.valueOf(System.currentTimeMillis());
         String packageStr = "prepay_id=" + prepayId;
@@ -395,7 +408,7 @@ public class WxPayKit {
         list.add(packageStr);
         String packageSign = PayKit.createSign(
                 PayKit.buildSignMessage(list),
-                keyPath
+                privateKey
         );
         packageParams.put("paySign", packageSign);
         return packageParams;
@@ -439,6 +452,20 @@ public class WxPayKit {
      * @throws Exception 错误信息
      */
     public static Map<String, String> appCreateSign(String appId, String partnerId, String prepayId, String keyPath) throws Exception {
+        return appCreateSign(appId, partnerId, prepayId, PayKit.getPrivateKey(keyPath));
+    }
+
+    /**
+     * App 调起支付签名
+     *
+     * @param appId      应用编号
+     * @param partnerId  商户编号
+     * @param prepayId   预付订单号
+     * @param privateKey 商户私钥
+     * @return 唤起支付需要的参数
+     * @throws Exception 错误信息
+     */
+    public static Map<String, String> appCreateSign(String appId, String partnerId, String prepayId, PrivateKey privateKey) throws Exception {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = String.valueOf(System.currentTimeMillis());
         Map<String, String> packageParams = new HashMap<>(8);
@@ -456,7 +483,7 @@ public class WxPayKit {
         list.add(prepayId);
         String packageSign = PayKit.createSign(
                 PayKit.buildSignMessage(list),
-                keyPath
+                privateKey
         );
         packageParams.put("sign", packageSign);
         return packageParams;
