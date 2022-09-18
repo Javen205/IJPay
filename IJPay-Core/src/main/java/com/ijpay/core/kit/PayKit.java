@@ -20,6 +20,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -531,7 +532,7 @@ public class PayKit {
         // 绝对地址
         File file = new File(path);
         if (file.exists()) {
-            return new FileInputStream(file);
+            return Files.newInputStream(file.toPath());
         }
         // 相对地址
         return getFileToStream(path);
