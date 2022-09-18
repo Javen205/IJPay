@@ -20,7 +20,12 @@ import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
-import com.ijpay.wxpay.model.v3.*;
+import com.ijpay.wxpay.model.v3.Amount;
+import com.ijpay.wxpay.model.v3.Payer;
+import com.ijpay.wxpay.model.v3.RefundAmount;
+import com.ijpay.wxpay.model.v3.RefundGoodsDetail;
+import com.ijpay.wxpay.model.v3.RefundModel;
+import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,11 +37,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -69,8 +81,21 @@ public class WxPayV3Controller {
     public String index() {
         log.info(wxPayV3Bean.toString());
         try {
-            String absolutePath = PayKit.getAbsolutePath("classpath:/dev/apiclient_cert.p12");
+            String classPath = "classpath:/dev/apiclient_cert.p12";
+            String v3 = "classpath:/dev/wxpay_v3.properties";
+            String absolutePath = PayKit.getAbsolutePath(classPath);
             log.info("absolutePath:{}", absolutePath);
+            InputStream inputStream = PayKit.getCertFileInputStream(v3);
+            if (null != inputStream) {
+                ByteArrayOutputStream result = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) != -1) {
+                    result.write(buffer, 0, length);
+                }
+                String str = result.toString();
+                log.info("file content:{}", str);
+            }
         } catch (Exception e) {
             log.error("文件不存在", e);
         }

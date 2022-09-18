@@ -1,10 +1,30 @@
 package com.ijpay.demo.controller.alipay;
 
-import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.domain.*;
+import com.alipay.api.domain.AlipayCommerceCityfacilitatorVoucherGenerateModel;
+import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
+import com.alipay.api.domain.AlipayFundAccountQueryModel;
+import com.alipay.api.domain.AlipayFundAuthOrderFreezeModel;
+import com.alipay.api.domain.AlipayFundCouponOrderAgreementPayModel;
+import com.alipay.api.domain.AlipayFundTransCommonQueryModel;
+import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
+import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
+import com.alipay.api.domain.AlipayFundTransUniTransferModel;
+import com.alipay.api.domain.AlipayOpenAuthTokenAppModel;
+import com.alipay.api.domain.AlipayOpenAuthTokenAppQueryModel;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeCancelModel;
+import com.alipay.api.domain.AlipayTradeCloseModel;
+import com.alipay.api.domain.AlipayTradeCreateModel;
+import com.alipay.api.domain.AlipayTradeOrderSettleModel;
+import com.alipay.api.domain.AlipayTradePagePayModel;
+import com.alipay.api.domain.AlipayTradePayModel;
+import com.alipay.api.domain.AlipayTradePrecreateModel;
+import com.alipay.api.domain.AlipayTradeQueryModel;
+import com.alipay.api.domain.AlipayTradeRefundModel;
+import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.alipay.api.domain.Participant;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.response.AlipayFundAuthOrderFreezeResponse;
 import com.alipay.api.response.AlipayFundCouponOrderAgreementPayResponse;
@@ -12,8 +32,6 @@ import com.alipay.api.response.AlipayTradeCreateResponse;
 import com.ijpay.alipay.AliPayApi;
 import com.ijpay.alipay.AliPayApiConfig;
 import com.ijpay.alipay.AliPayApiConfigKit;
-import com.ijpay.core.kit.PayKit;
-import com.ijpay.core.kit.RsaKit;
 import com.ijpay.demo.entity.AliPayBean;
 import com.ijpay.demo.utils.StringUtils;
 import com.ijpay.demo.vo.AjaxResult;
@@ -27,7 +45,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,49 +147,6 @@ public class AliPayController extends AbstractAliPayApiController {
         return result;
     }
 
-    @RequestMapping(value = "/wapPayNoSdk")
-    @ResponseBody
-    public void wapPayNoSdk(HttpServletResponse response) {
-        try {
-            AliPayApiConfig aliPayApiConfig = AliPayApiConfigKit.getAliPayApiConfig();
-            Map<String, String> paramsMap = new HashMap<>();
-            paramsMap.put("app_id", aliPayApiConfig.getAppId());
-            paramsMap.put("method", "alipay.trade.wap.pay");
-            paramsMap.put("return_url", aliPayBean.getDomain() + RETURN_URL);
-            paramsMap.put("charset", aliPayApiConfig.getCharset());
-            paramsMap.put("sign_type", aliPayApiConfig.getSignType());
-            paramsMap.put("timestamp", DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
-            paramsMap.put("version", "1.0");
-            paramsMap.put("notify_url", aliPayBean.getDomain() + NOTIFY_URL);
-
-            Map<String, String> bizMap = new HashMap<>();
-            bizMap.put("body", "IJPay 聚合支付-H5");
-            bizMap.put("subject", "IJPay 让支付触手可及");
-            bizMap.put("out_trade_no", StringUtils.getOutTradeNo());
-            bizMap.put("total_amount", "6.66");
-            bizMap.put("product_code", "QUICK_WAP_WAY");
-
-            paramsMap.put("biz_content", JSON.toJSONString(bizMap));
-
-            String content = PayKit.createLinkString(paramsMap);
-
-            System.out.println(content);
-
-            String encrypt = RsaKit.encryptByPrivateKey(content, aliPayApiConfig.getPrivateKey());
-            System.out.println(encrypt);
-//            encrypt = AlipaySignature.rsaSign(content,aliPayApiConfig.getPrivateKey(), "UTF-8","RSA2");
-//            System.out.println(encrypt);
-            paramsMap.put("sign", encrypt);
-
-            String url = aliPayApiConfig.getServiceUrl() + "?" + PayKit.createLinkString(paramsMap, true);
-            System.out.println(url);
-            response.sendRedirect(url);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @RequestMapping(value = "/wapPay")
     @ResponseBody
     public void wapPay(HttpServletResponse response) {
@@ -233,6 +207,9 @@ public class AliPayController extends AbstractAliPayApiController {
 //            model.setExtendParams(extendParams);
 
             AliPayApi.tradePage(response, model, notifyUrl, returnUrl);
+            // https://opensupport.alipay.com/support/helpcenter/192/201602488772?ant_source=antsupport
+            // Alipay Easy SDK（新版）目前只支持输出form表单，不支持打印出url链接。
+            // AliPayApi.tradePage(response, "GET", model, notifyUrl, returnUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
