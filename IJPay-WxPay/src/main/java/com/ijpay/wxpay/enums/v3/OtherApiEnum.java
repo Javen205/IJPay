@@ -26,7 +26,7 @@ public enum OtherApiEnum implements WxApiEnum {
      * 视频上传
      */
     MERCHANT_UPLOAD_VIDEO("/v3/merchant/media/video_upload", "视频上传"),
-    
+
     /**
      * 图片上传(营销专用)
      */
