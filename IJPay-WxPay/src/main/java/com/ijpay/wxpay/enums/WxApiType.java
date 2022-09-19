@@ -13,6 +13,7 @@ package com.ijpay.wxpay.enums;
  *
  * @author Javen
  */
+@Deprecated
 public enum WxApiType implements WxApiEnum {
     /**
      * 沙箱环境
