@@ -42,6 +42,16 @@ public enum TransferApiEnum implements WxApiEnum {
      * 获取 RSA 加密公钥
      */
     GET_PUBLIC_KEY("/risk/getpublickey", "获取 RSA 加密公钥"),
+
+    /**
+     * 向员工付款
+     */
+    PAY_WWS_TRANS_2_POCKET("/mmpaymkttransfers/promotion/paywwsptrans2pocket", "向员工付款"),
+
+    /**
+     * 查询向员工付款记录
+     */
+    QUERY_WWS_TRANS_2_POCKET("/mmpaymkttransfers/promotion/querywwsptrans2pocket", "查询向员工付款记录"),
     ;
 
     /**
