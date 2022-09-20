@@ -37,6 +37,17 @@ public enum RedPackApiEnum implements WxApiEnum {
      * 小程序发红包
      */
     SEND_MINI_PROGRAM_HB("/mmpaymkttransfers/sendminiprogramhb", "小程序发红包"),
+
+    /**
+     * 发放企业红包
+     */
+    SEND_WORK_WX_RED_PACK("/mmpaymkttransfers/sendworkwxredpack", "发放企业红包"),
+
+    /**
+     * 查询企业红包记录
+     */
+    QUERY_WORK_WX_RED_PACK("/mmpaymkttransfers/queryworkwxredpack", "查询企业红包记录"),
+
     ;
 
     /**
