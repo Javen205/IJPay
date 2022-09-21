@@ -12,7 +12,7 @@ import com.ijpay.wxpay.enums.WxApiEnum;
  *
  * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">Node.js 版</a></p>
  *
- * <p>微信v3接口-消费者投诉2.0</p>
+ * <p>微信支付 v3 接口-消费者投诉2.0接口枚举</p>
  *
  * @author Javen
  */
@@ -88,5 +88,10 @@ public enum ComplaintsApiEnum implements WxApiEnum {
     @Override
     public String getDesc() {
         return desc;
+    }
+
+    @Override
+    public String toString() {
+        return url;
     }
 }

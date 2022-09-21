@@ -73,4 +73,9 @@ public enum FacePayApiEnum implements WxApiEnum {
     public String getDesc() {
         return desc;
     }
+
+    @Override
+    public String toString() {
+        return url;
+    }
 }

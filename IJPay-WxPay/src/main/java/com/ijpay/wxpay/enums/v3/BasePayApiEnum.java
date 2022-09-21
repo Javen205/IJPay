@@ -12,7 +12,7 @@ import com.ijpay.wxpay.enums.WxApiEnum;
  *
  * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">Node.js 版</a></p>
  *
- * <p>微信v3接口-基础支付枚举</p>
+ * <p>微信支付 v3 接口-基础支付接口枚举</p>
  *
  * @author Javen
  */
