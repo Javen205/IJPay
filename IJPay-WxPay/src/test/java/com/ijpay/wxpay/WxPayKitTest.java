@@ -2,8 +2,8 @@ package com.ijpay.wxpay;
 
 
 import com.ijpay.core.kit.WxPayKit;
-import com.ijpay.wxpay.enums.WxApiType;
-import com.ijpay.wxpay.enums.WxDomain;
+import com.ijpay.wxpay.enums.WxDomainEnum;
+import com.ijpay.wxpay.enums.v3.BasePayApiEnum;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class WxPayKitTest {
 
     @Test
     public void StringFormat() {
-        Assert.assertEquals("https://api.mch.weixin.qq.com/v3/discount-card/orders/out-trade-no/123456789",
-               String.format(WxDomain.CHINA.toString().concat(WxApiType.DISCOUNT_CARD_ORDER_TRADE_NO.toString()),"123456789"));
+        Assert.assertEquals(WxDomainEnum.CHINA.toString().concat(String.format(BasePayApiEnum.ORDER_QUERY_BY_TRANSACTION_ID.toString(), "123456789")),
+                String.format(WxDomainEnum.CHINA.toString().concat(BasePayApiEnum.ORDER_QUERY_BY_TRANSACTION_ID.toString()), "123456789"));
     }
 }
