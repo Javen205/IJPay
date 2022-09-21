@@ -10,9 +10,16 @@ import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiEnum;
-import com.ijpay.wxpay.enums.WxApiType;
 import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.enums.WxDomainEnum;
+import com.ijpay.wxpay.enums.v2.CouponApiEnum;
+import com.ijpay.wxpay.enums.v2.DepositApiEnum;
+import com.ijpay.wxpay.enums.v2.EntrustPayApiEnum;
+import com.ijpay.wxpay.enums.v2.FacePayApiEnum;
+import com.ijpay.wxpay.enums.v2.PayApiEnum;
+import com.ijpay.wxpay.enums.v2.ProfitSharingApiEnum;
+import com.ijpay.wxpay.enums.v2.RedPackApiEnum;
+import com.ijpay.wxpay.enums.v2.TransferApiEnum;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,7 +34,7 @@ import java.util.Map;
  *
  * <p>IJPay 交流群: 723992875</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">Node.js 版</a></p>
  *
  * <p>微信支付相关接口</p>
  *
@@ -48,7 +55,7 @@ public class WxPayApi {
     /**
      * 获取接口请求的 URL
      *
-     * @param wxApiEnum {@link WxApiType} 支付 API 接口枚举
+     * @param wxApiEnum {@link WxApiEnum} 支付 API 接口枚举
      * @param isSandBox 是否是沙箱环境
      * @return {@link String} 返回完整的接口请求URL
      */
@@ -60,16 +67,16 @@ public class WxPayApi {
      * 获取接口请求的 URL
      *
      * @param wxApiEnum {@link WxApiEnum} 支付 API 接口枚举
-     * @param WxDomainEnumEnum  {@link WxDomainEnum} 支付 API 接口域名枚举
+     * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
      * @param isSandBox 是否是沙箱环境
      * @return {@link String} 返回完整的接口请求URL
      */
-    public static String getReqUrl(WxApiEnum wxApiEnum, WxDomainEnum WxDomainEnumEnum, boolean isSandBox) {
-        if (WxDomainEnumEnum == null) {
-            WxDomainEnumEnum = WxDomain.CHINA;
+    public static String getReqUrl(WxApiEnum wxApiEnum, WxDomain wxDomain, boolean isSandBox) {
+        if (wxDomain == null) {
+            wxDomain = WxDomainEnum.CHINA;
         }
-        return WxDomainEnumEnum.getDomain()
-                .concat(isSandBox ? WxApiType.SAND_BOX_NEW.getUrl() : "")
+        return wxDomain.getDomain()
+                .concat(isSandBox ? PayApiEnum.SAND_BOX_NEW.getUrl() : "")
                 .concat(wxApiEnum.getUrl());
     }
 
@@ -78,7 +85,7 @@ public class WxPayApi {
      *
      * @param apiUrl 接口 URL
      *               通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params 接口请求参数
      * @return {@link String} 请求返回的结果
      */
@@ -91,7 +98,7 @@ public class WxPayApi {
      *
      * @param apiUrl 接口 URL
      *               通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *               或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params 接口请求参数
      * @return {@link String} 请求返回的结果
      */
@@ -104,7 +111,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param certPass 证书密码
@@ -119,7 +126,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param certPass 证书密码
@@ -135,7 +142,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @return {@link String} 请求返回的结果
@@ -149,7 +156,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certPath 证书文件路径
      * @param protocol 协议
@@ -164,7 +171,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param certPass 证书密码
@@ -179,7 +186,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param certPass 证书密码
@@ -195,7 +202,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @return {@link String} 请求返回的结果
@@ -209,7 +216,7 @@ public class WxPayApi {
      *
      * @param apiUrl   接口 URL
      *                 通过 {@link WxPayApi#getReqUrl(WxApiEnum)}
-     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomainEnum, boolean)} 来获取
+     *                 或者 {@link WxPayApi#getReqUrl(WxApiEnum, WxDomain, boolean)} 来获取
      * @param params   接口请求参数
      * @param certFile 证书文件输入流
      * @param protocol 协议
@@ -233,8 +240,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号，接口中包含敏感信息时必传
@@ -277,8 +284,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号，接口中包含敏感信息时必传
@@ -321,8 +328,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -343,8 +350,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -365,8 +372,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -391,8 +398,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -416,8 +423,8 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -437,8 +444,8 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -460,8 +467,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号，接口中包含敏感信息时必传
@@ -487,8 +494,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
      * @param keyPath   apiclient_key.pem 证书路径
@@ -506,8 +513,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -527,8 +534,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method       {@link RequestMethod} 请求方法
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -549,8 +556,8 @@ public class WxPayApi {
      * V3 接口统一执行入口
      *
      * @param method    {@link RequestMethod} 请求方法
-     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
      * @param keyPath   apiclient_key.pem 证书路径
@@ -569,8 +576,8 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix    可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix    可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix    可通过 {@link WxDomain}来获取
+     * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId        商户Id
      * @param serialNo     商户 API 证书序列号
      * @param platSerialNo 平台序列号
@@ -589,8 +596,8 @@ public class WxPayApi {
     /**
      * V3 接口统一执行入口
      *
-     * @param urlPrefix 可通过 {@link WxDomainEnum}来获取
-     * @param urlSuffix 可通过 {@link WxApiType} 来获取，URL挂载参数需要自行拼接
+     * @param urlPrefix 可通过 {@link WxDomain}来获取
+     * @param urlSuffix 可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
      * @param mchId     商户Id
      * @param serialNo  商户 API 证书序列号
      * @param keyPath   apiclient_key.pem 证书路径
@@ -618,7 +625,7 @@ public class WxPayApi {
         map.put("mch_id", mchId);
         map.put("nonce_str", nonceStr);
         map.put("sign", WxPayKit.createSign(map, partnerKey, signType));
-        return execution(getReqUrl(WxApiType.GET_SIGN_KEY), map);
+        return execution(getReqUrl(PayApiEnum.GET_SIGN_KEY), map);
     }
 
     /**
@@ -645,13 +652,13 @@ public class WxPayApi {
     /**
      * 统一下单
      *
-     * @param isSandbox 是否是沙盒环境
-     * @param WxDomainEnum  {@link WxDomainEnum} 支付 API 接口域名枚举
-     * @param params    请求参数
+     * @param isSandbox    是否是沙盒环境
+     * @param WxDomainEnum {@link WxDomain} 支付 API 接口域名枚举
+     * @param params       请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String pushOrder(boolean isSandbox, WxDomainEnum WxDomainEnum, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.UNIFIED_ORDER, WxDomainEnum, isSandbox), params);
+    public static String pushOrder(boolean isSandbox, WxDomain WxDomainEnum, Map<String, String> params) {
+        return execution(getReqUrl(PayApiEnum.UNIFIED_ORDER, WxDomainEnum, isSandbox), params);
     }
 
     /**
@@ -672,7 +679,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderQuery(boolean isSandbox, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.ORDER_QUERY, null, isSandbox), params);
+        return execution(getReqUrl(PayApiEnum.ORDER_QUERY, null, isSandbox), params);
     }
 
     /**
@@ -682,8 +689,8 @@ public class WxPayApi {
      * @param params    请求参数
      * @return {@link String} 请求返回的结果
      */
-    public static String orderQuery(boolean isSandbox, WxDomainEnum WxDomainEnum, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.ORDER_QUERY, WxDomainEnum, isSandbox), params);
+    public static String orderQuery(boolean isSandbox, WxDomain WxDomainEnum, Map<String, String> params) {
+        return execution(getReqUrl(PayApiEnum.ORDER_QUERY, WxDomainEnum, isSandbox), params);
     }
 
     /**
@@ -693,7 +700,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String closeOrder(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.CLOSE_ORDER), params);
+        return execution(getReqUrl(PayApiEnum.CLOSE_ORDER), params);
     }
 
     /**
@@ -705,7 +712,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReverse(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.REVERSE), params, certPath, certPass);
+        return execution(getReqUrl(PayApiEnum.REVERSE), params, certPath, certPass);
     }
 
     /**
@@ -717,7 +724,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReverse(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.REVERSE), params, certFile, certPass);
+        return execution(getReqUrl(PayApiEnum.REVERSE), params, certFile, certPass);
     }
 
     /**
@@ -730,7 +737,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass);
+        return execution(getReqUrl(PayApiEnum.REFUND, null, isSandbox), params, certPath, certPass);
     }
 
     /**
@@ -743,7 +750,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(PayApiEnum.REFUND, null, isSandbox), params, certPath, certPass, protocol);
     }
 
     /**
@@ -756,7 +763,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefund(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certFile, certPass);
+        return execution(getReqUrl(PayApiEnum.REFUND, null, isSandbox), params, certFile, certPass);
     }
 
     /**
@@ -769,7 +776,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.REFUND, null, isSandbox), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(PayApiEnum.REFUND, null, isSandbox), params, certFile, certPass, protocol);
     }
 
     /**
@@ -780,7 +787,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderRefundQuery(boolean isSandbox, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.REFUND_QUERY, null, isSandbox), params);
+        return execution(getReqUrl(PayApiEnum.REFUND_QUERY, null, isSandbox), params);
     }
 
     /**
@@ -791,7 +798,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String downloadBill(boolean isSandbox, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.DOWNLOAD_BILL, null, isSandbox), params);
+        return execution(getReqUrl(PayApiEnum.DOWNLOAD_BILL, null, isSandbox), params);
     }
 
     /**
@@ -801,7 +808,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String orderReport(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.REPORT, null, false), params);
+        return execution(getReqUrl(PayApiEnum.REPORT, null, false), params);
     }
 
     /**
@@ -811,7 +818,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String toShortUrl(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.SHORT_URL, null, false), params);
+        return execution(getReqUrl(PayApiEnum.SHORT_URL, null, false), params);
     }
 
     /**
@@ -821,7 +828,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String authCodeToOpenid(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.AUTH_CODE_TO_OPENID, null, false), params);
+        return execution(getReqUrl(PayApiEnum.AUTH_CODE_TO_OPENID, null, false), params);
     }
 
     /**
@@ -832,7 +839,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String microPay(boolean isSandbox, Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.MICRO_PAY, null, isSandbox), params);
+        return execution(getReqUrl(PayApiEnum.MICRO_PAY, null, isSandbox), params);
     }
 
     /**
@@ -844,7 +851,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String transfers(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.TRANSFER, null, false), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.TRANSFER, null, false), params, certPath, certPass);
     }
 
     /**
@@ -857,7 +864,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String transfersByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.TRANSFER, null, false), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.TRANSFER, null, false), params, certPath, certPass, protocol);
     }
 
     /**
@@ -869,7 +876,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String transfers(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.TRANSFER, null, false), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.TRANSFER, null, false), params, certFile, certPass);
     }
 
     /**
@@ -882,7 +889,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String transfersByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.TRANSFER, null, false), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.TRANSFER, null, false), params, certFile, certPass, protocol);
     }
 
     /**
@@ -894,7 +901,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getTransferInfo(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_TRANSFER_INFO, null, false), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_TRANSFER_INFO, null, false), params, certPath, certPass);
     }
 
     /**
@@ -906,7 +913,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getTransferInfo(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_TRANSFER_INFO, null, false), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_TRANSFER_INFO, null, false), params, certFile, certPass);
     }
 
     /**
@@ -918,7 +925,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String payBank(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.TRANSFER_BANK, null, false), params, certPath, certPass);
     }
 
     /**
@@ -931,7 +938,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String payBankByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.TRANSFER_BANK, null, false), params, certPath, certPass, protocol);
     }
 
     /**
@@ -943,7 +950,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String payBank(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.TRANSFER_BANK, null, false), params, certFile, certPass);
     }
 
     /**
@@ -956,7 +963,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String payBankByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.TRANSFER_BANK, null, false), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.TRANSFER_BANK, null, false), params, certFile, certPass, protocol);
     }
 
     /**
@@ -968,7 +975,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryBank(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_TRANSFER_BANK_INFO, null, false), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_TRANSFER_BANK_INFO, null, false), params, certPath, certPass);
     }
 
     /**
@@ -980,7 +987,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryBank(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_TRANSFER_BANK_INFO, null, false), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_TRANSFER_BANK_INFO, null, false), params, certFile, certPass);
     }
 
     /**
@@ -992,7 +999,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getPublicKey(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, WxDomain.FRAUD, false), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certPath, certPass);
     }
 
     /**
@@ -1004,7 +1011,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_PUBLIC_KEY, WxDomain.FRAUD, false), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certFile, certPass);
     }
 
     /**
@@ -1016,9 +1023,9 @@ public class WxPayApi {
      */
     public static String entrustWeb(Map<String, Object> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return executionByGet(getReqUrl(WxApiType.ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.ENTRUST_WEB), params);
         } else {
-            return executionByGet(getReqUrl(WxApiType.PARTNER_ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.PARTNER_ENTRUST_WEB), params);
         }
     }
 
@@ -1032,9 +1039,9 @@ public class WxPayApi {
      */
     public static String preEntrustWeb(Map<String, Object> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return executionByGet(getReqUrl(WxApiType.PRE_ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.PRE_ENTRUST_WEB), params);
         } else {
-            return executionByGet(getReqUrl(WxApiType.PARTNER_PRE_ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.PARTNER_PRE_ENTRUST_WEB), params);
         }
     }
 
@@ -1048,9 +1055,9 @@ public class WxPayApi {
      */
     public static String h5EntrustWeb(Map<String, Object> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return executionByGet(getReqUrl(WxApiType.H5_ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.H5_ENTRUST_WEB), params);
         } else {
-            return executionByGet(getReqUrl(WxApiType.PARTNER_H5_ENTRUST_WEB), params);
+            return executionByGet(getReqUrl(EntrustPayApiEnum.PARTNER_H5_ENTRUST_WEB), params);
         }
     }
 
@@ -1061,7 +1068,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String contractOrder(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.PAY_CONTRACT_ORDER), params);
+        return execution(getReqUrl(EntrustPayApiEnum.PAY_CONTRACT_ORDER), params);
     }
 
     /**
@@ -1073,9 +1080,9 @@ public class WxPayApi {
      */
     public static String queryContract(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return execution(getReqUrl(WxApiType.QUERY_ENTRUST_CONTRACT), params);
+            return execution(getReqUrl(EntrustPayApiEnum.QUERY_ENTRUST_CONTRACT), params);
         } else {
-            return execution(getReqUrl(WxApiType.PARTNER_QUERY_ENTRUST_CONTRACT), params);
+            return execution(getReqUrl(EntrustPayApiEnum.PARTNER_QUERY_ENTRUST_CONTRACT), params);
         }
     }
 
@@ -1088,9 +1095,9 @@ public class WxPayApi {
      */
     public static String papPayApply(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return execution(getReqUrl(WxApiType.PAP_PAY_APPLY), params);
+            return execution(getReqUrl(EntrustPayApiEnum.PAP_PAY_APPLY), params);
         } else {
-            return execution(getReqUrl(WxApiType.PARTNER_PAP_PAY_APPLY), params);
+            return execution(getReqUrl(EntrustPayApiEnum.PARTNER_PAP_PAY_APPLY), params);
         }
     }
 
@@ -1103,9 +1110,9 @@ public class WxPayApi {
      */
     public static String deleteContract(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return execution(getReqUrl(WxApiType.DELETE_ENTRUST_CONTRACT), params);
+            return execution(getReqUrl(EntrustPayApiEnum.DELETE_ENTRUST_CONTRACT), params);
         } else {
-            return execution(getReqUrl(WxApiType.PARTNER_DELETE_ENTRUST_CONTRACT), params);
+            return execution(getReqUrl(EntrustPayApiEnum.PARTNER_DELETE_ENTRUST_CONTRACT), params);
         }
     }
 
@@ -1117,24 +1124,9 @@ public class WxPayApi {
      */
     public static String contractBill(Map<String, String> params, PayModel payModel) {
         if (payModel == PayModel.BUSINESS_MODEL) {
-            return execution(getReqUrl(WxApiType.QUERY_ENTRUST_CONTRACT), params);
+            return execution(getReqUrl(EntrustPayApiEnum.QUERY_ENTRUST_CONTRACT), params);
         } else {
-            return execution(getReqUrl(WxApiType.PARTNER_QUERY_ENTRUST_CONTRACT), params);
-        }
-    }
-
-    /**
-     * 查询代扣订单
-     *
-     * @param params   请求参数
-     * @param payModel 商户平台模式
-     * @return {@link String} 请求返回的结果
-     */
-    public static String papOrderQuery(Map<String, String> params, PayModel payModel) {
-        if (payModel == PayModel.BUSINESS_MODEL) {
-            return execution(getReqUrl(WxApiType.PAP_ORDER_QUERY), params);
-        } else {
-            return execution(getReqUrl(WxApiType.PARTNER_PAP_ORDER_QUERY), params);
+            return execution(getReqUrl(EntrustPayApiEnum.PARTNER_QUERY_ENTRUST_CONTRACT), params);
         }
     }
 
@@ -1147,7 +1139,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharing(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING), params, certPath, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING), params, certPath, certPass);
     }
 
     /**
@@ -1159,7 +1151,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharing(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING), params, certFile, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING), params, certFile, certPass);
     }
 
     /**
@@ -1171,7 +1163,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String multiProfitSharing(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.MULTI_PROFIT_SHARING), params, certPath, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.MULTI_PROFIT_SHARING), params, certPath, certPass);
     }
 
     /**
@@ -1183,7 +1175,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String multiProfitSharing(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.MULTI_PROFIT_SHARING), params, certFile, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.MULTI_PROFIT_SHARING), params, certFile, certPass);
     }
 
     /**
@@ -1193,7 +1185,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingQuery(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_QUERY), params);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_QUERY), params);
     }
 
     /**
@@ -1203,7 +1195,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingAddReceiver(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.PROFITS_HARING_ADD_RECEIVER), params);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_ADD_RECEIVER), params);
     }
 
     /**
@@ -1213,7 +1205,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingRemoveReceiver(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_REMOVE_RECEIVER), params);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_REMOVE_RECEIVER), params);
     }
 
     /**
@@ -1225,7 +1217,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingFinish(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_FINISH), params, certPath, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_FINISH), params, certPath, certPass);
     }
 
     /**
@@ -1237,7 +1229,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingFinish(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_FINISH), params, certFile, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_FINISH), params, certFile, certPass);
     }
 
     /**
@@ -1249,7 +1241,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingReturn(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN), params, certPath, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_RETURN), params, certPath, certPass);
     }
 
     /**
@@ -1261,7 +1253,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingReturn(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN), params, certFile, certPass);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_RETURN), params, certFile, certPass);
     }
 
     /**
@@ -1271,7 +1263,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String profitSharingReturnQuery(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.PROFIT_SHARING_RETURN_QUERY), params);
+        return execution(getReqUrl(ProfitSharingApiEnum.PROFIT_SHARING_RETURN_QUERY), params);
     }
 
     /**
@@ -1283,7 +1275,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendCoupon(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_COUPON), params, certPath, certPass);
+        return execution(getReqUrl(CouponApiEnum.SEND_COUPON), params, certPath, certPass);
     }
 
     /**
@@ -1295,7 +1287,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendCoupon(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_COUPON), params, certFile, certPass);
+        return execution(getReqUrl(CouponApiEnum.SEND_COUPON), params, certFile, certPass);
     }
 
     /**
@@ -1305,7 +1297,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryCouponStock(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.QUERY_COUPON_STOCK), params);
+        return execution(getReqUrl(CouponApiEnum.QUERY_COUPON_STOCK), params);
     }
 
     /**
@@ -1315,31 +1307,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryCouponsInfo(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.QUERY_COUPONS_INFO), params);
-    }
-
-    /**
-     * 拉取订单评价数据
-     *
-     * @param params   请求参数
-     * @param certPath 证书文件路径
-     * @param certPass 证书密码
-     * @return {@link String} 请求返回的结果
-     */
-    public static String batchQueryComment(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.BATCH_QUERY_COMMENT), params, certPath, certPass);
-    }
-
-    /**
-     * 拉取订单评价数据
-     *
-     * @param params   请求参数
-     * @param certFile 证书文件的 InputStream
-     * @param certPass 证书密码
-     * @return {@link String} 请求返回的结果
-     */
-    public static String batchQueryComment(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.BATCH_QUERY_COMMENT), params, certFile, certPass);
+        return execution(getReqUrl(CouponApiEnum.QUERY_COUPONS_INFO), params);
     }
 
     /**
@@ -1349,7 +1317,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositFacePay(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_FACE_PAY), params);
+        return execution(getReqUrl(DepositApiEnum.FACE_PAY), params);
     }
 
     /**
@@ -1359,7 +1327,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositMicroPay(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_MICRO_PAY), params);
+        return execution(getReqUrl(DepositApiEnum.MICRO_PAY), params);
     }
 
     /**
@@ -1369,7 +1337,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositOrderQuery(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_ORDER_QUERY), params);
+        return execution(getReqUrl(DepositApiEnum.ORDER_QUERY), params);
     }
 
     /**
@@ -1381,7 +1349,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositReverse(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_REVERSE), params, certPath, certPass);
+        return execution(getReqUrl(DepositApiEnum.REVERSE), params, certPath, certPass);
     }
 
     /**
@@ -1393,7 +1361,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositReverse(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_REVERSE), params, certFile, certPass);
+        return execution(getReqUrl(DepositApiEnum.REVERSE), params, certFile, certPass);
     }
 
     /**
@@ -1405,7 +1373,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositConsume(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_CONSUME), params, certPath, certPass);
+        return execution(getReqUrl(DepositApiEnum.CONSUME), params, certPath, certPass);
     }
 
     /**
@@ -1417,7 +1385,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositConsume(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_CONSUME), params, certFile, certPass);
+        return execution(getReqUrl(DepositApiEnum.CONSUME), params, certFile, certPass);
     }
 
     /**
@@ -1429,7 +1397,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositRefund(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND), params, certPath, certPass);
+        return execution(getReqUrl(DepositApiEnum.REFUND), params, certPath, certPass);
     }
 
     /**
@@ -1441,7 +1409,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositRefund(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND), params, certFile, certPass);
+        return execution(getReqUrl(DepositApiEnum.REFUND), params, certFile, certPass);
     }
 
     /**
@@ -1451,7 +1419,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String depositRefundQuery(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.DEPOSIT_REFUND_QUERY), params);
+        return execution(getReqUrl(DepositApiEnum.REFUND_QUERY), params);
     }
 
     /**
@@ -1463,7 +1431,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String downloadFundFlow(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.DOWNLOAD_FUND_FLOW), params, certPath, certPass);
+        return execution(getReqUrl(PayApiEnum.DOWNLOAD_FUND_FLOW), params, certPath, certPass);
     }
 
     /**
@@ -1475,7 +1443,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String downloadFundFlow(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.DOWNLOAD_FUND_FLOW), params, certFile, certPass);
+        return execution(getReqUrl(PayApiEnum.DOWNLOAD_FUND_FLOW), params, certFile, certPass);
     }
 
     /**
@@ -1485,7 +1453,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getAuthInfo(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.GET_AUTH_INFO, WxDomain.PAY_APP, false), params);
+        return execution(getReqUrl(FacePayApiEnum.GET_AUTH_INFO, WxDomainEnum.PAY_APP, false), params);
     }
 
     /**
@@ -1495,7 +1463,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePay(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.FACE_PAY), params);
+        return execution(getReqUrl(FacePayApiEnum.FACE_PAY), params);
     }
 
     /**
@@ -1505,7 +1473,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePayQuery(Map<String, String> params) {
-        return execution(getReqUrl(WxApiType.FACE_PAY_QUERY), params);
+        return execution(getReqUrl(FacePayApiEnum.FACE_PAY_QUERY), params);
     }
 
     /**
@@ -1517,7 +1485,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePayReverse(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.FACE_PAY_REVERSE), params, certPath, certPass);
+        return execution(getReqUrl(FacePayApiEnum.FACE_PAY_REVERSE), params, certPath, certPass);
     }
 
     /**
@@ -1529,7 +1497,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String facePayReverse(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.FACE_PAY_REVERSE), params, certFile, certPass);
+        return execution(getReqUrl(FacePayApiEnum.FACE_PAY_REVERSE), params, certFile, certPass);
     }
 
     /**
@@ -1541,7 +1509,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendRedPack(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_RED_PACK), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_RED_PACK), params, certPath, certPass);
     }
 
     /**
@@ -1554,7 +1522,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_RED_PACK), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_RED_PACK), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1566,7 +1534,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendRedPack(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_RED_PACK), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_RED_PACK), params, certFile, certPass);
     }
 
     /**
@@ -1579,7 +1547,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_RED_PACK), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1591,7 +1559,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendGroupRedPack(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_GROUP_RED_PACK), params, certPath, certPass);
     }
 
     /**
@@ -1604,7 +1572,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendGroupRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_GROUP_RED_PACK), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1616,7 +1584,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendGroupRedPack(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_GROUP_RED_PACK), params, certFile, certPass);
     }
 
     /**
@@ -1629,7 +1597,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendGroupRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_GROUP_RED_PACK), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_GROUP_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1641,7 +1609,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getHbInfo(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_HB_INFO), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.GET_HB_INFO), params, certPath, certPass);
     }
 
     /**
@@ -1653,7 +1621,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String getHbInfo(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.GET_HB_INFO), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.GET_HB_INFO), params, certFile, certPass);
     }
 
     /**
@@ -1665,7 +1633,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendMiniProgramRedPack(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_MINI_PROGRAM_HB), params, certPath, certPass);
     }
 
     /**
@@ -1678,7 +1646,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendMiniProgramRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_MINI_PROGRAM_HB), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1690,7 +1658,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendMiniProgramRedPack(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_MINI_PROGRAM_HB), params, certFile, certPass);
     }
 
     /**
@@ -1703,7 +1671,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendMiniProgramRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_MINI_PROGRAM_HB), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_MINI_PROGRAM_HB), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1715,7 +1683,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendWorkWxRedPack(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_WORK_WX_RED_PACK), params, certPath, certPass);
     }
 
     /**
@@ -1728,7 +1696,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendWorkWxRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1740,7 +1708,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.SEND_WORK_WX_RED_PACK), params, certFile, certPass);
     }
 
     /**
@@ -1753,7 +1721,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String sendWorkWxRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.SEND_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.SEND_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1765,7 +1733,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryWorkWxRedPack(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certPath, certPass);
+        return execution(getReqUrl(RedPackApiEnum.QUERY_WORK_WX_RED_PACK), params, certPath, certPass);
     }
 
     /**
@@ -1778,7 +1746,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryWorkWxRedPackByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.QUERY_WORK_WX_RED_PACK), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1790,7 +1758,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryWorkWxRedPack(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certFile, certPass);
+        return execution(getReqUrl(RedPackApiEnum.QUERY_WORK_WX_RED_PACK), params, certFile, certPass);
     }
 
     /**
@@ -1803,7 +1771,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryWorkWxRedPackByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.QUERY_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(RedPackApiEnum.QUERY_WORK_WX_RED_PACK), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1815,7 +1783,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String trans2pocket(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass);
     }
 
     /**
@@ -1828,7 +1796,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String trans2pocketByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.PAY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1840,7 +1808,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String trans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass);
     }
 
     /**
@@ -1853,7 +1821,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String trans2pocketByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.PAY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
     }
 
     /**
@@ -1865,7 +1833,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryTrans2pocket(Map<String, String> params, String certPath, String certPass) {
-        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass);
+        return execution(getReqUrl(TransferApiEnum.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass);
     }
 
     /**
@@ -1878,7 +1846,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryTrans2pocketByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.QUERY_WWS_TRANS_2_POCKET), params, certPath, certPass, protocol);
     }
 
     /**
@@ -1890,7 +1858,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass) {
-        return execution(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass);
+        return execution(getReqUrl(TransferApiEnum.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass);
     }
 
     /**
@@ -1903,7 +1871,7 @@ public class WxPayApi {
      * @return {@link String} 请求返回的结果
      */
     public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
-        return executionByProtocol(getReqUrl(WxApiType.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
+        return executionByProtocol(getReqUrl(TransferApiEnum.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
     }
 
     /**
