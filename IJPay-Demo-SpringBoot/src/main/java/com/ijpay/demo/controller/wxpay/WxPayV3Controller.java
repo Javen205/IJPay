@@ -18,8 +18,13 @@ import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.core.utils.DateTimeZoneUtil;
 import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
-import com.ijpay.wxpay.enums.WxApiType;
-import com.ijpay.wxpay.enums.WxDomain;
+import com.ijpay.wxpay.enums.WxDomainEnum;
+import com.ijpay.wxpay.enums.v3.Apply4SubApiEnum;
+import com.ijpay.wxpay.enums.v3.BasePayApiEnum;
+import com.ijpay.wxpay.enums.v3.ComplaintsApiEnum;
+import com.ijpay.wxpay.enums.v3.OtherApiEnum;
+import com.ijpay.wxpay.enums.v3.PayGiftActivityApiEnum;
+import com.ijpay.wxpay.enums.v3.PayScoreApiEnum;
 import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.RefundAmount;
@@ -189,8 +194,8 @@ public class WxPayV3Controller {
         try {
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.GET,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.GET_CERTIFICATES.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    OtherApiEnum.GET_CERTIFICATES.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -251,8 +256,8 @@ public class WxPayV3Controller {
             log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.NATIVE_PAY.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.NATIVE_PAY.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -289,8 +294,8 @@ public class WxPayV3Controller {
             log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.JS_API_PAY.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.JS_API_PAY.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -329,8 +334,8 @@ public class WxPayV3Controller {
 
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.PUT,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -351,17 +356,17 @@ public class WxPayV3Controller {
 
     @RequestMapping("/getParams")
     @ResponseBody
-    public String payScoreUserServiceState() {
+    public String payScoreServiceOrder() {
         try {
             Map<String, String> params = new HashMap<>();
             params.put("service_id", "500001");
             params.put("appid", "wxd678efh567hg6787");
-            params.put("openid", "oUpF8uMuAJO_M2pxb1Q9zNjWeS6o");
+            params.put("out_order_no", "1234323JKHDFE1243252");
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.PAY_SCORE_USER_SERVICE_STATE.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    PayScoreApiEnum.PAY_SCORE_SERVICE_ORDER.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -385,8 +390,8 @@ public class WxPayV3Controller {
             hashMap.put("url", "https://qq.com");
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -397,8 +402,8 @@ public class WxPayV3Controller {
 
             result = WxPayApi.v3(
                     RequestMethod.DELETE,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.MERCHANT_SERVICE_COMPLAINTS_NOTIFICATIONS.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -435,8 +440,8 @@ public class WxPayV3Controller {
             System.out.println(body);
 
             IJPayHttpResponse result = WxPayApi.v3(
-                    WxDomain.CHINA.toString(),
-                    WxApiType.MERCHANT_UPLOAD_MEDIA.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    OtherApiEnum.MERCHANT_UPLOAD_MEDIA.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -460,11 +465,11 @@ public class WxPayV3Controller {
     public String payGiftActivity() {
         // 支付有礼-终止活动
         try {
-            String urlSuffix = String.format(WxApiType.PAY_GIFT_ACTIVITY_TERMINATE.toString(), "10028001");
+            String urlSuffix = String.format(PayGiftActivityApiEnum.PAY_GIFT_ACTIVITY_TERMINATE.toString(), "10028001");
             System.out.println(urlSuffix);
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
+                    WxDomainEnum.CHINA.toString(),
                     urlSuffix,
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
@@ -489,8 +494,8 @@ public class WxPayV3Controller {
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.APPLY_4_SUB.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    Apply4SubApiEnum.APPLY_4_SUB.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     getPlatSerialNumber(),
@@ -548,8 +553,8 @@ public class WxPayV3Controller {
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.TRADE_BILL.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.TRADE_BILL.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -589,8 +594,8 @@ public class WxPayV3Controller {
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.FUND_FLOW_BILL.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.FUND_FLOW_BILL.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -622,8 +627,8 @@ public class WxPayV3Controller {
 
             IJPayHttpResponse result = WxPayApi.v3(
                     RequestMethod.GET,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.BILL_DOWNLOAD.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.BILL_DOWNLOAD.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
@@ -671,8 +676,8 @@ public class WxPayV3Controller {
             log.info("退款参数 {}", JSONUtil.toJsonStr(refundModel));
             IJPayHttpResponse response = WxPayApi.v3(
                     RequestMethod.POST,
-                    WxDomain.CHINA.toString(),
-                    WxApiType.DOMESTIC_REFUNDS.toString(),
+                    WxDomainEnum.CHINA.toString(),
+                    BasePayApiEnum.REFUND.toString(),
                     wxPayV3Bean.getMchId(),
                     getSerialNumber(),
                     null,
