@@ -76,7 +76,7 @@ public class WxPayApi {
             wxDomain = WxDomainEnum.CHINA;
         }
         return wxDomain.getDomain()
-                .concat(isSandBox ? PayApiEnum.SAND_BOX_NEW.getUrl() : "")
+                .concat(isSandBox ? PayApiEnum.API_V2_SANDBOX.getUrl() : "")
                 .concat(wxApiEnum.getUrl());
     }
 

@@ -17,16 +17,21 @@ import com.ijpay.wxpay.enums.WxApiEnum;
  * @author Javen
  */
 public enum PayApiEnum implements WxApiEnum {
-    
+
     /**
      * 沙箱环境
      */
     SAND_BOX_NEW("/sandboxnew", "沙箱环境"),
 
     /**
+     * V2 版本沙箱环境
+     */
+    API_V2_SANDBOX("/xdc/apiv2sandbox", "V2 版本沙箱环境"),
+
+    /**
      * 获取沙箱环境验签秘钥
      */
-    GET_SIGN_KEY("/sandboxnew/pay/getsignkey", "获取沙箱环境验签秘钥"),
+    GET_SIGN_KEY("/xdc/apiv2getsignkey/sign/getsignkey", "获取沙箱环境验签秘钥"),
 
     /**
      * 统一下单
