@@ -35,7 +35,7 @@ public enum BasePayApiEnum implements WxApiEnum {
 	/**
 	 * 服务商模式-APP 下单
 	 */
-	PARTNER_APP_PAY("/v3/pay/transactions/app", "服务商模式-APP 下单"),
+	PARTNER_APP_PAY("/v3/pay/partner/transactions/app", "服务商模式-APP 下单"),
 
 	/**
 	 * H5 下单
@@ -45,7 +45,7 @@ public enum BasePayApiEnum implements WxApiEnum {
 	/**
 	 * 服务商模式-H5 下单
 	 */
-	PARTNER_H5_PAY("/v3/pay/transactions/h5", "服务商模式-H5 下单"),
+	PARTNER_H5_PAY("/v3/pay/partner/transactions/h5", "服务商模式-H5 下单"),
 
 	/**
 	 * Native 下单
@@ -55,7 +55,7 @@ public enum BasePayApiEnum implements WxApiEnum {
 	/**
 	 * 服务商模式-Native 下单
 	 */
-	PARTNER_NATIVE_PAY("/v3/pay/transactions/native", "服务商模式-Native 下单"),
+	PARTNER_NATIVE_PAY("/v3/pay/partner/transactions/native", "服务商模式-Native 下单"),
 
 	/**
 	 * 合单 APP 下单
