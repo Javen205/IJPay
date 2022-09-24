@@ -11,74 +11,74 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * @author Javen
  */
 @Controller
 public class IndexController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping("")
-    public String index() {
-        logger.error("欢迎使用 IJPay -By Javen  交流群：723992875");
-        return "index.html";
-    }
+	@RequestMapping("")
+	public String index() {
+		logger.error("欢迎使用 IJPay -By Javen  交流群：723992875、864988890");
+		return "index.html";
+	}
 
-    @RequestMapping("/toWxH5Pay")
-    public String toWxH5Pay() {
-        return "wxh5pay.html";
-    }
+	@RequestMapping("/toWxH5Pay")
+	public String toWxH5Pay() {
+		return "wxh5pay.html";
+	}
 
-    @RequestMapping("/toWxPay")
-    public String toWxPay() {
-        return "wxpay.html";
-    }
+	@RequestMapping("/toWxPay")
+	public String toWxPay() {
+		return "wxpay.html";
+	}
 
-    @RequestMapping("/toWxSuPay")
-    public String toWxSuPay() {
-        return "wxsubpay.html";
-    }
+	@RequestMapping("/toWxSuPay")
+	public String toWxSuPay() {
+		return "wxsubpay.html";
+	}
 
-    @RequestMapping(value = "/payInputMoney")
-    public ModelAndView payInputMoney() {
-        ModelAndView mav = new ModelAndView("pay_input_money.html");
-        mav.addObject("content", "xxx");
-        return mav;
-    }
+	@RequestMapping(value = "/payInputMoney")
+	public ModelAndView payInputMoney() {
+		ModelAndView mav = new ModelAndView("pay_input_money.html");
+		mav.addObject("content", "xxx");
+		return mav;
+	}
 
-    @RequestMapping(value = "/payKeyBoard")
-    public String payKeyBoard() {
-        return "pay_keyboard.html";
-    }
+	@RequestMapping(value = "/payKeyBoard")
+	public String payKeyBoard() {
+		return "pay_keyboard.html";
+	}
 
-    @RequestMapping(value = "/paySelectMoney")
-    public String paySelectMoney() {
-        return "pay_select_money.html";
-    }
+	@RequestMapping(value = "/paySelectMoney")
+	public String paySelectMoney() {
+		return "pay_select_money.html";
+	}
 
-    @RequestMapping("/success")
-    public String success() {
-        return "success.html";
-    }
+	@RequestMapping("/success")
+	public String success() {
+		return "success.html";
+	}
 
-    @RequestMapping(value = "/ss/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public String pa(@PathVariable("id") Integer id) {
-        return "id>" + id;
-    }
+	@RequestMapping(value = "/ss/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String pa(@PathVariable("id") Integer id) {
+		return "id>" + id;
+	}
 
-    @RequestMapping(value = "/xx", method = RequestMethod.GET)
-    @ResponseBody
-    public String param(@RequestParam("id") Integer xx) {
-        return "id>" + xx;
-    }
+	@RequestMapping(value = "/xx", method = RequestMethod.GET)
+	@ResponseBody
+	public String param(@RequestParam("id") Integer xx) {
+		return "id>" + xx;
+	}
 
-    @RequestMapping(value = "/xxx", method = RequestMethod.GET)
-    @ResponseBody
-    public String param2(@RequestParam(value = "id", required = false, defaultValue = "2") Integer xx) {
-        return "id>" + xx;
-    }
+	@RequestMapping(value = "/xxx", method = RequestMethod.GET)
+	@ResponseBody
+	public String param2(@RequestParam(value = "id", required = false, defaultValue = "2") Integer xx) {
+		return "id>" + xx;
+	}
 }

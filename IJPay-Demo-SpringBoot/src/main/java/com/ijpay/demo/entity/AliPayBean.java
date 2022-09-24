@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>支付宝配置 Bean</p>
  *
@@ -21,91 +21,91 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:/alipay.properties")
 @ConfigurationProperties(prefix = "alipay")
 public class AliPayBean {
-    private String appId;
-    private String privateKey;
-    private String publicKey;
-    private String appCertPath;
-    private String aliPayCertPath;
-    private String aliPayRootCertPath;
-    private String serverUrl;
-    private String domain;
+	private String appId;
+	private String privateKey;
+	private String publicKey;
+	private String appCertPath;
+	private String aliPayCertPath;
+	private String aliPayRootCertPath;
+	private String serverUrl;
+	private String domain;
 
-    public String getAppId() {
-        return appId;
-    }
+	public String getAppId() {
+		return appId;
+	}
 
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 
-    public String getPrivateKey() {
-        return privateKey;
-    }
+	public String getPrivateKey() {
+		return privateKey;
+	}
 
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
-    }
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
+	}
 
-    public String getPublicKey() {
-        return publicKey;
-    }
+	public String getPublicKey() {
+		return publicKey;
+	}
 
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
-    }
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
+	}
 
-    public String getAppCertPath() {
-        return appCertPath;
-    }
+	public String getAppCertPath() {
+		return appCertPath;
+	}
 
-    public void setAppCertPath(String appCertPath) {
-        this.appCertPath = appCertPath;
-    }
+	public void setAppCertPath(String appCertPath) {
+		this.appCertPath = appCertPath;
+	}
 
-    public String getAliPayCertPath() {
-        return aliPayCertPath;
-    }
+	public String getAliPayCertPath() {
+		return aliPayCertPath;
+	}
 
-    public void setAliPayCertPath(String aliPayCertPath) {
-        this.aliPayCertPath = aliPayCertPath;
-    }
+	public void setAliPayCertPath(String aliPayCertPath) {
+		this.aliPayCertPath = aliPayCertPath;
+	}
 
-    public String getAliPayRootCertPath() {
-        return aliPayRootCertPath;
-    }
+	public String getAliPayRootCertPath() {
+		return aliPayRootCertPath;
+	}
 
-    public void setAliPayRootCertPath(String aliPayRootCertPath) {
-        this.aliPayRootCertPath = aliPayRootCertPath;
-    }
+	public void setAliPayRootCertPath(String aliPayRootCertPath) {
+		this.aliPayRootCertPath = aliPayRootCertPath;
+	}
 
-    public String getServerUrl() {
-        return serverUrl;
-    }
+	public String getServerUrl() {
+		return serverUrl;
+	}
 
-    public void setServerUrl(String serverUrl) {
-        this.serverUrl = serverUrl;
-    }
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
 
 
-    public String getDomain() {
-        return domain;
-    }
+	public String getDomain() {
+		return domain;
+	}
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 
-    @Override
-    public String toString() {
-        return "AliPayBean{" +
-                "appId='" + appId + '\'' +
-                ", privateKey='" + privateKey + '\'' +
-                ", publicKey='" + publicKey + '\'' +
-                ", appCertPath='" + appCertPath + '\'' +
-                ", aliPayCertPath='" + aliPayCertPath + '\'' +
-                ", aliPayRootCertPath='" + aliPayRootCertPath + '\'' +
-                ", serverUrl='" + serverUrl + '\'' +
-                ", domain='" + domain + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "AliPayBean{" +
+			"appId='" + appId + '\'' +
+			", privateKey='" + privateKey + '\'' +
+			", publicKey='" + publicKey + '\'' +
+			", appCertPath='" + appCertPath + '\'' +
+			", aliPayCertPath='" + aliPayCertPath + '\'' +
+			", aliPayRootCertPath='" + aliPayRootCertPath + '\'' +
+			", serverUrl='" + serverUrl + '\'' +
+			", domain='" + domain + '\'' +
+			'}';
+	}
 }

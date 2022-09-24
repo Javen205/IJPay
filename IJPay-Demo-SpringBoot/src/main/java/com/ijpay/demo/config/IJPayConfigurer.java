@@ -20,52 +20,52 @@ import java.util.List;
 
 @Configuration
 public class IJPayConfigurer extends WebMvcConfigurationSupport {
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AliPayInterceptor()).addPathPatterns("/aliPay/**");
-        registry.addInterceptor(new WxPayInterceptor()).addPathPatterns("/wxPay/**");
-        super.addInterceptors(registry);
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new AliPayInterceptor()).addPathPatterns("/aliPay/**");
+		registry.addInterceptor(new WxPayInterceptor()).addPathPatterns("/wxPay/**");
+		super.addInterceptors(registry);
+	}
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 将所有/static/** 访问都映射到classpath:/static/ 目录下
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 将所有/static/** 访问都映射到classpath:/static/ 目录下
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+	}
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        super.configureMessageConverters(converters);
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		super.configureMessageConverters(converters);
 
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        FastJsonConfig config = new FastJsonConfig();
-        config.setSerializerFeatures(
+		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+		FastJsonConfig config = new FastJsonConfig();
+		config.setSerializerFeatures(
 
-                SerializerFeature.WriteMapNullValue, // 保留map空的字段
+			SerializerFeature.WriteMapNullValue, // 保留map空的字段
 
-                SerializerFeature.WriteNullStringAsEmpty, // 将String类型的null转成""
+			SerializerFeature.WriteNullStringAsEmpty, // 将String类型的null转成""
 
-                SerializerFeature.WriteNullNumberAsZero, // 将Number类型的null转成0
+			SerializerFeature.WriteNullNumberAsZero, // 将Number类型的null转成0
 
-                SerializerFeature.WriteNullListAsEmpty, // 将List类型的null转成[]
+			SerializerFeature.WriteNullListAsEmpty, // 将List类型的null转成[]
 
-                SerializerFeature.WriteNullBooleanAsFalse, // 将Boolean类型的null转成false
+			SerializerFeature.WriteNullBooleanAsFalse, // 将Boolean类型的null转成false
 
-                SerializerFeature.DisableCircularReferenceDetect);// 避免循环引用
+			SerializerFeature.DisableCircularReferenceDetect);// 避免循环引用
 
-        converter.setFastJsonConfig(config);
-        converter.setDefaultCharset(Charset.forName("UTF-8"));
-        List<MediaType> mediaTypeList = new ArrayList<>();
-        // 解决中文乱码问题，相当于在Controller上的@RequestMapping中加了个属性produces = "application/json"
-        mediaTypeList.add(MediaType.APPLICATION_JSON);
-        converter.setSupportedMediaTypes(mediaTypeList);
-        converters.add(converter);
+		converter.setFastJsonConfig(config);
+		converter.setDefaultCharset(Charset.forName("UTF-8"));
+		List<MediaType> mediaTypeList = new ArrayList<>();
+		// 解决中文乱码问题，相当于在Controller上的@RequestMapping中加了个属性produces = "application/json"
+		mediaTypeList.add(MediaType.APPLICATION_JSON);
+		converter.setSupportedMediaTypes(mediaTypeList);
+		converters.add(converter);
 
-        converters.add(responseBodyConverter());
-    }
+		converters.add(responseBodyConverter());
+	}
 
-    @Bean
-    public HttpMessageConverter<String> responseBodyConverter() {
-        return new StringHttpMessageConverter(Charset.forName("UTF-8"));
-    }
+	@Bean
+	public HttpMessageConverter<String> responseBodyConverter() {
+		return new StringHttpMessageConverter(Charset.forName("UTF-8"));
+	}
 }

@@ -2,6 +2,7 @@ body, html {
   height: 100%;
   -webkit-tap-highlight-color: transparent;
 }
+
 .demos-title {
   text-align: center;
   font-size: 34px;

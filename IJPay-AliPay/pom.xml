@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>IJPay</artifactId>
-        <groupId>com.github.javen205</groupId>
-        <version>2.9.1</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>IJPay</artifactId>
+		<groupId>com.github.javen205</groupId>
+		<version>2.9.1</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
 
-    <artifactId>IJPay-AliPay</artifactId>
-    <name>${project.artifactId}</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)-支付宝支付</description>
-    <url>https://github.com/javen205/IJPay</url>
+	<artifactId>IJPay-AliPay</artifactId>
+	<name>${project.artifactId}</name>
+	<description>IJPay 让支付触手可及(Easy Pay Library)-支付宝支付</description>
+	<url>https://github.com/javen205/IJPay</url>
 
-    <properties>
-        <alipay.version>4.33.44.ALL</alipay.version>
-        <fastjson.version>2.0.14.graal</fastjson.version>
-    </properties>
-    
-    <dependencies>
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>${alipay.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>fastjson</artifactId>
-                    <groupId>com.alibaba</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-    </dependencies>
+	<properties>
+		<alipay.version>4.33.44.ALL</alipay.version>
+		<fastjson.version>2.0.14.graal</fastjson.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>${alipay.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>fastjson</artifactId>
+					<groupId>com.alibaba</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>

@@ -11,14 +11,14 @@ import com.jfinal.core.Controller;
  */
 public class WxPayApiInterceptor implements Interceptor {
 
-    @Override
-    public void intercept(Invocation inv) {
-        Controller controller = inv.getController();
-        if (!(controller instanceof WxPayApiController)) {
-            throw new RuntimeException("控制器需要继承 WxPayApiController");
-        }
-        WxPayApiConfigKit.setThreadLocalWxPayApiConfig(((WxPayApiController) controller).getApiConfig());
-        inv.invoke();
-    }
+	@Override
+	public void intercept(Invocation inv) {
+		Controller controller = inv.getController();
+		if (!(controller instanceof WxPayApiController)) {
+			throw new RuntimeException("控制器需要继承 WxPayApiController");
+		}
+		WxPayApiConfigKit.setThreadLocalWxPayApiConfig(((WxPayApiController) controller).getApiConfig());
+		inv.invoke();
+	}
 
 }

@@ -8,11 +8,11 @@ package com.ijpay;
  * <p>Gitee: https://gitee.com/javen205/IJPay</p>
  * <p>Github: https://gitee.com/javen205/IJPay</p>
  *
- * @author Javen 
+ * @author Javen
  */
 public class IJPay {
-    public static final String DESCRIBE = "IJPay 让支付触手可及";
+	public static final String DESCRIBE = "IJPay 让支付触手可及";
 
-    private IJPay() {
-    }
+	private IJPay() {
+	}
 }

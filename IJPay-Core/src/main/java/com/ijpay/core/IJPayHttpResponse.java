@@ -14,64 +14,64 @@ import java.util.Map;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>IJPay Http Response</p>
  *
  * @author Javen
  */
 public class IJPayHttpResponse implements Serializable {
-    private static final long serialVersionUID = 6089103955998013402L;
-    private String body;
-    private int status;
-    private Map<String, List<String>> headers;
+	private static final long serialVersionUID = 6089103955998013402L;
+	private String body;
+	private int status;
+	private Map<String, List<String>> headers;
 
-    public String getBody() {
-        return body;
-    }
+	public String getBody() {
+		return body;
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public Map<String, List<String>> getHeaders() {
-        return headers;
-    }
+	public Map<String, List<String>> getHeaders() {
+		return headers;
+	}
 
-    public void setHeaders(Map<String, List<String>> headers) {
-        this.headers = headers;
-    }
+	public void setHeaders(Map<String, List<String>> headers) {
+		this.headers = headers;
+	}
 
-    public String getHeader(String name) {
-        List<String> values = this.headerList(name);
-        return CollectionUtil.isEmpty(values) ? null : values.get(0);
-    }
+	public String getHeader(String name) {
+		List<String> values = this.headerList(name);
+		return CollectionUtil.isEmpty(values) ? null : values.get(0);
+	}
 
-    private List<String> headerList(String name) {
-        if (StrUtil.isBlank(name)) {
-            return null;
-        } else {
-            CaseInsensitiveMap<String, List<String>> headersIgnoreCase = new CaseInsensitiveMap<>(getHeaders());
-            return headersIgnoreCase.get(name.trim());
-        }
-    }
+	private List<String> headerList(String name) {
+		if (StrUtil.isBlank(name)) {
+			return null;
+		} else {
+			CaseInsensitiveMap<String, List<String>> headersIgnoreCase = new CaseInsensitiveMap<>(getHeaders());
+			return headersIgnoreCase.get(name.trim());
+		}
+	}
 
-    @Override
-    public String toString() {
-        return "IJPayHttpResponse{" +
-                "body='" + body + '\'' +
-                ", status=" + status +
-                ", headers=" + headers +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "IJPayHttpResponse{" +
+			"body='" + body + '\'' +
+			", status=" + status +
+			", headers=" + headers +
+			'}';
+	}
 }

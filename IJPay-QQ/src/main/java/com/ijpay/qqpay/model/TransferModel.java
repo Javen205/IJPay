@@ -3,9 +3,9 @@
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>企业付款到余额 Model</p>
  *
@@ -24,22 +24,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TransferModel extends BaseModel {
-    private String input_charset;
-    private String appid;
-    private String openid;
-    private String uin;
-    private String mch_id;
-    private String nonce_str;
-    private String sign;
-    private String out_trade_no;
-    private String fee_type;
-    private String total_fee;
-    private String memo;
-    private String check_name;
-    private String re_user_name;
-    private String check_real_name;
-    private String op_user_id;
-    private String op_user_passwd;
-    private String spbill_create_ip;
-    private String notify_url;
+	private String input_charset;
+	private String appid;
+	private String openid;
+	private String uin;
+	private String mch_id;
+	private String nonce_str;
+	private String sign;
+	private String out_trade_no;
+	private String fee_type;
+	private String total_fee;
+	private String memo;
+	private String check_name;
+	private String re_user_name;
+	private String check_real_name;
+	private String op_user_id;
+	private String op_user_passwd;
+	private String spbill_create_ip;
+	private String notify_url;
 }

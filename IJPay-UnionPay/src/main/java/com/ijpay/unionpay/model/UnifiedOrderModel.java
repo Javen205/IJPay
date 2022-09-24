@@ -3,15 +3,16 @@
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>云闪付-统一下单</p>
  *
  * @author Javen
  */
 package com.ijpay.unionpay.model;
+
 import com.ijpay.core.model.BaseModel;
 import lombok.*;
 
@@ -20,38 +21,38 @@ import lombok.*;
 @Getter
 @Setter
 public class UnifiedOrderModel extends BaseModel {
-    private String service;
-    private String version;
-    private String charset;
-    private String sign_type;
-    private String mch_id;
-    private String appid;
-    private String is_raw;
-    private String is_minipg;
-    private String out_trade_no;
-    private String device_info;
-    private String op_shop_id;
-    private String body;
-    private String sub_openid;
-    private String user_id;
-    private String attach;
-    private String sub_appid;
-    private String total_fee;
-    private String need_receipt;
-    private String customer_ip;
-    private String mch_create_ip;
-    private String notify_url;
-    private String time_start;
-    private String time_expire;
-    private String qr_code_timeout_express;
-    private String op_user_id;
-    private String goods_tag;
-    private String product_id;
-    private String nonce_str;
-    private String buyer_logon_id;
-    private String buyer_id;
-    private String limit_credit_pay;
-    private String sign;
-    private String sign_agentno;
-    private String groupno;
+	private String service;
+	private String version;
+	private String charset;
+	private String sign_type;
+	private String mch_id;
+	private String appid;
+	private String is_raw;
+	private String is_minipg;
+	private String out_trade_no;
+	private String device_info;
+	private String op_shop_id;
+	private String body;
+	private String sub_openid;
+	private String user_id;
+	private String attach;
+	private String sub_appid;
+	private String total_fee;
+	private String need_receipt;
+	private String customer_ip;
+	private String mch_create_ip;
+	private String notify_url;
+	private String time_start;
+	private String time_expire;
+	private String qr_code_timeout_express;
+	private String op_user_id;
+	private String goods_tag;
+	private String product_id;
+	private String nonce_str;
+	private String buyer_logon_id;
+	private String buyer_id;
+	private String limit_credit_pay;
+	private String sign;
+	private String sign_agentno;
+	private String groupno;
 }

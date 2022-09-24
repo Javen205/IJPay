@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>IJPay</artifactId>
-        <groupId>com.github.javen205</groupId>
-        <version>2.9.1</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>IJPay</artifactId>
+		<groupId>com.github.javen205</groupId>
+		<version>2.9.1</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
 
-    <artifactId>IJPay-Core</artifactId>
-    <name>${project.artifactId}</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)-核心工具包</description>
-    <url>https://github.com/javen205/IJPay</url>
+	<artifactId>IJPay-Core</artifactId>
+	<name>${project.artifactId}</name>
+	<description>IJPay 让支付触手可及(Easy Pay Library)-核心工具包</description>
+	<url>https://github.com/javen205/IJPay</url>
 
-    <properties>
-        <zxing.version>3.5.0</zxing.version>
-        <slf4j.api.version>2.0.2</slf4j.api.version>
-        <xk.time.version>3.2.4</xk.time.version>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
+	<properties>
+		<zxing.version>3.5.0</zxing.version>
+		<slf4j.api.version>2.0.2</slf4j.api.version>
+		<xk.time.version>3.2.4</xk.time.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- 开源多维码生成工具 -->
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-            <version>${zxing.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-            <version>${zxing.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- 开源多维码生成工具 -->
-        <dependency>
-            <groupId>com.github.xkzhangsan</groupId>
-            <artifactId>xk-time</artifactId>
-            <version>${xk.time.version}</version>
-        </dependency>
-    </dependencies>
+		<!-- 开源多维码生成工具 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>${zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- 开源多维码生成工具 -->
+		<dependency>
+			<groupId>com.github.xkzhangsan</groupId>
+			<artifactId>xk-time</artifactId>
+			<version>${xk.time.version}</version>
+		</dependency>
+	</dependencies>
 </project>

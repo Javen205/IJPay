@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>IJPay</artifactId>
-        <groupId>com.github.javen205</groupId>
-        <version>2.9.1</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>IJPay</artifactId>
+		<groupId>com.github.javen205</groupId>
+		<version>2.9.1</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
 
-    <artifactId>IJPay-UnionPay</artifactId>
-    <name>${project.artifactId}</name>
-    <description>IJPay 让支付触手可及(Easy Pay Library)-银联支付</description>
-    <url>https://github.com/javen205/IJPay</url>
+	<artifactId>IJPay-UnionPay</artifactId>
+	<name>${project.artifactId}</name>
+	<description>IJPay 让支付触手可及(Easy Pay Library)-银联支付</description>
+	<url>https://github.com/javen205/IJPay</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.github.javen205</groupId>
-            <artifactId>IJPay-Core</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-Core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+	</dependencies>
 </project>

@@ -11,9 +11,9 @@ import lombok.Setter;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>企业付款到零钱 Model</p>
  *
@@ -24,16 +24,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TransferModel extends BaseModel {
-    private String mch_appid;
-    private String mchid;
-    private String device_info;
-    private String nonce_str;
-    private String sign;
-    private String partner_trade_no;
-    private String openid;
-    private String check_name;
-    private String re_user_name;
-    private String amount;
-    private String desc;
-    private String spbill_create_ip;
+	private String mch_appid;
+	private String mchid;
+	private String device_info;
+	private String nonce_str;
+	private String sign;
+	private String partner_trade_no;
+	private String openid;
+	private String check_name;
+	private String re_user_name;
+	private String amount;
+	private String desc;
+	private String spbill_create_ip;
 }

@@ -3,9 +3,9 @@
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p> 微信发送红包 Mode </p>
  *
@@ -24,21 +24,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SendRedPackModel extends BaseModel {
-    private String nonce_str;
-    private String sign;
-    private String mch_billno;
-    private String mch_id;
-    private String wxappid;
-    private String send_name;
-    private String re_openid;
-    private String total_amount;
-    private String total_num;
-    private String amt_type;
-    private String wishing;
-    private String client_ip;
-    private String act_name;
-    private String remark;
-    private String scene_id;
-    private String risk_info;
-    private String notify_way;
+	private String nonce_str;
+	private String sign;
+	private String mch_billno;
+	private String mch_id;
+	private String wxappid;
+	private String send_name;
+	private String re_openid;
+	private String total_amount;
+	private String total_num;
+	private String amt_type;
+	private String wishing;
+	private String client_ip;
+	private String act_name;
+	private String remark;
+	private String scene_id;
+	private String risk_info;
+	private String notify_way;
 }

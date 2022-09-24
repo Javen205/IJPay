@@ -8,9 +8,9 @@ import java.io.Serializable;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>PayPal 支付配置</p>
  *
@@ -18,53 +18,53 @@ import java.io.Serializable;
  */
 public class PayPalApiConfig implements Serializable {
 
-    private static final long serialVersionUID = -6012811778236113584L;
-    /**
-     * 应用编号
-     */
-    private String clientId;
-    /**
-     * 应用密钥
-     */
-    private String secret;
-    /**
-     * 是否是沙箱环境
-     */
-    private boolean sandBox;
-    /**
-     * 域名
-     */
-    private String domain;
+	private static final long serialVersionUID = -6012811778236113584L;
+	/**
+	 * 应用编号
+	 */
+	private String clientId;
+	/**
+	 * 应用密钥
+	 */
+	private String secret;
+	/**
+	 * 是否是沙箱环境
+	 */
+	private boolean sandBox;
+	/**
+	 * 域名
+	 */
+	private String domain;
 
-    public String getClientId() {
-        return clientId;
-    }
+	public String getClientId() {
+		return clientId;
+	}
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	public String getSecret() {
+		return secret;
+	}
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
 
-    public boolean isSandBox() {
-        return sandBox;
-    }
+	public boolean isSandBox() {
+		return sandBox;
+	}
 
-    public void setSandBox(boolean sandBox) {
-        this.sandBox = sandBox;
-    }
+	public void setSandBox(boolean sandBox) {
+		this.sandBox = sandBox;
+	}
 
-    public String getDomain() {
-        return domain;
-    }
+	public String getDomain() {
+		return domain;
+	}
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 }

@@ -10,9 +10,9 @@ import java.util.List;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>V3 统一下单-优惠功能</p>
  *
@@ -21,16 +21,16 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class Detail {
-    /**
-     * 订单原价
-     */
-    private int cost_price;
-    /**
-     * 商品小票ID
-     */
-    private String invoice_id;
-    /**
-     * 单品列表
-     */
-    private List<GoodsDetail> goods_detail;
+	/**
+	 * 订单原价
+	 */
+	private int cost_price;
+	/**
+	 * 商品小票ID
+	 */
+	private String invoice_id;
+	/**
+	 * 单品列表
+	 */
+	private List<GoodsDetail> goods_detail;
 }

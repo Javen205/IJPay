@@ -8,9 +8,9 @@ import lombok.experimental.Accessors;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>V3 统一下单-订单金额</p>
  *
@@ -19,12 +19,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class Amount {
-    /**
-     * 总金额
-     */
-    private int total;
-    /**
-     * 货币类型
-     */
-    private String currency;
+	/**
+	 * 总金额
+	 */
+	private int total;
+	/**
+	 * 货币类型
+	 */
+	private String currency;
 }

@@ -11,12 +11,13 @@ import java.util.UUID;
 
 /**
  * 字符串工具类，继承lang3字符串工具类
+ *
  * @author L.com
  */
 public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
-	public static String encode(String str){
-		String encode=null;
+	public static String encode(String str) {
+		String encode = null;
 		try {
 			encode = URLEncoder.encode(str, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -24,22 +25,23 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 		return encode;
 	}
-	
+
 	/**
 	 * 获取UUID，去掉`-`的
+	 *
 	 * @return {String}
-	 * 
 	 */
-	public static String generateStr () {
+	public static String generateStr() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 
-	
+
 	/**
 	 * 要求外部订单号必须唯一。
+	 *
 	 * @return {String}
 	 */
-	public  static String getOutTradeNo() {
+	public static String getOutTradeNo() {
 		SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
 		Date date = new Date();
 		String key = format.format(date);
@@ -50,36 +52,38 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	/**
 	 * 字符串格式化
-	 * 
+	 * <p>
 	 * use: format("my name is {0}, and i like {1}!", "L.cm", "java")
-	 * 
+	 * <p>
 	 * int long use {0,number,#}
-	 * 
-	 * @param s 
+	 *
+	 * @param s
 	 * @param args
 	 * @return {String}转换后的字符串
 	 */
 	public static String format(String s, Object... args) {
 		return MessageFormat.format(s, args);
 	}
-	
+
 	/**
 	 * 替换某个字符
+	 *
 	 * @param str
 	 * @param regex
 	 * @param args
 	 * @return {String}
 	 */
-	public static String replace(String str,String regex,String... args){
+	public static String replace(String str, String regex, String... args) {
 		int length = args.length;
 		for (int i = 0; i < length; i++) {
-			str=str.replaceFirst(regex, args[i]);
+			str = str.replaceFirst(regex, args[i]);
 		}
 		return str;
 	}
 
 	/**
 	 * 清理字符串，清理出某些不可见字符
+	 *
 	 * @param txt
 	 * @return {String}
 	 */
@@ -88,7 +92,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 *  随机字符串
+	 * 随机字符串
 	 */
 	private static final String INT_TEMP = "0123456789";
 	private static final String STR_TEMP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -116,6 +120,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	/**
 	 * 随机数生成
+	 *
 	 * @param count
 	 * @return {String}
 	 */
@@ -132,13 +137,13 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 				buffer[i] = INT_TEMP.charAt(RANDOM.nextInt(INT_TEMP.length()));
 			} else if (randomType.equals(RandomType.STRING)) {
 				buffer[i] = STR_TEMP.charAt(RANDOM.nextInt(STR_TEMP.length()));
-			}else {
+			} else {
 				buffer[i] = ALL_TEMP.charAt(RANDOM.nextInt(ALL_TEMP.length()));
 			}
 		}
 		return new String(buffer);
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(random(32, RandomType.ALL));
 	}

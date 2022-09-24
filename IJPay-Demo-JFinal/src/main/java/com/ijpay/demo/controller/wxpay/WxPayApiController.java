@@ -10,5 +10,5 @@ import com.jfinal.core.Controller;
  */
 @Before(WxPayApiInterceptor.class)
 public abstract class WxPayApiController extends Controller {
-    public abstract WxPayApiConfig getApiConfig();
+	public abstract WxPayApiConfig getApiConfig();
 }

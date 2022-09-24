@@ -13,9 +13,9 @@ import java.util.Map;
  *
  * <p>不依赖任何第三方 mvc 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。 </p>
  *
- * <p>IJPay 交流群: 723992875</p>
+ * <p>IJPay 交流群: 723992875、864988890</p>
  *
- * <p>Node.js 版: https://gitee.com/javen205/TNWX</p>
+ * <p>Node.js 版: <a href="https://gitee.com/javen205/TNWX">https://gitee.com/javen205/TNWX</a></p>
  *
  * <p>Http 工具类</p>
  *
@@ -23,60 +23,60 @@ import java.util.Map;
  */
 public class HttpKit {
 
-    private static AbstractHttpDelegate delegate = new DefaultHttpKit();
+	private static AbstractHttpDelegate delegate = new DefaultHttpKit();
 
-    public static AbstractHttpDelegate getDelegate() {
-        return delegate;
-    }
+	public static AbstractHttpDelegate getDelegate() {
+		return delegate;
+	}
 
-    public static void setDelegate(AbstractHttpDelegate delegate) {
-        HttpKit.delegate = delegate;
-    }
+	public static void setDelegate(AbstractHttpDelegate delegate) {
+		HttpKit.delegate = delegate;
+	}
 
-    public static String readData(HttpServletRequest request) {
-        BufferedReader br = null;
-        try {
-            StringBuilder result = new StringBuilder();
-            br = request.getReader();
-            for (String line; (line = br.readLine()) != null; ) {
-                if (result.length() > 0) {
-                    result.append("\n");
-                }
-                result.append(line);
-            }
-            return result.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+	public static String readData(HttpServletRequest request) {
+		BufferedReader br = null;
+		try {
+			StringBuilder result = new StringBuilder();
+			br = request.getReader();
+			for (String line; (line = br.readLine()) != null; ) {
+				if (result.length() > 0) {
+					result.append("\n");
+				}
+				result.append(line);
+			}
+			return result.toString();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
-    /**
-     * 将同步通知的参数转化为Map
-     *
-     * @param request {@link HttpServletRequest}
-     * @return 转化后的 Map
-     */
-    public static Map<String, String> toMap(HttpServletRequest request) {
-        Map<String, String> params = new HashMap<>();
-        Map<String, String[]> requestParams = request.getParameterMap();
-        for (String name : requestParams.keySet()) {
-            String[] values = requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-            }
-            params.put(name, valueStr);
-        }
-        return params;
-    }
+	/**
+	 * 将同步通知的参数转化为Map
+	 *
+	 * @param request {@link HttpServletRequest}
+	 * @return 转化后的 Map
+	 */
+	public static Map<String, String> toMap(HttpServletRequest request) {
+		Map<String, String> params = new HashMap<>();
+		Map<String, String[]> requestParams = request.getParameterMap();
+		for (String name : requestParams.keySet()) {
+			String[] values = requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+			}
+			params.put(name, valueStr);
+		}
+		return params;
+	}
 }
 
 /**

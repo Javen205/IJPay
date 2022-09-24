@@ -7,11 +7,11 @@ import org.springframework.core.annotation.Order;
 
 @Order(1)
 public class StartupRunner implements CommandLineRunner {
-    private static final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
+	private static final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
 
-    @Override
-    public void run(String... args) {
-        logger.info("startup runner");
-    }
+	@Override
+	public void run(String... args) {
+		logger.info("startup runner");
+	}
 
 }

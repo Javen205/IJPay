@@ -13,6 +13,7 @@ import com.jfinal.core.Controller;
 public abstract class AliPayApiController extends Controller {
 	/**
 	 * 获取支付宝配置
+	 *
 	 * @return {@link AliPayApiConfig}
 	 */
 	public abstract AliPayApiConfig getApiConfig() throws AlipayApiException;
