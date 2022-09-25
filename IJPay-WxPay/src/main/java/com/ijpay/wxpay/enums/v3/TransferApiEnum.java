@@ -29,9 +29,19 @@ public enum TransferApiEnum implements WxApiEnum {
 	TRANSFER_QUERY_BY_BATCH_ID("/v3/transfer/batches/batch-id/%s", "微信支付批次单号查询批次单"),
 
 	/**
+	 * 微信支付批次单号查询批次单
+	 */
+	PARTNER_TRANSFER_QUERY_BY_BATCH_ID("/v3/partner-transfer/batches/batch-id/%s", "微信支付批次单号查询批次单"),
+
+	/**
 	 * 微信支付明细单号查询明细单
 	 */
 	TRANSFER_QUERY_BY_DETAIL_ID("/v3/transfer/batches/batch-id/%s/details/detail-id/%s", "微信支付明细单号查询明细单"),
+
+	/**
+	 * 微信支付明细单号查询明细单
+	 */
+	PARTNER_TRANSFER_QUERY_BY_DETAIL_ID("/v3/partner-transfer/batches/batch-id/%s/details/detail-id/%s", "微信支付明细单号查询明细单"),
 
 	/**
 	 * 商家批次单号查询批次单
@@ -39,9 +49,19 @@ public enum TransferApiEnum implements WxApiEnum {
 	TRANSFER_QUERY_BY_OUT_BATCH_NO("/v3/transfer/batches/out-batch-no/%s", "商家批次单号查询批次单"),
 
 	/**
+	 * 商家批次单号查询批次单
+	 */
+	PARTNER_TRANSFER_QUERY_BY_OUT_BATCH_NO("/v3/partner-transfer/batches/out-batch-no/%s", "商家批次单号查询批次单"),
+
+	/**
 	 * 商家明细单号查询明细单
 	 */
 	TRANSFER_QUERY_DETAIL_BY_OUT_BATCH_NO("/v3/transfer/batches/out-batch-no/%s/details/out-detail-no/%s", "商家明细单号查询明细单"),
+
+	/**
+	 * 商家明细单号查询明细单
+	 */
+	PARTNER_TRANSFER_QUERY_DETAIL_BY_OUT_BATCH_NO("/v3/partner-transfer/batches/out-batch-no/%s/details/out-detail-no/%s", "商家明细单号查询明细单"),
 
 	/**
 	 * 转账电子回单申请受理
@@ -57,6 +77,16 @@ public enum TransferApiEnum implements WxApiEnum {
 	 * 转账明细电子回单受理/查询转账明细电子回单受理结果
 	 */
 	TRANSFER_ELECTRONIC_RECEIPTS("/v3/transfer-detail/electronic-receipts", "转账明细电子回单受理"),
+
+	/**
+	 * 特约商户银行来账查询
+	 */
+	PARTNER_INCOME_RECORDS("/v3/merchantfund/partner/income-records", "特约商户银行来账查询"),
+
+	/**
+	 * 服务商银行来账查询
+	 */
+	MERCHANT_INCOME_RECORDS("/v3/merchantfund/merchant/income-records", "服务商银行来账查询"),
 	;
 
 	/**
