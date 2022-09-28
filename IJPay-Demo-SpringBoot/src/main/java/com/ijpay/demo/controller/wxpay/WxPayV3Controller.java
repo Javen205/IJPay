@@ -1,5 +1,6 @@
 package com.ijpay.demo.controller.wxpay;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
@@ -122,9 +123,13 @@ public class WxPayV3Controller {
 	private String getSerialNumber() {
 		if (StrUtil.isEmpty(serialNo)) {
 			// 获取证书序列号
-			X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getCertPath()));
-			serialNo = certificate.getSerialNumber().toString(16).toUpperCase();
-
+			X509Certificate certificate = PayKit.getCertificate(wxPayV3Bean.getCertPath());
+			if (null != certificate) {
+				serialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+				// 提前两天检查证书是否有效
+				boolean isValid = PayKit.checkCertificateIsValid(certificate, -2);
+				log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(certificate.getNotAfter(), DatePattern.NORM_DATETIME_PATTERN));
+			}
 //            System.out.println("输出证书信息:\n" + certificate.toString());
 //            // 输出关键信息，截取部分并进行标记
 //            System.out.println("证书序列号:" + certificate.getSerialNumber().toString(16));
