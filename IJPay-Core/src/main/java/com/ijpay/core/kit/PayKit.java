@@ -1,6 +1,8 @@
 package com.ijpay.core.kit;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.io.resource.Resource;
@@ -12,20 +14,33 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.model.CertificateModel;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.cert.*;
-import java.util.*;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateExpiredException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.CertificateNotYetValidException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -447,6 +462,106 @@ public class PayKit {
 		} catch (CertificateException e) {
 			throw new RuntimeException("无效的证书", e);
 		}
+	}
+
+	/**
+	 * 获取证书
+	 *
+	 * @param path 证书路径，支持相对路径以及绝得路径
+	 * @return {@link X509Certificate} 获取证书
+	 */
+	public static X509Certificate getCertificate(String path) {
+		if (StrUtil.isEmpty(path)) {
+			return null;
+		}
+		InputStream inputStream;
+		try {
+			inputStream = getCertFileInputStream(path);
+		} catch (IOException e) {
+			throw new RuntimeException("请检查证书路径是否正确", e);
+		}
+		return getCertificate(inputStream);
+	}
+
+	/**
+	 * 获取证书详细信息
+	 *
+	 * @param certificate {@link X509Certificate} 证书
+	 * @return {@link CertificateModel}  获取证书详细信息
+	 */
+	public static CertificateModel getCertificateInfo(X509Certificate certificate) {
+		if (null == certificate) {
+			return null;
+		}
+		CertificateModel model = new CertificateModel();
+		model.setItself(certificate);
+		model.setIssuerDn(certificate.getIssuerDN());
+		model.setSubjectDn(certificate.getSubjectDN());
+		model.setVersion(certificate.getVersion());
+		model.setNotBefore(certificate.getNotBefore());
+		model.setNotAfter(certificate.getNotAfter());
+		model.setSerialNumber(certificate.getSerialNumber().toString(16));
+		return model;
+	}
+
+	/**
+	 * 获取证书详细信息
+	 *
+	 * @param path 证书路径，支持相对路径以及绝得路径
+	 * @return {@link CertificateModel}  获取证书详细信息
+	 */
+	public static CertificateModel getCertificateInfo(String path) {
+		X509Certificate certificate = getCertificate(path);
+		return getCertificateInfo(certificate);
+	}
+
+	/**
+	 * 检查证书是否可用
+	 *
+	 * @param model     {@link CertificateModel} 证书详细 model
+	 * @param offsetDay 偏移天数，正数向未来偏移，负数向历史偏移
+	 * @return true 有效 false 无效
+	 */
+	public static boolean checkCertificateIsValid(CertificateModel model, int offsetDay) {
+		if (null == model) {
+			return false;
+		}
+		Date notAfter = model.getNotAfter();
+		if (null == notAfter) {
+			return false;
+		}
+		// 偏移后的时间
+		DateTime dateTime = DateUtil.offsetDay(notAfter, offsetDay);
+		DateTime now = DateUtil.date();
+		int compare = DateUtil.compare(dateTime, now);
+		return compare >= 0;
+	}
+
+	/**
+	 * 检查证书是否可用
+	 *
+	 * @param certificate {@link X509Certificate} 证书
+	 * @param offsetDay   偏移天数，正数向未来偏移，负数向历史偏移
+	 * @return true 有效 false 无效
+	 */
+	public static boolean checkCertificateIsValid(X509Certificate certificate, int offsetDay) {
+		if (null == certificate) {
+			return false;
+		}
+		CertificateModel model = getCertificateInfo(certificate);
+		return checkCertificateIsValid(model, offsetDay);
+	}
+
+	/**
+	 * 检查证书是否可用
+	 *
+	 * @param path      证书路径，支持相对路径以及绝得路径
+	 * @param offsetDay 偏移天数，正数向未来偏移，负数向历史偏移
+	 * @return true 有效 false 无效
+	 */
+	public static boolean checkCertificateIsValid(String path, int offsetDay) {
+		X509Certificate certificate = getCertificate(path);
+		return checkCertificateIsValid(certificate, offsetDay);
 	}
 
 	/**
