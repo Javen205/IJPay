@@ -25,7 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class XPayModel extends BaseModel {
+public class PayModel extends BaseModel {
 	private String out_trade_no;
 	private String total_fee;
 	private String mch_id;
@@ -56,4 +56,5 @@ public class XPayModel extends BaseModel {
 	private String url;
 	private String params;
 	private String code;
+	private String callback_url;
 }

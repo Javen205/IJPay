@@ -2,7 +2,6 @@ package com.ijpay.xpay;
 
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.kit.HttpKit;
-import com.ijpay.xpay.enums.XPayUrl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,16 +21,16 @@ import java.util.Map;
  *
  * @author Javen
  */
-public class XPayApi {
+public class PayApi {
 	/**
 	 * 获取接口请求的 URL
 	 *
-	 * @param xPayUrl   {@link XPayUrl} 支付 API 接口枚举
+	 * @param payUrl    {@link PayUrl} 支付 API 接口枚举
 	 * @param serverUrl 网关
 	 * @return {@link String} 返回完整的接口请求URL
 	 */
-	public static String getReqUrl(String serverUrl, XPayUrl xPayUrl) {
-		return serverUrl.concat(xPayUrl.getUrl());
+	public static String getReqUrl(String serverUrl, PayUrl payUrl) {
+		return serverUrl.concat(payUrl.getUrl());
 	}
 
 	/**
@@ -62,25 +61,25 @@ public class XPayApi {
 	 * 执行请求
 	 *
 	 * @param serverUrl XPay 网关
-	 * @param xPayUrl   {@link XPayUrl} 支付 API 接口枚举
+	 * @param payUrl    {@link PayUrl} 支付 API 接口枚举
 	 * @param params    请求参数
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 */
-	public static IJPayHttpResponse exePost(String serverUrl, XPayUrl xPayUrl, Map<String, String> params) {
+	public static IJPayHttpResponse exePost(String serverUrl, PayUrl payUrl, Map<String, String> params) {
 		Map<String, Object> dataMap = new HashMap<String, Object>(params);
-		return post(getReqUrl(serverUrl, xPayUrl), dataMap, null);
+		return post(getReqUrl(serverUrl, payUrl), dataMap, null);
 	}
 
 	/**
 	 * 执行请求
 	 *
 	 * @param serverUrl XPay 网关
-	 * @param xPayUrl   {@link XPayUrl} 支付 API 接口枚举
+	 * @param payUrl    {@link PayUrl} 支付 API 接口枚举
 	 * @param params    请求参数
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 */
-	public static IJPayHttpResponse exeGet(String serverUrl, XPayUrl xPayUrl, Map<String, String> params) {
+	public static IJPayHttpResponse exeGet(String serverUrl, PayUrl payUrl, Map<String, String> params) {
 		Map<String, Object> dataMap = new HashMap<String, Object>(params);
-		return get(getReqUrl(serverUrl, xPayUrl), dataMap, null);
+		return get(getReqUrl(serverUrl, payUrl), dataMap, null);
 	}
 }
