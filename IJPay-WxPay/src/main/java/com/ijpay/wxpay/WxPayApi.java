@@ -501,6 +501,7 @@ public class WxPayApi {
 	 * @param keyPath   apiclient_key.pem 证书路径
 	 * @param body      接口请求参数
 	 * @return {@link Map} 请求返回的结果
+	 * @throws Exception 异常信息
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
@@ -652,13 +653,13 @@ public class WxPayApi {
 	/**
 	 * 统一下单
 	 *
-	 * @param isSandbox    是否是沙盒环境
-	 * @param WxDomainEnum {@link WxDomain} 支付 API 接口域名枚举
-	 * @param params       请求参数
+	 * @param isSandbox 是否是沙盒环境
+	 * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
+	 * @param params    请求参数
 	 * @return {@link String} 请求返回的结果
 	 */
-	public static String pushOrder(boolean isSandbox, WxDomain WxDomainEnum, Map<String, String> params) {
-		return execution(getReqUrl(PayApiEnum.UNIFIED_ORDER, WxDomainEnum, isSandbox), params);
+	public static String pushOrder(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
+		return execution(getReqUrl(PayApiEnum.UNIFIED_ORDER, wxDomain, isSandbox), params);
 	}
 
 	/**
@@ -686,11 +687,12 @@ public class WxPayApi {
 	 * 订单查询
 	 *
 	 * @param isSandbox 是否是沙盒环境
+	 * @param wxDomain  {@link WxDomain} 支付 API 接口域名枚举
 	 * @param params    请求参数
 	 * @return {@link String} 请求返回的结果
 	 */
-	public static String orderQuery(boolean isSandbox, WxDomain WxDomainEnum, Map<String, String> params) {
-		return execution(getReqUrl(PayApiEnum.ORDER_QUERY, WxDomainEnum, isSandbox), params);
+	public static String orderQuery(boolean isSandbox, WxDomain wxDomain, Map<String, String> params) {
+		return execution(getReqUrl(PayApiEnum.ORDER_QUERY, wxDomain, isSandbox), params);
 	}
 
 	/**
@@ -773,6 +775,7 @@ public class WxPayApi {
 	 * @param params    请求参数
 	 * @param certFile  证书文件的 InputStream
 	 * @param certPass  证书密码
+	 * @param protocol  协议
 	 * @return {@link String} 请求返回的结果
 	 */
 	public static String orderRefundByProtocol(boolean isSandbox, Map<String, String> params, InputStream certFile, String certPass, String protocol) {
@@ -1119,7 +1122,8 @@ public class WxPayApi {
 	/**
 	 * 查询签约关系对账单
 	 *
-	 * @param params 请求参数
+	 * @param params   请求参数
+	 * @param payModel 商户平台模式
 	 * @return {@link String} 请求返回的结果
 	 */
 	public static String contractBill(Map<String, String> params, PayModel payModel) {

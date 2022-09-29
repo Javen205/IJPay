@@ -64,8 +64,7 @@ public enum PayApiEnum implements WxApiEnum {
 	REFUND("/secapi/pay/refund", "申请退款"),
 
 	/**
-	 * 单品优惠-申请退款
-	 * <a href="https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3">https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3</a>
+	 * 单品优惠-申请退款 <a href="https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3">官方文档</a>
 	 */
 	REFUND_V2("/secapi/pay/refundv2", "单品优惠-申请退款"),
 
