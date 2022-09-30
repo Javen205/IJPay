@@ -127,7 +127,7 @@ public class WxPayV3Controller {
 			if (null != certificate) {
 				serialNo = certificate.getSerialNumber().toString(16).toUpperCase();
 				// 提前两天检查证书是否有效
-				boolean isValid = PayKit.checkCertificateIsValid(certificate, -2);
+				boolean isValid = PayKit.checkCertificateIsValid(certificate, wxPayV3Bean.getMchId(), -2);
 				log.info("证书是否可用 {} 证书有效期为 {}", isValid, DateUtil.format(certificate.getNotAfter(), DatePattern.NORM_DATETIME_PATTERN));
 			}
 //            System.out.println("输出证书信息:\n" + certificate.toString());

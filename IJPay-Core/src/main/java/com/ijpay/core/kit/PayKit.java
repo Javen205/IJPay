@@ -13,6 +13,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
+import com.ijpay.core.constant.IJPayConstants;
 import com.ijpay.core.enums.RequestMethod;
 import com.ijpay.core.model.CertificateModel;
 
@@ -29,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateExpiredException;
@@ -519,15 +521,33 @@ public class PayKit {
 	 * 检查证书是否可用
 	 *
 	 * @param model     {@link CertificateModel} 证书详细 model
+	 * @param mchId     商户号
 	 * @param offsetDay 偏移天数，正数向未来偏移，负数向历史偏移
 	 * @return true 有效 false 无效
 	 */
-	public static boolean checkCertificateIsValid(CertificateModel model, int offsetDay) {
+	public static boolean checkCertificateIsValid(CertificateModel model, String mchId, int offsetDay) {
 		if (null == model) {
 			return false;
 		}
 		Date notAfter = model.getNotAfter();
 		if (null == notAfter) {
+			return false;
+		}
+		// 证书颁发者
+		Principal issuerDn = model.getIssuerDn();
+		if (null == issuerDn || !issuerDn.getName().contains(IJPayConstants.ISSUER)) {
+			return false;
+		}
+		// 证书CN字段
+		if (StrUtil.isNotEmpty(mchId)) {
+			Principal subjectDn = model.getSubjectDn();
+			if (null == subjectDn || !subjectDn.getName().contains(IJPayConstants.CN.concat(mchId.trim()))) {
+				return false;
+			}
+		}
+		// 证书序列号固定40字节的字符串
+		String serialNumber = model.getSerialNumber();
+		if (StrUtil.isEmpty(serialNumber) || serialNumber.length() != IJPayConstants.SERIAL_NUMBER_LENGTH) {
 			return false;
 		}
 		// 偏移后的时间
@@ -541,27 +561,28 @@ public class PayKit {
 	 * 检查证书是否可用
 	 *
 	 * @param certificate {@link X509Certificate} 证书
+	 * @param mchId       商户号
 	 * @param offsetDay   偏移天数，正数向未来偏移，负数向历史偏移
 	 * @return true 有效 false 无效
 	 */
-	public static boolean checkCertificateIsValid(X509Certificate certificate, int offsetDay) {
+	public static boolean checkCertificateIsValid(X509Certificate certificate, String mchId, int offsetDay) {
 		if (null == certificate) {
 			return false;
 		}
 		CertificateModel model = getCertificateInfo(certificate);
-		return checkCertificateIsValid(model, offsetDay);
+		return checkCertificateIsValid(model, mchId, offsetDay);
 	}
 
 	/**
 	 * 检查证书是否可用
 	 *
 	 * @param path      证书路径，支持相对路径以及绝得路径
+	 * @param mchId     商户号
 	 * @param offsetDay 偏移天数，正数向未来偏移，负数向历史偏移
 	 * @return true 有效 false 无效
 	 */
-	public static boolean checkCertificateIsValid(String path, int offsetDay) {
-		X509Certificate certificate = getCertificate(path);
-		return checkCertificateIsValid(certificate, offsetDay);
+	public static boolean checkCertificateIsValid(String path, String mchId, int offsetDay) {
+		return checkCertificateIsValid(getCertificateInfo(path), mchId, offsetDay);
 	}
 
 	/**

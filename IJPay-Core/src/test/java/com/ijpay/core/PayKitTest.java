@@ -14,15 +14,15 @@ public class PayKitTest {
 	@Test
 	public void checkCertificateIsValid() {
 		CertificateModel model = new CertificateModel();
-		model.setNotAfter(DateUtil.offsetDay(new Date(),2));
-		boolean isValid = PayKit.checkCertificateIsValid(model, -1);
-		Assert.assertTrue(isValid);
+		model.setNotAfter(DateUtil.offsetDay(new Date(), 2));
+		boolean isValid = PayKit.checkCertificateIsValid(model, "", -1);
+		Assert.assertFalse(isValid);
 	}
 
 	@Test
 	public void checkCertificateIsValidByPath() {
-	    String path = "";
-		boolean isValid =  PayKit.checkCertificateIsValid(path,-2);
+		String path = "";
+		boolean isValid = PayKit.checkCertificateIsValid(path, "", -2);
 		Assert.assertFalse(isValid);
 	}
 }
