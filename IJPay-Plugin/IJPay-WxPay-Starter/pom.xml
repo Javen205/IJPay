@@ -13,8 +13,9 @@
 	<description>IJPay 各个模块的 Spring Boot Starter</description>
 
 	<properties>
-		<spring.boot.version>2.5.3</spring.boot.version>
+		<spring.boot.version>2.7.4</spring.boot.version>
 		<ijpay.wxpay.version>2.9.1</ijpay.wxpay.version>
+		<slf4j.api.version>2.0.3</slf4j.api.version>
 	</properties>
 
 	<dependencies>
@@ -38,7 +39,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>2.0.1</version>
+			<version>${slf4j.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
