@@ -3,18 +3,18 @@
 	<parent>
 		<artifactId>IJPay-Plugin</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.1</version>
+		<version>2.9.2</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>ijpay-wxpay-spring-boot-starters</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<name>IJPay-WxPay-Spring Boot Starters</name>
 	<description>IJPay 各个模块的 Spring Boot Starter</description>
 
 	<properties>
 		<spring.boot.version>2.7.4</spring.boot.version>
-		<ijpay.wxpay.version>2.9.1</ijpay.wxpay.version>
+		<ijpay.wxpay.version>2.9.2</ijpay.wxpay.version>
 		<slf4j.api.version>2.0.3</slf4j.api.version>
 	</properties>
 
