@@ -1,0 +1,53 @@
+wx:
+    pay:
+        configs:
+            - #应用编号
+                appId: appId
+                # 商户号
+                mchId: mchId
+                # 服务商应用编号
+                slAppId: slAppId
+                # 服务商商户号
+                slMchId: slMchId
+                # 商户平台「API安全」中的 API 密钥
+                apiKey: apiKey
+                # 商户平台「API安全」中的 APIv3 密钥
+                apiKey3: apiKey3
+                # API 证书中的 p12
+                certPath: certPath
+                # API 证书中的 key.pem
+                keyPath: keyPath
+                # API 证书中的 cert.pem
+                platformCertPath: platformCertPath
+                # p12 退款证书
+                certP12Path: certP12Path
+                # 其他附加参数
+                exParams: exParams
+                # 应用域名，回调中会使用此参数
+                domain: domain
+            - #应用编号
+                appId: appId2
+                # 商户号
+                mchId: mchId2
+                # 服务商应用编号
+                slAppId: slAppId2
+                # 服务商商户号
+                slMchId: slMchId2
+                # 商户平台「API安全」中的 API 密钥
+                apiKey: apiKey2
+                # 商户平台「API安全」中的 APIv3 密钥
+                apiKey3: apiKey3
+                # API 证书中的 p12
+                certPath: certPath2
+                # API 证书中的 key.pem
+                keyPath: keyPath2
+                # API 证书中的 cert.pem
+                platformCertPath: platformCertPath2
+                # p12 退款证书
+                certP12Path: certP12Path2
+                # 其他附加参数
+                exParams: exParams2
+                # 应用域名，回调中会使用此参数
+                domain: domain2
+server:
+    port: 8888
