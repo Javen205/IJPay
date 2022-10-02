@@ -15,13 +15,17 @@ package com.ijpay.jdpay.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Builder
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class FkmModel extends JdBaseModel {
 	private String token;
 	private String version;

@@ -1,6 +1,9 @@
 package com.ijpay.wxpay.model.v3;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -16,6 +19,9 @@ import lombok.experimental.Accessors;
  *
  * @author Javen
  */
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Accessors(chain = true)
 public class RefundGoodsDetail {

@@ -1,7 +1,12 @@
 package com.ijpay.wxpay.model;
 
 import com.ijpay.core.model.BaseModel;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 刷脸设备获取设备调用凭证
@@ -10,8 +15,10 @@ import lombok.*;
  */
 @Builder
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class AuthInfoModel extends BaseModel {
 	private String appid;
 	private String mch_id;

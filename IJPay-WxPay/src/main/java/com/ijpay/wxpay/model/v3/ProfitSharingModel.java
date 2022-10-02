@@ -4,8 +4,10 @@ import com.ijpay.core.model.BaseModel;
 import com.ijpay.wxpay.model.ReceiverModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -26,8 +28,10 @@ import java.util.List;
  */
 @Builder
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class ProfitSharingModel extends BaseModel {
 	/**
 	 * 微信支付分配的服务商商户号,兼容V2接口

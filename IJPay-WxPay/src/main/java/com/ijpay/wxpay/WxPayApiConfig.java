@@ -1,6 +1,10 @@
 package com.ijpay.wxpay;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -18,11 +22,11 @@ import java.io.Serializable;
  * @author Javen
  */
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class WxPayApiConfig implements Serializable {
 	private static final long serialVersionUID = -9044503427692786302L;
 	/**
@@ -60,15 +64,19 @@ public class WxPayApiConfig implements Serializable {
 	/**
 	 * API 证书中的 p12
 	 */
-	private String certPath;
+	private String certP12Path;
 	/**
 	 * API 证书中的 key.pem
 	 */
-	private String keyPemPath;
+	private String keyPath;
 	/**
 	 * API 证书中的 cert.pem
 	 */
-	private String certPemPath;
+	private String certPath;
+	/**
+	 * 微信平台证书
+	 */
+	private String platformCertPath;
 	/**
 	 * 其他附加参数
 	 */

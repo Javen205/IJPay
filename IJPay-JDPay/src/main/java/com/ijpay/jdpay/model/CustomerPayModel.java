@@ -2,8 +2,10 @@ package com.ijpay.jdpay.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付等常用的支付方式以及各种常用的接口。</p>
@@ -20,8 +22,10 @@ import lombok.Setter;
  */
 @Builder
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class CustomerPayModel extends JdBaseModel {
 	private String version;
 	private String sign;
