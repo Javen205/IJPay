@@ -22,7 +22,8 @@
 		<module>IJPay-JDPay</module>
 		<module>IJPay-PayPal</module>
 		<module>IJPay-XPay</module>
-	</modules>
+        <module>IJPay-Plugin</module>
+    </modules>
 
 	<licenses>
 		<license>
