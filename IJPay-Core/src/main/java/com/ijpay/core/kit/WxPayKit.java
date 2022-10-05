@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
-import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
 
 import java.io.BufferedInputStream;
@@ -517,7 +517,7 @@ public class WxPayKit {
 	/**
 	 * 构建 v3 接口所需的 Authorization
 	 *
-	 * @param method    {@link RequestMethod} 请求方法
+	 * @param method    {@link RequestMethodEnum} 请求方法
 	 * @param urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
 	 * @param mchId     商户Id
 	 * @param serialNo  商户 API 证书序列号
@@ -529,9 +529,9 @@ public class WxPayKit {
 	 * @return {@link String} 返回 v3 所需的 Authorization
 	 * @throws Exception 异常信息
 	 */
-	public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
-											String serialNo, String keyPath, String body, String nonceStr,
-											long timestamp, String authType) throws Exception {
+	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
+                                            String serialNo, String keyPath, String body, String nonceStr,
+                                            long timestamp, String authType) throws Exception {
 		// 构建签名参数
 		String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
 		String signature = PayKit.createSign(buildSignMessage, keyPath);
@@ -542,7 +542,7 @@ public class WxPayKit {
 	/**
 	 * 构建 v3 接口所需的 Authorization
 	 *
-	 * @param method     {@link RequestMethod} 请求方法
+	 * @param method     {@link RequestMethodEnum} 请求方法
 	 * @param urlSuffix  可通过 WxApiType 来获取，URL挂载参数需要自行拼接
 	 * @param mchId      商户Id
 	 * @param serialNo   商户 API 证书序列号
@@ -554,9 +554,9 @@ public class WxPayKit {
 	 * @return {@link String} 返回 v3 所需的 Authorization
 	 * @throws Exception 异常信息
 	 */
-	public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
-											String serialNo, PrivateKey privateKey, String body, String nonceStr,
-											long timestamp, String authType) throws Exception {
+	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
+                                            String serialNo, PrivateKey privateKey, String body, String nonceStr,
+                                            long timestamp, String authType) throws Exception {
 		// 构建签名参数
 		String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
 		String signature = PayKit.createSign(buildSignMessage, privateKey);
@@ -567,7 +567,7 @@ public class WxPayKit {
 	/**
 	 * 构建 v3 接口所需的 Authorization
 	 *
-	 * @param method    {@link RequestMethod} 请求方法
+	 * @param method    {@link RequestMethodEnum} 请求方法
 	 * @param urlSuffix 可通过 WxApiType 来获取，URL挂载参数需要自行拼接
 	 * @param mchId     商户Id
 	 * @param serialNo  商户 API 证书序列号
@@ -576,8 +576,8 @@ public class WxPayKit {
 	 * @return {@link String} 返回 v3 所需的 Authorization
 	 * @throws Exception 异常信息
 	 */
-	public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
-											String serialNo, String keyPath, String body) throws Exception {
+	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
+                                            String serialNo, String keyPath, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
@@ -589,7 +589,7 @@ public class WxPayKit {
 	/**
 	 * 构建 v3 接口所需的 Authorization
 	 *
-	 * @param method     {@link RequestMethod} 请求方法
+	 * @param method     {@link RequestMethodEnum} 请求方法
 	 * @param urlSuffix  可通过 WxApiType 来获取，URL挂载参数需要自行拼接
 	 * @param mchId      商户Id
 	 * @param serialNo   商户 API 证书序列号
@@ -598,8 +598,8 @@ public class WxPayKit {
 	 * @return {@link String} 返回 v3 所需的 Authorization
 	 * @throws Exception 异常信息
 	 */
-	public static String buildAuthorization(RequestMethod method, String urlSuffix, String mchId,
-											String serialNo, PrivateKey privateKey, String body) throws Exception {
+	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
+                                            String serialNo, PrivateKey privateKey, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";

@@ -14,7 +14,7 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.constant.IJPayConstants;
-import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.model.CertificateModel;
 
 import javax.crypto.BadPaddingException;
@@ -277,14 +277,14 @@ public class PayKit {
 	/**
 	 * 构造签名串
 	 *
-	 * @param method    {@link RequestMethod} GET,POST,PUT等
+	 * @param method    {@link RequestMethodEnum} GET,POST,PUT等
 	 * @param url       请求接口 /v3/certificates
 	 * @param timestamp 获取发起请求时的系统当前时间戳
 	 * @param nonceStr  随机字符串
 	 * @param body      请求报文主体
 	 * @return 待签名字符串
 	 */
-	public static String buildSignMessage(RequestMethod method, String url, long timestamp, String nonceStr, String body) {
+	public static String buildSignMessage(RequestMethodEnum method, String url, long timestamp, String nonceStr, String body) {
 		ArrayList<String> arrayList = new ArrayList<>();
 		arrayList.add(method.toString());
 		arrayList.add(url);

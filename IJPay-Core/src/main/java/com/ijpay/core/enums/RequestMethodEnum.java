@@ -13,7 +13,7 @@ package com.ijpay.core.enums;
  *
  * @author Javen
  */
-public enum RequestMethod {
+public enum RequestMethodEnum {
 	/**
 	 * 上传实质是 post 请求
 	 */
@@ -53,7 +53,7 @@ public enum RequestMethod {
 
 	private final String method;
 
-	RequestMethod(String method) {
+	RequestMethodEnum(String method) {
 		this.method = method;
 	}
 
