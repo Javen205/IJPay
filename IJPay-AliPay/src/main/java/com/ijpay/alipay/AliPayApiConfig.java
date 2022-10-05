@@ -1,6 +1,7 @@
 package com.ijpay.alipay;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.CertAlipayRequest;
@@ -24,26 +25,90 @@ import java.io.Serializable;
 public class AliPayApiConfig implements Serializable {
 	private static final long serialVersionUID = -4736760736935998953L;
 
+	/**
+	 * 应用私钥
+	 */
 	private String privateKey;
+
+	/**
+	 * 支付宝公钥
+	 */
 	private String aliPayPublicKey;
+
+	/**
+	 * 应用编号
+	 */
 	private String appId;
+
+	/**
+	 * 支付宝支付网关
+	 */
 	private String serviceUrl;
+
+	/**
+	 * 字符集，为空默认为 UTF-8
+	 */
 	private String charset;
+
+	/**
+	 * 为空默认为 RSA2
+	 */
 	private String signType;
+
+	/**
+	 * 为空默认为 JSON
+	 */
 	private String format;
+
+	/**
+	 * 是否为证书模式
+	 */
 	private boolean certModel;
+
+	/**
+	 * 应用公钥证书 (证书模式必须)
+	 */
 	private String appCertPath;
+
+	/**
+	 * 应用公钥证书文本内容
+	 */
 	private String appCertContent;
+
+	/**
+	 * 支付宝公钥证书 (证书模式必须)
+	 */
 	private String aliPayCertPath;
+
+	/**
+	 * 支付宝公钥证书文本内容
+	 */
 	private String aliPayCertContent;
+
+	/**
+	 * 支付宝根证书 (证书模式必须)
+	 */
 	private String aliPayRootCertPath;
+
+	/**
+	 * 支付宝根证书文本内容
+	 */
 	private String aliPayRootCertContent;
+
+	/**
+	 * 支付宝客户端
+	 */
 	private AlipayClient alipayClient;
 
 	/**
 	 * 其他附加参数
 	 */
 	private Object exParams;
+
+	/**
+	 * 域名
+	 */
+	private String domain;
 
 	private AliPayApiConfig() {
 	}
@@ -297,5 +362,19 @@ public class AliPayApiConfig implements Serializable {
 	public AliPayApiConfig setExParams(Object exParams) {
 		this.exParams = exParams;
 		return this;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public AliPayApiConfig setDomain(String domain) {
+		this.domain = domain;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return JSONUtil.toJsonStr(this);
 	}
 }
