@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.PayModel;
-import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
@@ -239,7 +239,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -254,10 +254,10 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix,
-									   String mchId, String serialNo, String platSerialNo, String keyPath,
-									   String body, String nonceStr, long timestamp, String authType,
-									   File file) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                       String mchId, String serialNo, String platSerialNo, String keyPath,
+                                       String body, String nonceStr, long timestamp, String authType,
+                                       File file) throws Exception {
 		// 构建 Authorization
 		String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
 			keyPath, body, nonceStr, timestamp, authType);
@@ -266,15 +266,15 @@ public class WxPayApi {
 			platSerialNo = serialNo;
 		}
 
-		if (method == RequestMethod.GET) {
+		if (method == RequestMethodEnum.GET) {
 			return get(urlPrefix.concat(urlSuffix), authorization, platSerialNo, null);
-		} else if (method == RequestMethod.POST) {
+		} else if (method == RequestMethodEnum.POST) {
 			return post(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
-		} else if (method == RequestMethod.DELETE) {
+		} else if (method == RequestMethodEnum.DELETE) {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
-		} else if (method == RequestMethod.UPLOAD) {
+		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
-		} else if (method == RequestMethod.PUT) {
+		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
 		return null;
@@ -283,7 +283,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -298,10 +298,10 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix,
-									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
-									   String body, String nonceStr, long timestamp, String authType,
-									   File file) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                       String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
+                                       String body, String nonceStr, long timestamp, String authType,
+                                       File file) throws Exception {
 		// 构建 Authorization
 		String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
 			privateKey, body, nonceStr, timestamp, authType);
@@ -310,15 +310,15 @@ public class WxPayApi {
 			platSerialNo = serialNo;
 		}
 
-		if (method == RequestMethod.GET) {
+		if (method == RequestMethodEnum.GET) {
 			return get(urlPrefix.concat(urlSuffix), authorization, platSerialNo, null);
-		} else if (method == RequestMethod.POST) {
+		} else if (method == RequestMethodEnum.POST) {
 			return post(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
-		} else if (method == RequestMethod.DELETE) {
+		} else if (method == RequestMethodEnum.DELETE) {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
-		} else if (method == RequestMethod.UPLOAD) {
+		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
-		} else if (method == RequestMethod.PUT) {
+		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
 		return null;
@@ -327,7 +327,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -338,8 +338,8 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
-									   String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+                                       String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
@@ -349,7 +349,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -360,8 +360,8 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
-									   String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+                                       String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
@@ -371,7 +371,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -382,9 +382,9 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix,
-									   String mchId, String serialNo, String platSerialNo, String keyPath,
-									   Map<String, String> params) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                       String mchId, String serialNo, String platSerialNo, String keyPath,
+                                       Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
@@ -397,7 +397,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -408,9 +408,9 @@ public class WxPayApi {
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
-	public static IJPayHttpResponse v3(RequestMethod method, String urlPrefix, String urlSuffix,
-									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
-									   Map<String, String> params) throws Exception {
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                       String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
+                                       Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
@@ -438,7 +438,7 @@ public class WxPayApi {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
-		return v3(RequestMethod.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
+		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 	}
 
 	/**
@@ -460,13 +460,13 @@ public class WxPayApi {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
 		String nonceStr = WxPayKit.generateStr();
-		return v3(RequestMethod.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, file);
+		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, file);
 	}
 
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -482,10 +482,10 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	@Deprecated
-	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
-												  String mchId, String serialNo, String platSerialNo, String keyPath,
-												  String body, String nonceStr, long timestamp, String authType,
-												  File file) throws Exception {
+	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                                  String mchId, String serialNo, String platSerialNo, String keyPath,
+                                                  String body, String nonceStr, long timestamp, String authType,
+                                                  File file) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 		return buildResMap(response);
 	}
@@ -493,7 +493,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method    {@link RequestMethod} 请求方法
+	 * @param method    {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix 可通过 {@link WxDomain}来获取
 	 * @param urlSuffix 可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId     商户Id
@@ -504,8 +504,8 @@ public class WxPayApi {
 	 * @throws Exception 异常信息
 	 */
 	@Deprecated
-	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
-												  String serialNo, String keyPath, String body) throws Exception {
+	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+                                                  String serialNo, String keyPath, String body) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, null, keyPath, body);
 		return buildResMap(response);
 	}
@@ -513,7 +513,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -525,8 +525,8 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	@Deprecated
-	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix, String mchId,
-												  String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
+	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+                                                  String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body);
 		return buildResMap(response);
 	}
@@ -534,7 +534,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method       {@link RequestMethod} 请求方法
+	 * @param method       {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix    可通过 {@link WxDomain}来获取
 	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId        商户Id
@@ -546,9 +546,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	@Deprecated
-	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
-												  String mchId, String serialNo, String platSerialNo, String keyPath,
-												  Map<String, String> params) throws Exception {
+	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                                  String mchId, String serialNo, String platSerialNo, String keyPath,
+                                                  Map<String, String> params) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, params);
 		return buildResMap(response);
 	}
@@ -556,7 +556,7 @@ public class WxPayApi {
 	/**
 	 * V3 接口统一执行入口
 	 *
-	 * @param method    {@link RequestMethod} 请求方法
+	 * @param method    {@link RequestMethodEnum} 请求方法
 	 * @param urlPrefix 可通过 {@link WxDomain}来获取
 	 * @param urlSuffix 可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
 	 * @param mchId     商户Id
@@ -567,9 +567,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	@Deprecated
-	public static Map<String, Object> v3Execution(RequestMethod method, String urlPrefix, String urlSuffix,
-												  String mchId, String serialNo, String keyPath,
-												  Map<String, String> params) throws Exception {
+	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+                                                  String mchId, String serialNo, String keyPath,
+                                                  Map<String, String> params) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, null, keyPath, params);
 		return buildResMap(response);
 	}

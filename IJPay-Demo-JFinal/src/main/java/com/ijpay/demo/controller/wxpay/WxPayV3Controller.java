@@ -10,7 +10,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
-import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.PayKit;
@@ -169,7 +169,7 @@ public class WxPayV3Controller extends Controller {
 		// 获取平台证书列表
 		try {
 			IJPayHttpResponse response = WxPayApi.v3(
-				RequestMethod.GET,
+				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
 				OtherApiEnum.GET_CERTIFICATES.toString(),
 				mchId,
@@ -228,7 +228,7 @@ public class WxPayV3Controller extends Controller {
 
 			log.info("统一下单参数 " + JSONUtil.toJsonStr(unifiedOrderModel));
 			IJPayHttpResponse response = WxPayApi.v3(
-				RequestMethod.POST,
+				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
 				BasePayApiEnum.NATIVE_PAY.toString(),
 				mchId,
@@ -264,7 +264,7 @@ public class WxPayV3Controller extends Controller {
 
 			log.info("统一下单参数 " + JSONUtil.toJsonStr(unifiedOrderModel));
 			IJPayHttpResponse response = WxPayApi.v3(
-				RequestMethod.POST,
+				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
 				BasePayApiEnum.JS_API_PAY.toString(),
 				mchId,
@@ -300,7 +300,7 @@ public class WxPayV3Controller extends Controller {
 			params.put("url", "https://gitee.com/javen205/IJPay");
 
 			IJPayHttpResponse response = WxPayApi.v3(
-				RequestMethod.PUT,
+				RequestMethodEnum.PUT,
 				WxDomainEnum.CHINA.toString(),
 				ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
 				mchId,
@@ -328,7 +328,7 @@ public class WxPayV3Controller extends Controller {
 			params.put("out_order_no", "1234323JKHDFE1243252");
 
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.GET,
+				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
 				PayScoreApiEnum.PAY_SCORE_SERVICE_ORDER.toString(),
 				mchId,
@@ -350,7 +350,7 @@ public class WxPayV3Controller extends Controller {
 			HashMap<String, String> hashMap = new HashMap<>(12);
 			hashMap.put("url", "https://qq.com");
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.POST,
+				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
 				ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
 				mchId,
@@ -362,7 +362,7 @@ public class WxPayV3Controller extends Controller {
 			System.out.println(result);
 
 			result = WxPayApi.v3(
-				RequestMethod.DELETE,
+				RequestMethodEnum.DELETE,
 				WxDomainEnum.CHINA.toString(),
 				ComplaintsApiEnum.COMPLAINTS_NOTIFICATION.toString(),
 				mchId,
@@ -423,7 +423,7 @@ public class WxPayV3Controller extends Controller {
 			String urlSuffix = String.format(PayGiftActivityApiEnum.PAY_GIFT_ACTIVITY_TERMINATE.toString(), "10028001");
 			System.out.println(urlSuffix);
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.POST,
+				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
 				urlSuffix,
 				mchId,
@@ -445,7 +445,7 @@ public class WxPayV3Controller extends Controller {
 			String body = "处理请求参数";
 
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.POST,
+				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
 				Apply4SubApiEnum.APPLY_4_SUB.toString(),
 				mchId,
@@ -496,7 +496,7 @@ public class WxPayV3Controller extends Controller {
 			params.put("tar_type", "GZIP");
 
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.GET,
+				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
 				BasePayApiEnum.TRADE_BILL.toString(),
 				mchId,
@@ -533,7 +533,7 @@ public class WxPayV3Controller extends Controller {
 			params.put("account_type", "BASIC");
 
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.GET,
+				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
 				BasePayApiEnum.FUND_FLOW_BILL.toString(),
 				mchId,
@@ -564,7 +564,7 @@ public class WxPayV3Controller extends Controller {
 			}
 
 			IJPayHttpResponse result = WxPayApi.v3(
-				RequestMethod.GET,
+				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
 				BasePayApiEnum.BILL_DOWNLOAD.toString(),
 				mchId,
