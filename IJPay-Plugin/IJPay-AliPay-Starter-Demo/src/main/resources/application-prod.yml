@@ -1,0 +1,45 @@
+alipay:
+  pay:
+    configs:
+      - # 支付宝支付网关
+        serviceUrl: serviceUrl
+        # 是否为证书模式
+        certModel: true
+        # 应用编号
+        appId: appId
+        # 应用私钥
+        privateKey: privateKey
+        # 支付宝公钥
+        aliPayPublicKey: aliPayPublicKey
+        # 应用公钥证书 (证书模式必须)
+        appCertPath: appCertPath
+        # 支付宝公钥证书 (证书模式必须)
+        aliPayCertPath: aliPayCertPath
+        # 支付宝根证书 (证书模式必须)
+        aliPayRootCertPath: aliPayRootCertPath
+        # 其他附加参数
+        exParams: exParams
+      - # 支付宝支付网关
+        serviceUrl: serviceUrl2
+        # 是否为证书模式
+        certModel: true
+        # 应用编号
+        appId: appId2
+        # 应用私钥
+        privateKey: privateKey2
+        # 支付宝公钥
+        aliPayPublicKey: aliPayPublicKey2
+        # 应用公钥证书 (证书模式必须)
+        appCertPath: appCertPath2
+        # 支付宝公钥证书 (证书模式必须)
+        aliPayCertPath: aliPayCertPath2
+        # 支付宝根证书 (证书模式必须)
+        aliPayRootCertPath: aliPayRootCertPath2
+        # 其他附加参数
+        exParams: exParams2
+server:
+  port: 6666
+
+logging:
+  level:
+    com.ijpay: debug
