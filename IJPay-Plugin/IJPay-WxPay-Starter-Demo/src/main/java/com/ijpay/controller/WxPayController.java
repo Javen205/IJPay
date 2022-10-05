@@ -52,20 +52,9 @@ public class WxPayController extends AbstractWxPayController {
 
 	@GetMapping("/getConfig")
 	public WxPayApiConfig getWxPayApiConfig() {
-		log.info("微信支付配置\n {}", WxPayApiConfigKit.getApiConfig(wxPayApiConfig.getAppId()));
-		log.info("yml支付配置\n {}", wxPayProperties);
+		log.info("当前微信支付配置信息\n {}", WxPayApiConfigKit.getApiConfig(wxPayApiConfig.getAppId()));
+		log.info("配置文件中微信支付配置信息\n {}", wxPayProperties);
 		return wxPayApiConfig;
-	}
-
-	/**
-	 * 获取并保存证书,默认取有效期内第一个
-	 *
-	 * @return 自动更新证书
-	 * @throws Exception 异常信息
-	 */
-	@GetMapping("/autoUpdate")
-	public boolean autoUpdate() throws Exception {
-		return autoUpdateOrGetCertificate(null);
 	}
 
 	/**
