@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.constant.IJPayConstants;
-import com.ijpay.core.enums.RequestMethod;
+import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.PayKit;
 import com.ijpay.core.kit.WxPayKit;
@@ -23,6 +23,10 @@ import com.ijpay.wxpay.model.v3.CertificateInfo;
 import com.ijpay.wxpay.model.v3.EncryptCertificate;
 import com.ijpay.wxpay.starter.properties.WxPayProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -84,10 +88,28 @@ public class AbstractWxPayController extends AbstractWxPayApiController {
 		return apiConfig;
 	}
 
+	@RequestMapping(value = "/onlineContact", method = {RequestMethod.GET, RequestMethod.POST})
+	public String onlineContact() {
+		return IJPayConstants.ONLINE_CONTACT;
+	}
+
+	/**
+	 * 自动获取最新微信平台证书
+	 *
+	 * @param serialNumber 指定保存的平台证书序列号
+	 * @return 微信平台证书保存结果
+	 * @throws Exception 异常信息
+	 */
+	@GetMapping("/autoUpdateCertificate")
+	public boolean autoUpdateCertificate(@RequestParam(value = "serialNumber", required = false) String serialNumber)
+		throws Exception {
+		return autoUpdateOrGetCertificate(serialNumber);
+	}
+
 	/**
 	 * 自动更新获取证书
 	 *
-	 * @param serialNumber 指定保存的序列号
+	 * @param serialNumber 指定保存的平台证书序列号
 	 * @return 获取证书结果
 	 * @throws Exception 异常信息
 	 */
@@ -95,7 +117,7 @@ public class AbstractWxPayController extends AbstractWxPayApiController {
 		WxPayApiConfig config = WxPayApiConfigKit.getWxPayApiConfig();
 		// 获取平台证书列表
 		IJPayHttpResponse response = WxPayApi.v3(
-			RequestMethod.GET,
+			RequestMethodEnum.GET,
 			WxDomainEnum.CHINA.toString(),
 			OtherApiEnum.GET_CERTIFICATES.toString(),
 			config.getMchId(),

@@ -8,10 +8,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>ijpay-wxpay-spring-boot-starters</artifactId>
-	<packaging>jar</packaging>
-	<name>IJPay-WxPay-Spring Boot Starters</name>
+	<name>${project.artifactId}</name>
 	<description>IJPay 各个模块的 Spring Boot Starter</description>
-
+	<url>https://github.com/javen205/IJPay</url>
 	<properties>
 		<spring.boot.version>2.7.4</spring.boot.version>
 		<ijpay.wxpay.version>2.9.2</ijpay.wxpay.version>
