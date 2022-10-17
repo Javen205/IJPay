@@ -4,9 +4,13 @@ import cn.hutool.crypto.SecureUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayConstants;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.internal.util.AntCertificationUtil;
+import com.alipay.api.internal.util.codec.Base64;
 import enums.SignType;
 
 import java.util.*;
+
+import static com.alipay.api.internal.util.AlipaySignature.rsaCheckV1;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -111,5 +115,25 @@ public class AliPayCore {
 			content.deleteCharAt(content.length() - 1);
 		}
 		return content.toString();
+	}
+
+	/**
+	 * 从证书内容验签
+	 * @param params 待验签的从支付宝接收到的参数Map
+	 * @param alipayPublicCertContent 支付宝公钥证书内容
+	 * @param charset 参数内容编码集
+	 * @param signType 指定采用的签名方式，RSA或RSA2
+	 * @return true：验签通过；false：验签不通过
+	 * @throws AlipayApiException
+	 */
+	public static boolean rsaCertCheckV1ByContent(Map<String, String> params, String alipayPublicCertContent,
+										 String charset, String signType) throws AlipayApiException {
+		String publicKey = Base64.encodeBase64String(
+			AntCertificationUtil
+				.getCertFromContent(alipayPublicCertContent)
+				.getPublicKey()
+				.getEncoded()
+		);
+		return rsaCheckV1(params, publicKey, charset, signType);
 	}
 }
