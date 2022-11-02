@@ -426,7 +426,10 @@ public class PayKit {
 	 * @throws Exception 异常信息
 	 */
 	public static PrivateKey getPrivateKey(String keyPath) throws Exception {
-		String originalKey = FileUtil.readUtf8String(keyPath);
+		String originalKey = getCertFileContent(keyPath);
+		if (StrUtil.isEmpty(originalKey)) {
+			throw new RuntimeException("商户私钥证书获取失败");
+		}
 		return getPrivateKeyByKeyContent(originalKey);
 	}
 
@@ -672,5 +675,23 @@ public class PayKit {
 		}
 		// 相对地址
 		return getFileToStream(path);
+	}
+
+	/**
+	 * 通过路径获取证书文件的内容
+	 *
+	 * @param path 文件路径
+	 * @return 文件内容
+	 */
+	public static String getCertFileContent(String path) {
+		if (StrUtil.isBlank(path)) {
+			return null;
+		}
+		// 绝对地址
+		File file = new File(path);
+		if (!file.exists()) {
+			path = getAbsolutePath(path);
+		}
+		return FileUtil.readUtf8String(path);
 	}
 }

@@ -1,6 +1,5 @@
 package com.ijpay.core.kit;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -8,7 +7,6 @@ import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
@@ -530,8 +528,8 @@ public class WxPayKit {
 	 * @throws Exception 异常信息
 	 */
 	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
-                                            String serialNo, String keyPath, String body, String nonceStr,
-                                            long timestamp, String authType) throws Exception {
+											String serialNo, String keyPath, String body, String nonceStr,
+											long timestamp, String authType) throws Exception {
 		// 构建签名参数
 		String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
 		String signature = PayKit.createSign(buildSignMessage, keyPath);
@@ -555,8 +553,8 @@ public class WxPayKit {
 	 * @throws Exception 异常信息
 	 */
 	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
-                                            String serialNo, PrivateKey privateKey, String body, String nonceStr,
-                                            long timestamp, String authType) throws Exception {
+											String serialNo, PrivateKey privateKey, String body, String nonceStr,
+											long timestamp, String authType) throws Exception {
 		// 构建签名参数
 		String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
 		String signature = PayKit.createSign(buildSignMessage, privateKey);
@@ -577,7 +575,7 @@ public class WxPayKit {
 	 * @throws Exception 异常信息
 	 */
 	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
-                                            String serialNo, String keyPath, String body) throws Exception {
+											String serialNo, String keyPath, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
@@ -599,7 +597,7 @@ public class WxPayKit {
 	 * @throws Exception 异常信息
 	 */
 	public static String buildAuthorization(RequestMethodEnum method, String urlSuffix, String mchId,
-                                            String serialNo, PrivateKey privateKey, String body) throws Exception {
+											String serialNo, PrivateKey privateKey, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = "WECHATPAY2-SHA256-RSA2048";
@@ -622,7 +620,7 @@ public class WxPayKit {
 		String body = (String) map.get("body");
 		String nonceStr = (String) map.get("nonceStr");
 		String timestamp = (String) map.get("timestamp");
-		return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+		return verifySignature(signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
 	}
 
 	/**
@@ -638,7 +636,7 @@ public class WxPayKit {
 		String nonceStr = response.getHeader("Wechatpay-Nonce");
 		String signature = response.getHeader("Wechatpay-Signature");
 		String body = response.getBody();
-		return verifySignature(signature, body, nonceStr, timestamp, FileUtil.getInputStream(certPath));
+		return verifySignature(signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
 	}
 
 	/**
@@ -785,7 +783,7 @@ public class WxPayKit {
 	 */
 	public static String verifyNotify(String serialNo, String body, String signature, String nonce,
 									  String timestamp, String key, String certPath) throws Exception {
-		BufferedInputStream inputStream = FileUtil.getInputStream(certPath);
+		InputStream inputStream = PayKit.getCertFileInputStream(certPath);
 		return verifyNotify(serialNo, body, signature, nonce, timestamp, key, inputStream);
 	}
 }
