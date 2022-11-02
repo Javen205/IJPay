@@ -25,6 +25,7 @@ import java.util.Map;
 public class IJPayHttpResponse implements Serializable {
 	private static final long serialVersionUID = 6089103955998013402L;
 	private String body;
+	private byte[] bodyByte;
 	private int status;
 	private Map<String, List<String>> headers;
 
@@ -34,6 +35,14 @@ public class IJPayHttpResponse implements Serializable {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public byte[] getBodyByte() {
+		return bodyByte;
+	}
+
+	public void setBodyByte(byte[] bodyByte) {
+		this.bodyByte = bodyByte;
 	}
 
 	public int getStatus() {

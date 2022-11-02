@@ -66,7 +66,11 @@ public abstract class AbstractHttpDelegate {
 	public IJPayHttpResponse get(String url, Map<String, Object> paramMap, Map<String, String> headers) {
 		IJPayHttpResponse response = new IJPayHttpResponse();
 		HttpResponse httpResponse = getToResponse(url, paramMap, headers);
-		response.setBody(httpResponse.body());
+		if (httpResponse.isGzip()) {
+			response.setBodyByte(httpResponse.bodyBytes());
+		} else {
+			response.setBody(httpResponse.body());
+		}
 		response.setStatus(httpResponse.getStatus());
 		response.setHeaders(httpResponse.headers());
 		return response;
