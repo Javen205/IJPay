@@ -308,19 +308,16 @@ public class WxPayV3Controller {
 				JSONUtil.toJsonStr(unifiedOrderModel)
 			);
 			log.info("统一下单响应 {}", response);
-
-			if (response.getStatus() == OK) {
-				// 根据证书序列号查询对应的证书来验证签名结果
-				boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
-				log.info("verifySignature: {}", verifySignature);
-				if (verifySignature) {
-					String body = response.getBody();
-					JSONObject jsonObject = JSONUtil.parseObj(body);
-					String prepayId = jsonObject.getStr("prepay_id");
-					Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
-					log.info("唤起支付参数:{}", map);
-					return JSONUtil.toJsonStr(map);
-				}
+			// 根据证书序列号查询对应的证书来验证签名结果
+			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			log.info("verifySignature: {}", verifySignature);
+			if (response.getStatus() == OK && verifySignature) {
+				String body = response.getBody();
+				JSONObject jsonObject = JSONUtil.parseObj(body);
+				String prepayId = jsonObject.getStr("prepay_id");
+				Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
+				log.info("唤起支付参数:{}", map);
+				return JSONUtil.toJsonStr(map);
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
