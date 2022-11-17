@@ -324,7 +324,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	public String post(String url, String data, InputStream certFile, String certPass, String protocol) {
 		try {
-			SSLSocketFactory sslSocketFactory = getSslSocketFactory(certPass, certFile, null, protocol);
+			SSLSocketFactory sslSocketFactory = getSslSocketFactory(null, certFile, certPass, protocol);
 			return HttpRequest.post(url)
 				.setSSLSocketFactory(sslSocketFactory)
 				.body(data)
