@@ -49,7 +49,12 @@ public enum RequestMethodEnum {
 	/**
 	 * connect 请求
 	 */
-	CONNECT("CONNECT");
+	CONNECT("CONNECT"),
+	/**
+	 * PATCH 请求
+	 */
+	PATCH("PATCH"),
+	;
 
 	private final String method;
 
