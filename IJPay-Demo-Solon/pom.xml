@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.noear</groupId>
+		<artifactId>solon-parent</artifactId>
+		<version>1.12.1</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.ijpay.demo</groupId>
+	<artifactId>IJPay-Demo-Solon</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>${project.artifactId}</name>
+	<description>IJPay Demo for Solon</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+
+		<ijapy.version>2.9.3</ijapy.version>
+		<enjoy.version>4.3</enjoy.version>
+		<fastjson.version>1.2.75</fastjson.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.noear</groupId>
+					<artifactId>solon.boot.jlhttp</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ijpay 需要 servlet 接口  -->
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon.boot.jetty</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>logback-solon-plugin</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon.view.enjoy</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-WxPay</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-AliPay</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-QQ</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-UnionPay</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-JDPay</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-PayPal</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgument>-parameters</compilerArgument>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.noear</groupId>
+				<artifactId>solon-maven-plugin</artifactId><configuration>
+				<!-- 如果只有一个 main 函数，则不用配置 -->
+				<mainClass>com.ijpay.demo.DemoApplication</mainClass>
+			</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

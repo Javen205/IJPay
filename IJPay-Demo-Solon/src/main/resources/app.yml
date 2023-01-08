@@ -1,0 +1,8 @@
+server.port: 80
+
+solon.app:
+  name: demoapp
+  group: demo
+
+#添加视图映射（EnjoyRender 默认映射为 .shtm）
+solon.view.mapping.html: EnjoyRender
