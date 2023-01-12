@@ -16,14 +16,7 @@ import org.noear.solon.Solon;
  */
 public class DemoApplication {
 	public static void main(String[] args) {
-		Solon.start(DemoApplication.class, args, app -> {
-			app.cfg().loadAdd("production/alipay.properties");
-			app.cfg().loadAdd("production/jdpay.properties");
-			app.cfg().loadAdd("production/paypal.properties");
-			app.cfg().loadAdd("production/unionpay.properties");
-			app.cfg().loadAdd("production/wxpay.properties");
-			app.cfg().loadAdd("production/wxpay_v3.properties");
-		});
+		Solon.start(DemoApplication.class, args);
 	}
 }
 
