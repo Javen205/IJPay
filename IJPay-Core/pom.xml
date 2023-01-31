@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.4</version>
+		<version>2.9.5</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -17,7 +17,7 @@
 
 	<properties>
 		<zxing.version>3.5.1</zxing.version>
-		<slf4j.api.version>2.0.3</slf4j.api.version>
+		<slf4j.api.version>2.0.6</slf4j.api.version>
 		<xk.time.version>3.2.4</xk.time.version>
 	</properties>
 	<dependencies>

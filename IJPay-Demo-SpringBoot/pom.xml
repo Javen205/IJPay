@@ -19,7 +19,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<ijapy.version>2.9.3</ijapy.version>
+		<ijapy.version>2.9.5</ijapy.version>
 		<enjoy.version>4.3</enjoy.version>
 		<fastjson.version>1.2.75</fastjson.version>
 	</properties>
