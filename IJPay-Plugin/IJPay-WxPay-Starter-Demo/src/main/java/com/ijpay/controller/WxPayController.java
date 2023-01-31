@@ -30,6 +30,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/wxPay")
 public class WxPayController extends AbstractWxPayController {
 
+	@GetMapping("")
+	public String index() {
+		return "欢迎使用 IJPay 中的支付宝支付 -By Javen  <br/><br>  交流群：723992875、864988890";
+	}
+
 	@GetMapping("/switchConfig")
 	public WxPayApiConfig switchConfig() {
 		String appId = wxPayApiConfig.getAppId();

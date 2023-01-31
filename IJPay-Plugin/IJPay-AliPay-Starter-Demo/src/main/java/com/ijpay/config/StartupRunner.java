@@ -2,8 +2,12 @@ package com.ijpay.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
+
+import java.util.Arrays;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付等常用的支付方式以及各种常用的接口。</p>
@@ -20,9 +24,17 @@ import org.springframework.core.annotation.Order;
 public class StartupRunner implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
 
+	@Autowired
+	private ApplicationContext applicationContext;
+
 	@Override
 	public void run(String... args) {
 		logger.info("startup runner");
+		String[] beanNames = applicationContext.getBeanDefinitionNames();
+		Arrays.sort(beanNames);
+		for (String name : beanNames) {
+			logger.info(name);
+		}
 	}
 
 }
