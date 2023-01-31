@@ -3,7 +3,7 @@ package com.ijpay.core.kit;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.io.resource.Resource;
 import cn.hutool.core.lang.Snowflake;
@@ -654,6 +654,7 @@ public class PayKit {
 	 * @return 绝对路径
 	 */
 	public static String getAbsolutePath(String classPath) {
+		System.out.println("2");
 		return new ClassPathResource(classPath).getAbsolutePath();
 	}
 
@@ -683,15 +684,8 @@ public class PayKit {
 	 * @param path 文件路径
 	 * @return 文件内容
 	 */
-	public static String getCertFileContent(String path) {
-		if (StrUtil.isBlank(path)) {
-			return null;
-		}
-		// 绝对地址
-		File file = new File(path);
-		if (!file.exists()) {
-			path = getAbsolutePath(path);
-		}
-		return FileUtil.readUtf8String(path);
+	public static String getCertFileContent(String path) throws IOException {
+		InputStream certFileInputStream = getCertFileInputStream(path);
+		return IoUtil.read(certFileInputStream, StandardCharsets.UTF_8);
 	}
 }
