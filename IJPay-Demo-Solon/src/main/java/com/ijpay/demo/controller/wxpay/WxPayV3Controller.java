@@ -82,10 +82,12 @@ public class WxPayV3Controller {
 	public String index() {
 		log.info(wxPayV3Bean.toString());
 		try {
-			String classPath = "classpath:/dev/apiclient_cert.p12";
+			String classPath = "classpath:/dev/apiclient_key.pem";
 			String v3 = "classpath:/dev/wxpay_v3.properties";
 			String absolutePath = PayKit.getAbsolutePath(classPath);
 			log.info("absolutePath:{}", absolutePath);
+			String certFileContent = PayKit.getCertFileContent(classPath);
+			log.info("classPath content:{}", certFileContent);
 			InputStream inputStream = PayKit.getCertFileInputStream(v3);
 			if (null != inputStream) {
 				ByteArrayOutputStream result = new ByteArrayOutputStream();
