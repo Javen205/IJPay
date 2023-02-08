@@ -1,7 +1,7 @@
 package com.ijpay.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,13 +17,7 @@ import java.util.UUID;
 public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	public static String encode(String str) {
-		String encode = null;
-		try {
-			encode = URLEncoder.encode(str, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return encode;
+		return URLEncoder.encode(str, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -74,9 +68,8 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return {String}
 	 */
 	public static String replace(String str, String regex, String... args) {
-		int length = args.length;
-		for (int i = 0; i < length; i++) {
-			str = str.replaceFirst(regex, args[i]);
+		for (String arg : args) {
+			str = str.replaceFirst(regex, arg);
 		}
 		return str;
 	}

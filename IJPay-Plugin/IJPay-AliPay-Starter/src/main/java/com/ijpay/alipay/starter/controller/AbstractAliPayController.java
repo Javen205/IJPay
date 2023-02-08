@@ -5,10 +5,10 @@ import com.ijpay.alipay.AliPayApiConfigKit;
 import com.ijpay.alipay.starter.constants.IJPayConstant;
 import com.ijpay.alipay.starter.properties.AliPayProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.annotation.Resource;
 
 
 /**
@@ -23,18 +23,19 @@ import javax.annotation.Resource;
  * @author Javen
  */
 @Slf4j
+@Component
 public class AbstractAliPayController extends AbstractAliPayApiController {
 
 	/**
 	 * starter 自动生成的支付宝支付配置,默认取配置的第一个
 	 */
-	@Resource
+	@Autowired
 	protected AliPayApiConfig aliPayApiConfig;
 
 	/**
 	 * yml 配置
 	 */
-	@Resource
+	@Autowired
 	protected AliPayProperties aliPayProperties;
 
 	/**
