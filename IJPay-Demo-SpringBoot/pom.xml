@@ -21,7 +21,7 @@
 
 		<ijapy.version>2.9.6</ijapy.version>
 		<enjoy.version>4.3</enjoy.version>
-		<fastjson.version>1.2.75</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 	</properties>
 
 	<dependencies>
