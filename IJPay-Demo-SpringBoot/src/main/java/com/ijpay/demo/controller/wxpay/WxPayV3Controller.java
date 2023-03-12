@@ -26,11 +26,14 @@ import com.ijpay.wxpay.enums.v3.ComplaintsApiEnum;
 import com.ijpay.wxpay.enums.v3.OtherApiEnum;
 import com.ijpay.wxpay.enums.v3.PayGiftActivityApiEnum;
 import com.ijpay.wxpay.enums.v3.PayScoreApiEnum;
+import com.ijpay.wxpay.enums.v3.TransferApiEnum;
 import com.ijpay.wxpay.model.v3.Amount;
+import com.ijpay.wxpay.model.v3.BatchTransferModel;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.RefundAmount;
 import com.ijpay.wxpay.model.v3.RefundGoodsDetail;
 import com.ijpay.wxpay.model.v3.RefundModel;
+import com.ijpay.wxpay.model.v3.TransferDetailInput;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +54,7 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -320,6 +324,49 @@ public class WxPayV3Controller {
 				Map<String, String> map = WxPayKit.jsApiCreateSign(wxPayV3Bean.getAppId(), prepayId, wxPayV3Bean.getKeyPath());
 				log.info("唤起支付参数:{}", map);
 				return JSONUtil.toJsonStr(map);
+			}
+			return JSONUtil.toJsonStr(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+
+	@RequestMapping("/batchTransfer")
+	@ResponseBody
+	public String batchTransfer(@RequestParam(value = "openId", required = false, defaultValue = "o-_-itxuXeGW3O1cxJ7FXNmq8Wf8") String openId) {
+		try {
+			BatchTransferModel batchTransferModel = new BatchTransferModel()
+				.setAppid(wxPayV3Bean.getAppId())
+				.setOut_batch_no(PayKit.generateStr())
+				.setBatch_name("IJPay 测试微信转账到零钱")
+				.setBatch_remark("IJPay 测试微信转账到零钱")
+				.setTotal_amount(1)
+				.setTotal_num(1)
+				.setTransfer_detail_list(Collections.singletonList(
+					new TransferDetailInput()
+					.setOut_detail_no(PayKit.generateStr())
+					.setTransfer_amount(1)
+					.setTransfer_remark("IJPay 测试微信转账到零钱")
+					.setOpenid(openId)));
+
+			log.info("发起商家转账请求参数 {}", JSONUtil.toJsonStr(batchTransferModel));
+			IJPayHttpResponse response = WxPayApi.v3(
+				RequestMethodEnum.POST,
+				WxDomainEnum.CHINA.toString(),
+				TransferApiEnum.TRANSFER_BATCHES.toString(),
+				wxPayV3Bean.getMchId(),
+				getSerialNumber(),
+				null,
+				wxPayV3Bean.getKeyPath(),
+				JSONUtil.toJsonStr(batchTransferModel)
+			);
+			log.info("发起商家转账响应 {}", response);
+			// 根据证书序列号查询对应的证书来验证签名结果
+			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			log.info("verifySignature: {}", verifySignature);
+			if (response.getStatus() == OK && verifySignature) {
+				return response.getBody();
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
