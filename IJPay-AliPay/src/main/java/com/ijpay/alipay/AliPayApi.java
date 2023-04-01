@@ -451,8 +451,8 @@ public class AliPayApi {
 	 *
 	 * @param response  {@link HttpServletResponse}
 	 * @param model     {@link AlipayTradeWapPayModel}
-	 * @param returnUrl 异步通知URL
-	 * @param notifyUrl 同步通知URL
+	 * @param returnUrl 同步通知URL
+	 * @param notifyUrl 异步通知URL
 	 * @throws AlipayApiException 支付宝 Api 异常
 	 * @throws IOException        IO 异常
 	 */
