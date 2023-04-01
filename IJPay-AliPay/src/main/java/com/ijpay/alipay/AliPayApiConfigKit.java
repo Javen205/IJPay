@@ -33,7 +33,8 @@ public class AliPayApiConfigKit {
 		if (CFG_MAP.size() == 0) {
 			CFG_MAP.put(DEFAULT_CFG_KEY, aliPayApiConfig);
 		}
-		return CFG_MAP.put(aliPayApiConfig.getAppId(), aliPayApiConfig);
+		CFG_MAP.put(aliPayApiConfig.getAppId(), aliPayApiConfig);
+		return aliPayApiConfig;
 	}
 
 	/**
