@@ -20,6 +20,7 @@ import com.ijpay.wxpay.enums.v2.PayApiEnum;
 import com.ijpay.wxpay.enums.v2.ProfitSharingApiEnum;
 import com.ijpay.wxpay.enums.v2.RedPackApiEnum;
 import com.ijpay.wxpay.enums.v2.TransferApiEnum;
+import com.ijpay.core.enums.AuthTypeEnum;
 
 import java.io.File;
 import java.io.InputStream;
@@ -255,9 +256,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                       String mchId, String serialNo, String platSerialNo, String keyPath,
-                                       String body, String nonceStr, long timestamp, String authType,
-                                       File file) throws Exception {
+									   String mchId, String serialNo, String platSerialNo, String keyPath,
+									   String body, String nonceStr, long timestamp, String authType,
+									   File file) throws Exception {
 		// 构建 Authorization
 		String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
 			keyPath, body, nonceStr, timestamp, authType);
@@ -299,9 +300,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                       String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
-                                       String body, String nonceStr, long timestamp, String authType,
-                                       File file) throws Exception {
+									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
+									   String body, String nonceStr, long timestamp, String authType,
+									   File file) throws Exception {
 		// 构建 Authorization
 		String authorization = WxPayKit.buildAuthorization(method, urlSuffix, mchId, serialNo,
 			privateKey, body, nonceStr, timestamp, authType);
@@ -339,9 +340,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
-                                       String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
+									   String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, null);
 	}
@@ -361,9 +362,9 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
-                                       String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
+									   String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, null);
 	}
@@ -383,10 +384,10 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                       String mchId, String serialNo, String platSerialNo, String keyPath,
-                                       Map<String, String> params) throws Exception {
+									   String mchId, String serialNo, String platSerialNo, String keyPath,
+									   Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -409,10 +410,10 @@ public class WxPayApi {
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                       String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
-                                       Map<String, String> params) throws Exception {
+									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
+									   Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -436,7 +437,7 @@ public class WxPayApi {
 	 */
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo, String platSerialNo, String keyPath, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 	}
@@ -458,7 +459,7 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo,
 									   String platSerialNo, PrivateKey privateKey, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, file);
 	}
@@ -483,9 +484,9 @@ public class WxPayApi {
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                                  String mchId, String serialNo, String platSerialNo, String keyPath,
-                                                  String body, String nonceStr, long timestamp, String authType,
-                                                  File file) throws Exception {
+												  String mchId, String serialNo, String platSerialNo, String keyPath,
+												  String body, String nonceStr, long timestamp, String authType,
+												  File file) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 		return buildResMap(response);
 	}
@@ -505,7 +506,7 @@ public class WxPayApi {
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
-                                                  String serialNo, String keyPath, String body) throws Exception {
+												  String serialNo, String keyPath, String body) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, null, keyPath, body);
 		return buildResMap(response);
 	}
@@ -526,7 +527,7 @@ public class WxPayApi {
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
-                                                  String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
+												  String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body);
 		return buildResMap(response);
 	}
@@ -547,8 +548,8 @@ public class WxPayApi {
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                                  String mchId, String serialNo, String platSerialNo, String keyPath,
-                                                  Map<String, String> params) throws Exception {
+												  String mchId, String serialNo, String platSerialNo, String keyPath,
+												  Map<String, String> params) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, params);
 		return buildResMap(response);
 	}
@@ -568,8 +569,8 @@ public class WxPayApi {
 	 */
 	@Deprecated
 	public static Map<String, Object> v3Execution(RequestMethodEnum method, String urlPrefix, String urlSuffix,
-                                                  String mchId, String serialNo, String keyPath,
-                                                  Map<String, String> params) throws Exception {
+												  String mchId, String serialNo, String keyPath,
+												  Map<String, String> params) throws Exception {
 		IJPayHttpResponse response = v3(method, urlPrefix, urlSuffix, mchId, serialNo, null, keyPath, params);
 		return buildResMap(response);
 	}

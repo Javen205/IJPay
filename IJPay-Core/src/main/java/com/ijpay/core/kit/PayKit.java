@@ -398,7 +398,7 @@ public class PayKit {
      * @param nonceStr  请求随机串
      * @param timestamp 时间戳
      * @param signature 签名值
-     * @param authType  认证类型，目前为WECHATPAY2-SHA256-RSA2048
+     * @param authType  认证类型
      * @return 请求头 Authorization
      */
     public static String getAuthorization(String mchId, String serialNo, String nonceStr, String timestamp, String signature, String authType) {

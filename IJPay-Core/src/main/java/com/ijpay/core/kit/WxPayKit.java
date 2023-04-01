@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
 
@@ -578,7 +579,7 @@ public class WxPayKit {
 											String serialNo, String keyPath, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = PayKit.generateStr();
 
 		return buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
@@ -600,7 +601,7 @@ public class WxPayKit {
 											String serialNo, PrivateKey privateKey, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = "WECHATPAY2-SHA256-RSA2048";
+		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = PayKit.generateStr();
 
 		return buildAuthorization(method, urlSuffix, mchId, serialNo, privateKey, body, nonceStr, timestamp, authType);
