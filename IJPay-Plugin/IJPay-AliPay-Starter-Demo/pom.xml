@@ -17,7 +17,7 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<fastjson.version>2.0.14</fastjson.version>
-		<ijpay-alipay-starters.version>2.9.6-17</ijpay-alipay-starters.version>
+		<ijpay-alipay-starters.version>2.9.7-17</ijpay-alipay-starters.version>
 		<commons-lang.version>3.12.0</commons-lang.version>
 	</properties>
 	<dependencies>
