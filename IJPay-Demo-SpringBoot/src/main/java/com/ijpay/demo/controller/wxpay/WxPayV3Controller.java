@@ -286,6 +286,85 @@ public class WxPayV3Controller {
 		}
 	}
 
+	@RequestMapping("/appPay")
+	@ResponseBody
+	public String appPay() {
+		try {
+			String timeExpire = DateTimeZoneUtil.dateToTimeZone(System.currentTimeMillis() + 1000 * 60 * 3);
+			UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
+				.setAppid(wxPayV3Bean.getAppId())
+				.setMchid(wxPayV3Bean.getMchId())
+				.setDescription("IJPay 让支付触手可及")
+				.setOut_trade_no(PayKit.generateStr())
+				.setTime_expire(timeExpire)
+				.setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
+				.setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
+				.setAmount(new Amount().setTotal(1));
+
+			log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
+			IJPayHttpResponse response = WxPayApi.v3(
+				RequestMethodEnum.POST,
+				WxDomainEnum.CHINA.toString(),
+				BasePayApiEnum.APP_PAY.toString(),
+				wxPayV3Bean.getMchId(),
+				getSerialNumber(),
+				null,
+				wxPayV3Bean.getKeyPath(),
+				JSONUtil.toJsonStr(unifiedOrderModel)
+			);
+			log.info("统一下单响应 {}", response);
+			// 根据证书序列号查询对应的证书来验证签名结果
+			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			log.info("verifySignature: {}", verifySignature);
+			if (response.getStatus() == OK && verifySignature) {
+				String body = response.getBody();
+				JSONObject jsonObject = JSONUtil.parseObj(body);
+				String prepayId = jsonObject.getStr("prepay_id");
+				Map<String, String> map = WxPayKit.appCreateSign(wxPayV3Bean.getAppId(), wxPayV3Bean.getMchId(), prepayId, wxPayV3Bean.getKeyPath());
+				log.info("唤起支付参数:{}", map);
+				return JSONUtil.toJsonStr(map);
+			}
+			return JSONUtil.toJsonStr(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+
+
+	@RequestMapping("/query")
+	@ResponseBody
+	public String query(@RequestParam String outTradeNo) {
+		try {
+			Map<String, String> params = new HashMap<>(16);
+			params.put("mchid", wxPayV3Bean.getMchId());
+
+			log.info("统一下单参数 {}", JSONUtil.toJsonStr(params));
+			IJPayHttpResponse response = WxPayApi.v3(
+				RequestMethodEnum.GET,
+				WxDomainEnum.CHINA.toString(),
+				String.format(BasePayApiEnum.ORDER_QUERY_BY_OUT_TRADE_NO.toString(), outTradeNo),
+				wxPayV3Bean.getMchId(),
+				getSerialNumber(),
+				null,
+				wxPayV3Bean.getKeyPath(),
+				params
+			);
+			log.info("查询响应 {}", response);
+			if (response.getStatus() == OK) {
+				// 根据证书序列号查询对应的证书来验证签名结果
+				boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+				log.info("verifySignature: {}", verifySignature);
+				return response.getBody();
+			}
+			return JSONUtil.toJsonStr(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+
+
 	@RequestMapping("/jsApiPay")
 	@ResponseBody
 	public String jsApiPay(@RequestParam(value = "openId", required = false, defaultValue = "o-_-itxuXeGW3O1cxJ7FXNmq8Wf8") String openId) {
@@ -345,10 +424,10 @@ public class WxPayV3Controller {
 				.setTotal_num(1)
 				.setTransfer_detail_list(Collections.singletonList(
 					new TransferDetailInput()
-					.setOut_detail_no(PayKit.generateStr())
-					.setTransfer_amount(1)
-					.setTransfer_remark("IJPay 测试微信转账到零钱")
-					.setOpenid(openId)));
+						.setOut_detail_no(PayKit.generateStr())
+						.setTransfer_amount(1)
+						.setTransfer_remark("IJPay 测试微信转账到零钱")
+						.setOpenid(openId)));
 
 			log.info("发起商家转账请求参数 {}", JSONUtil.toJsonStr(batchTransferModel));
 			IJPayHttpResponse response = WxPayApi.v3(
