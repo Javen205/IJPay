@@ -3,6 +3,7 @@ package com.ijpay.wxpay;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import com.ijpay.core.IJPayHttpResponse;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.PayModel;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
@@ -20,7 +21,6 @@ import com.ijpay.wxpay.enums.v2.PayApiEnum;
 import com.ijpay.wxpay.enums.v2.ProfitSharingApiEnum;
 import com.ijpay.wxpay.enums.v2.RedPackApiEnum;
 import com.ijpay.wxpay.enums.v2.TransferApiEnum;
-import com.ijpay.core.enums.AuthTypeEnum;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1010,12 +1010,39 @@ public class WxPayApi {
 	 * 获取 RSA 加密公钥
 	 *
 	 * @param params   请求参数
+	 * @param certPath 证书文件路径
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String getPublicKeyByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+		return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certPath, certPass, protocol);
+	}
+
+	/**
+	 * 获取 RSA 加密公钥
+	 *
+	 * @param params   请求参数
 	 * @param certFile 证书文件的   InputStream
 	 * @param certPass 证书密码
 	 * @return {@link String} 请求返回的结果
 	 */
 	public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPass) {
 		return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certFile, certPass);
+	}
+
+
+	/**
+	 * 获取 RSA 加密公钥
+	 *
+	 * @param params   请求参数
+	 * @param certFile 证书文件的   InputStream
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String getPublicKeyByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+		return executionByProtocol(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certFile, certPass, protocol);
 	}
 
 	/**
