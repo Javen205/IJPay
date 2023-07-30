@@ -275,6 +275,8 @@ public class WxPayApi {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+		} else if (method == RequestMethodEnum.PATCH) {
+			return patch(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
@@ -319,6 +321,8 @@ public class WxPayApi {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+		} else if (method == RequestMethodEnum.PATCH) {
+			return patch(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
@@ -2017,6 +2021,32 @@ public class WxPayApi {
 		paramMap.put("file", file);
 		paramMap.put("meta", data);
 		return upload(url, paramMap, getUploadHeaders(authorization, serialNumber));
+	}
+
+	/**
+	 * patch 请求
+	 *
+	 * @param url     请求url
+	 * @param data    请求参数
+	 * @param headers 请求头
+	 * @return {@link IJPayHttpResponse}    请求返回的结果
+	 */
+	public static IJPayHttpResponse patch(String url, String data, Map<String, String> headers) {
+		return HttpKit.getDelegate().patch(url, data, headers);
+	}
+
+
+	/**
+	 * patch 请求
+	 *
+	 * @param url           请求url
+	 * @param authorization 授权信息
+	 * @param serialNumber  公钥证书序列号
+	 * @param data          请求参数
+	 * @return {@link IJPayHttpResponse}    请求返回的结果
+	 */
+	public static IJPayHttpResponse patch(String url, String authorization, String serialNumber, String data) {
+		return patch(url, data, getHeaders(authorization, serialNumber));
 	}
 
 
