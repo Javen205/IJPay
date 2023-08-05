@@ -37,6 +37,11 @@ public enum OtherApiEnum implements WxApiEnum {
 	 */
 	GET_CERTIFICATES("/v3/certificates", "获取平台证书列表"),
 
+	/**
+	 * 获取平台证书列表
+	 */
+	GET_CERTIFICATES_BY_ALGORITHM_TYPE("/v3/certificates?algorithm_type=%s", "获取平台证书列表"),
+
 	;
 
 	/**
