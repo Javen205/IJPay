@@ -378,7 +378,7 @@ public class WxPayKit {
 	 * @throws Exception 错误信息
 	 */
 	public static Map<String, String> jsApiCreateSign(String appId, String prepayId, String keyPath) throws Exception {
-		return jsApiCreateSign(appId, prepayId, PayKit.getPrivateKey(keyPath));
+		return jsApiCreateSign(appId, prepayId, PayKit.getPrivateKey(keyPath, AuthTypeEnum.RSA.getCode()));
 	}
 
 	/**
@@ -451,7 +451,7 @@ public class WxPayKit {
 	 * @throws Exception 错误信息
 	 */
 	public static Map<String, String> appCreateSign(String appId, String partnerId, String prepayId, String keyPath) throws Exception {
-		return appCreateSign(appId, partnerId, prepayId, PayKit.getPrivateKey(keyPath));
+		return appCreateSign(appId, partnerId, prepayId, PayKit.getPrivateKey(keyPath, AuthTypeEnum.RSA.getCode()));
 	}
 
 	/**
@@ -533,7 +533,7 @@ public class WxPayKit {
 											long timestamp, String authType) throws Exception {
 		// 构建签名参数
 		String buildSignMessage = PayKit.buildSignMessage(method, urlSuffix, timestamp, nonceStr, body);
-		String signature = PayKit.createSign(buildSignMessage, keyPath);
+		String signature = PayKit.createSign(buildSignMessage, keyPath, authType);
 		// 根据平台规则生成请求头 authorization
 		return PayKit.getAuthorization(mchId, serialNo, nonceStr, String.valueOf(timestamp), signature, authType);
 	}
@@ -579,7 +579,7 @@ public class WxPayKit {
 											String serialNo, String keyPath, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = PayKit.generateStr();
 
 		return buildAuthorization(method, urlSuffix, mchId, serialNo, keyPath, body, nonceStr, timestamp, authType);
@@ -601,9 +601,8 @@ public class WxPayKit {
 											String serialNo, PrivateKey privateKey, String body) throws Exception {
 
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = PayKit.generateStr();
-
 		return buildAuthorization(method, urlSuffix, mchId, serialNo, privateKey, body, nonceStr, timestamp, authType);
 	}
 
@@ -621,7 +620,8 @@ public class WxPayKit {
 		String body = (String) map.get("body");
 		String nonceStr = (String) map.get("nonceStr");
 		String timestamp = (String) map.get("timestamp");
-		return verifySignature(signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
+		String signatureType = (String) map.get("Wechatpay-Signature-Type");
+		return verifySignature(signatureType, signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
 	}
 
 	/**
@@ -636,8 +636,14 @@ public class WxPayKit {
 		String timestamp = response.getHeader("Wechatpay-Timestamp");
 		String nonceStr = response.getHeader("Wechatpay-Nonce");
 		String signature = response.getHeader("Wechatpay-Signature");
+		String signatureType = response.getHeader("Wechatpay-Signature-Type");
 		String body = response.getBody();
-		return verifySignature(signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
+		System.out.println("timestamp:" + timestamp);
+		System.out.println("nonceStr:" + nonceStr);
+		System.out.println("signature:" + signature);
+		System.out.println("signatureType:" + signatureType);
+		System.out.println("body:" + body);
+		return verifySignature(signatureType, signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
 	}
 
 	/**
@@ -652,8 +658,9 @@ public class WxPayKit {
 		String timestamp = response.getHeader("Wechatpay-Timestamp");
 		String nonceStr = response.getHeader("Wechatpay-Nonce");
 		String signature = response.getHeader("Wechatpay-Signature");
+		String signatureType = response.getHeader("Wechatpay-Signature-Type");
 		String body = response.getBody();
-		return verifySignature(signature, body, nonceStr, timestamp, certInputStream);
+		return verifySignature(signatureType, signature, body, nonceStr, timestamp, certInputStream);
 	}
 
 	/**
@@ -670,7 +677,8 @@ public class WxPayKit {
 		String body = (String) map.get("body");
 		String nonceStr = (String) map.get("nonceStr");
 		String timestamp = (String) map.get("timestamp");
-		return verifySignature(signature, body, nonceStr, timestamp, certInputStream);
+		String signatureType = (String) map.get("Wechatpay-Signature-Type");
+		return verifySignature(signatureType, signature, body, nonceStr, timestamp, certInputStream);
 	}
 
 	/**
@@ -708,6 +716,7 @@ public class WxPayKit {
 	/**
 	 * 验证签名
 	 *
+	 * @param signatureType   签名类型
 	 * @param signature       待验证的签名
 	 * @param body            应答主体
 	 * @param nonce           随机串
@@ -716,11 +725,14 @@ public class WxPayKit {
 	 * @return 签名结果
 	 * @throws Exception 异常信息
 	 */
-	public static boolean verifySignature(String signature, String body, String nonce, String timestamp, InputStream certInputStream) throws Exception {
+	public static boolean verifySignature(String signatureType, String signature, String body, String nonce, String timestamp, InputStream certInputStream) throws Exception {
 		String buildSignMessage = PayKit.buildSignMessage(timestamp, nonce, body);
 		// 获取证书
 		X509Certificate certificate = PayKit.getCertificate(certInputStream);
 		PublicKey publicKey = certificate.getPublicKey();
+		if (StrUtil.equals(signatureType, AuthTypeEnum.SM2.getCode())) {
+			return PayKit.sm4Verify(publicKey, buildSignMessage, signature);
+		}
 		return RsaKit.checkByPublicKey(buildSignMessage, signature, publicKey);
 	}
 

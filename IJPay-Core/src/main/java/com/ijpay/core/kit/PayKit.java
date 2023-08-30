@@ -14,13 +14,18 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.ijpay.core.XmlHelper;
 import com.ijpay.core.constant.IJPayConstants;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.model.CertificateModel;
+import org.bouncycastle.asn1.gm.GMObjectIdentifiers;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,21 +33,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
-import java.security.PrivateKey;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateExpiredException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.CertificateNotYetValidException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.*;
+import java.security.cert.*;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.*;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -62,6 +57,138 @@ public class PayKit {
 	 * 对象路径前缀
 	 */
 	public static final String CLASS_PATH_PREFIX = "classpath:";
+
+
+	/**
+	 * 获取国密证书私钥
+	 *
+	 * @param privateKey 私钥
+	 * @return 返回值
+	 * @throws Exception 异常信息
+	 */
+	public static PrivateKey getSmPrivateKey(String privateKey) throws Exception {
+		byte[] encPrivate = Base64.decode(privateKey);
+		return getSmPrivateKey(encPrivate);
+	}
+
+	/**
+	 * 获取国密证书公钥
+	 *
+	 * @param publicKey 公钥
+	 * @return 返回值
+	 * @throws Exception 异常信息
+	 */
+	public static PublicKey getSmPublicKey(String publicKey) throws Exception {
+		byte[] encPublic = Base64.decode(publicKey);
+		return getSmPublicKey(encPublic);
+	}
+
+	/**
+	 * 获取国密证书私钥
+	 *
+	 * @param encPrivate 私钥
+	 * @return 返回值
+	 * @throws Exception 异常信息
+	 */
+	public static PrivateKey getSmPrivateKey(byte[] encPrivate) throws Exception {
+		KeyFactory keyFact = KeyFactory.getInstance("EC", new BouncyCastleProvider());
+		return keyFact.generatePrivate(new PKCS8EncodedKeySpec(encPrivate));
+	}
+
+	/**
+	 * 获取国密证书公钥
+	 *
+	 * @param encPublic 公钥
+	 * @return 返回值
+	 * @throws Exception 异常信息
+	 */
+	public static PublicKey getSmPublicKey(byte[] encPublic) throws Exception {
+		KeyFactory keyFact = KeyFactory.getInstance("EC", new BouncyCastleProvider());
+		return keyFact.generatePublic(new X509EncodedKeySpec(encPublic));
+	}
+
+	/**
+	 * 签名
+	 *
+	 * @param privateKey 私钥
+	 * @param content    需要签名的内容
+	 * @return 返回结果
+	 * @throws Exception 异常信息
+	 */
+	public static String sm2SignWithSm3(String privateKey, String content) throws Exception {
+		PrivateKey smPrivateKey = getSmPrivateKey(privateKey);
+		return sm2SignWithSm3(smPrivateKey, content);
+	}
+
+	/**
+	 * 签名
+	 *
+	 * @param privateKey 私钥
+	 * @param content    需要签名的内容
+	 * @return 返回结果
+	 * @throws Exception 异常信息
+	 */
+	public static String sm2SignWithSm3(PrivateKey privateKey, String content) throws Exception {
+		// 生成SM2sign with sm3 签名验签算法实例
+		Signature signature = Signature.getInstance(GMObjectIdentifiers.sm2sign_with_sm3.toString()
+			, new BouncyCastleProvider());
+		// 使用私钥签名,初始化签名实例
+		signature.initSign(privateKey);
+		// 签名原文
+		byte[] plainText = content.getBytes(StandardCharsets.UTF_8);
+		// 写入签名原文到算法中
+		signature.update(plainText);
+		// 计算签名值
+		byte[] signatureValue = signature.sign();
+		return Base64.encode(signatureValue);
+	}
+
+	/**
+	 * SM3 Hash
+	 *
+	 * @param content 原始内容
+	 * @return 返回结果
+	 * @throws Exception 异常信息
+	 */
+	public static byte[] sm3Hash(String content) throws Exception {
+		MessageDigest digest = MessageDigest.getInstance("SM3", new BouncyCastleProvider());
+		byte[] contentDigest = digest.digest(content.getBytes(StandardCharsets.UTF_8));
+		return Arrays.copyOf(contentDigest, 16);
+	}
+
+	/**
+	 * 下载平台证书以及回调通知加解密
+	 *
+	 * @param key3           APIv3密钥
+	 * @param cipherText     密文
+	 * @param nonce          随机串
+	 * @param associatedData 附加数据
+	 * @return 解密后的明文
+	 * @throws Exception 异常信息
+	 */
+	public static String sm4DecryptToString(String key3, String cipherText, String nonce, String associatedData) throws Exception {
+		Cipher cipher = Cipher.getInstance("SM4/GCM/NoPadding", new BouncyCastleProvider());
+		byte[] keyByte = PayKit.sm3Hash(key3);
+		SecretKeySpec key = new SecretKeySpec(keyByte, "SM4");
+		GCMParameterSpec spec = new GCMParameterSpec(128, nonce.getBytes(StandardCharsets.UTF_8));
+		cipher.init(Cipher.DECRYPT_MODE, key, spec);
+		cipher.updateAAD(associatedData.getBytes(StandardCharsets.UTF_8));
+		return new String(cipher.doFinal(Base64.decode(cipherText)), StandardCharsets.UTF_8);
+	}
+
+	public static boolean sm4Verify(String publicKey, String plainText, String originalSignature) throws Exception {
+		PublicKey smPublicKey = getSmPublicKey(publicKey);
+		return sm4Verify(smPublicKey, plainText, originalSignature);
+	}
+
+	public static boolean sm4Verify(PublicKey publicKey, String data, String originalSignature) throws Exception {
+		Signature signature = Signature.getInstance(GMObjectIdentifiers.sm2sign_with_sm3.toString()
+			, new BouncyCastleProvider());
+		signature.initVerify(publicKey);
+		// 写入待验签的签名原文到算法中
+		signature.update(data.getBytes(StandardCharsets.UTF_8));
+		return signature.verify(Base64.decode(originalSignature.getBytes(StandardCharsets.UTF_8)));
+	}
 
 	/**
 	 * 生成16进制的 sha256 字符串
@@ -321,7 +448,7 @@ public class PayKit {
 	 * @return 构造后带待签名串
 	 */
 	public static String buildSignMessage(ArrayList<String> signMessage) {
-		if (signMessage == null || signMessage.size() <= 0) {
+		if (signMessage == null || signMessage.size() == 0) {
 			return null;
 		}
 		StringBuilder sbf = new StringBuilder();
@@ -339,8 +466,8 @@ public class PayKit {
 	 * @return 生成 v3 签名
 	 * @throws Exception 异常信息
 	 */
-	public static String createSign(ArrayList<String> signMessage, String keyPath) throws Exception {
-		return createSign(buildSignMessage(signMessage), keyPath);
+	public static String createSign(ArrayList<String> signMessage, String keyPath, String authType) throws Exception {
+		return createSign(buildSignMessage(signMessage), keyPath, authType);
 	}
 
 	/**
@@ -364,13 +491,16 @@ public class PayKit {
 	 * @return 生成 v3 签名
 	 * @throws Exception 异常信息
 	 */
-	public static String createSign(String signMessage, String keyPath) throws Exception {
+	public static String createSign(String signMessage, String keyPath, String authType) throws Exception {
 		if (StrUtil.isEmpty(signMessage)) {
 			return null;
 		}
 		// 获取商户私钥
-		PrivateKey privateKey = PayKit.getPrivateKey(keyPath);
+		PrivateKey privateKey = PayKit.getPrivateKey(keyPath, authType);
 		// 生成签名
+		if (StrUtil.equals(authType, AuthTypeEnum.SM2.getCode())) {
+			return sm2SignWithSm3(privateKey, signMessage);
+		}
 		return RsaKit.encryptByPrivateKey(signMessage, privateKey);
 	}
 
@@ -418,8 +548,8 @@ public class PayKit {
 	 * @return {@link String} 商户私钥
 	 * @throws Exception 异常信息
 	 */
-	public static String getPrivateKeyStr(String keyPath) throws Exception {
-		return RsaKit.getPrivateKeyStr(getPrivateKey(keyPath));
+	public static String getPrivateKeyStr(String keyPath, String authType) throws Exception {
+		return RsaKit.getPrivateKeyStr(getPrivateKey(keyPath, authType));
 	}
 
 	/**
@@ -429,12 +559,12 @@ public class PayKit {
 	 * @return {@link PrivateKey} 商户私钥
 	 * @throws Exception 异常信息
 	 */
-	public static PrivateKey getPrivateKey(String keyPath) throws Exception {
+	public static PrivateKey getPrivateKey(String keyPath, String authType) throws Exception {
 		String originalKey = getCertFileContent(keyPath);
 		if (StrUtil.isEmpty(originalKey)) {
 			throw new RuntimeException("商户私钥证书获取失败");
 		}
-		return getPrivateKeyByKeyContent(originalKey);
+		return getPrivateKeyByKeyContent(originalKey, authType);
 	}
 
 	/**
@@ -444,8 +574,11 @@ public class PayKit {
 	 * @return {@link PrivateKey} 商户私钥
 	 * @throws Exception 异常信息
 	 */
-	public static PrivateKey getPrivateKeyByKeyContent(String originalKey) throws Exception {
+	public static PrivateKey getPrivateKeyByKeyContent(String originalKey, String authType) throws Exception {
 		String privateKey = getPrivateKeyByContent(originalKey);
+		if (StrUtil.equals(authType, AuthTypeEnum.SM2.getCode())) {
+			return getSmPrivateKey(privateKey);
+		}
 		return RsaKit.loadPrivateKey(privateKey);
 	}
 
@@ -470,7 +603,8 @@ public class PayKit {
 	 */
 	public static X509Certificate getCertificate(InputStream inputStream) {
 		try {
-			CertificateFactory cf = CertificateFactory.getInstance("X509");
+			Security.addProvider(new BouncyCastleProvider());
+			CertificateFactory cf = CertificateFactory.getInstance("X.509", new BouncyCastleProvider());
 			X509Certificate cert = (X509Certificate) cf.generateCertificate(inputStream);
 			cert.checkValidity();
 			return cert;
@@ -548,11 +682,6 @@ public class PayKit {
 		}
 		Date notAfter = model.getNotAfter();
 		if (null == notAfter) {
-			return false;
-		}
-		// 证书颁发者
-		Principal issuerDn = model.getIssuerDn();
-		if (null == issuerDn || !issuerDn.getName().contains(IJPayConstants.ISSUER)) {
 			return false;
 		}
 		// 证书CN字段

@@ -13,14 +13,7 @@ import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiEnum;
 import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.enums.WxDomainEnum;
-import com.ijpay.wxpay.enums.v2.CouponApiEnum;
-import com.ijpay.wxpay.enums.v2.DepositApiEnum;
-import com.ijpay.wxpay.enums.v2.EntrustPayApiEnum;
-import com.ijpay.wxpay.enums.v2.FacePayApiEnum;
-import com.ijpay.wxpay.enums.v2.PayApiEnum;
-import com.ijpay.wxpay.enums.v2.ProfitSharingApiEnum;
-import com.ijpay.wxpay.enums.v2.RedPackApiEnum;
-import com.ijpay.wxpay.enums.v2.TransferApiEnum;
+import com.ijpay.wxpay.enums.v2.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -340,15 +333,35 @@ public class WxPayApi {
 	 * @param platSerialNo 平台序列号
 	 * @param keyPath      apiclient_key.pem 证书路径
 	 * @param body         接口请求参数
+	 * @param authType     认证类型
+	 * @return {@link IJPayHttpResponse} 请求返回的结果
+	 * @throws Exception 接口执行异常
+	 */
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+									   String serialNo, String platSerialNo, String keyPath, String body, String authType) throws Exception {
+		long timestamp = System.currentTimeMillis() / 1000;
+		String nonceStr = WxPayKit.generateStr();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, null);
+	}
+
+	/**
+	 * V3 接口统一执行入口
+	 *
+	 * @param method       {@link RequestMethodEnum} 请求方法
+	 * @param urlPrefix    可通过 {@link WxDomain}来获取
+	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
+	 * @param mchId        商户Id
+	 * @param serialNo     商户 API 证书序列号
+	 * @param platSerialNo 平台序列号
+	 * @param keyPath      apiclient_key.pem 证书路径
+	 * @param body         接口请求参数
 	 * @return {@link IJPayHttpResponse} 请求返回的结果
 	 * @throws Exception 接口执行异常
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
 									   String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
-		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
-		String nonceStr = WxPayKit.generateStr();
-		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, null);
+		String authType = AuthTypeEnum.RSA.getCode();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, authType);
 	}
 
 	/**
@@ -368,7 +381,7 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
 									   String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, null);
 	}
@@ -391,7 +404,7 @@ public class WxPayApi {
 									   String mchId, String serialNo, String platSerialNo, String keyPath,
 									   Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -417,7 +430,7 @@ public class WxPayApi {
 									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
 									   Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -441,7 +454,7 @@ public class WxPayApi {
 	 */
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo, String platSerialNo, String keyPath, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 	}
@@ -463,7 +476,7 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo,
 									   String platSerialNo, PrivateKey privateKey, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, file);
 	}
