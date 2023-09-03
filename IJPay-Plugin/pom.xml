@@ -19,7 +19,7 @@
 
 	<properties>
 		<spring.boot.version>2.7.5</spring.boot.version>
-		<lombok.version>1.18.26</lombok.version>
+		<lombok.version>1.18.28</lombok.version>
 		<slf4j.api.version>2.0.6</slf4j.api.version>
 	</properties>
 	<dependencyManagement>
