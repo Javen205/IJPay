@@ -403,8 +403,29 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
 									   String mchId, String serialNo, String platSerialNo, String keyPath,
 									   Map<String, String> params) throws Exception {
-		long timestamp = System.currentTimeMillis() / 1000;
 		String authType = AuthTypeEnum.RSA.getCode();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, params, authType);
+	}
+
+	/**
+	 * V3 接口统一执行入口
+	 *
+	 * @param method       {@link RequestMethodEnum} 请求方法
+	 * @param urlPrefix    可通过 {@link WxDomain}来获取
+	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
+	 * @param mchId        商户Id
+	 * @param serialNo     商户 API 证书序列号
+	 * @param platSerialNo 平台序列号
+	 * @param keyPath      apiclient_key.pem 证书路径
+	 * @param params       Get 接口请求参数
+	 * @param authType     {@link AuthTypeEnum} 授权类型
+	 * @return {@link IJPayHttpResponse} 请求返回的结果
+	 * @throws Exception 接口执行异常
+	 */
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+									   String mchId, String serialNo, String platSerialNo, String keyPath,
+									   Map<String, String> params, String authType) throws Exception {
+		long timestamp = System.currentTimeMillis() / 1000;
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
