@@ -33,11 +33,29 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.security.*;
-import java.security.cert.*;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Security;
+import java.security.Signature;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateExpiredException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.CertificateNotYetValidException;
+import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -181,6 +199,15 @@ public class PayKit {
 		return sm4Verify(smPublicKey, plainText, originalSignature);
 	}
 
+	/**
+	 * 国密验签
+	 *
+	 * @param publicKey         平台证书公钥
+	 * @param data              待验签的签名原文
+	 * @param originalSignature 签名值
+	 * @return 验签结果
+	 * @throws Exception 异常信息
+	 */
 	public static boolean sm4Verify(PublicKey publicKey, String data, String originalSignature) throws Exception {
 		Signature signature = Signature.getInstance(GMObjectIdentifiers.sm2sign_with_sm3.toString()
 			, new BouncyCastleProvider());
@@ -592,6 +619,19 @@ public class PayKit {
 		return originalKey
 			.replace("-----BEGIN PRIVATE KEY-----", "")
 			.replace("-----END PRIVATE KEY-----", "")
+			.replaceAll("\\s+", "");
+	}
+
+	/**
+	 * 获取证书内容
+	 *
+	 * @param originalKey 公钥文本内容
+	 * @return 商户公钥
+	 */
+	public static String getPublicKeyByContent(String originalKey) {
+		return originalKey
+			.replace("-----BEGIN PUBLIC KEY-----", "")
+			.replace("-----END PUBLIC KEY-----", "")
 			.replaceAll("\\s+", "");
 	}
 
