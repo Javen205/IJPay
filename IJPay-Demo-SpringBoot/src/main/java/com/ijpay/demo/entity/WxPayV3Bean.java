@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class WxPayV3Bean {
 	private String appId;
 	private String keyPath;
+	private String publicKeyPath;
 	private String certPath;
 	private String certP12Path;
 	private String platformCertPath;
@@ -45,6 +46,14 @@ public class WxPayV3Bean {
 
 	public void setKeyPath(String keyPath) {
 		this.keyPath = keyPath;
+	}
+
+	public String getPublicKeyPath() {
+		return publicKeyPath;
+	}
+
+	public void setPublicKeyPath(String publicKeyPath) {
+		this.publicKeyPath = publicKeyPath;
 	}
 
 	public String getCertPath() {

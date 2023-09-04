@@ -4,13 +4,17 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.SmUtil;
+import cn.hutool.crypto.asymmetric.SM2;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.HttpKit;
@@ -22,6 +26,7 @@ import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxDomainEnum;
 import com.ijpay.wxpay.enums.v3.Apply4SubApiEnum;
 import com.ijpay.wxpay.enums.v3.BasePayApiEnum;
+import com.ijpay.wxpay.enums.v3.CertAlgorithmTypeEnum;
 import com.ijpay.wxpay.enums.v3.ComplaintsApiEnum;
 import com.ijpay.wxpay.enums.v3.OtherApiEnum;
 import com.ijpay.wxpay.enums.v3.PayGiftActivityApiEnum;
@@ -29,12 +34,16 @@ import com.ijpay.wxpay.enums.v3.PayScoreApiEnum;
 import com.ijpay.wxpay.enums.v3.TransferApiEnum;
 import com.ijpay.wxpay.model.v3.Amount;
 import com.ijpay.wxpay.model.v3.BatchTransferModel;
+import com.ijpay.wxpay.model.v3.H5Info;
 import com.ijpay.wxpay.model.v3.Payer;
 import com.ijpay.wxpay.model.v3.RefundAmount;
 import com.ijpay.wxpay.model.v3.RefundGoodsDetail;
 import com.ijpay.wxpay.model.v3.RefundModel;
+import com.ijpay.wxpay.model.v3.SceneInfo;
 import com.ijpay.wxpay.model.v3.TransferDetailInput;
 import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
+import org.bouncycastle.crypto.engines.SM2Engine;
+import org.bouncycastle.crypto.signers.PlainDSAEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -51,6 +60,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -161,24 +171,33 @@ public class WxPayV3Controller {
 		return platSerialNo;
 	}
 
-	private String savePlatformCert(String associatedData, String nonce, String cipherText, String certPath) {
+	private String savePlatformCert(String associatedData, String nonce, String cipherText, String algorithm, String certPath) {
 		try {
-			AesUtil aesUtil = new AesUtil(wxPayV3Bean.getApiKey3().getBytes(StandardCharsets.UTF_8));
-			// 平台证书密文解密
-			// encrypt_certificate 中的  associated_data nonce  ciphertext
-			String publicKey = aesUtil.decryptToString(
-				associatedData.getBytes(StandardCharsets.UTF_8),
-				nonce.getBytes(StandardCharsets.UTF_8),
-				cipherText
-			);
-			// 保存证书
-			FileWriter writer = new FileWriter(certPath);
-			writer.write(publicKey);
-			// 获取平台证书序列号
-			X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
-			return certificate.getSerialNumber().toString(16).toUpperCase();
+			String key3 = wxPayV3Bean.getApiKey3();
+			String publicKey;
+			if (StrUtil.equals(algorithm, AuthTypeEnum.SM2.getPlatformCertAlgorithm())) {
+				publicKey = PayKit.sm4DecryptToString(key3, cipherText, nonce, associatedData);
+			} else {
+				AesUtil aesUtil = new AesUtil(wxPayV3Bean.getApiKey3().getBytes(StandardCharsets.UTF_8));
+				// 平台证书密文解密
+				// encrypt_certificate 中的  associated_data nonce  ciphertext
+				publicKey = aesUtil.decryptToString(
+					associatedData.getBytes(StandardCharsets.UTF_8),
+					nonce.getBytes(StandardCharsets.UTF_8),
+					cipherText
+				);
+			}
+			if (StrUtil.isNotEmpty(publicKey)) {
+				// 保存证书
+				FileWriter writer = new FileWriter(certPath);
+				writer.write(publicKey);
+				// 获取平台证书序列号
+				X509Certificate certificate = PayKit.getCertificate(new ByteArrayInputStream(publicKey.getBytes()));
+				return certificate.getSerialNumber().toString(16).toUpperCase();
+			}
+			return "";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("保存平台证书异常", e);
 			return e.getMessage();
 		}
 	}
@@ -191,9 +210,25 @@ public class WxPayV3Controller {
 			String associatedData = "certificate";
 			String nonce = "80d28946a64a";
 			String cipherText = "DwAqW4+4TeUaOEylfKEXhw+XqGh/YTRhUmLw/tBfQ5nM9DZ9d+9aGEghycwV1jwo52vXb/t6ueBvBRHRIW5JgDRcXmTHw9IMTrIK6HxTt2qiaGTWJU9whsF+GGeQdA7gBCHZm3AJUwrzerAGW1mclXBTvXqaCl6haE7AOHJ2g4RtQThi3nxOI63/yc3WaiAlSR22GuCpy6wJBfljBq5Bx2xXDZXlF2TNbDIeodiEnJEG2m9eBWKuvKPyUPyClRXG1fdOkKnCZZ6u+ipb4IJx28n3MmhEtuc2heqqlFUbeONaRpXv6KOZmH/IdEL6nqNDP2D7cXutNVCi0TtSfC7ojnO/+PKRu3MGO2Z9q3zyZXmkWHCSms/C3ACatPUKHIK+92MxjSQDc1E/8faghTc9bDgn8cqWpVKcL3GHK+RfuYKiMcdSkUDJyMJOwEXMYNUdseQMJ3gL4pfxuQu6QrVvJ17q3ZjzkexkPNU4PNSlIBJg+KX61cyBTBumaHy/EbHiP9V2GeM729a0h5UYYJVedSo1guIGjMZ4tA3WgwQrlpp3VAMKEBLRJMcnHd4pH5YQ/4hiUlHGEHttWtnxKFwnJ6jHr3OmFLV1FiUUOZEDAqR0U1KhtGjOffnmB9tymWF8FwRNiH2Tee/cCDBaHhNtfPI5129SrlSR7bZc+h7uzz9z+1OOkNrWHzAoWEe3XVGKAywpn5HGbcL+9nsEVZRJLvV7aOxAZBkxhg8H5Fjt1ioTJL+qXgRzse1BX1iiwfCR0fzEWT9ldDTDW0Y1b3tb419MhdmTQB5FsMXYOzqp5h+Tz1FwEGsa6TJsmdjJQSNz+7qPSg5D6C2gc9/6PkysSu/6XfsWXD7cQkuZ+TJ/Xb6Q1Uu7ZB90SauA8uPQUIchW5zQ6UfK5dwMkOuEcE/141/Aw2rlDqjtsE17u1dQ6TCax/ZQTDQ2MDUaBPEaDIMPcgL7fCeijoRgovkBY92m86leZvQ+HVbxlFx5CoPhz4a81kt9XJuEYOztSIKlm7QNfW0BvSUhLmxDNCjcxqwyydtKbLzA+EBb2gG4ORiH8IOTbV0+G4S6BqetU7RrO+/nKt21nXVqXUmdkhkBakLN8FUcHygyWnVxbA7OI2RGnJJUnxqHd3kTbzD5Wxco4JIQsTOV6KtO5c960oVYUARZIP1SdQhqwELm27AktEN7kzg/ew/blnTys/eauGyw78XCROb9F1wbZBToUZ7L+8/m/2tyyyqNid+sC9fYqJoIOGfFOe6COWzTI/XPytCHwgHeUxmgk7NYfU0ukR223RPUOym6kLzSMMBKCivnNg68tbLRJHEOpQTXFBaFFHt2qpceJpJgw5sKFqx3eQnIFuyvA1i8s2zKLhULZio9hpsDJQREOcNeHVjEZazdCGnbe3Vjg7uqOoVHdE/YbNzJNQEsB3/erYJB+eGzyFwFmdAHenG5RE6FhCutjszwRiSvW9F7wvRK36gm7NnVJZkvlbGwh0UHr0pbcrOmxT81xtNSvMzT0VZNLTUX2ur3AGLwi2ej8BIC0H41nw4ToxTnwtFR1Xy55+pUiwpB7JzraA08dCXdFdtZ72Tw/dNBy5h1P7EtQYiKzXp6rndfOEWgNOsan7e1XRpCnX7xoAkdPvy40OuQ5gNbDKry5gVDEZhmEk/WRuGGaX06CG9m7NfErUsnQYrDJVjXWKYuARd9R7W0aa5nUXqz/Pjul/LAatJgWhZgFBGXhNr9iAoade/0FPpBj0QWa8SWqKYKiOqXqhfhppUq35FIa0a1Vvxcn3E38XYpVZVTDEXcEcD0RLCu/ezdOa6vRcB7hjgXFIRZQAka0aXnQxwOZwE2Rt3yWXqc+Q1ah2oOrg8Lg3ETc644X9QP4FxOtDwz/A==";
-			return savePlatformCert(associatedData, nonce, cipherText, wxPayV3Bean.getPlatformCertPath());
+			String algorithm = "AEAD_AES_256_GCM";
+			return savePlatformCert(associatedData, nonce, cipherText, algorithm, wxPayV3Bean.getPlatformCertPath());
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("保存平台证书异常", e);
+			return e.getMessage();
+		}
+	}
+
+	@RequestMapping("/smPlatformCert")
+	@ResponseBody
+	public String smPlatformCert() {
+		try {
+			String associatedData = "certificate";
+			String nonce = "";
+			String cipherText = "";
+			String algorithm = "AEAD_SM4_GCM";
+			return savePlatformCert(associatedData, nonce, cipherText, algorithm, wxPayV3Bean.getPlatformCertPath());
+		} catch (Exception e) {
+			log.error("保存国密平台证书异常", e);
 			return e.getMessage();
 		}
 	}
@@ -206,14 +241,16 @@ public class WxPayV3Controller {
 			IJPayHttpResponse response = WxPayApi.v3(
 				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
-				OtherApiEnum.GET_CERTIFICATES.toString(),
+				CertAlgorithmTypeEnum.getCertSuffixUrl(CertAlgorithmTypeEnum.SM2.getCode()),
 				wxPayV3Bean.getMchId(),
 				getSerialNumber(),
 				null,
 				wxPayV3Bean.getKeyPath(),
-				""
+				"",
+				AuthTypeEnum.SM2.getCode()
 			);
-
+			Map<String, List<String>> headers = response.getHeaders();
+			log.info("请求头: {}", headers);
 			String timestamp = response.getHeader("Wechatpay-Timestamp");
 			String nonceStr = response.getHeader("Wechatpay-Nonce");
 			String serialNumber = response.getHeader("Wechatpay-Serial");
@@ -235,16 +272,17 @@ public class WxPayV3Controller {
 				String associatedData = encryptCertificate.getStr("associated_data");
 				String cipherText = encryptCertificate.getStr("ciphertext");
 				String nonce = encryptCertificate.getStr("nonce");
+				String algorithm = encryptCertificate.getStr("algorithm");
 				String serialNo = encryptObject.getStr("serial_no");
-				final String platSerialNo = savePlatformCert(associatedData, nonce, cipherText, wxPayV3Bean.getPlatformCertPath());
+				final String platSerialNo = savePlatformCert(associatedData, nonce, cipherText, algorithm, wxPayV3Bean.getPlatformCertPath());
 				log.info("平台证书序列号: {} serialNo: {}", platSerialNo, serialNo);
+				// 根据证书序列号查询对应的证书来验证签名结果
+				boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+				log.info("verifySignature:{}", verifySignature);
 			}
-			// 根据证书序列号查询对应的证书来验证签名结果
-			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
-			System.out.println("verifySignature:" + verifySignature);
 			return body;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("获取平台证书列表异常", e);
 			return null;
 		}
 	}
@@ -273,7 +311,8 @@ public class WxPayV3Controller {
 				getSerialNumber(),
 				null,
 				wxPayV3Bean.getKeyPath(),
-				JSONUtil.toJsonStr(unifiedOrderModel)
+				JSONUtil.toJsonStr(unifiedOrderModel),
+				AuthTypeEnum.SM2.getCode()
 			);
 			log.info("统一下单响应 {}", response);
 			// 根据证书序列号查询对应的证书来验证签名结果
@@ -281,7 +320,7 @@ public class WxPayV3Controller {
 			log.info("verifySignature: {}", verifySignature);
 			return response.getBody();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -310,7 +349,8 @@ public class WxPayV3Controller {
 				getSerialNumber(),
 				null,
 				wxPayV3Bean.getKeyPath(),
-				JSONUtil.toJsonStr(unifiedOrderModel)
+				JSONUtil.toJsonStr(unifiedOrderModel),
+				AuthTypeEnum.SM2.getCode()
 			);
 			log.info("统一下单响应 {}", response);
 			// 根据证书序列号查询对应的证书来验证签名结果
@@ -326,7 +366,7 @@ public class WxPayV3Controller {
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -348,7 +388,8 @@ public class WxPayV3Controller {
 				getSerialNumber(),
 				null,
 				wxPayV3Bean.getKeyPath(),
-				params
+				params,
+				AuthTypeEnum.SM2.getCode()
 			);
 			log.info("查询响应 {}", response);
 			if (response.getStatus() == OK) {
@@ -359,7 +400,7 @@ public class WxPayV3Controller {
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -406,7 +447,53 @@ public class WxPayV3Controller {
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
+			return e.getMessage();
+		}
+	}
+
+	@RequestMapping("/wapPay")
+	@ResponseBody
+	public String wapPay() {
+		try {
+			String timeExpire = DateTimeZoneUtil.dateToTimeZone(System.currentTimeMillis() + 1000 * 60 * 3);
+			UnifiedOrderModel unifiedOrderModel = new UnifiedOrderModel()
+				.setAppid(wxPayV3Bean.getAppId())
+				.setMchid(wxPayV3Bean.getMchId())
+				.setDescription("IJPay 让支付触手可及")
+				.setOut_trade_no(PayKit.generateStr())
+				.setTime_expire(timeExpire)
+				.setAttach("微信系开发脚手架 https://gitee.com/javen205/TNWX")
+				.setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
+				.setAmount(new Amount().setTotal(1))
+				.setScene_info(
+					new SceneInfo()
+						.setPayer_client_ip("").
+						setH5_info(new H5Info()
+							.setType("Wap")));
+
+			log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
+			IJPayHttpResponse response = WxPayApi.v3(
+				RequestMethodEnum.POST,
+				WxDomainEnum.CHINA.toString(),
+				BasePayApiEnum.H5_PAY.toString(),
+				wxPayV3Bean.getMchId(),
+				getSerialNumber(),
+				null,
+				wxPayV3Bean.getKeyPath(),
+				JSONUtil.toJsonStr(unifiedOrderModel)
+			);
+			log.info("统一下单响应 {}", response);
+			// 根据证书序列号查询对应的证书来验证签名结果
+			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			log.info("verifySignature: {}", verifySignature);
+			if (response.getStatus() == OK && verifySignature) {
+				String body = response.getBody();
+				return JSONUtil.toJsonStr(body);
+			}
+			return JSONUtil.toJsonStr(response);
+		} catch (Exception e) {
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -449,7 +536,7 @@ public class WxPayV3Controller {
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -478,7 +565,7 @@ public class WxPayV3Controller {
 			log.info("响应 {}", response);
 			return response.getBody();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -506,7 +593,7 @@ public class WxPayV3Controller {
 			System.out.println(result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -547,7 +634,7 @@ public class WxPayV3Controller {
 			System.out.println(result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -585,7 +672,7 @@ public class WxPayV3Controller {
 			System.out.println(result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -610,7 +697,7 @@ public class WxPayV3Controller {
 			System.out.println(result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -635,26 +722,60 @@ public class WxPayV3Controller {
 			System.out.println(result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
 
+	public static String sm2Encrypt(String plainText, SM2 sm2) {
+		byte[] dateBytes = plainText.getBytes();
+		// 这里需要手动设置，sm2 对象的默认值与我们期望的不一致
+		sm2.setMode(SM2Engine.Mode.C1C2C3);
+		sm2.setEncoding(new PlainDSAEncoding());
+		// 加密
+		byte[] encrypt = sm2.encrypt(dateBytes);
+		return HexUtil.encodeHexStr(encrypt);
+	}
+
+	public static String sm2Decrypt(String cipherText, SM2 sm2) {
+		// 解密
+		byte[] decrypt = sm2.decrypt(HexUtil.decodeHex(cipherText));
+		return new String(decrypt);
+	}
+
 	@RequestMapping("/cipher")
 	@ResponseBody
-	public String cipher() {
+	public String cipher(@RequestParam(required = false) String authType) {
 		try {
-			// 敏感信息加密
-			X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getPlatformCertPath()));
-			String encrypt = PayKit.rsaEncryptOAEP("IJPay", certificate);
-			System.out.println(encrypt);
-			// 敏感信息解密
-			String encryptStr = "";
-			PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath());
-			String decrypt = PayKit.rsaDecryptOAEP(encryptStr, privateKey);
-			System.out.println(decrypt);
+			String plainText = "IJPay";
+			String privateKeyPath = wxPayV3Bean.getKeyPath();
+			String publicKeyPath = wxPayV3Bean.getPublicKeyPath();
+			if (StrUtil.equals(authType, AuthTypeEnum.SM2.getCode())) {
+				String privateKeyByContent = PayKit.getPrivateKeyByContent(PayKit.getCertFileContent(privateKeyPath));
+				String publicKeyByContent = PayKit.getPublicKeyByContent(PayKit.getCertFileContent(publicKeyPath));
+
+				PrivateKey privateKey = PayKit.getPrivateKey(privateKeyPath, AuthTypeEnum.SM2.getCode());
+				PublicKey publicKey = PayKit.getSmPublicKey(publicKeyByContent);
+
+				// 创建sm2 对象
+				SM2 sm2 = SmUtil.sm2(privateKey, publicKey);
+				// SM2 sm2 = SmUtil.sm2(privateKeyByContent, publicKeyByContent);
+				String encrypt = sm2Encrypt(plainText, sm2);
+				log.info("加密: {}", encrypt);
+				log.info("解密: {}", sm2Decrypt(encrypt, sm2));
+			} else {
+				// 敏感信息加密
+				X509Certificate certificate = PayKit.getCertificate(FileUtil.getInputStream(wxPayV3Bean.getPlatformCertPath()));
+				String encrypt = PayKit.rsaEncryptOAEP(plainText, certificate);
+				log.info("明文:{} 加密后密文:{}", plainText, encrypt);
+				// 敏感信息解密
+				String encryptStr = "";
+				PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath(), AuthTypeEnum.RSA.getCode());
+				String decrypt = PayKit.rsaDecryptOAEP(encryptStr, privateKey);
+				log.info("解密后明文:{}", decrypt);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 		return null;
@@ -697,7 +818,7 @@ public class WxPayV3Controller {
 			log.info("result:{}", result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -738,7 +859,7 @@ public class WxPayV3Controller {
 			log.info("result:{}", result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -768,7 +889,7 @@ public class WxPayV3Controller {
 			log.info("result:{}", result);
 			return JSONUtil.toJsonStr(result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 	}
@@ -823,7 +944,7 @@ public class WxPayV3Controller {
 				return response.getBody();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 			return e.getMessage();
 		}
 		return null;
@@ -862,7 +983,7 @@ public class WxPayV3Controller {
 			response.getOutputStream().write(JSONUtil.toJsonStr(map).getBytes(StandardCharsets.UTF_8));
 			response.flushBuffer();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("系统异常", e);
 		}
 	}
 }
