@@ -22,13 +22,13 @@
 		<module>IJPay-JDPay</module>
 		<module>IJPay-PayPal</module>
 		<module>IJPay-XPay</module>
-        <module>IJPay-Plugin</module>
-    </modules>
+		<module>IJPay-Plugin</module>
+	</modules>
 
 	<licenses>
 		<license>
-			<name>Mulan Permissive Software License，Version 1</name>
-			<url>https://license.coscl.org.cn/MulanPSL</url>
+			<name>Apache-2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
 		</license>
 	</licenses>
 
