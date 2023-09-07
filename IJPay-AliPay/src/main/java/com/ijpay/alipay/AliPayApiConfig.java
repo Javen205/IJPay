@@ -1,7 +1,6 @@
 package com.ijpay.alipay;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.CertAlipayRequest;
@@ -371,10 +370,5 @@ public class AliPayApiConfig implements Serializable {
 	public AliPayApiConfig setDomain(String domain) {
 		this.domain = domain;
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return JSONUtil.toJsonStr(this);
 	}
 }

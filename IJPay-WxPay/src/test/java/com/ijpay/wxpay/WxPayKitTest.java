@@ -4,6 +4,8 @@ package com.ijpay.wxpay;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxDomainEnum;
 import com.ijpay.wxpay.enums.v3.BasePayApiEnum;
+import com.ijpay.wxpay.enums.v3.CertAlgorithmTypeEnum;
+import com.ijpay.wxpay.enums.v3.OtherApiEnum;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,5 +41,32 @@ public class WxPayKitTest {
 	public void StringFormat() {
 		Assert.assertEquals(WxDomainEnum.CHINA.toString().concat(String.format(BasePayApiEnum.ORDER_QUERY_BY_TRANSACTION_ID.toString(), "123456789")),
 			String.format(WxDomainEnum.CHINA.toString().concat(BasePayApiEnum.ORDER_QUERY_BY_TRANSACTION_ID.toString()), "123456789"));
+	}
+
+	@Test
+	public void certAlgorithmTypeEnum() {
+		Assert.assertEquals("/v3/certificates?algorithm_type=SM2", CertAlgorithmTypeEnum.getCertSuffixUrl(CertAlgorithmTypeEnum.SM2));
+	}
+
+	@Test
+	public void certAlgorithmTypeEnumNone() {
+		Assert.assertEquals("/v3/certificates", CertAlgorithmTypeEnum.getCertSuffixUrl(CertAlgorithmTypeEnum.NONE));
+	}
+
+	@Test
+	public void certAlgorithmTypeEnumOther() {
+		Assert.assertEquals("/v3/certificates", CertAlgorithmTypeEnum.getCertSuffixUrl("OTHER"));
+	}
+
+	@Test
+	public void getCertUrl() {
+		Assert.assertEquals(WxDomainEnum.CHINA.getDomain() + String.format(OtherApiEnum.GET_CERTIFICATES.getUrl()),
+			CertAlgorithmTypeEnum.getCertUrl(WxDomainEnum.CHINA, CertAlgorithmTypeEnum.NONE));
+	}
+
+	@Test
+	public void getCertUrlBySm2() {
+		Assert.assertEquals(WxDomainEnum.CHINA.getDomain() + String.format(OtherApiEnum.GET_CERTIFICATES_BY_ALGORITHM_TYPE.getUrl(), CertAlgorithmTypeEnum.SM2.getCode()),
+			CertAlgorithmTypeEnum.getCertUrl(WxDomainEnum.CHINA, CertAlgorithmTypeEnum.SM2));
 	}
 }

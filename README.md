@@ -96,6 +96,10 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 
 [Gitee-JFinal-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  [GitHub-JFinal-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-JFinal)  
 
+
+[Gitee-Solon-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-Solon)  [GitHub-Solon-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-Solon)
+
+
 [Gitee-SpringBoot-Demo](https://gitee.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)  [GitHub-SpringBoot-Demo](https://github.com/javen205/IJPay/tree/master/IJPay-Demo-SpringBoot)
 
 ### 联系方式

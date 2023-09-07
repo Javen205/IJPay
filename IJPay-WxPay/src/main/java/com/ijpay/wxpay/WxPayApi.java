@@ -3,6 +3,7 @@ package com.ijpay.wxpay;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import com.ijpay.core.IJPayHttpResponse;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.PayModel;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.enums.SignType;
@@ -12,15 +13,7 @@ import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.enums.WxApiEnum;
 import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.enums.WxDomainEnum;
-import com.ijpay.wxpay.enums.v2.CouponApiEnum;
-import com.ijpay.wxpay.enums.v2.DepositApiEnum;
-import com.ijpay.wxpay.enums.v2.EntrustPayApiEnum;
-import com.ijpay.wxpay.enums.v2.FacePayApiEnum;
-import com.ijpay.wxpay.enums.v2.PayApiEnum;
-import com.ijpay.wxpay.enums.v2.ProfitSharingApiEnum;
-import com.ijpay.wxpay.enums.v2.RedPackApiEnum;
-import com.ijpay.wxpay.enums.v2.TransferApiEnum;
-import com.ijpay.core.enums.AuthTypeEnum;
+import com.ijpay.wxpay.enums.v2.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -275,6 +268,8 @@ public class WxPayApi {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+		} else if (method == RequestMethodEnum.PATCH) {
+			return patch(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
@@ -319,10 +314,34 @@ public class WxPayApi {
 			return delete(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.UPLOAD) {
 			return upload(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body, file);
+		} else if (method == RequestMethodEnum.PATCH) {
+			return patch(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		} else if (method == RequestMethodEnum.PUT) {
 			return put(urlPrefix.concat(urlSuffix), authorization, platSerialNo, body);
 		}
 		return null;
+	}
+
+	/**
+	 * V3 接口统一执行入口
+	 *
+	 * @param method       {@link RequestMethodEnum} 请求方法
+	 * @param urlPrefix    可通过 {@link WxDomain}来获取
+	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
+	 * @param mchId        商户Id
+	 * @param serialNo     商户 API 证书序列号
+	 * @param platSerialNo 平台序列号
+	 * @param keyPath      apiclient_key.pem 证书路径
+	 * @param body         接口请求参数
+	 * @param authType     认证类型
+	 * @return {@link IJPayHttpResponse} 请求返回的结果
+	 * @throws Exception 接口执行异常
+	 */
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
+									   String serialNo, String platSerialNo, String keyPath, String body, String authType) throws Exception {
+		long timestamp = System.currentTimeMillis() / 1000;
+		String nonceStr = WxPayKit.generateStr();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, null);
 	}
 
 	/**
@@ -341,10 +360,8 @@ public class WxPayApi {
 	 */
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
 									   String serialNo, String platSerialNo, String keyPath, String body) throws Exception {
-		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
-		String nonceStr = WxPayKit.generateStr();
-		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, null);
+		String authType = AuthTypeEnum.RSA.getCode();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, authType);
 	}
 
 	/**
@@ -364,7 +381,7 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix, String mchId,
 									   String serialNo, String platSerialNo, PrivateKey privateKey, String body) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, null);
 	}
@@ -386,8 +403,29 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
 									   String mchId, String serialNo, String platSerialNo, String keyPath,
 									   Map<String, String> params) throws Exception {
+		String authType = AuthTypeEnum.RSA.getCode();
+		return v3(method, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, params, authType);
+	}
+
+	/**
+	 * V3 接口统一执行入口
+	 *
+	 * @param method       {@link RequestMethodEnum} 请求方法
+	 * @param urlPrefix    可通过 {@link WxDomain}来获取
+	 * @param urlSuffix    可通过 {@link WxApiEnum} 来获取，URL挂载参数需要自行拼接
+	 * @param mchId        商户Id
+	 * @param serialNo     商户 API 证书序列号
+	 * @param platSerialNo 平台序列号
+	 * @param keyPath      apiclient_key.pem 证书路径
+	 * @param params       Get 接口请求参数
+	 * @param authType     {@link AuthTypeEnum} 授权类型
+	 * @return {@link IJPayHttpResponse} 请求返回的结果
+	 * @throws Exception 接口执行异常
+	 */
+	public static IJPayHttpResponse v3(RequestMethodEnum method, String urlPrefix, String urlSuffix,
+									   String mchId, String serialNo, String platSerialNo, String keyPath,
+									   Map<String, String> params, String authType) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -413,7 +451,7 @@ public class WxPayApi {
 									   String mchId, String serialNo, String platSerialNo, PrivateKey privateKey,
 									   Map<String, String> params) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		if (null != params && !params.keySet().isEmpty()) {
 			urlSuffix = urlSuffix.concat("?").concat(PayKit.createLinkString(params, true));
@@ -437,7 +475,7 @@ public class WxPayApi {
 	 */
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo, String platSerialNo, String keyPath, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, keyPath, body, nonceStr, timestamp, authType, file);
 	}
@@ -459,7 +497,7 @@ public class WxPayApi {
 	public static IJPayHttpResponse v3(String urlPrefix, String urlSuffix, String mchId, String serialNo,
 									   String platSerialNo, PrivateKey privateKey, String body, File file) throws Exception {
 		long timestamp = System.currentTimeMillis() / 1000;
-		String authType = AuthTypeEnum.RSA.getUrl();
+		String authType = AuthTypeEnum.RSA.getCode();
 		String nonceStr = WxPayKit.generateStr();
 		return v3(RequestMethodEnum.UPLOAD, urlPrefix, urlSuffix, mchId, serialNo, platSerialNo, privateKey, body, nonceStr, timestamp, authType, file);
 	}
@@ -1010,12 +1048,39 @@ public class WxPayApi {
 	 * 获取 RSA 加密公钥
 	 *
 	 * @param params   请求参数
+	 * @param certPath 证书文件路径
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String getPublicKeyByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+		return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certPath, certPass, protocol);
+	}
+
+	/**
+	 * 获取 RSA 加密公钥
+	 *
+	 * @param params   请求参数
 	 * @param certFile 证书文件的   InputStream
 	 * @param certPass 证书密码
 	 * @return {@link String} 请求返回的结果
 	 */
 	public static String getPublicKey(Map<String, String> params, InputStream certFile, String certPass) {
 		return execution(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certFile, certPass);
+	}
+
+
+	/**
+	 * 获取 RSA 加密公钥
+	 *
+	 * @param params   请求参数
+	 * @param certFile 证书文件的   InputStream
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String getPublicKeyByProtocol(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+		return executionByProtocol(getReqUrl(TransferApiEnum.GET_PUBLIC_KEY, WxDomainEnum.FRAUD, false), params, certFile, certPass, protocol);
 	}
 
 	/**
@@ -1990,6 +2055,32 @@ public class WxPayApi {
 		paramMap.put("file", file);
 		paramMap.put("meta", data);
 		return upload(url, paramMap, getUploadHeaders(authorization, serialNumber));
+	}
+
+	/**
+	 * patch 请求
+	 *
+	 * @param url     请求url
+	 * @param data    请求参数
+	 * @param headers 请求头
+	 * @return {@link IJPayHttpResponse}    请求返回的结果
+	 */
+	public static IJPayHttpResponse patch(String url, String data, Map<String, String> headers) {
+		return HttpKit.getDelegate().patch(url, data, headers);
+	}
+
+
+	/**
+	 * patch 请求
+	 *
+	 * @param url           请求url
+	 * @param authorization 授权信息
+	 * @param serialNumber  公钥证书序列号
+	 * @param data          请求参数
+	 * @return {@link IJPayHttpResponse}    请求返回的结果
+	 */
+	public static IJPayHttpResponse patch(String url, String authorization, String serialNumber, String data) {
+		return patch(url, data, getHeaders(authorization, serialNumber));
 	}
 
 

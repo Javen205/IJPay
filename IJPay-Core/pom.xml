@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.7-17</version>
+		<version>2.9.8-17</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,9 +16,10 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<zxing.version>3.5.1</zxing.version>
-		<slf4j.api.version>2.0.6</slf4j.api.version>
+		<zxing.version>3.5.2</zxing.version>
+		<slf4j.api.version>2.0.7</slf4j.api.version>
 		<xk.time.version>3.2.4</xk.time.version>
+		<bc.version>1.70</bc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +51,12 @@
 			<groupId>com.github.xkzhangsan</groupId>
 			<artifactId>xk-time</artifactId>
 			<version>${xk.time.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bc.version}</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
