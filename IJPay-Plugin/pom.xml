@@ -18,7 +18,7 @@
 	</modules>
 
 	<properties>
-		<spring.boot.version>2.7.5</spring.boot.version>
+		<spring.boot.version>3.0.7</spring.boot.version>
 		<lombok.version>1.18.26</lombok.version>
 		<slf4j.api.version>2.0.6</slf4j.api.version>
 	</properties>
