@@ -32,7 +32,9 @@ public class SendRedPackModel extends BaseModel {
 	private String sign;
 	private String mch_billno;
 	private String mch_id;
+	private String sub_mch_id;
 	private String wxappid;
+	private String msgappid;
 	private String send_name;
 	private String re_openid;
 	private String total_amount;
