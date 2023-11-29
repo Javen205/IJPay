@@ -23,13 +23,12 @@ import com.ijpay.wxpay.model.v3.CertificateInfo;
 import com.ijpay.wxpay.model.v3.EncryptCertificate;
 import com.ijpay.wxpay.starter.properties.WxPayProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -49,19 +48,18 @@ import java.util.Optional;
  * @author Javen
  */
 @Slf4j
-@Component
 public class AbstractWxPayController extends AbstractWxPayApiController {
 
 	/**
 	 * starter 自动生成的微信支付配置,默认取配置的第一个
 	 */
-	@Autowired
+	@Resource
 	protected WxPayApiConfig wxPayApiConfig;
 
 	/**
 	 * yml 配置
 	 */
-	@Autowired
+	@Resource
 	protected WxPayProperties wxPayProperties;
 
 	/***
