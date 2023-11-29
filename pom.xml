@@ -55,7 +55,7 @@
 	<properties>
 		<jdk.version>1.8</jdk.version>
 		<junit.version>4.13.2</junit.version>
-		<hutool.version>5.8.21</hutool.version>
+		<hutool.version>5.8.23</hutool.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
