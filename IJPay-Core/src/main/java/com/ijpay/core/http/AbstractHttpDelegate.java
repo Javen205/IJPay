@@ -13,6 +13,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.File;
 import java.io.InputStream;
+import java.net.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyStore;
@@ -33,6 +34,15 @@ import java.util.Map;
  * @author Javen
  */
 public abstract class AbstractHttpDelegate {
+
+	/**
+	 * 设置代理
+	 *
+	 * @return {@link Proxy} 代理对象
+	 */
+	public Proxy getProxy(){
+		return null;
+	}
 
 	/**
 	 * get 请求
@@ -250,6 +260,7 @@ public abstract class AbstractHttpDelegate {
 			File file = FileUtil.newFile(filePath);
 			SSLSocketFactory sslSocketFactory = getSslSocketFactory(certPath, null, certPass, protocol);
 			return HttpRequest.post(url)
+				.setProxy(getProxy())
 				.setSSLSocketFactory(sslSocketFactory)
 				.header("Content-Type", "multipart/form-data;boundary=\"boundary\"")
 				.form("file", file)
@@ -289,6 +300,7 @@ public abstract class AbstractHttpDelegate {
 		try {
 			SSLSocketFactory socketFactory = getSslSocketFactory(certPath, null, certPass, protocol);
 			return HttpRequest.post(url)
+				.setProxy(getProxy())
 				.setSSLSocketFactory(socketFactory)
 				.body(data)
 				.execute()
@@ -326,6 +338,7 @@ public abstract class AbstractHttpDelegate {
 		try {
 			SSLSocketFactory sslSocketFactory = getSslSocketFactory(null, certFile, certPass, protocol);
 			return HttpRequest.post(url)
+				.setProxy(getProxy())
 				.setSSLSocketFactory(sslSocketFactory)
 				.body(data)
 				.execute()
@@ -358,6 +371,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse getToResponse(String url, Map<String, Object> paramMap, Map<String, String> headers) {
 		return HttpRequest.get(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.form(paramMap)
 			.execute();
@@ -373,6 +387,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse postToResponse(String url, Map<String, String> headers, String data) {
 		return HttpRequest.post(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.body(data)
 			.execute();
@@ -388,6 +403,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse postToResponse(String url, Map<String, String> headers, Map<String, Object> paramMap) {
 		return HttpRequest.post(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.form(paramMap)
 			.execute();
@@ -403,6 +419,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse patchToResponse(String url, Map<String, String> headers, Map<String, Object> paramMap) {
 		return HttpRequest.patch(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.form(paramMap)
 			.execute();
@@ -418,6 +435,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse patchToResponse(String url, Map<String, String> headers, String data) {
 		return HttpRequest.patch(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.body(data)
 			.execute();
@@ -433,6 +451,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse deleteToResponse(String url, Map<String, String> headers, String data) {
 		return HttpRequest.delete(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.body(data)
 			.execute();
@@ -448,6 +467,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse deleteToResponse(String url, Map<String, String> headers, Map<String, Object> paramMap) {
 		return HttpRequest.delete(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.form(paramMap)
 			.execute();
@@ -463,6 +483,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse putToResponse(String url, Map<String, String> headers, String data) {
 		return HttpRequest.put(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.body(data)
 			.execute();
@@ -478,6 +499,7 @@ public abstract class AbstractHttpDelegate {
 	 */
 	private HttpResponse putToResponse(String url, Map<String, String> headers, Map<String, Object> paramMap) {
 		return HttpRequest.put(url)
+			.setProxy(getProxy())
 			.addHeaders(headers)
 			.form(paramMap)
 			.execute();
