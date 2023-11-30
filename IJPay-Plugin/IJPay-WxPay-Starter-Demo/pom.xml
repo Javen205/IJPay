@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<fastjson.version>2.0.14</fastjson.version>
-		<ijpay-wxpay-starters.version>2.9.8</ijpay-wxpay-starters.version>
+		<ijpay-wxpay-starters.version>2.9.10</ijpay-wxpay-starters.version>
 	</properties>
 	<dependencies>
 		<dependency>
