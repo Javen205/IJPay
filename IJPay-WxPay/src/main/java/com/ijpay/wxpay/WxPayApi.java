@@ -14,6 +14,7 @@ import com.ijpay.wxpay.enums.WxApiEnum;
 import com.ijpay.wxpay.enums.WxDomain;
 import com.ijpay.wxpay.enums.WxDomainEnum;
 import com.ijpay.wxpay.enums.v2.*;
+import com.ijpay.wxpay.enums.xpay.XPayApiEnum;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1942,6 +1943,23 @@ public class WxPayApi {
 	 */
 	public static String queryTrans2pocket(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
 		return executionByProtocol(getReqUrl(TransferApiEnum.QUERY_WWS_TRANS_2_POCKET), params, certFile, certPass, protocol);
+	}
+
+	/**
+	 * 小程序虚拟支付接口
+	 *
+	 * @param apiEnum     接口枚举 {@link XPayApiEnum}
+	 * @param appKey      应用秘钥
+	 * @param accessToken 小程序Token
+	 * @param postBody    POST的数据包体
+	 * @return {@link IJPayHttpResponse} 请求返回的结果
+	 */
+	public static IJPayHttpResponse xPay(WxApiEnum apiEnum, String appKey, String accessToken, String postBody) {
+		String url = getReqUrl(apiEnum);
+		String needSignMsg = url.concat("&").concat(postBody);
+		String paySig = PayKit.hmacSha256(needSignMsg, appKey);
+		url = url.concat("?access_token=").concat(accessToken).concat("&pay_sig=").concat(paySig);
+		return post(url, postBody, null);
 	}
 
 	/**
