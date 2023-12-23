@@ -16,32 +16,13 @@ import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
 import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.RequestMethodEnum;
-import com.ijpay.core.kit.AesUtil;
-import com.ijpay.core.kit.HttpKit;
-import com.ijpay.core.kit.PayKit;
-import com.ijpay.core.kit.WxPayKit;
+import com.ijpay.core.kit.*;
 import com.ijpay.core.utils.DateTimeZoneUtil;
 import com.ijpay.demo.entity.WxPayV3Bean;
 import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxDomainEnum;
-import com.ijpay.wxpay.enums.v3.Apply4SubApiEnum;
-import com.ijpay.wxpay.enums.v3.BasePayApiEnum;
-import com.ijpay.wxpay.enums.v3.CertAlgorithmTypeEnum;
-import com.ijpay.wxpay.enums.v3.ComplaintsApiEnum;
-import com.ijpay.wxpay.enums.v3.OtherApiEnum;
-import com.ijpay.wxpay.enums.v3.PayGiftActivityApiEnum;
-import com.ijpay.wxpay.enums.v3.PayScoreApiEnum;
-import com.ijpay.wxpay.enums.v3.TransferApiEnum;
-import com.ijpay.wxpay.model.v3.Amount;
-import com.ijpay.wxpay.model.v3.BatchTransferModel;
-import com.ijpay.wxpay.model.v3.H5Info;
-import com.ijpay.wxpay.model.v3.Payer;
-import com.ijpay.wxpay.model.v3.RefundAmount;
-import com.ijpay.wxpay.model.v3.RefundGoodsDetail;
-import com.ijpay.wxpay.model.v3.RefundModel;
-import com.ijpay.wxpay.model.v3.SceneInfo;
-import com.ijpay.wxpay.model.v3.TransferDetailInput;
-import com.ijpay.wxpay.model.v3.UnifiedOrderModel;
+import com.ijpay.wxpay.enums.v3.*;
+import com.ijpay.wxpay.model.v3.*;
 import org.bouncycastle.crypto.engines.SM2Engine;
 import org.bouncycastle.crypto.signers.PlainDSAEncoding;
 import org.slf4j.Logger;
@@ -62,13 +43,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -247,7 +222,7 @@ public class WxPayV3Controller {
 				null,
 				wxPayV3Bean.getKeyPath(),
 				"",
-				AuthTypeEnum.SM2.getCode()
+				AuthTypeEnum.RSA.getCode()
 			);
 			Map<String, List<String>> headers = response.getHeaders();
 			log.info("请求头: {}", headers);
@@ -312,7 +287,7 @@ public class WxPayV3Controller {
 				null,
 				wxPayV3Bean.getKeyPath(),
 				JSONUtil.toJsonStr(unifiedOrderModel),
-				AuthTypeEnum.SM2.getCode()
+				AuthTypeEnum.RSA.getCode()
 			);
 			log.info("统一下单响应 {}", response);
 			// 根据证书序列号查询对应的证书来验证签名结果
@@ -350,7 +325,7 @@ public class WxPayV3Controller {
 				null,
 				wxPayV3Bean.getKeyPath(),
 				JSONUtil.toJsonStr(unifiedOrderModel),
-				AuthTypeEnum.SM2.getCode()
+				AuthTypeEnum.RSA.getCode()
 			);
 			log.info("统一下单响应 {}", response);
 			// 根据证书序列号查询对应的证书来验证签名结果
@@ -389,7 +364,7 @@ public class WxPayV3Controller {
 				null,
 				wxPayV3Bean.getKeyPath(),
 				params,
-				AuthTypeEnum.SM2.getCode()
+				AuthTypeEnum.RSA.getCode()
 			);
 			log.info("查询响应 {}", response);
 			if (response.getStatus() == OK) {
