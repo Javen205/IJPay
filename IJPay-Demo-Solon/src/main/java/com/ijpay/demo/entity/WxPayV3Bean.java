@@ -1,8 +1,8 @@
 package com.ijpay.demo.entity;
 
 import org.noear.solon.annotation.Configuration;
+import org.noear.solon.annotation.Import;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.annotation.PropertySource;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -18,7 +18,7 @@ import org.noear.solon.annotation.PropertySource;
  * @author Javen
  */
 @Inject("${v3}")
-@PropertySource("classpath:/wxpay_v3.properties")
+@Import(profiles = "classpath:/wxpay_v3.properties")
 @Configuration
 public class WxPayV3Bean {
 	private String appId;
