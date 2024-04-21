@@ -1,11 +1,13 @@
 package com.ijpay.demo.interceptor;
 
-import com.alipay.api.AlipayApiException;
 import com.ijpay.alipay.AliPayApiConfigKit;
 import com.ijpay.demo.controller.alipay.AbstractAliPayApiController;
-import org.noear.solon.core.handle.Action;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
+import org.noear.solon.core.route.PathRule;
+import org.noear.solon.core.route.RouterInterceptor;
+import org.noear.solon.core.route.RouterInterceptorChain;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -20,10 +22,16 @@ import org.noear.solon.core.handle.Handler;
  *
  * @author Javen
  */
-public class AliPayInterceptor implements Handler {
+@Component
+public class AliPayInterceptor implements RouterInterceptor {
 
 	@Override
-	public void handle(Context ctx) throws Throwable {
+	public PathRule pathPatterns() {
+		return new PathRule().include("/aliPay/**");
+	}
+
+	@Override
+	public void doIntercept(Context ctx, Handler mainHandler, RouterInterceptorChain chain) throws Throwable {
 		Object controller = ctx.controller();
 
 		if (controller != null) {
@@ -34,5 +42,7 @@ public class AliPayInterceptor implements Handler {
 
 			//ctx.setHandled(true);
 		}
+
+		chain.doIntercept(ctx, mainHandler);
 	}
 }
