@@ -346,6 +346,10 @@ public class PayKit {
 		for (int i = 0; i < keys.size(); i++) {
 			String key = keys.get(i);
 			String value = params.get(key);
+			// 参数的值为空不参与签名
+			if (StrUtil.isBlank(value)) {
+				continue;
+			}
 			// 拼接时，不包括最后一个&字符
 			if (i == keys.size() - 1) {
 				if (quotes) {
