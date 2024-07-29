@@ -58,6 +58,11 @@ public enum BasePayApiEnum implements WxApiEnum {
 	PARTNER_NATIVE_PAY("/v3/pay/partner/transactions/native", "服务商模式-Native 下单"),
 
 	/**
+	 * 付款码支付
+	 */
+	CODE_PAY("/v3/pay/transactions/codepay", "付款码支付"),
+
+	/**
 	 * 合单 APP 下单
 	 */
 	COMBINE_TRANSACTIONS_APP("/v3/combine-transactions/app", "合单 APP 下单"),
@@ -121,6 +126,11 @@ public enum BasePayApiEnum implements WxApiEnum {
 	 * 关闭订单
 	 */
 	CLOSE_ORDER_BY_OUT_TRADE_NO("/v3/pay/transactions/out-trade-no/%s/close", "关闭订单"),
+
+	/**
+	 * 撤销订单
+	 */
+	REVERSE_ORDER_BY_OUT_TRADE_NO("/v3/pay/transactions/out-trade-no/%s/reverse", "撤销订单"),
 
 	/**
 	 * 服务商模式-关闭订单
