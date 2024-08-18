@@ -101,7 +101,7 @@ public class PayPalController {
 
 			Map<String, Object> amount = new HashMap<>();
 			amount.put("currency_code", "USD");
-			amount.put("value", "100.00");
+			amount.put("value", "0.01");
 
 			Map<String, Object> itemMap = new HashMap<>();
 			itemMap.put("amount", amount);
@@ -110,11 +110,20 @@ public class PayPalController {
 
 			dataMap.put("purchase_units", list);
 
-			Map<String, String> applicationContext = new HashMap<>();
-			applicationContext.put("cancel_url", config.getDomain().concat(CANCEL_URL));
-			applicationContext.put("return_url", config.getDomain().concat(RETURN_URL));
+			Map<String, String> card = new HashMap<>();
+			card.put("name", "test buyer");
+			card.put("number", "4231220385792723");
+			card.put("security_code", "123");
+			card.put("expiry", "2029-07");
 
-			dataMap.put("application_context", applicationContext);
+			Map<String, String> experienceContext = new HashMap<>();
+			experienceContext.put("cancel_url", config.getDomain().concat(CANCEL_URL));
+			experienceContext.put("return_url", config.getDomain().concat(RETURN_URL));
+			Map<String, Map<String,String>> paymentSource = new HashMap<>();
+			paymentSource.put("experience_context",experienceContext);
+			paymentSource.put("card",card);
+
+//			dataMap.put("payment_source", paymentSource);
 
 			String data = JSONUtil.toJsonStr(dataMap);
 			log.info(data);
