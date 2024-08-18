@@ -117,6 +117,17 @@ public class AliPayApiConfig implements Serializable {
 	}
 
 	/**
+	 * 直接传入阿里客户端方式
+	 *
+	 * @param defaultAlipayClient 默认阿里客户端
+	 * @return {@link AliPayApiConfig}  支付宝支付配置
+	 */
+	public AliPayApiConfig build(DefaultAlipayClient defaultAlipayClient) {
+		this.alipayClient = defaultAlipayClient;
+		return this;
+	}
+
+	/**
 	 * 普通公钥方式
 	 *
 	 * @return AliPayApiConfig 支付宝配置

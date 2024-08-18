@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.10-17</version>
+		<version>2.9.11</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,8 +16,8 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<alipay.version>4.38.149.ALL</alipay.version>
-		<fastjson.version>2.0.42</fastjson.version>
+		<alipay.version>4.39.42.ALL</alipay.version>
+		<fastjson.version>2.0.49</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -33,9 +33,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<version>6.0.0</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
