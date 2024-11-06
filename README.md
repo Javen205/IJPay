@@ -49,7 +49,7 @@
 - 支付宝支付支持多商户多应用，签名同时支持普通公钥方式与公钥证书方式
 
 
-[![Stargazers over time](https://starchart.cc/Javen205/IJPay.svg)](https://javen205.gitee.io/ijpay)
+[![Stargazers over time](https://starchart.cc/Javen205/IJPay.svg)](https://ijpay.dreamlu.net/ijpay/)
 
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
@@ -82,7 +82,11 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 
 ### 接入文档
 
-[IJPay 让支付触手可及](https://javen205.gitee.io/ijpay)
+[IJPay 让支付触手可及](https://ijpay.dreamlu.net/)
+
+### 接入指南
+
+[IJPay 让支付触手可及](https://ijpay.dreamlu.net/ijpay/guide/)
 
 ### 效果图&示例
 
