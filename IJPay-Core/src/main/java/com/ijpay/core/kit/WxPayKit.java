@@ -638,12 +638,47 @@ public class WxPayKit {
 		String signature = response.getHeader("Wechatpay-Signature");
 		String signatureType = response.getHeader("Wechatpay-Signature-Type");
 		String body = response.getBody();
-		System.out.println("timestamp:" + timestamp);
-		System.out.println("nonceStr:" + nonceStr);
-		System.out.println("signature:" + signature);
-		System.out.println("signatureType:" + signatureType);
-		System.out.println("body:" + body);
 		return verifySignature(signatureType, signature, body, nonceStr, timestamp, PayKit.getCertFileInputStream(certPath));
+	}
+
+	/**
+	 * 微信支付公钥验证签名
+	 *
+	 * @param response 接口请求返回的 {@link IJPayHttpResponse}
+	 * @param certPath 平台证书路径
+	 * @return 签名结果
+	 * @throws Exception 异常信息
+	 */
+	public static boolean verifyPublicKeySignature(IJPayHttpResponse response, String certPath) throws Exception {
+		return verifyWxPublicKeySignature(response, PayKit.getPublicKeyByContent(PayKit.getCertFileContent(certPath)));
+	}
+
+	/**
+	 * 微信支付公钥验证签名
+	 *
+	 * @param response            接口请求返回的 {@link IJPayHttpResponse}
+	 * @param certFileInputStream 平台证书流
+	 * @return 签名结果
+	 * @throws Exception 异常信息
+	 */
+	public static boolean verifyWxPublicKeySignature(IJPayHttpResponse response, InputStream certFileInputStream) throws Exception {
+		return verifyWxPublicKeySignature(response, PayKit.getPublicKeyByContent(PayKit.getCertFileContent(certFileInputStream)));
+	}
+
+	/**
+	 * 微信支付公钥验证签名
+	 *
+	 * @param response         接口请求返回的 {@link IJPayHttpResponse}
+	 * @param publicKeyContent 平台证书文件内容
+	 * @return 签名结果
+	 * @throws Exception 异常信息
+	 */
+	public static boolean verifyWxPublicKeySignature(IJPayHttpResponse response, String publicKeyContent) throws Exception {
+		String timestamp = response.getHeader("Wechatpay-Timestamp");
+		String nonceStr = response.getHeader("Wechatpay-Nonce");
+		String signature = response.getHeader("Wechatpay-Signature");
+		String body = response.getBody();
+		return verifySignature(signature, body, nonceStr, timestamp, PayKit.getPublicKeyByContent(publicKeyContent));
 	}
 
 	/**
@@ -678,6 +713,7 @@ public class WxPayKit {
 		String nonceStr = (String) map.get("nonceStr");
 		String timestamp = (String) map.get("timestamp");
 		String signatureType = (String) map.get("Wechatpay-Signature-Type");
+		String serialNo = (String) map.get("Wechatpay-Serial");
 		return verifySignature(signatureType, signature, body, nonceStr, timestamp, certInputStream);
 	}
 
@@ -797,5 +833,74 @@ public class WxPayKit {
 									  String timestamp, String key, String certPath) throws Exception {
 		InputStream inputStream = PayKit.getCertFileInputStream(certPath);
 		return verifyNotify(serialNo, body, signature, nonce, timestamp, key, inputStream);
+	}
+
+	/**
+	 * v3 公钥支付异步通知验证签名
+	 *
+	 * @param body      异步通知密文
+	 * @param signature 签名
+	 * @param nonce     随机字符串
+	 * @param timestamp 时间戳
+	 * @param key       api 密钥
+	 * @param certPath  公钥证书文件路径
+	 * @return 异步通知明文
+	 * @throws Exception 异常信息
+	 */
+	public static String verifyPublicKeyNotify(String body, String signature, String nonce, String timestamp,
+											   String key, String certPath) throws Exception {
+		return verifyNotify(body, signature, nonce, timestamp, key, PayKit.getCertFileContent(certPath));
+	}
+
+	/**
+	 * v3 公钥支付异步通知验证签名
+	 *
+	 * @param body                异步通知密文
+	 * @param signature           签名
+	 * @param nonce               随机字符串
+	 * @param timestamp           时间戳
+	 * @param key                 api 密钥
+	 * @param certFileInputStream 公钥证书文件流
+	 * @return 异步通知明文
+	 * @throws Exception 异常信息
+	 */
+	public static String verifyPublicKeyNotify(String body, String signature, String nonce, String timestamp,
+											   String key, InputStream certFileInputStream) throws Exception {
+		return verifyNotify(body, signature, nonce, timestamp, key, PayKit.getCertFileContent(certFileInputStream));
+	}
+
+	/**
+	 * v3 公钥支付异步通知验证签名
+	 *
+	 * @param body            异步通知密文
+	 * @param signature       签名
+	 * @param nonce           随机字符串
+	 * @param timestamp       时间戳
+	 * @param key             api 密钥
+	 * @param certFileContent 公钥证书文件内容
+	 * @return 异步通知明文
+	 * @throws Exception 异常信息
+	 */
+	public static String verifyNotify(String body, String signature, String nonce, String timestamp,
+									  String key, String certFileContent) throws Exception {
+		boolean verifySignature = WxPayKit.verifySignature(signature, body, nonce, timestamp,
+			PayKit.getPublicKeyByContent(certFileContent));
+		if (verifySignature) {
+			JSONObject resultObject = JSONUtil.parseObj(body);
+			JSONObject resource = resultObject.getJSONObject("resource");
+			String cipherText = resource.getStr("ciphertext");
+			String nonceStr = resource.getStr("nonce");
+			String associatedData = resource.getStr("associated_data");
+
+			AesUtil aesUtil = new AesUtil(key.getBytes(StandardCharsets.UTF_8));
+			// 密文解密
+			return aesUtil.decryptToString(
+				associatedData.getBytes(StandardCharsets.UTF_8),
+				nonceStr.getBytes(StandardCharsets.UTF_8),
+				cipherText
+			);
+		} else {
+			throw new Exception("签名错误");
+		}
 	}
 }

@@ -872,6 +872,10 @@ public class PayKit {
 	 */
 	public static String getCertFileContent(String path) throws IOException {
 		InputStream certFileInputStream = getCertFileInputStream(path);
+		return getCertFileContent(certFileInputStream);
+	}
+
+	public static String getCertFileContent(InputStream certFileInputStream) {
 		return IoUtil.read(certFileInputStream, StandardCharsets.UTF_8);
 	}
 
