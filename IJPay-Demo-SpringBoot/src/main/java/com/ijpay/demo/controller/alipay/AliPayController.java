@@ -66,7 +66,7 @@ import java.util.Map;
 public class AliPayController extends AbstractAliPayApiController {
 	private static final Logger log = LoggerFactory.getLogger(AliPayController.class);
 
-	@Resource
+	@Autowired
 	private AliPayBean aliPayBean;
 
 	private final AjaxResult result = new AjaxResult();

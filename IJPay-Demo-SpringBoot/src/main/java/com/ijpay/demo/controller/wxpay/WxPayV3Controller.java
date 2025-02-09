@@ -66,7 +66,7 @@ public class WxPayV3Controller {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private final static int OK = 200;
 
-	@Resource
+	@Autowired
 	WxPayV3Bean wxPayV3Bean;
 
 	String serialNo;
@@ -918,7 +918,9 @@ public class WxPayV3Controller {
 				JSONUtil.toJsonStr(refundModel)
 			);
 			// 根据证书序列号查询对应的证书来验证签名结果
-			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+//			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			// 微信支付公钥验证签名
+			boolean verifySignature = WxPayKit.verifyPublicKeySignature(response, wxPayV3Bean.getPlatformCertPath());
 			log.info("verifySignature: {}", verifySignature);
 			log.info("退款响应 {}", response);
 
@@ -955,6 +957,47 @@ public class WxPayV3Controller {
 					wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
 			}
 			log.info("支付通知明文 {}", plainText);
+
+			if (StrUtil.isNotEmpty(plainText)) {
+				response.setStatus(200);
+				map.put("code", "SUCCESS");
+				map.put("message", "SUCCESS");
+			} else {
+				response.setStatus(500);
+				map.put("code", "ERROR");
+				map.put("message", "签名错误");
+			}
+			response.setHeader("Content-type", ContentType.JSON.toString());
+			response.getOutputStream().write(JSONUtil.toJsonStr(map).getBytes(StandardCharsets.UTF_8));
+			response.flushBuffer();
+		} catch (Exception e) {
+			log.error("系统异常", e);
+		}
+	}
+
+	@RequestMapping(value = "/refundNotify", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public void refundNotify(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, String> map = new HashMap<>(12);
+		try {
+			String timestamp = request.getHeader("Wechatpay-Timestamp");
+			String nonce = request.getHeader("Wechatpay-Nonce");
+			String serialNo = request.getHeader("Wechatpay-Serial");
+			String signature = request.getHeader("Wechatpay-Signature");
+
+			log.info("退款通知 timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
+			String result = HttpKit.readData(request);
+			log.info("退款通知密文 {}", result);
+			String plainText = null;
+			// 需要通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
+//			String plainText = WxPayKit.verifyNotify(serialNo, result, signature, nonce, timestamp,
+//				wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
+			// 微信公钥验证签名并解密
+			if (StringUtils.equals(serialNo, wxPayV3Bean.getPublicKeyId())) {
+				plainText = WxPayKit.verifyPublicKeyNotify(result, signature, nonce, timestamp,
+					wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
+			}
+			log.info("退款通知明文 {}", plainText);
 
 			if (StrUtil.isNotEmpty(plainText)) {
 				response.setStatus(200);
