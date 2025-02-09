@@ -19,6 +19,7 @@ import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.*;
 import com.ijpay.core.utils.DateTimeZoneUtil;
 import com.ijpay.demo.entity.WxPayV3Bean;
+import com.ijpay.demo.utils.StringUtils;
 import com.ijpay.wxpay.WxPayApi;
 import com.ijpay.wxpay.enums.WxDomainEnum;
 import com.ijpay.wxpay.enums.v3.*;
@@ -29,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -216,7 +218,7 @@ public class WxPayV3Controller {
 			IJPayHttpResponse response = WxPayApi.v3(
 				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
-				CertAlgorithmTypeEnum.getCertSuffixUrl(CertAlgorithmTypeEnum.SM2.getCode()),
+				CertAlgorithmTypeEnum.getCertSuffixUrl(CertAlgorithmTypeEnum.ALL.getCode()),
 				wxPayV3Bean.getMchId(),
 				getSerialNumber(),
 				null,
@@ -329,10 +331,13 @@ public class WxPayV3Controller {
 			);
 			log.info("统一下单响应 {}", response);
 			// 根据证书序列号查询对应的证书来验证签名结果
-			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+//			boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+			// 微信支付公钥验证签名
+			boolean verifySignature = WxPayKit.verifyPublicKeySignature(response, wxPayV3Bean.getPlatformCertPath());
 			log.info("verifySignature: {}", verifySignature);
 			if (response.getStatus() == OK && verifySignature) {
 				String body = response.getBody();
+				log.info("请求响应 {}", body);
 				JSONObject jsonObject = JSONUtil.parseObj(body);
 				String prepayId = jsonObject.getStr("prepay_id");
 				Map<String, String> map = WxPayKit.appCreateSign(wxPayV3Bean.getAppId(), wxPayV3Bean.getMchId(), prepayId, wxPayV3Bean.getKeyPath());
@@ -369,7 +374,9 @@ public class WxPayV3Controller {
 			log.info("查询响应 {}", response);
 			if (response.getStatus() == OK) {
 				// 根据证书序列号查询对应的证书来验证签名结果
-				boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+//				boolean verifySignature = WxPayKit.verifySignature(response, wxPayV3Bean.getPlatformCertPath());
+				// 微信公钥验证签名
+				boolean verifySignature = WxPayKit.verifyPublicKeySignature(response, wxPayV3Bean.getPlatformCertPath());
 				log.info("verifySignature: {}", verifySignature);
 				return response.getBody();
 			}
@@ -925,7 +932,7 @@ public class WxPayV3Controller {
 		return null;
 	}
 
-	@RequestMapping(value = "/payNotify", method = {org.springframework.web.bind.annotation.RequestMethod.POST, org.springframework.web.bind.annotation.RequestMethod.GET})
+	@RequestMapping(value = "/payNotify", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public void payNotify(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, String> map = new HashMap<>(12);
@@ -938,11 +945,15 @@ public class WxPayV3Controller {
 			log.info("timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
 			String result = HttpKit.readData(request);
 			log.info("支付通知密文 {}", result);
-
+			String plainText = null;
 			// 需要通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
-			String plainText = WxPayKit.verifyNotify(serialNo, result, signature, nonce, timestamp,
-				wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
-
+//			String plainText = WxPayKit.verifyNotify(serialNo, result, signature, nonce, timestamp,
+//				wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
+			// 微信公钥验证签名并解密
+			if (StringUtils.equals(serialNo, wxPayV3Bean.getPublicKeyId())) {
+				plainText = WxPayKit.verifyPublicKeyNotify(result, signature, nonce, timestamp,
+					wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
+			}
 			log.info("支付通知明文 {}", plainText);
 
 			if (StrUtil.isNotEmpty(plainText)) {

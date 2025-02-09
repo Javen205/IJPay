@@ -31,6 +31,7 @@ public class WxPayV3Bean {
 	private String apiKey;
 	private String apiKey3;
 	private String domain;
+	private String publicKeyId;
 
 	public String getAppId() {
 		return appId;
@@ -112,10 +113,20 @@ public class WxPayV3Bean {
 		this.domain = domain;
 	}
 
+	public String getPublicKeyId() {
+		return publicKeyId;
+	}
+
+	public void setPublicKeyId(String publicKeyId) {
+		this.publicKeyId = publicKeyId;
+	}
+
 	@Override
 	public String toString() {
 		return "WxPayV3Bean{" +
-			"keyPath='" + keyPath + '\'' +
+			"appId='" + appId + '\'' +
+			", keyPath='" + keyPath + '\'' +
+			", publicKeyPath='" + publicKeyPath + '\'' +
 			", certPath='" + certPath + '\'' +
 			", certP12Path='" + certP12Path + '\'' +
 			", platformCertPath='" + platformCertPath + '\'' +
@@ -123,6 +134,7 @@ public class WxPayV3Bean {
 			", apiKey='" + apiKey + '\'' +
 			", apiKey3='" + apiKey3 + '\'' +
 			", domain='" + domain + '\'' +
+			", publicKeyId='" + publicKeyId + '\'' +
 			'}';
 	}
 }
