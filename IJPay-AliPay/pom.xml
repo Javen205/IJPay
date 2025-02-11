@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.11-17</version>
+		<version>2.9.12-17</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,8 +16,8 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<alipay.version>4.39.175.ALL</alipay.version>
-		<fastjson.version>2.0.52</fastjson.version>
+		<alipay.version>4.40.54.ALL</alipay.version>
+		<fastjson.version>2.0.54</fastjson.version>
 	</properties>
 
 	<dependencies>

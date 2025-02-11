@@ -66,6 +66,9 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 ### 赞助商与活动推广
 
  <p align="left">
+ 	<a target="_blank" href="https://www.jetbrains.com/?from=IJPay">
+ 	    <img src="https://gitee.com/javen205/IJPay/raw/master/assets/img/jetbrains.png" height="100" alt="jetbrains">
+ 	</a>
  	<a left="100" target="_blank" href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=b1hkzv2x">
         <img src="https://gitee.com/javen205/IJPay/raw/master/assets/img/aliYun.jpg" height="100" alt="">
     </a>
