@@ -57,6 +57,7 @@
 
 [![Stargazers over time](https://starchart.cc/Javen205/IJPay.svg)](https://ijpay.dreamlu.net/ijpay/)
 
+GitCode：[http://gitcode.com/javendev/IJPay](http://gitcode.com/javendev/IJPay)
 
 Gitee：[http://gitee.com/Javen205/IJPay](http://gitee.com/Javen205/IJPay)
 
@@ -136,7 +137,7 @@ JavaDoc 文档：[https://apidoc.gitee.com/javen205/IJPay](https://apidoc.gitee.
 ## 开源推荐
 
 - `TNWX` 微信系开发脚手架：https://gitcode.com/javendev/TNWX https://gitee.com/javen205/TNWX
-- SpringBoot 微服务高效开发 `mica` 工具集：https://gitee.com/596392912/mica
+- SpringBoot 微服务高效开发 `mica` 工具集：https://gitcode.com/mica/mica-auto https://gitee.com/596392912/mica
 - `Avue` 一款基于 vue 可配置化的神奇框架：https://gitcode.com/superwei/avue https://gitee.com/smallweigit/avue
 - `pig` 宇宙最强微服务（架构师必备）：https://gitcode.com/pig-mesh/pig https://gitee.com/log4j/pig
 - `SpringBlade` 完整的线上解决方案（企业开发必备）：https://gitcode.com/bladex/SpringBlade https://gitee.com/smallc/SpringBlade
