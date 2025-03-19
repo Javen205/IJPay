@@ -13,9 +13,6 @@
      <a target="_blank" href="https://gitcode.com/javendev/IJPay">
         <img alt="" src="https://gitcode.com/javendev/IJPay/star/badge.svg"/>
      </a>
-    <a target="_blank" href="https://gitee.com/javen205/IJPay">
-        <img alt="" src="https://gitee.com/javen205/IJPay/badge/star.svg"/>
-    </a>
      <a target="_blank" href="https://github.com/Javen205/IJPay">
         <img alt="" src="https://img.shields.io/github/stars/Javen205/IJPay.svg?style=social&label=Stars"/>
      </a>
@@ -51,7 +48,7 @@
 
 **特别说明：** 
 - 不依赖任何第三方 MVC 框架，仅仅作为工具使用简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
-- 微信支付支持多商户多应用，普通商户模式与服务商商模式当然也支持境外商户、同时支持 Api-v3 与 Api-v2 版本的接口。
+- 微信支付支持多商户多应用，普通商户模式与服务商商模式当然也支持境外商户、同时支持 Api-v3 与 Api-v2 版本的接口、支持微信公钥模式。
 - 支付宝支付支持多商户多应用，签名同时支持普通公钥方式与公钥证书方式
 
 
