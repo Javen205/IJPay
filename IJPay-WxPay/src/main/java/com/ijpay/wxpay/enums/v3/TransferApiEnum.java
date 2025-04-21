@@ -87,6 +87,48 @@ public enum TransferApiEnum implements WxApiEnum {
 	 * 服务商银行来账查询
 	 */
 	MERCHANT_INCOME_RECORDS("/v3/merchantfund/merchant/income-records", "服务商银行来账查询"),
+
+
+	/**
+	 * 发起转账
+	 */
+	TRANSFER_BILLS("/v3/fund-app/mch-transfer/transfer-bills", "发起转账"),
+
+	/**
+	 * 撤销转账
+	 */
+	CANCEL_TRANSFER_BILLS("/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/%s/cancel", "撤销转账"),
+
+	/**
+	 * 查询转账单
+	 */
+	GET_TRANSFER_BILLS_BY_OUT_BILL_NO("/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/%s", "商户单号查询转账单"),
+
+	/**
+	 * 微信单号查询转账单
+	 */
+	GET_TRANSFER_BILLS_BY_TRANSFER_BILL_NO("/v3/fund-app/mch-transfer/transfer-bills/transfer-bill-no/%s", "微信单号查询转账单"),
+
+	/**
+	 * 商户单号申请电子回单
+	 */
+	EL_EC_SIGN_BY_OUT_BILL_NO("/v3/fund-app/mch-transfer/elecsign/out-bill-no", "商户单号申请电子回单"),
+
+	/**
+	 * 商户单号查询电子回单
+	 */
+	GET_EL_EC_SIGN_BY_OUT_BILL_NO("/v3/fund-app/mch-transfer/elecsign/out-bill-no/%", "商户单号申请电子回单"),
+
+	/**
+	 * 微信单号申请电子回单
+	 */
+	EL_EC_SIGN_BY_TRANSFER_BILL_NO("/v3/fund-app/mch-transfer/elecsign/transfer-bill-no", "微信单号申请电子回单"),
+
+	/**
+	 * 微信单号查询电子回单
+	 */
+	GET_EL_EC_SIGN_BY_TRANSFER_BILL_NO("/v3/fund-app/mch-transfer/elecsign/transfer-bill-no/%s", "微信单号查询电子回单"),
+
 	;
 
 	/**
