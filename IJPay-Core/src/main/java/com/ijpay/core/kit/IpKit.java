@@ -4,7 +4,7 @@ package com.ijpay.core.kit;
 // (powered by Fernflower decompiler)
 //
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Javen
