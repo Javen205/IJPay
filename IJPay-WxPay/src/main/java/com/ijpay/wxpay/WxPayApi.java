@@ -761,12 +761,38 @@ public class WxPayApi {
 	 * 撤销订单
 	 *
 	 * @param params   请求参数
+	 * @param certPath 证书文件路径
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String orderReverseByProtocol(Map<String, String> params, String certPath, String certPass, String protocol) {
+		return executionByProtocol(getReqUrl(PayApiEnum.REVERSE), params, certPath, certPass, protocol);
+	}
+
+	/**
+	 * 撤销订单
+	 *
+	 * @param params   请求参数
 	 * @param certFile 证书文件的 InputStream
 	 * @param certPass 证书密码
 	 * @return {@link String} 请求返回的结果
 	 */
 	public static String orderReverse(Map<String, String> params, InputStream certFile, String certPass) {
 		return execution(getReqUrl(PayApiEnum.REVERSE), params, certFile, certPass);
+	}
+
+	/**
+	 * 撤销订单
+	 *
+	 * @param params   请求参数
+	 * @param certFile 证书文件的 InputStream
+	 * @param certPass 证书密码
+	 * @param protocol 协议
+	 * @return {@link String} 请求返回的结果
+	 */
+	public static String orderReverse(Map<String, String> params, InputStream certFile, String certPass, String protocol) {
+		return executionByProtocol(getReqUrl(PayApiEnum.REVERSE), params, certFile, certPass, protocol);
 	}
 
 	/**
