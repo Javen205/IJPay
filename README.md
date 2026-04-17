@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-	<strong>IJPay 让支付触手可及</strong>
+	<strong>IJPay 让支付触手可及吧</strong>
 </p>
 
 <p align="center">
