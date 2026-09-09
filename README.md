@@ -52,6 +52,28 @@
 - 支付宝支付支持多商户多应用，签名同时支持普通公钥方式与公钥证书方式
 
 
+### 支持的支付渠道
+
+IJPay 已聚合国内外主流支付渠道，统一封装、开箱即用：
+
+| 模块 | 渠道 | 说明 |
+| --- | --- | --- |
+| IJPay-Core | 公共基础 | 加解密、签名、证书、Http 等公共能力 |
+| IJPay-WxPay | 微信支付 | 多商户多应用，普通商户/服务商/境外商户模式，同时支持 APIv3 与 APIv2 双版本接口、微信公钥模式 |
+| IJPay-AliPay | 支付宝 | 多商户多应用，普通公钥与公钥证书两种签名方式 |
+| IJPay-AliPay-V3 | 支付宝 V3（新增） | 基于支付宝官方 V3 SDK 的全新适配封装 |
+| IJPay-QQ | QQ 钱包 | QQ 钱包支付能力封装 |
+| IJPay-JDPay | 京东支付 | 京东支付、京东聚合支付能力封装 |
+| IJPay-UnionPay | 银联支付 | 银联条码支付综合前置平台能力封装 |
+| IJPay-PayPal | PayPal | 海外支付渠道能力封装 |
+| IJPay-Stripe | Stripe（新增） | 海外支付渠道，封装 stripe-java，覆盖 Payment、Checkout、Customer、Connect、Billing 等能力 |
+| IJPay-FuiYou | 富友支付（新增） | 富友全渠道收单能力封装 |
+| IJPay-XPay | 微信个人商户 | 微信个人商户收款能力封装，提供稳定异步通知 |
+| IJPay-All | 聚合包 | 一次引入聚合全部渠道模块 |
+
+本次重点扩展的支付渠道：**支付宝 V3**、**Stripe**、**富友支付（FuiYou）**，进一步覆盖境内外主流支付场景。
+
+
 [![Stargazers over time](https://starchart.cc/Javen205/IJPay.svg)](https://ijpay.dreamlu.net/ijpay/)
 
 GitCode：[http://gitcode.com/javendev/IJPay](http://gitcode.com/javendev/IJPay)
