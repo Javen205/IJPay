@@ -42,6 +42,16 @@ public enum OtherApiEnum implements WxApiEnum {
 	 */
 	GET_CERTIFICATES_BY_ALGORITHM_TYPE("/v3/certificates?algorithm_type=%s", "获取平台证书列表"),
 
+	/**
+	 * 获取微信支付公钥
+	 */
+	GET_PUBLIC_KEYS("/v3/certificates/public-keys", "获取微信支付公钥"),
+
+	/**
+	 * 商户签名验签、加解密测试
+	 */
+	SECURITY_ECHO("/v3/security/echo", "商户签名验签、加解密测试"),
+
 	;
 
 	/**

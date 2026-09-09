@@ -53,6 +53,21 @@ public enum ComplaintsApiEnum implements WxApiEnum {
 	 */
 	COMPLAINTS_COMPLETE("/v3/merchant-service/complaints-v2/%s/complete", "反馈处理完成"),
 
+	/**
+	 * 更新退款审批进度
+	 */
+	COMPLAINTS_UPDATE_REFUND_PROGRESS("/v3/merchant-service/complaints-v2/%s/update-refund-progress", "更新退款审批进度"),
+
+	/**
+	 * 回复用户（同步）
+	 */
+	COMPLAINTS_RESPONSE_IMMEDIATE("/v3/merchant-service/complaints-v2/%s/response-immediate-service", "回复用户（同步）"),
+
+	/**
+	 * 下载图片
+	 */
+	IMAGES_DOWNLOAD("/v3/merchant-service/images/%s", "下载图片"),
+
 	;
 
 	/**

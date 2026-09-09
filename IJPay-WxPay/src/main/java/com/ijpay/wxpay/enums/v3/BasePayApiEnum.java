@@ -83,6 +83,11 @@ public enum BasePayApiEnum implements WxApiEnum {
 	COMBINE_TRANSACTIONS_NATIVE("/v3/combine-transactions/native", "合单 Native 下单"),
 
 	/**
+	 * 合单小程序下单
+	 */
+	COMBINE_TRANSACTIONS_MINI_PROGRAM("/v3/combine-transactions/mini-program", "合单小程序下单"),
+
+	/**
 	 * 合单查询订单
 	 */
 	COMBINE_QUERY_BY_OUT_TRADE_NO("/v3/combine-transactions/out-trade-no/%s", "合单查询订单"),
@@ -146,6 +151,11 @@ public enum BasePayApiEnum implements WxApiEnum {
 	 * 查询单笔退款
 	 */
 	REFUND_QUERY_BY_OUT_REFUND_NO("/v3/refund/domestic/refunds/%s", "查询单笔退款"),
+
+	/**
+	 * 发起异常退款
+	 */
+	ABNORMAL_REFUND("/v3/refund/domestic/refunds/%s/apply-abnormal-refund", "发起异常退款"),
 
 
 	/**

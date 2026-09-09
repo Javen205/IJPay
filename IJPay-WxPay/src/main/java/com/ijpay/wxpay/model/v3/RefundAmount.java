@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
  *
@@ -37,4 +39,8 @@ public class RefundAmount {
 	 * 退款金额
 	 */
 	private int refund;
+	/**
+	 * 退款出资账户及金额，必填，列表里最多有两项
+	 */
+	private List<FundsFromItem> from;
 }

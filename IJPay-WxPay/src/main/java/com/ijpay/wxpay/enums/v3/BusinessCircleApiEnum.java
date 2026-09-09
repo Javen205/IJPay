@@ -36,7 +36,7 @@ public enum BusinessCircleApiEnum implements WxApiEnum {
 	/**
 	 * 智慧商圈-商圈会员停车状态同步
 	 */
-	BUSINESS_CIRCLE_PARKING("v3/businesscircle/parkings", "商圈会员停车状态同步"),
+	BUSINESS_CIRCLE_PARKING("/v3/businesscircle/parkings", "商圈会员停车状态同步"),
 	;
 
 	/**

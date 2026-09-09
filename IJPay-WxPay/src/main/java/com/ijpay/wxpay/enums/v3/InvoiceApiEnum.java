@@ -78,6 +78,41 @@ public enum InvoiceApiEnum implements WxApiEnum {
 	 */
 	USER_TITLE_URL("/v3/new-tax-control-fapiao/user-title/title-url", "获取抬头填写链接"),
 
+	/**
+	 * 开具通用行业电子发票
+	 */
+	ISSUE_GENERAL("/v3/new-tax-control-fapiao/fapiao-applications/issue-general", "开具通用行业电子发票"),
+
+	/**
+	 * 开具旅客运输行业电子发票
+	 */
+	ISSUE_PASSENGER_TRANSPORT("/v3/new-tax-control-fapiao/fapiao-applications/issue-passenger-transport", "开具旅客运输行业电子发票"),
+
+	/**
+	 * 开具成品油行业电子发票
+	 */
+	ISSUE_REFINED_OIL("/v3/new-tax-control-fapiao/fapiao-applications/issue-refined-oil", "开具成品油行业电子发票"),
+
+	/**
+	 * 开具不动产租赁行业电子发票
+	 */
+	ISSUE_REAL_ESTATE_LEASING("/v3/new-tax-control-fapiao/fapiao-applications/real-estate-leasing", "开具不动产租赁行业电子发票"),
+
+	/**
+	 * 获取开通服务商电子发票能力邀请链接
+	 */
+	GET_SP_INVITE_URL("/v3/new-tax-control-fapiao/fapiaomerchant/getspinviteurl", "获取开通服务商电子发票能力邀请链接"),
+
+	/**
+	 * 获取邀请开通的商户信息
+	 */
+	LIST_SP_INVITE_MCH_INFO("/v3/new-tax-control-fapiao/fapiaomerchant/listspinvitemchinfo", "获取邀请开通的商户信息"),
+
+	/**
+	 * 检查子商户开票功能状态
+	 */
+	MERCHANT_CHECK_STATUS("/v3/new-tax-control-fapiao/merchant/%s/check-status", "检查子商户开票功能状态"),
+
 	;
 
 	/**

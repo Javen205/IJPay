@@ -117,7 +117,7 @@ public enum TransferApiEnum implements WxApiEnum {
 	/**
 	 * 商户单号查询电子回单
 	 */
-	GET_EL_EC_SIGN_BY_OUT_BILL_NO("/v3/fund-app/mch-transfer/elecsign/out-bill-no/%", "商户单号申请电子回单"),
+	GET_EL_EC_SIGN_BY_OUT_BILL_NO("/v3/fund-app/mch-transfer/elecsign/out-bill-no/%s", "商户单号查询电子回单"),
 
 	/**
 	 * 微信单号申请电子回单
@@ -128,6 +128,31 @@ public enum TransferApiEnum implements WxApiEnum {
 	 * 微信单号查询电子回单
 	 */
 	GET_EL_EC_SIGN_BY_TRANSFER_BILL_NO("/v3/fund-app/mch-transfer/elecsign/transfer-bill-no/%s", "微信单号查询电子回单"),
+
+	/**
+	 * 商户预授权模式发起转账
+	 */
+	PRE_TRANSFER_WITH_AUTHORIZATION("/v3/fund-app/mch-transfer/transfer-bills/pre-transfer-with-authorization", "商户预授权模式发起转账"),
+
+	/**
+	 * 免确认模式发起转账
+	 */
+	TRANSFER_WITHOUT_AUTHORIZATION("/v3/fund-app/mch-transfer/transfer-bills/transfer", "免确认模式发起转账"),
+
+	/**
+	 * 用户确认收款
+	 */
+	USER_CONFIRM_AUTHORIZATION("/v3/fund-app/mch-transfer/user-confirm-authorization", "用户确认收款"),
+
+	/**
+	 * 通过商户授权号查询授权
+	 */
+	GET_USER_CONFIRM_AUTHORIZATION("/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/%s", "通过商户授权号查询授权"),
+
+	/**
+	 * 关闭授权
+	 */
+	CLOSE_USER_CONFIRM_AUTHORIZATION("/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/%s/close", "关闭授权"),
 
 	;
 

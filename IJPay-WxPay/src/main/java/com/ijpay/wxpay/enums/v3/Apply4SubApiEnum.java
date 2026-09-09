@@ -44,6 +44,16 @@ public enum Apply4SubApiEnum implements WxApiEnum {
 	GET_SETTLEMENT("/v3/apply4sub/sub_merchants/%s/settlement", "查询结算账户"),
 
 	/**
+	 * 查询结算账户修改申请状态
+	 */
+	GET_SETTLEMENT_APPLY_STATE("/v3/apply4sub/sub_merchants/%s/application/%s", "查询结算账户修改申请状态"),
+
+	/**
+	 * 商户开户意愿确认-提交申请单（注意带尾部斜杠）
+	 */
+	MER_OPEN_APPLY_SUBMIT("/v3/apply4subject/applyment/", "商户开户意愿确认-提交申请单"),
+
+	/**
 	 * 商户开户意愿确认-提交申请单 OR 查询申请单审核结果
 	 */
 	MER_OPEN_APPLY_SUBMIT_OR_RESULT("/v3/apply4subject/applyment", "提交申请单/查询申请单审核结果"),

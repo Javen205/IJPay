@@ -161,6 +161,11 @@ public enum CouponApiEnum implements WxApiEnum {
 
 
 	/**
+	 * 委托营销-查询合作关系列表
+	 */
+	PARTNERSHIPS_QUERY("/v3/marketing/partnerships", "查询合作关系列表"),
+
+	/**
 	 * 委托营销-建立合作关系
 	 */
 	PARTNERSHIPS_BUILD("/v3/marketing/partnerships/build", "建立合作关系"),

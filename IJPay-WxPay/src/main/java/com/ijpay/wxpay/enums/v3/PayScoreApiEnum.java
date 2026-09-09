@@ -67,6 +67,31 @@ public enum PayScoreApiEnum implements WxApiEnum {
 	 * 解除用户授权关系（openid）
 	 */
 	PAY_SCORE_PERMISSIONS_OPENID_TERMINATE("/v3/payscore/permissions/openid/%s/terminate", "解除用户授权关系（openid）"),
+
+	/**
+	 * 服务商模式-创建/查询支付分订单
+	 */
+	PAY_SCORE_PARTNER_SERVICE_ORDER("/v3/payscore/partner/serviceorder", "服务商模式-创建/查询支付分订单"),
+
+	/**
+	 * 服务商模式-取消支付分订单
+	 */
+	PAY_SCORE_PARTNER_SERVICE_ORDER_CANCEL("/v3/payscore/partner/serviceorder/%s/cancel", "服务商模式-取消支付分订单"),
+
+	/**
+	 * 服务商模式-修改订单金额
+	 */
+	PAY_SCORE_PARTNER_SERVICE_ORDER_MODIFY("/v3/payscore/partner/serviceorder/%s/modify", "服务商模式-修改订单金额"),
+
+	/**
+	 * 服务商模式-完结支付分订单
+	 */
+	PAY_SCORE_PARTNER_SERVICE_ORDER_COMPLETE("/v3/payscore/partner/serviceorder/%s/complete", "服务商模式-完结支付分订单"),
+
+	/**
+	 * 服务商模式-同步服务订单信息
+	 */
+	PAY_SCORE_PARTNER_SERVICE_ORDER_SYNC("/v3/payscore/partner/serviceorder/%s/sync", "服务商模式-同步服务订单信息"),
 	;
 
 	/**

@@ -170,6 +170,66 @@ public enum EcommerceApiEnum implements WxApiEnum {
 	 * 申请二级商户资金账单
 	 */
 	FUND_FLOW_BILL("/v3/ecommerce/bill/fundflowbill", "申请二级商户资金账单"),
+
+	/**
+	 * 提现接口-二级商户查询预约提现状态（按商户预约提现单号查询）
+	 */
+	WITHDRAW_QUERY_BY_OUT_REQUEST_NO("/v3/ecommerce/fund/withdraw/out-request-no/%s", "二级商户查询预约提现状态（按商户预约提现单号查询）"),
+
+	/**
+	 * 提现接口-二级商户按日终余额预约提现
+	 */
+	DAY_END_BALANCE_WITHDRAW("/v3/platsolution/ecommerce/withdraw/day-end-balance-withdraw", "二级商户按日终余额预约提现"),
+
+	/**
+	 * 提现接口-查询二级商户按日终余额预约提现状态
+	 */
+	DAY_END_BALANCE_WITHDRAW_QUERY("/v3/platsolution/ecommerce/withdraw/day-end-balance-withdraw/out-request-no/%s", "查询二级商户按日终余额预约提现状态"),
+
+	/**
+	 * 注销申请-提交注销提现申请
+	 */
+	APPLY_CANCEL_WITHDRAW("/v3/ecommerce/account/apply-cancel-withdraw", "提交注销提现申请"),
+
+	/**
+	 * 注销申请-按微信支付申请单号查询申请单状态
+	 */
+	APPLY_CANCEL_WITHDRAW_QUERY_BY_ID("/v3/ecommerce/account/apply-cancel-withdraw/applyment-id/%s", "按微信支付申请单号查询申请单状态"),
+
+	/**
+	 * 注销申请-按商户申请单号查询申请单状态
+	 */
+	APPLY_CANCEL_WITHDRAW_QUERY_BY_NO("/v3/ecommerce/account/apply-cancel-withdraw/out-request-no/%s", "按商户申请单号查询申请单状态"),
+
+	/**
+	 * 注销申请-商户注销资格校验
+	 */
+	VALIDATE_CANCEL("/v3/ecommerce/account/apply-cancel-withdraw/validate-cancel/%s", "商户注销资格校验"),
+
+	/**
+	 * 注销申请-提交注销申请单
+	 */
+	CANCEL_APPLICATIONS("/v3/ecommerce/account/cancel-applications", "提交注销申请单"),
+
+	/**
+	 * 注销申请-注销图片上传
+	 */
+	CANCEL_APPLICATIONS_MEDIA("/v3/ecommerce/account/cancel-applications/media", "注销图片上传"),
+
+	/**
+	 * 注销申请-查询注销单状态
+	 */
+	CANCEL_APPLICATIONS_QUERY("/v3/ecommerce/account/cancel-applications/out-apply-no/%s", "查询注销单状态"),
+
+	/**
+	 * 退款接口-发起异常退款
+	 */
+	REFUNDS_ABNORMAL("/v3/ecommerce/refunds/%s/apply-abnormal-refund", "发起异常退款"),
+
+	/**
+	 * 商户进件-查询指定主体子商户列表
+	 */
+	SUBJECT_SUB_MERCHANTS("/v3/ecommerce/subject-sub-merchants", "查询指定主体子商户列表"),
 	;
 
 	/**
