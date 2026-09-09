@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>IJPay Stripe 收款演示</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f6f9fc;
+            margin: 0;
+            padding: 40px 16px;
+        }
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+            padding: 32px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 22px;
+            color: #32325d;
+            margin: 0 0 6px;
+        }
+        .sub {
+            color: #8898aa;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            color: #32325d;
+            margin: 16px 0 6px;
+        }
+        input[type=number] {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #e6e8ec;
+            border-radius: 6px;
+            box-sizing: border-box;
+            background: #fafbfc;
+            outline: none;
+        }
+        input[type=number]:focus {
+            border-color: #635bff;
+            background: #fff;
+        }
+        #card-element {
+            padding: 12px;
+            border: 1px solid #e6e8ec;
+            border-radius: 6px;
+            background: #fafbfc;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background: #635bff;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+        .btn:hover {
+            background: #544bd8;
+        }
+        .btn.secondary {
+            background: #6772e5;
+            margin-top: 10px;
+        }
+        .test-card {
+            font-size: 13px;
+            color: #8898aa;
+            margin-top: 16px;
+            line-height: 1.8;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f4f6f8;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #32325d;
+            min-height: 40px;
+            word-break: break-all;
+        }
+        .err {
+            color: #d02b2b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>IJPay Stripe 收款演示</h1>
+    <div class="sub">PaymentIntent + Elements / Checkout 托管收银台，两种方式可切换测试</div>
+
+    <label>支付金额（USD）</label>
+    <input type="number" id="amount" value="1.00" min="0.50" step="0.01"/>
+
+    <label>持卡人姓名（选填）</label>
+    <input type="text" id="cardName" placeholder="Javen" value="Javen"/>
+
+    <label>银行卡信息（Stripe Elements）</label>
+    <div id="card-element"></div>
+
+    <button class="btn" id="payBtn">确认支付（PaymentIntent）</button>
+    <button class="btn secondary" id="checkoutBtn">Checkout 托管收银台</button>
+
+    <div class="test-card">
+        测试卡号：4242 4242 4242 4242（成功）/ 4000 0000 0000 0002（被拒）<br/>
+        有效期任意未来时间、CVC 任意三位、邮编任意
+    </div>
+
+    <div id="log">等待操作...</div>
+</div>
+
+<script>
+    var stripe, card;
+
+    // 1. 获取公开的可发布密钥，初始化 Stripe
+    fetch('/stripe/config')
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            if (!data.publishableKey) {
+                log('初始化失败：请先在 dev/stripe.properties 配置 publishableKey', true);
+                return;
+            }
+            stripe = Stripe(data.publishableKey);
+            card = stripe.elements().create('card');
+            card.mount('#card-element');
+            log('Stripe.js 初始化完成，环境：' + (data.sandBox ? '测试(SandBox)' : '生产'));
+        })
+        .catch(function (e) {
+            log('初始化失败：' + e.message, true);
+        });
+
+    function cents() {
+        var amount = parseFloat(document.getElementById('amount').value);
+        if (isNaN(amount) || amount <= 0) {
+            alert('请输入正确的金额');
+            throw new Error('invalid amount');
+        }
+        return Math.round(amount * 100);
+    }
+
+    function log(msg, isErr) {
+        var div = document.getElementById('log');
+        div.innerHTML = (isErr ? '<div class="err">' : '<div>') + msg + '</div>' + div.innerHTML;
+    }
+
+    // 2. 方式一：PaymentIntent + Elements，服务端创建意图，前端确认卡片扣款
+    document.getElementById('payBtn').addEventListener('click', function () {
+        var unitAmount = cents();
+        log('正在创建 PaymentIntent，金额：' + unitAmount + ' 分 ...');
+        fetch('/stripe/createPaymentIntent', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({unitAmount: unitAmount})
+        })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (data) {
+                if (data.code !== 0) {
+                    log('创建 PaymentIntent 失败：' + data.msg, true);
+                    return;
+                }
+                log('PaymentIntent 已创建 id=' + data.id);
+                return stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: {
+                        card: card,
+                        billing_details: {name: document.getElementById('cardName').value}
+                    }
+                });
+            })
+            .then(function (result) {
+                if (!result) {
+                    return;
+                }
+                if (result.error) {
+                    log('支付失败：' + result.error.message, true);
+                } else {
+                    log('支付成功 paymentIntent=' + result.paymentIntent.id);
+                    log('可在接口 retrievePaymentIntent / refund 中传入该 ID 进行查询与退款');
+                }
+            })
+            .catch(function (e) {
+                log('支付异常：' + e.message, true);
+            });
+    });
+
+    // 3. 方式二：Checkout 托管收银台，跳转 Stripe 托管页面完成支付
+    document.getElementById('checkoutBtn').addEventListener('click', function () {
+        var unitAmount = cents();
+        log('正在创建 Checkout Session ...');
+        fetch('/stripe/createCheckoutSession', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({unitAmount: unitAmount})
+        })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (data) {
+                if (data.code !== 0) {
+                    log('创建 Checkout Session 失败：' + data.msg, true);
+                    return;
+                }
+                log('Checkout Session 已创建 id=' + data.sessionId + '，正在跳转...');
+                location.href = data.url;
+            })
+            .catch(function (e) {
+                log('创建 Checkout Session 异常：' + e.message, true);
+            });
+    });
+</script>
+</body>
+</html>

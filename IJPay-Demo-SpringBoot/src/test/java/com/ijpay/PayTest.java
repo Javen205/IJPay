@@ -2,7 +2,7 @@ package com.ijpay;
 
 
 import com.ijpay.core.utils.DateTimeZoneUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
