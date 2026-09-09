@@ -55,7 +55,6 @@ import com.alipay.api.domain.ZolozAuthenticationSmilepayInitializeModel;
 import com.alipay.api.domain.ZolozIdentificationUserWebInitializeModel;
 import com.alipay.api.domain.ZolozIdentificationUserWebQueryModel;
 import com.alipay.api.internal.util.StringUtils;
-import com.alipay.api.request.AlipayCommerceAdContractSignRequest;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorStationQueryRequest;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherBatchqueryRequest;
 import com.alipay.api.request.AlipayCommerceCityfacilitatorVoucherGenerateRequest;
@@ -103,7 +102,6 @@ import com.alipay.api.request.ZolozAuthenticationCustomerSmilepayInitializeReque
 import com.alipay.api.request.ZolozAuthenticationSmilepayInitializeRequest;
 import com.alipay.api.request.ZolozIdentificationUserWebInitializeRequest;
 import com.alipay.api.request.ZolozIdentificationUserWebQueryRequest;
-import com.alipay.api.response.AlipayCommerceAdContractSignResponse;
 import com.alipay.api.response.AlipayCommerceCityfacilitatorStationQueryResponse;
 import com.alipay.api.response.AlipayCommerceCityfacilitatorVoucherBatchqueryResponse;
 import com.alipay.api.response.AlipayCommerceCityfacilitatorVoucherGenerateResponse;
@@ -2741,30 +2739,6 @@ public class AliPayApi {
 	public static ZolozAuthenticationCustomerSmilepayInitializeResponse authenticationCustomerSmilePayInitialize(AlipayClient alipayClient, Boolean certModel, ZolozAuthenticationCustomerSmilepayInitializeModel model) throws AlipayApiException {
 		ZolozAuthenticationCustomerSmilepayInitializeRequest request = new ZolozAuthenticationCustomerSmilepayInitializeRequest();
 		request.setBizModel(model);
-		return doExecute(alipayClient, certModel, request);
-	}
-
-	/**
-	 * 生态激励项目ISV代签约接口
-	 *
-	 * @return {@link AlipayCommerceAdContractSignResponse}
-	 * @throws AlipayApiException 支付宝 Api 异常
-	 */
-	public static AlipayCommerceAdContractSignResponse commerceAdContractSign() throws AlipayApiException {
-		AlipayCommerceAdContractSignRequest request = new AlipayCommerceAdContractSignRequest();
-		return doExecute(request);
-	}
-
-	/**
-	 * 生态激励项目ISV代签约接口
-	 *
-	 * @param alipayClient {@link AlipayClient}
-	 * @param certModel    是否证书模式
-	 * @return {@link AlipayCommerceAdContractSignResponse}
-	 * @throws AlipayApiException 支付宝 Api 异常
-	 */
-	public static AlipayCommerceAdContractSignResponse commerceAdContractSign(AlipayClient alipayClient, Boolean certModel) throws AlipayApiException {
-		AlipayCommerceAdContractSignRequest request = new AlipayCommerceAdContractSignRequest();
 		return doExecute(alipayClient, certModel, request);
 	}
 

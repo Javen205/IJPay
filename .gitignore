@@ -61,3 +61,4 @@ build/
 
 dev/*
 *.log
+.playwright-cli
