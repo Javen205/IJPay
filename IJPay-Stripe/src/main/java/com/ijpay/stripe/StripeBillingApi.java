@@ -108,7 +108,7 @@ public class StripeBillingApi {
 	 * 列表查询商品
 	 *
 	 * @param params {@link ProductListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Product}>
+	 * @return {@link StripeCollection}&lt;{@link Product}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Product> listProducts(ProductListParams params) throws StripeException {
@@ -119,7 +119,7 @@ public class StripeBillingApi {
 	 * 搜索商品
 	 *
 	 * @param params {@link ProductSearchParams} 搜索参数
-	 * @return {@link StripeSearchResult}<{@link Product}>
+	 * @return {@link StripeSearchResult}&lt;{@link Product}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Product> searchProducts(ProductSearchParams params) throws StripeException {
@@ -178,7 +178,7 @@ public class StripeBillingApi {
 	 * 列表查询价格
 	 *
 	 * @param params {@link PriceListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Price}>
+	 * @return {@link StripeCollection}&lt;{@link Price}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Price> listPrices(PriceListParams params) throws StripeException {
@@ -189,7 +189,7 @@ public class StripeBillingApi {
 	 * 搜索价格
 	 *
 	 * @param params {@link PriceSearchParams} 搜索参数
-	 * @return {@link StripeSearchResult}<{@link Price}>
+	 * @return {@link StripeSearchResult}&lt;{@link Price}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Price> searchPrices(PriceSearchParams params) throws StripeException {
@@ -271,7 +271,7 @@ public class StripeBillingApi {
 	 * 列表查询订阅
 	 *
 	 * @param params {@link SubscriptionListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Subscription}>
+	 * @return {@link StripeCollection}&lt;{@link Subscription}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Subscription> listSubscriptions(SubscriptionListParams params) throws StripeException {
@@ -282,7 +282,7 @@ public class StripeBillingApi {
 	 * 搜索订阅
 	 *
 	 * @param params {@link SubscriptionSearchParams} 搜索参数
-	 * @return {@link StripeSearchResult}<{@link Subscription}>
+	 * @return {@link StripeSearchResult}&lt;{@link Subscription}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Subscription> searchSubscriptions(SubscriptionSearchParams params) throws StripeException {
@@ -349,7 +349,7 @@ public class StripeBillingApi {
 	}
 
 	/**
-	 * 终结发票(草稿 -> 待支付)
+	 * 终结发票(草稿 -&gt; 待支付)
 	 *
 	 * @param id 发票 ID(in_xxx)
 	 * @return {@link Invoice}
@@ -444,7 +444,7 @@ public class StripeBillingApi {
 	 * 列表查询发票
 	 *
 	 * @param params {@link InvoiceListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Invoice}>
+	 * @return {@link StripeCollection}&lt;{@link Invoice}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Invoice> listInvoices(InvoiceListParams params) throws StripeException {
@@ -455,7 +455,7 @@ public class StripeBillingApi {
 	 * 搜索发票
 	 *
 	 * @param params {@link InvoiceSearchParams} 搜索参数
-	 * @return {@link StripeSearchResult}<{@link Invoice}>
+	 * @return {@link StripeSearchResult}&lt;{@link Invoice}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Invoice> searchInvoices(InvoiceSearchParams params) throws StripeException {

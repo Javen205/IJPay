@@ -101,7 +101,7 @@ public class StripeCheckoutApi {
 	 * 列表查询 Checkout Session
 	 *
 	 * @param params {@link SessionListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Session}>
+	 * @return {@link StripeCollection}&lt;{@link Session}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Session> listSessions(SessionListParams params) throws StripeException {
@@ -160,7 +160,7 @@ public class StripeCheckoutApi {
 	 * 列表查询 Payment Link
 	 *
 	 * @param params {@link PaymentLinkListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link PaymentLink}>
+	 * @return {@link StripeCollection}&lt;{@link PaymentLink}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<PaymentLink> listPaymentLinks(PaymentLinkListParams params) throws StripeException {

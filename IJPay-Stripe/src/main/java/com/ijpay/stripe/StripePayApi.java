@@ -173,7 +173,7 @@ public class StripePayApi {
 	 * 列表查询 PaymentIntent
 	 *
 	 * @param params {@link PaymentIntentListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link PaymentIntent}>
+	 * @return {@link StripeCollection}&lt;{@link PaymentIntent}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<PaymentIntent> listPaymentIntents(PaymentIntentListParams params) throws StripeException {
@@ -184,7 +184,7 @@ public class StripePayApi {
 	 * 搜索 PaymentIntent
 	 *
 	 * @param params {@link PaymentIntentSearchParams} 搜索参数(使用 query 表达式)
-	 * @return {@link StripeSearchResult}<{@link PaymentIntent}>
+	 * @return {@link StripeSearchResult}&lt;{@link PaymentIntent}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<PaymentIntent> searchPaymentIntents(PaymentIntentSearchParams params) throws StripeException {
@@ -312,7 +312,7 @@ public class StripePayApi {
 	 * 列表查询 Charge
 	 *
 	 * @param params {@link ChargeListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Charge}>
+	 * @return {@link StripeCollection}&lt;{@link Charge}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Charge> listCharges(ChargeListParams params) throws StripeException {
@@ -323,7 +323,7 @@ public class StripePayApi {
 	 * 搜索 Charge
 	 *
 	 * @param params {@link ChargeSearchParams} 搜索参数
-	 * @return {@link StripeSearchResult}<{@link Charge}>
+	 * @return {@link StripeSearchResult}&lt;{@link Charge}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Charge> searchCharges(ChargeSearchParams params) throws StripeException {
@@ -405,7 +405,7 @@ public class StripePayApi {
 	 * 列表查询退款
 	 *
 	 * @param params {@link RefundListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Refund}>
+	 * @return {@link StripeCollection}&lt;{@link Refund}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Refund> listRefunds(RefundListParams params) throws StripeException {
@@ -510,7 +510,7 @@ public class StripePayApi {
 	 * 列表查询 SetupIntent
 	 *
 	 * @param params {@link SetupIntentListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link SetupIntent}>
+	 * @return {@link StripeCollection}&lt;{@link SetupIntent}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<SetupIntent> listSetupIntents(SetupIntentListParams params) throws StripeException {

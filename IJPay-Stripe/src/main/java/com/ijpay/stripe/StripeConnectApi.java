@@ -141,7 +141,7 @@ public class StripeConnectApi {
 	 * 列表查询子商户账户
 	 *
 	 * @param params {@link AccountListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Account}>
+	 * @return {@link StripeCollection}&lt;{@link Account}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Account> listAccounts(AccountListParams params) throws StripeException {
@@ -226,7 +226,7 @@ public class StripeConnectApi {
 	 * 列表查询转账
 	 *
 	 * @param params {@link TransferListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Transfer}>
+	 * @return {@link StripeCollection}&lt;{@link Transfer}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Transfer> listTransfers(TransferListParams params) throws StripeException {
@@ -331,7 +331,7 @@ public class StripeConnectApi {
 	 * 列表查询提现
 	 *
 	 * @param params {@link PayoutListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Payout}>
+	 * @return {@link StripeCollection}&lt;{@link Payout}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Payout> listPayouts(PayoutListParams params) throws StripeException {
@@ -379,7 +379,7 @@ public class StripeConnectApi {
 	 * 列表查询平台费用
 	 *
 	 * @param params {@link ApplicationFeeListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link ApplicationFee}>
+	 * @return {@link StripeCollection}&lt;{@link ApplicationFee}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<ApplicationFee> listApplicationFees(ApplicationFeeListParams params) throws StripeException {

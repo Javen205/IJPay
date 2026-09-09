@@ -92,7 +92,7 @@ public class StripeCustomerApi {
 	 * 列表查询客户
 	 *
 	 * @param params {@link CustomerListParams} 列表参数
-	 * @return {@link StripeCollection}<{@link Customer}>
+	 * @return {@link StripeCollection}&lt;{@link Customer}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<Customer> listCustomers(CustomerListParams params) throws StripeException {
@@ -103,7 +103,7 @@ public class StripeCustomerApi {
 	 * 搜索客户
 	 *
 	 * @param params {@link CustomerSearchParams} 搜索参数(使用 query 表达式)
-	 * @return {@link StripeSearchResult}<{@link Customer}>
+	 * @return {@link StripeSearchResult}&lt;{@link Customer}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeSearchResult<Customer> searchCustomers(CustomerSearchParams params) throws StripeException {
@@ -197,7 +197,7 @@ public class StripeCustomerApi {
 	 * 列表查询 PaymentMethod
 	 *
 	 * @param params {@link PaymentMethodListParams} 列表参数(通常需指定 customer 与 type)
-	 * @return {@link StripeCollection}<{@link PaymentMethod}>
+	 * @return {@link StripeCollection}&lt;{@link PaymentMethod}&gt;
 	 * @throws StripeException Stripe 异常
 	 */
 	public static StripeCollection<PaymentMethod> listPaymentMethods(PaymentMethodListParams params) throws StripeException {
