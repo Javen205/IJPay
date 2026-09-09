@@ -9,7 +9,7 @@ features:
 - title: 开箱即用
   details: 不依赖任何第三方 MVC 框架，仅仅作为工具使用，简单快速完成支付模块的开发，可轻松嵌入到任何系统里。
 - title: 渠道丰富
-  details: 支持微信支付、QQ钱包支付、支付宝支付、银联支付、京东支付等。
+  details: 支持微信支付、QQ钱包支付、支付宝支付、银联支付、京东支付、PayPal、Stripe、富友支付等。
 - title: 极简入门
   details: IJPay 一直以简洁至上、开箱即用为核心，提供完整示例简单修改配置即可使用。交流群：723992875  
 - title: 微信支付
@@ -20,6 +20,10 @@ features:
   details: 全渠道扫码支付、微信 App 支付、公众号&小程序支付、银联 JS 支付、支付宝服务窗支付
 - title: PayPal 支付
   details: 自动管理 AccessToken，极速接入各种常用的支付方式
+- title: Stripe 支付
+  details: 支持 PaymentIntent、Checkout 托管收银台、Customer、订阅等接口，Webhook 验签开箱即用
+- title: 富友支付
+  details: 富友聚合支付，覆盖公众号、小程序、APP、扫码、云闪付等交易方式
 - title: 个人微信支付
   details: 微信个人商户，最低费率 0.38%，官方直连的异步回调通知
 footer: Apache License 2.0 | Copyright © 2019-present Javen

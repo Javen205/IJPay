@@ -101,6 +101,34 @@ PayPal 支付
 </dependency>
 ```     
 
+:::: tip
+Stripe 支付
+::::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-Stripe</artifactId>
+    <version>latest-version</version>
+</dependency>
+```
+
+:::: tip
+富友支付
+::::
+
+在项目的 pom.xml 的 dependencies 中加入以下内容:
+
+```xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-FuiYou</artifactId>
+    <version>latest-version</version>
+</dependency>
+```
+
 ## 更多依赖方式
 
 - [了解更多](https://search.maven.org/search?q=IJPay)
