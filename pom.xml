@@ -208,18 +208,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--自动发布 Jar 到 Maven 仓库-->
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.13</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>nexus-release</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
 			<!--测试覆盖率统计工具插件-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -241,6 +229,19 @@
 			<id>release</id>
 			<build>
 				<plugins>
+					<!--通过 Sonatype Central Portal 发布到 Maven 中央仓库(OSSRH 已于 2025-06-30 关停)-->
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.11.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<!--对应 ~/.m2/settings.xml 中 server 的 id, 凭据为 Central Portal 生成的 User Token-->
+							<publishingServerId>central</publishingServerId>
+							<autoPublish>true</autoPublish>
+							<waitUntil>published</waitUntil>
+						</configuration>
+					</plugin>
 					<!-- GPG -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -258,16 +259,6 @@
 					</plugin>
 				</plugins>
 			</build>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>nexus-release</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-				</snapshotRepository>
-				<repository>
-					<id>nexus-release</id>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-				</repository>
-			</distributionManagement>
 		</profile>
 	</profiles>
 </project>
