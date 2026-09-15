@@ -26,6 +26,8 @@ features:
   details: 富友聚合支付，覆盖公众号、小程序、APP、扫码、云闪付等交易方式
 - title: 个人微信支付
   details: 微信个人商户，最低费率 0.38%，官方直连的异步回调通知
+- title: 更多支付方式
+  details: 敬请期待，接定制开发
 footer: Apache License 2.0 | Copyright © 2019-present Javen
 ---
 

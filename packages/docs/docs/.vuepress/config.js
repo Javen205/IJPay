@@ -56,8 +56,8 @@ module.exports = ctx => ( {
         },
     },
     plugins: [
-        ['@vuepress/back-to-top', true],
-        ['@vuepress/pwa', {
+        ['@vuepress/plugin-back-to-top', true],
+        ['@vuepress/plugin-pwa', {
             serviceWorker: true,
             // updatePopup: true,
             updatePopup: {
@@ -65,19 +65,9 @@ module.exports = ctx => ( {
                buttonText: "刷新"
             }
         }],
-        ['@vuepress/medium-zoom', true],
-        ['@vuepress/google-analytics', {
+        ['@vuepress/plugin-medium-zoom', true],
+        ['@vuepress/plugin-google-analytics', {
             ga: 'UA-146072085-2'
-        }],
-        ['container', {
-            type: 'vue',
-            before: '<pre class="vue-container"><code>',
-            after: '</code></pre>',
-        }],
-        ['container', {
-            type: 'upgrade',
-            before: info => `<UpgradePath title="${info}">`,
-            after: '</UpgradePath>',
         }],
     ],
     extraWatchFiles: [
