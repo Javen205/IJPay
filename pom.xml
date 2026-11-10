@@ -25,6 +25,9 @@
 		<module>IJPay-Stripe</module>
 		<module>IJPay-XPay</module>
 		<module>IJPay-FuiYou</module>
+		<module>IJPay-Servlet-Javax</module>
+		<module>IJPay-Servlet-Jakarta</module>
+		<module>IJPay-Jakarta</module>
 	</modules>
 
 	<licenses>

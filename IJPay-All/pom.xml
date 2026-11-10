@@ -81,6 +81,12 @@
 								<includes>
 									<include>${project.groupId}:*:*</include>
 								</includes>
+								<!-- 适配模块不能进入聚合包，避免 javax/jakarta 命名空间混合 -->
+								<excludes>
+									<exclude>${project.groupId}:IJPay-Servlet-Javax:*</exclude>
+									<exclude>${project.groupId}:IJPay-Servlet-Jakarta:*</exclude>
+									<exclude>${project.groupId}:IJPay-Jakarta:*</exclude>
+								</excludes>
 							</artifactSet>
 						</configuration>
 					</execution>

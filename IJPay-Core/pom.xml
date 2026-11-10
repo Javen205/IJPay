@@ -23,13 +23,6 @@
 		<bc.version>1.86</bc.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- 开源多维码生成工具 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
