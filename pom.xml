@@ -451,5 +451,73 @@
 			</build>
 		</profile>
 
+		<!-- 二进制兼容检查：与上一个发布版本 2.9.13 对比，仅比对已存在的模块。
+			 3.0.0 计划内的 Servlet 方法迁移通过 excludes 排除，其余二进制不兼容改动会使构建失败。
+			 3.0.0 新增的模块（IJPay-Servlet-Javax 等）在旧版本中不存在，由模块自身设置 japicmp.skip=true 显式跳过。 -->
+		<profile>
+			<id>japicmp</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.siom79.japicmp</groupId>
+						<artifactId>japicmp-maven-plugin</artifactId>
+						<version>0.27.0</version>
+						<configuration>
+							<oldVersion>
+								<dependency>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>2.9.13</version>
+									<type>jar</type>
+								</dependency>
+							</oldVersion>
+							<newVersion>
+								<file>
+									<path>${project.build.directory}/${project.build.finalName}.jar</path>
+								</file>
+							</newVersion>
+							<breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+							<breakBuildOnSourceIncompatibleModifications>false</breakBuildOnSourceIncompatibleModifications>
+							<parameter>
+								<onlyBinaryIncompatible>true</onlyBinaryIncompatible>
+								<ignoreMissingClasses>true</ignoreMissingClasses>
+								<skipPomModules>true</skipPomModules>
+								<!-- 3.0.0 计划内迁移到 IJPay-Servlet-* 的 Servlet 重载，仅排除这些签名，
+									 其余二进制不兼容变化仍会使构建失败 -->
+								<excludes>
+									<exclude>com.ijpay.core.kit.HttpKit#readData(javax.servlet.http.HttpServletRequest)</exclude>
+									<exclude>com.ijpay.core.kit.HttpKit#toMap(javax.servlet.http.HttpServletRequest)</exclude>
+									<exclude>com.ijpay.core.kit.IpKit#getRealIp(javax.servlet.http.HttpServletRequest)</exclude>
+									<exclude>com.ijpay.core.kit.IpKit#getRealIpV2(javax.servlet.http.HttpServletRequest)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#toMap(javax.servlet.http.HttpServletRequest)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#batchTrans(*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*,*,*)</exclude>
+								</excludes>
+							</parameter>
+						</configuration>
+						<executions>
+							<execution>
+								<id>japicmp</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>cmp</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
