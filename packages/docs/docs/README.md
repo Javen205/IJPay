@@ -43,6 +43,18 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 
 ### 当前最新版本
 
+IJPay 3.x 的所有模块共用同一个版本号，核心支付模块的坐标在 JDK 8 与 JDK 8 以上完全一致：
+
+``` xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-WxPay</artifactId>
+    <version>latest-version</version>
+</dependency>
+```
+
+需要一次性引入所有支付方式时使用 `IJPay-All`：
+
 ``` xml
 <dependency>
     <groupId>com.github.javen205</groupId>
@@ -51,8 +63,40 @@ footer: Apache License 2.0 | Copyright © 2019-present Javen
 </dependency>
 ```
 
+#### JDK 8（javax.servlet，Servlet 4.0）
+
+当代码需要 `HttpServletRequest` / `HttpServletResponse`（页面支付、读取回调报文、解析真实 IP）时，额外引入 javax 适配模块：
+
+``` xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-Servlet-Javax</artifactId>
+    <version>latest-version</version>
+</dependency>
+```
+
+适用于 Spring Boot 2.x、Tomcat 9 及以下、JFinal、Solon 等 javax 容器。
+
+#### JDK 17+（jakarta.servlet，Servlet 5.0）
+
+同样的场景改用 jakarta 适配模块：
+
+``` xml
+<dependency>
+    <groupId>com.github.javen205</groupId>
+    <artifactId>IJPay-Servlet-Jakarta</artifactId>
+    <version>latest-version</version>
+</dependency>
+```
+
+适用于 Spring Boot 3.x、Tomcat 10+、Jakarta EE 9+ 容器。也可以引入 pom 聚合依赖 `IJPay-Jakarta`（Maven 中必须声明 `<type>pom</type>`），一次带入常用支付模块与 jakarta 适配。
+
+#### 纯验签 / 下单等容器无关场景
+
+只做签名、验签、下单、查询时，**不需要**引入任何 Servlet 适配模块：`IJPay-Core`、`IJPay-WxPay`、`IJPay-AliPay` 等核心模块自身不依赖 Servlet API。
+
 ::: tip
- 当然，不同的支付方式也可以单独添加相关依赖 [了解更多](./guide/maven.md) 
+完整的 JDK / Servlet 对应关系见[支持矩阵](./guide/jdk/support-matrix.md)，2.x 升级到 3.x 的变更见[升级指南](./guide/jdk/migration-2.x-to-3.x.md)，Spring Boot 2.x / 3.x 的接入示例见[使用说明](./guide/jdk/usage.md)。不同支付方式单独引用的坐标见[安装依赖](./guide/maven.md)。
 :::
 
 ### 全民云计算
