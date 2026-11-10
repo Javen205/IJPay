@@ -19,9 +19,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<ijapy.version>2.9.13</ijapy.version>
-		<enjoy.version>4.3</enjoy.version>
-		<fastjson.version>2.0.64</fastjson.version>
+		<ijapy.version>3.0.0</ijapy.version>
+		<enjoy.version>5.3.0</enjoy.version>
+		<fastjson.version>2.0.66</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -72,20 +72,26 @@
 			<version>${ijapy.version}</version>
 		</dependency>
 
+		<!-- 3.0.0 起 Servlet 相关工具与页面支付方法迁入适配模块 -->
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-Servlet-Javax</artifactId>
+			<version>${ijapy.version}</version>
+		</dependency>
+
 		<!-- V2 SDK(alipay-sdk-java)传递依赖 okhttp 3.12.13，V3 SDK(alipay-sdk-java-v3) 需要 okhttp 4.x，
-			 二者共存时 Maven 仲裁选择旧版本导致 NoSuchMethodError，此处统一使用 okhttp 4.9.3 -->
+			 二者共存时 Maven 仲裁选择旧版本导致 NoSuchMethodError，此处统一使用 okhttp 4.12.0 -->
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>4.9.3</version>
+			<version>4.12.0</version>
 		</dependency>
 
-		<!-- okhttp 4.9.3 为 Kotlin 实现，需 kotlin-stdlib 1.4.10+，防止仲裁到 logging-interceptor 传递的低版本(1.2.71)；
-			 1.6.0 同时修复 CVE-2022-24329（受影响版本 <1.6.0） -->
+		<!-- okhttp 4.12.0 为 Kotlin 实现，统一 kotlin-stdlib 版本，避免仲裁到旧版本 -->
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib</artifactId>
-			<version>1.6.0</version>
+			<version>2.4.21</version>
 		</dependency>
 
 		<dependency>
@@ -133,7 +139,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.18.0</version>
+			<version>3.21.0</version>
 		</dependency>
 
 		<dependency>

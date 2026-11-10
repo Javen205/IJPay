@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、富友支付等常用的支付方式以及各种常用的接口。</p>
@@ -199,7 +200,7 @@ public class FuiYouController {
 	@RequestMapping(value = "/payNotify", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String payNotify(HttpServletRequest request) {
-		String readData = HttpKit.readData(request);
+		String readData = ServletHttpKit.readData(request);
 		log.info("支付通知数据:{}", readData);
 		FuiYouNotify notify = JSONUtil.toBean(readData, FuiYouNotify.class);
 		log.info("支付通知解析结果:{}", notify);

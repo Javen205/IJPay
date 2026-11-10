@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
+import com.ijpay.servlet.javax.ServletIpKit;
 
 @Controller
 @RequestMapping("/unionPay")
@@ -58,7 +60,7 @@ public class UnionPayController {
 			String authCode = request.getParameter("authCode");
 			String totalFee = request.getParameter("totalFee");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
@@ -253,7 +255,7 @@ public class UnionPayController {
 		try {
 			String notifyUrl = unionPayBean.getDomain().concat("/unionPay/payNotify");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
@@ -290,7 +292,7 @@ public class UnionPayController {
 
 			String notifyUrl = unionPayBean.getDomain().concat("/unionPay/payNotify");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (ip.contains(",")) {
 				ip = ip.split(",")[0];
 			}
@@ -335,7 +337,7 @@ public class UnionPayController {
 
 			String notifyUrl = unionPayBean.getDomain().concat("/unionPay/payNotify");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (ip.contains(",")) {
 				ip = ip.split(",")[0];
 			}
@@ -391,7 +393,7 @@ public class UnionPayController {
 
 			String notifyUrl = unionPayBean.getDomain().concat("/unionPay/payNotify");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (ip.contains(",")) {
 				ip = ip.split(",")[0];
 			}
@@ -462,7 +464,7 @@ public class UnionPayController {
 
 			String notifyUrl = unionPayBean.getDomain().concat("/unionPay/payNotify");
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (ip.contains(",")) {
 				ip = ip.split(",")[0];
 			}
@@ -529,7 +531,7 @@ public class UnionPayController {
 	@RequestMapping(value = "/payNotify", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String payNotify(HttpServletRequest request) {
-		String xmlMsg = HttpKit.readData(request);
+		String xmlMsg = ServletHttpKit.readData(request);
 		logger.info("支付通知=" + xmlMsg);
 		Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 

@@ -49,6 +49,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.*;
+import com.ijpay.servlet.javax.ServletHttpKit;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -948,7 +949,7 @@ public class WxPayV3Controller {
 			String signature = request.getHeader("Wechatpay-Signature");
 
 			log.info("timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
-			String result = HttpKit.readData(request);
+			String result = ServletHttpKit.readData(request);
 			log.info("支付通知密文 {}", result);
 			String plainText = null;
 			// 需要通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
@@ -989,7 +990,7 @@ public class WxPayV3Controller {
 			String signature = request.getHeader("Wechatpay-Signature");
 
 			log.info("退款通知 timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
-			String result = HttpKit.readData(request);
+			String result = ServletHttpKit.readData(request);
 			log.info("退款通知密文 {}", result);
 			String plainText = null;
 			// 需要通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号
