@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.13</version>
+		<version>3.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -14,6 +14,11 @@
 	<name>${project.artifactId}</name>
 	<description>IJPay 让支付触手可及(Easy Pay Library)-QQ 钱包</description>
 	<url>https://github.com/javen205/IJPay</url>
+
+	<properties>
+		<automatic.module.name>com.ijpay.qq</automatic.module.name>
+	</properties>
+
 
 	<dependencies>
 		<dependency>

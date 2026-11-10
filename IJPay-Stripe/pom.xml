@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.13</version>
+		<version>3.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,7 +16,8 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<stripe.version>33.4.1</stripe.version>
+		<automatic.module.name>com.ijpay.stripe</automatic.module.name>
+		<stripe.version>34.1.0</stripe.version>
 	</properties>
 
 	<dependencies>

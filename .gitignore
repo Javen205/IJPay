@@ -5,6 +5,7 @@
 
 ### maven ###
 target/
+dependency-reduced-pom.xml
 *.war
 *.ear
 *.zip
