@@ -1,0 +1,6 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: IJPay-Demo-SpringBoot3
