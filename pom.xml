@@ -363,7 +363,7 @@
 						<configuration>
 							<!--对应 ~/.m2/settings.xml 中 server 的 id, 凭据为 Central Portal 生成的 User Token-->
 							<publishingServerId>central</publishingServerId>
-							<autoPublish>true</autoPublish>
+							<autoPublish>false</autoPublish>
 							<waitUntil>published</waitUntil>
 						</configuration>
 					</plugin>
@@ -482,7 +482,8 @@
 								<onlyBinaryIncompatible>true</onlyBinaryIncompatible>
 								<ignoreMissingClasses>true</ignoreMissingClasses>
 								<skipPomModules>true</skipPomModules>
-								<!-- 3.0.0 计划内迁移到 IJPay-Servlet-* 的 Servlet 重载，仅排除这些签名，
+								<!-- 3.0.0 计划内迁移到 IJPay-Servlet-* 的 Servlet 重载，仅排除这些精确签名，
+									 不使用通配符，避免把同名但保留/新增的重载一起排除掉；
 									 其余二进制不兼容变化仍会使构建失败 -->
 								<excludes>
 									<exclude>com.ijpay.core.kit.HttpKit#readData(javax.servlet.http.HttpServletRequest)</exclude>
@@ -490,19 +491,29 @@
 									<exclude>com.ijpay.core.kit.IpKit#getRealIp(javax.servlet.http.HttpServletRequest)</exclude>
 									<exclude>com.ijpay.core.kit.IpKit#getRealIpV2(javax.servlet.http.HttpServletRequest)</exclude>
 									<exclude>com.ijpay.alipay.AliPayApi#toMap(javax.servlet.http.HttpServletRequest)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#batchTrans(*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPay(*,*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(*,*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePage(*,*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*,*)</exclude>
-									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(*,*,*,*,*,*)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#batchTrans(java.util.Map,java.lang.String,java.lang.String,javax.servlet.http.HttpServletResponse)</exclude>
+
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPay(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#wapPayByOutputStream(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradeWapPayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(javax.servlet.http.HttpServletResponse,java.lang.String,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,java.lang.String,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePage(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
+									<exclude>com.ijpay.alipay.AliPayApi#tradePageByOutputStream(com.alipay.api.AlipayClient,javax.servlet.http.HttpServletResponse,com.alipay.api.domain.AlipayTradePagePayModel,java.lang.String,java.lang.String,java.lang.String)</exclude>
 								</excludes>
 							</parameter>
 						</configuration>
