@@ -1,6 +1,7 @@
 package com.ijpay.demo.controller.wxpay;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -42,6 +43,8 @@ import java.util.Map;
 public class WxPayV3Controller {
 	private static final Logger log = LoggerFactory.getLogger(WxPayV3Controller.class);
 	private static final int OK = 200;
+	private static final String VERIFY_FAILED = "{\"code\":\"FAIL\",\"message\":\"应答签名验证失败\"}";
+	private static final String SYSTEM_ERROR = "{\"code\":\"FAIL\",\"message\":\"系统繁忙，请稍后再试\"}";
 
 	private final WxPayV3Bean wxPayV3Bean;
 
@@ -71,7 +74,7 @@ public class WxPayV3Controller {
 				.setNotify_url(wxPayV3Bean.getDomain().concat("/v3/payNotify"))
 				.setAmount(new Amount().setTotal(1));
 
-			log.info("统一下单参数 {}", JSONUtil.toJsonStr(unifiedOrderModel));
+			log.info("统一下单请求已发送");
 			IJPayHttpResponse response = WxPayApi.v3(
 				RequestMethodEnum.POST,
 				WxDomainEnum.CHINA.toString(),
@@ -83,14 +86,17 @@ public class WxPayV3Controller {
 				JSONUtil.toJsonStr(unifiedOrderModel),
 				AuthTypeEnum.RSA.getCode()
 			);
-			log.info("统一下单响应 {}", response);
-			// 使用微信支付公钥验证应答签名
+			log.info("统一下单响应 status={}", response.getStatus());
+			// 使用微信支付公钥验证应答签名，验签失败视为不可信响应，直接拒绝
 			boolean verifySignature = WxPayKit.verifyPublicKeySignature(response, wxPayV3Bean.getPlatformCertPath());
-			log.info("verifySignature: {}", verifySignature);
+			if (!verifySignature) {
+				log.error("统一下单应答验签失败");
+				return VERIFY_FAILED;
+			}
 			return response.getBody();
 		} catch (Exception e) {
 			log.error("微信支付统一下单异常", e);
-			return e.getMessage();
+			return SYSTEM_ERROR;
 		}
 	}
 
@@ -106,7 +112,7 @@ public class WxPayV3Controller {
 			IJPayHttpResponse response = WxPayApi.v3(
 				RequestMethodEnum.GET,
 				WxDomainEnum.CHINA.toString(),
-				String.format(BasePayApiEnum.ORDER_QUERY_BY_OUT_TRADE_NO.toString(), outTradeNo),
+				String.format(BasePayApiEnum.ORDER_QUERY_BY_OUT_TRADE_NO.toString(), URLUtil.encode(outTradeNo)),
 				wxPayV3Bean.getMchId(),
 				getSerialNumber(),
 				null,
@@ -114,16 +120,19 @@ public class WxPayV3Controller {
 				params,
 				AuthTypeEnum.RSA.getCode()
 			);
-			log.info("查询响应 {}", response);
+			log.info("查询响应 status={}", response.getStatus());
 			if (response.getStatus() == OK) {
 				boolean verifySignature = WxPayKit.verifyPublicKeySignature(response, wxPayV3Bean.getPlatformCertPath());
-				log.info("verifySignature: {}", verifySignature);
+				if (!verifySignature) {
+					log.error("订单查询应答验签失败");
+					return VERIFY_FAILED;
+				}
 				return response.getBody();
 			}
 			return JSONUtil.toJsonStr(response);
 		} catch (Exception e) {
 			log.error("微信支付订单查询异常", e);
-			return e.getMessage();
+			return SYSTEM_ERROR;
 		}
 	}
 
@@ -140,7 +149,7 @@ public class WxPayV3Controller {
 			String signature = request.getHeader("Wechatpay-Signature");
 
 			String body = ServletHttpKit.readData(request);
-			log.info("支付通知密文 {}", body);
+			log.info("收到支付通知 serialNo={}", serialNo);
 
 			String plainText = null;
 			// 微信支付公钥模式：serialNo 与商户配置的公钥 ID 一致时，使用公钥验签并解密
@@ -148,12 +157,11 @@ public class WxPayV3Controller {
 				plainText = WxPayKit.verifyPublicKeyNotify(body, signature, nonce, timestamp,
 					wxPayV3Bean.getApiKey3(), wxPayV3Bean.getPlatformCertPath());
 			}
-			log.info("支付通知明文 {}", plainText);
 
 			if (StrUtil.isNotEmpty(plainText)) {
 				// TODO 请在这里加上商户的业务逻辑程序代码，回调可能重复，需要做去重处理
 				JSONObject jsonObject = JSONUtil.parseObj(plainText);
-				log.info("outTradeNo={} tradeState={}", jsonObject.getStr("out_trade_no"), jsonObject.getStr("trade_state"));
+				log.info("支付通知 tradeState={}", jsonObject.getStr("trade_state"));
 				response.setStatus(OK);
 				result.put("code", "SUCCESS");
 				result.put("message", "SUCCESS");
