@@ -20,6 +20,8 @@ import com.jfinal.log.Log;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
+import com.ijpay.servlet.javax.ServletIpKit;
 
 /**
  * @author Javen
@@ -73,7 +75,7 @@ public class WxPayController extends WxPayApiController {
 	 * 注意：必须再web页面中发起支付且域名已添加到开发配置中
 	 */
 	public void wapPay() {
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -148,7 +150,7 @@ public class WxPayController extends WxPayApiController {
 			renderJson(new AjaxResult().addError("请输入数字金额"));
 			return;
 		}
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrUtil.isEmpty(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -231,7 +233,7 @@ public class WxPayController extends WxPayApiController {
 	 */
 	public void scanCodeNotify() {
 		try {
-			String result = HttpKit.readData(getRequest());
+			String result = ServletHttpKit.readData(getRequest());
 			log.info("scanCodeNotify>>>" + result);
 			/**
 			 * 获取返回的信息内容中各个参数的值
@@ -261,7 +263,7 @@ public class WxPayController extends WxPayApiController {
 
 			String packageSign = WxPayKit.createSign(packageParams, wxPayApiConfig.getPartnerKey(), SignType.MD5);
 
-			String ip = IpKit.getRealIp(getRequest());
+			String ip = ServletIpKit.getRealIp(getRequest());
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
@@ -328,7 +330,7 @@ public class WxPayController extends WxPayApiController {
 			return;
 		}
 
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -394,7 +396,7 @@ public class WxPayController extends WxPayApiController {
 			renderJson(new AjaxResult().addError("auth_code参数错误"));
 			return;
 		}
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -449,7 +451,7 @@ public class WxPayController extends WxPayApiController {
 	 */
 	public void appPay() {
 
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -505,7 +507,7 @@ public class WxPayController extends WxPayApiController {
 		//需要通过授权来获取openId
 		String openId = (String) getSession().getAttribute("openId");
 
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -560,7 +562,7 @@ public class WxPayController extends WxPayApiController {
 		String openId = getSessionAttr("openId");
 		openId = "oRMVFv8zhSH--EhJiu3z9G3kNX-o";
 
-		String ip = IpKit.getRealIp(getRequest());
+		String ip = ServletIpKit.getRealIp(getRequest());
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -754,7 +756,7 @@ public class WxPayController extends WxPayApiController {
 	 * 退款通知
 	 */
 	public String refundNotify() {
-		String xmlMsg = HttpKit.readData(getRequest());
+		String xmlMsg = ServletHttpKit.readData(getRequest());
 		log.info("退款通知=" + xmlMsg);
 		Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 
@@ -778,7 +780,7 @@ public class WxPayController extends WxPayApiController {
 	 * 异步通知
 	 */
 	public void payNotify() {
-		String xmlMsg = HttpKit.readData(getRequest());
+		String xmlMsg = ServletHttpKit.readData(getRequest());
 		System.out.println("支付通知=" + xmlMsg);
 		Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 

@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.13</version>
+		<version>3.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,7 +16,8 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<alipay.version>3.1.88.ALL</alipay.version>
+		<automatic.module.name>com.ijpay.alipay.v3</automatic.module.name>
+		<alipay.version>3.1.89.ALL</alipay.version>
 	</properties>
 
 	<dependencies>
@@ -24,6 +25,25 @@
 			<groupId>com.alipay.sdk</groupId>
 			<artifactId>alipay-sdk-java-v3</artifactId>
 			<version>${alipay.version}</version>
+			<exclusions>
+				<!-- 官方 SDK 固定传递旧坐标且含已知漏洞，统一替换为根 dependencyManagement 管理的安全版本 -->
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk18on</artifactId>
 		</dependency>
 	</dependencies>
 

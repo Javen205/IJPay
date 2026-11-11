@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.AliPayServletApi;
 
 /**
  * @author Javen
@@ -129,7 +130,7 @@ public class AliPayController extends AliPayApiController {
 		model.setProductCode("QUICK_WAP_PAY");
 
 		try {
-			AliPayApi.wapPay(getResponse(), model, returnUrl, notifyUrl);
+			AliPayServletApi.wapPay(getResponse(), model, returnUrl, notifyUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,7 +169,7 @@ public class AliPayController extends AliPayApiController {
 			extendParams.setHbFqSellerPercent("0");
 			model.setExtendParams(extendParams);
 
-			AliPayApi.tradePage(getResponse(), model, notifyUrl, returnUrl);
+			AliPayServletApi.tradePage(getResponse(), model, notifyUrl, returnUrl);
 			renderNull();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -602,7 +603,7 @@ public class AliPayController extends AliPayApiController {
 			params.put("batch_fee", 10.00 + "");
 			params.put("email", "xx@xxx.com");
 
-			AliPayApi.batchTrans(params, AliPayApiConfigKit.getAliPayApiConfig().getPrivateKey(), signType, getResponse());
+			AliPayServletApi.batchTrans(params, AliPayApiConfigKit.getAliPayApiConfig().getPrivateKey(), signType, getResponse());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -638,7 +639,7 @@ public class AliPayController extends AliPayApiController {
 	public void returnUrl() {
 		try {
 			// 获取支付宝GET过来反馈信息
-			Map<String, String> map = AliPayApi.toMap(getRequest());
+			Map<String, String> map = AliPayServletApi.toMap(getRequest());
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -665,7 +666,7 @@ public class AliPayController extends AliPayApiController {
 	public void certReturnUrl() {
 		try {
 			// 获取支付宝GET过来反馈信息
-			Map<String, String> map = AliPayApi.toMap(getRequest());
+			Map<String, String> map = AliPayServletApi.toMap(getRequest());
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -692,7 +693,7 @@ public class AliPayController extends AliPayApiController {
 	public void notifyUrl() {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = AliPayApi.toMap(getRequest());
+			Map<String, String> params = AliPayServletApi.toMap(getRequest());
 
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -720,7 +721,7 @@ public class AliPayController extends AliPayApiController {
 	public void certNotifyUrl() {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = AliPayApi.toMap(getRequest());
+			Map<String, String> params = AliPayServletApi.toMap(getRequest());
 
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());

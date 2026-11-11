@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
+import com.ijpay.servlet.javax.ServletIpKit;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -103,7 +105,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	 */
 	@RequestMapping(value = "/wapPay", method = {RequestMethod.POST, RequestMethod.GET})
 	public void wapPay(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -176,7 +178,7 @@ public class WxPayController extends AbstractWxPayApiController {
 		if (StrUtil.isEmpty(totalFee)) {
 			return new AjaxResult().addError("请输入数字金额");
 		}
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrUtil.isEmpty(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -263,7 +265,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@ResponseBody
 	public String scanCodeNotify(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String result = HttpKit.readData(request);
+			String result = ServletHttpKit.readData(request);
 			log.info("scanCodeNotify>>>" + result);
 			/**
 			 * 获取返回的信息内容中各个参数的值
@@ -293,7 +295,7 @@ public class WxPayController extends AbstractWxPayApiController {
 
 			String packageSign = WxPayKit.createSign(packageParams, wxPayApiConfig.getPartnerKey(), SignType.MD5);
 
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
@@ -362,7 +364,7 @@ public class WxPayController extends AbstractWxPayApiController {
 			return new AjaxResult().addError("支付金额不能为空");
 		}
 
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -426,7 +428,7 @@ public class WxPayController extends AbstractWxPayApiController {
 		if (StrKit.isBlank(authCode)) {
 			return new AjaxResult().addError("auth_code参数错误");
 		}
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -481,7 +483,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@ResponseBody
 	public AjaxResult appPay(HttpServletRequest request) {
 
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -537,7 +539,7 @@ public class WxPayController extends AbstractWxPayApiController {
 		//需要通过授权来获取openId
 		String openId = (String) request.getSession().getAttribute("openId");
 
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -614,7 +616,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@ResponseBody
 	public String transfer(HttpServletRequest request, @RequestParam("openId") String openId) {
 
-		String ip = IpKit.getRealIp(request);
+		String ip = ServletIpKit.getRealIp(request);
 		if (StrKit.isBlank(ip)) {
 			ip = "127.0.0.1";
 		}
@@ -878,7 +880,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@RequestMapping(value = "/refundNotify", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String refundNotify(HttpServletRequest request) {
-		String xmlMsg = HttpKit.readData(request);
+		String xmlMsg = ServletHttpKit.readData(request);
 		log.info("退款通知=" + xmlMsg);
 		Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 
@@ -902,7 +904,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@ResponseBody
 	public String sendRedPack(HttpServletRequest request, @RequestParam("openId") String openId) {
 		try {
-			String ip = IpKit.getRealIp(request);
+			String ip = ServletIpKit.getRealIp(request);
 			if (StrKit.isBlank(ip)) {
 				ip = "127.0.0.1";
 			}
@@ -940,7 +942,7 @@ public class WxPayController extends AbstractWxPayApiController {
 	@RequestMapping(value = "/payNotify", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String payNotify(HttpServletRequest request) {
-		String xmlMsg = HttpKit.readData(request);
+		String xmlMsg = ServletHttpKit.readData(request);
 		log.info("支付通知=" + xmlMsg);
 		Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
 

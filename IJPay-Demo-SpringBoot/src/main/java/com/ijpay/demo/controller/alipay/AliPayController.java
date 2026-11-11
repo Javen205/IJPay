@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.AliPayServletApi;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -169,7 +170,7 @@ public class AliPayController extends AbstractAliPayApiController {
 		model.setProductCode("QUICK_WAP_PAY");
 
 		try {
-			AliPayApi.wapPay(response, model, returnUrl, notifyUrl);
+			AliPayServletApi.wapPay(response, model, returnUrl, notifyUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -207,10 +208,10 @@ public class AliPayController extends AbstractAliPayApiController {
 //            extendParams.setHbFqSellerPercent("0");
 //            model.setExtendParams(extendParams);
 
-			AliPayApi.tradePage(response, model, notifyUrl, returnUrl);
+			AliPayServletApi.tradePage(response, model, notifyUrl, returnUrl);
 			// https://opensupport.alipay.com/support/helpcenter/192/201602488772?ant_source=antsupport
 			// Alipay Easy SDK（新版）目前只支持输出form表单，不支持打印出url链接。
-			// AliPayApi.tradePage(response, "GET", model, notifyUrl, returnUrl);
+			// AliPayServletApi.tradePage(response, "GET", model, notifyUrl, returnUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -666,7 +667,7 @@ public class AliPayController extends AbstractAliPayApiController {
 			params.put("batch_fee", 10.00 + "");
 			params.put("email", "xx@xxx.com");
 
-			AliPayApi.batchTrans(params, aliPayBean.getPrivateKey(), signType, response);
+			AliPayServletApi.batchTrans(params, aliPayBean.getPrivateKey(), signType, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -704,7 +705,7 @@ public class AliPayController extends AbstractAliPayApiController {
 	public String returnUrl(HttpServletRequest request) {
 		try {
 			// 获取支付宝GET过来反馈信息
-			Map<String, String> map = AliPayApi.toMap(request);
+			Map<String, String> map = AliPayServletApi.toMap(request);
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -733,7 +734,7 @@ public class AliPayController extends AbstractAliPayApiController {
 	public String certReturnUrl(HttpServletRequest request) {
 		try {
 			// 获取支付宝GET过来反馈信息
-			Map<String, String> map = AliPayApi.toMap(request);
+			Map<String, String> map = AliPayServletApi.toMap(request);
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
 			}
@@ -763,7 +764,7 @@ public class AliPayController extends AbstractAliPayApiController {
 	public String notifyUrl(HttpServletRequest request) {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = AliPayApi.toMap(request);
+			Map<String, String> params = AliPayServletApi.toMap(request);
 
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -791,7 +792,7 @@ public class AliPayController extends AbstractAliPayApiController {
 	public String certNotifyUrl(HttpServletRequest request) {
 		try {
 			// 获取支付宝POST过来反馈信息
-			Map<String, String> params = AliPayApi.toMap(request);
+			Map<String, String> params = AliPayServletApi.toMap(request);
 
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				System.out.println(entry.getKey() + " = " + entry.getValue());

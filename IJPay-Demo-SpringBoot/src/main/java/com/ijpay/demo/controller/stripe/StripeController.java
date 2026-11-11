@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -264,7 +265,7 @@ public class StripeController {
 	@RequestMapping(value = "/webhook", method = RequestMethod.POST)
 	@ResponseBody
 	public String webhook(HttpServletRequest request, HttpServletResponse response) {
-		String payload = HttpKit.readData(request);
+		String payload = ServletHttpKit.readData(request);
 		String sigHeader = request.getHeader("Stripe-Signature");
 		try {
 			Event event = StripeApi.constructEvent(payload, sigHeader);

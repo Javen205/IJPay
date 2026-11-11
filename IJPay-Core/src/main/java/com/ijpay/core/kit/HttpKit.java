@@ -2,9 +2,9 @@ package com.ijpay.core.kit;
 
 import com.ijpay.core.http.AbstractHttpDelegate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +33,16 @@ public class HttpKit {
 		HttpKit.delegate = delegate;
 	}
 
-	public static String readData(HttpServletRequest request) {
-		BufferedReader br = null;
+	/**
+	 * 读取字符流内容。本方法不会关闭传入的 {@link Reader}，流生命周期由调用方负责。
+	 *
+	 * @param reader 字符流
+	 * @return 读取到的内容，行之间以 {@code \n} 分隔
+	 */
+	public static String readData(Reader reader) {
 		try {
 			StringBuilder result = new StringBuilder();
-			br = request.getReader();
+			BufferedReader br = new BufferedReader(reader);
 			for (String line; (line = br.readLine()) != null; ) {
 				if (result.length() > 0) {
 					result.append("\n");
@@ -47,35 +52,39 @@ public class HttpKit {
 			return result.toString();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 
 	/**
-	 * 将同步通知的参数转化为Map
+	 * 将同步通知的参数转化为 Map。
+	 * <p>
+	 * 参数来源由调用方负责（Servlet 的 {@code getParameterMap()}、Spring 的
+	 * {@code @RequestParam Map}、自建路由等），核心不再依赖任何容器类型。
 	 *
-	 * @param request {@link HttpServletRequest}
-	 * @return 转化后的 Map
+	 * @param params 参数名到多值数组的 Map
+	 * @return 转化后的 Map，多值以英文逗号拼接
 	 */
-	public static Map<String, String> toMap(HttpServletRequest request) {
-		Map<String, String> params = new HashMap<>();
-		Map<String, String[]> requestParams = request.getParameterMap();
-		for (String name : requestParams.keySet()) {
-			String[] values = requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-			}
-			params.put(name, valueStr);
+	public static Map<String, String> toMap(Map<String, String[]> params) {
+		Map<String, String> result = new HashMap<>();
+		if (params == null) {
+			return result;
 		}
-		return params;
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
+			String[] values = entry.getValue();
+			if (values == null) {
+				result.put(entry.getKey(), "");
+				continue;
+			}
+			StringBuilder valueStr = new StringBuilder();
+			for (int i = 0; i < values.length; i++) {
+				if (i > 0) {
+					valueStr.append(",");
+				}
+				valueStr.append(values[i]);
+			}
+			result.put(entry.getKey(), valueStr.toString());
+		}
+		return result;
 	}
 }
 

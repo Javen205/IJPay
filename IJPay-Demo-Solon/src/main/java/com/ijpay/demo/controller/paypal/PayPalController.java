@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
 
 @Controller
 @Mapping("/payPal")
@@ -284,7 +285,7 @@ public class PayPalController {
 
 	@Mapping("/cancel")
 	public String cancelUrl(HttpServletRequest request, HttpServletResponse response) {
-		String readData = HttpKit.readData(request);
+		String readData = ServletHttpKit.readData(request);
 		System.out.println(readData);
 		return readData;
 	}

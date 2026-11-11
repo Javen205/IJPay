@@ -1,0 +1,228 @@
+name: build
+
+on:
+  push:
+    branches: [ master, dev ]
+  pull_request:
+    branches: [ master, dev ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 多 JDK 编译验证：所有依赖字节码由 enforcer 限制为 <= Java 8，
+  # 产物 class major version 由 quality-checks 统一断言为 52。
+  matrix-build:
+    name: JDK ${{ matrix.java }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    continue-on-error: ${{ matrix.experimental || false }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 基线：JDK 8 必须通过，产物字节码为 52
+          - java: '8'
+          - java: '11'
+          - java: '17'
+            coverage: true
+          - java: '21'
+          # 前瞻验证：允许失败，不阻塞主干
+          - java: '25'
+            experimental: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      # 缓存 key 同时包含 pom 与 wrapper 配置，避免换 Maven 版本后复用旧缓存
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Build and verify
+        run: ./mvnw -B -V clean verify ${{ matrix.coverage && '-Pcoverage' || '' }}
+      - name: Upload JaCoCo reports
+        if: matrix.coverage
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: jacoco-reports
+          path: '**/target/site/jacoco/**'
+          if-no-files-found: ignore
+
+  # 质量校验：Wrapper、依赖字节码护栏、japicmp 二进制兼容、javadoc 产物、class 版本断言。
+  # 这些校验在 JDK 17 上执行，与本地已验证的等效命令一致。
+  quality-checks:
+    name: Quality checks (JDK 17)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Maven Wrapper 校验：固定 HTTPS 分发地址与 Maven 版本，且 wrapper 可正常启动
+      - name: Validate Maven Wrapper
+        run: |
+          set -e
+          grep -q '^distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/' .mvn/wrapper/maven-wrapper.properties
+          grep -q 'apache-maven-3\.9\.[0-9]*-bin\.zip' .mvn/wrapper/maven-wrapper.properties
+          ./mvnw -v
+
+      # clean verify 同时覆盖：
+      # - maven-enforcer-plugin enforceBytecodeVersion(依赖 base 字节码 <= Java 8)
+      # - bannedDependencies(禁止 dom4j:dom4j / bcprov-jdk15on 旧坐标回归)
+      # - animal-sniffer(java18 signature)
+      # - javadoc / source jar 生成
+      # - japicmp 与上一个发布版本 2.9.13 的二进制兼容对比
+      - name: Verify dependencies and binary compatibility
+        run: ./mvnw -B -V clean verify -Pjapicmp
+
+      # class 版本断言：所有模块 target/classes 下的 class 必须是 major 52(Java 8)
+      - name: Assert class file major version is 52
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import struct
+          import sys
+
+          bad = []
+          count = 0
+          for path in pathlib.Path('.').glob('*/target/classes/**/*.class'):
+              header = path.read_bytes()[:8]
+              if len(header) < 8:
+                  bad.append(f'{path}: truncated class file')
+                  continue
+              major = struct.unpack('>H', header[6:8])[0]
+              count += 1
+              if major != 52:
+                  bad.append(f'{path}: major version {major}, expected 52')
+          print(f'checked {count} class files, major version 52')
+          if bad:
+              print('\n'.join(bad))
+              sys.exit(1)
+          if count == 0:
+              print('no class files found')
+              sys.exit(1)
+          PY
+
+      # javadoc 产物断言：reactor 内全部 jar 模块(共 14 个)必须各自产出 javadoc jar，
+      # 逐个点名检查，任一模块 javadoc 失效（例如新增源码导致 javadoc 报错被吞掉）都会失败
+      - name: Assert javadoc artifacts
+        run: |
+          set -e
+          expected_modules="IJPay-AliPay IJPay-AliPay-V3 IJPay-All IJPay-Core IJPay-FuiYou IJPay-JDPay IJPay-PayPal IJPay-QQ IJPay-Servlet-Jakarta IJPay-Servlet-Javax IJPay-Stripe IJPay-UnionPay IJPay-WxPay IJPay-XPay"
+          missing=""
+          for module in $expected_modules; do
+            if [ ! -f "$module/target/IJPay-javadoc.jar" ]; then
+              echo "::error::missing javadoc jar: $module/target/IJPay-javadoc.jar"
+              missing="$missing $module"
+            fi
+          done
+          count=$(ls */target/IJPay-javadoc.jar 2>/dev/null | wc -l | tr -d ' ')
+          echo "javadoc jars: $count (expected 14)"
+          if [ -n "$missing" ]; then
+            echo "javadoc jar missing for:$missing"
+            exit 1
+          fi
+          test "$count" -eq 14
+
+      - name: Upload japicmp reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: japicmp-reports
+          path: '*/target/japicmp/*'
+          if-no-files-found: ignore
+
+  # 发布链路 dry-run：使用一次性测试 GPG key 在 verify 阶段完成真实签名，
+  # 验证 source/javadoc jar、GPG 签名与 Central 发布插件前置条件（不会上传）。
+  release-dry-run:
+    name: Release dry-run with GPG signing (JDK 17)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      # 每次运行生成一次性无口令 GPG key，仅用于本次签名验证
+      - name: Create ephemeral GPG key
+        run: |
+          set -e
+          export GNUPGHOME="$(mktemp -d)"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          gpg --batch --passphrase '' --quick-generate-key 'IJPay CI <ci@ijpay.invalid>' rsa2048 sign 1d
+          gpg --batch --list-keys
+      - name: Package and sign release artifacts without publishing
+        run: ./mvnw -B -V -Prelease -DskipTests -Dgpg.passphrase= verify
+
+  # Demo 编译验证：Demo 不属于 reactor，单独编译以发现适配模块迁移遗漏。
+  # 本地已验证 JDK 8/17 下三个 Demo 均可编译。
+  demo-smoke:
+    name: Demo compile (JDK ${{ matrix.java }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ '8', '17' ]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Install IJPay modules
+        run: ./mvnw -B -V install -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+      - name: Compile demos
+        run: |
+          ./mvnw -B -f IJPay-Demo-SpringBoot/pom.xml -DskipTests package
+          ./mvnw -B -f IJPay-Demo-Solon/pom.xml -DskipTests package
+          ./mvnw -B -f IJPay-Demo-JFinal/pom.xml -DskipTests package
+      # Spring Boot 3 示例最低要求 JDK 17，仅在 17 腿编译
+      - name: Compile Spring Boot 3 demo
+        if: matrix.java == '17'
+        run: ./mvnw -B -f IJPay-Demo-SpringBoot3/pom.xml -DskipTests package

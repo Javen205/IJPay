@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>IJPay</artifactId>
+		<groupId>com.github.javen205</groupId>
+		<version>3.0.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+
+	<artifactId>IJPay-Servlet-Javax</artifactId>
+	<name>${project.artifactId}</name>
+	<description>IJPay 让支付触手可及(Easy Pay Library)-javax.servlet 适配模块</description>
+	<url>https://github.com/javen205/IJPay</url>
+
+	<properties>
+		<automatic.module.name>com.ijpay.servlet.javax</automatic.module.name>
+		<!-- 3.0.0 新增模块，旧版本 2.9.13 中不存在，显式跳过 japicmp 以免产出虚假的"通过"报告 -->
+		<japicmp.skip>true</japicmp.skip>
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>IJPay-Core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>IJPay-AliPay</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- provided：适配模块编译期需要，使用方由其容器提供，不传递 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>

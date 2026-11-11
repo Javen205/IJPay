@@ -112,6 +112,15 @@ function getGuideSidebar (groupA, groupB,groupC,groupD,groupE,groupF,groupG,grou
             ]
         },
         {
+            title: 'JDK 与容器适配',
+            collapsable: false,
+            children: [
+                'jdk/support-matrix',
+                'jdk/migration-2.x-to-3.x',
+                'jdk/usage',
+            ]
+        },
+        {
             title: groupD,
             collapsable: false,
             children: [

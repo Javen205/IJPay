@@ -11,6 +11,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.IJPayHttpResponse;
+import com.ijpay.core.enums.AuthTypeEnum;
 import com.ijpay.core.enums.RequestMethodEnum;
 import com.ijpay.core.kit.AesUtil;
 import com.ijpay.core.kit.HttpKit;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.ijpay.servlet.javax.ServletHttpKit;
 
 /**
  * <p>IJPay 让支付触手可及，封装了微信支付、支付宝支付、银联支付常用的支付方式以及各种常用的接口。</p>
@@ -506,7 +508,7 @@ public class WxPayV3Controller {
 			System.out.println(encrypt);
 			// 敏感信息解密
 			String encryptStr = "";
-			PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath());
+			PrivateKey privateKey = PayKit.getPrivateKey(wxPayV3Bean.getKeyPath(), AuthTypeEnum.RSA.getCode());
 			String decrypt = PayKit.rsaDecryptOAEP(encryptStr, privateKey);
 			System.out.println(decrypt);
 		} catch (Exception e) {
@@ -693,7 +695,7 @@ public class WxPayV3Controller {
 			String signature = request.getHeader("Wechatpay-Signature");
 
 			log.info("timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
-			String result = HttpKit.readData(request);
+			String result = ServletHttpKit.readData(request);
 			log.info("支付通知密文 {}", result);
 
 			// 需要通过证书序列号查找对应的证书，verifyNotify 中有验证证书的序列号

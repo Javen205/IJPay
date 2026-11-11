@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>IJPay</artifactId>
 		<groupId>com.github.javen205</groupId>
-		<version>2.9.13</version>
+		<version>3.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -16,8 +16,9 @@
 	<url>https://github.com/javen205/IJPay</url>
 
 	<properties>
-		<alipay.version>4.40.965.ALL</alipay.version>
-		<fastjson.version>2.0.64</fastjson.version>
+		<automatic.module.name>com.ijpay.alipay</automatic.module.name>
+		<alipay.version>4.40.1067.ALL</alipay.version>
+		<fastjson.version>2.0.66</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -48,12 +49,6 @@
 					<groupId>com.squareup.okio</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
