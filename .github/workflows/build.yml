@@ -19,7 +19,8 @@ jobs:
   # 产物 class major version 由 quality-checks 统一断言为 52。
   matrix-build:
     name: JDK ${{ matrix.java }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental || false }}
     strategy:
       fail-fast: false
@@ -35,18 +36,27 @@ jobs:
           - java: '25'
             experimental: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-          cache: maven
+      # 缓存 key 同时包含 pom 与 wrapper 配置，避免换 Maven 版本后复用旧缓存
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Build and verify
         run: ./mvnw -B -V clean verify ${{ matrix.coverage && '-Pcoverage' || '' }}
       - name: Upload JaCoCo reports
         if: matrix.coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: jacoco-reports
           path: '**/target/site/jacoco/**'
@@ -56,14 +66,23 @@ jobs:
   # 这些校验在 JDK 17 上执行，与本地已验证的等效命令一致。
   quality-checks:
     name: Quality checks (JDK 17)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       # Maven Wrapper 校验：固定 HTTPS 分发地址与 Maven 版本，且 wrapper 可正常启动
       - name: Validate Maven Wrapper
@@ -123,7 +142,7 @@ jobs:
               missing="$missing $module"
             fi
           done
-          count=$(ls */target/IJPay-javadoc.jar | wc -l | tr -d ' ')
+          count=$(ls */target/IJPay-javadoc.jar 2>/dev/null | wc -l | tr -d ' ')
           echo "javadoc jars: $count (expected 14)"
           if [ -n "$missing" ]; then
             echo "javadoc jar missing for:$missing"
@@ -133,42 +152,69 @@ jobs:
 
       - name: Upload japicmp reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: japicmp-reports
           path: '*/target/japicmp/*'
           if-no-files-found: ignore
 
-  # 发布链路 dry-run：验证 source/javadoc jar、GPG 签名前置条件与 Central 插件可解析
+  # 发布链路 dry-run：使用一次性测试 GPG key 在 verify 阶段完成真实签名，
+  # 验证 source/javadoc jar、GPG 签名与 Central 发布插件前置条件（不会上传）。
   release-dry-run:
-    name: Release dry-run (JDK 17)
-    runs-on: ubuntu-latest
+    name: Release dry-run with GPG signing (JDK 17)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
-      - name: Package release artifacts without publishing
-        run: ./mvnw -B -V -Prelease -DskipTests -Dgpg.skip=true package
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      # 每次运行生成一次性无口令 GPG key，仅用于本次签名验证
+      - name: Create ephemeral GPG key
+        run: |
+          set -e
+          export GNUPGHOME="$(mktemp -d)"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          gpg --batch --passphrase '' --quick-generate-key 'IJPay CI <ci@ijpay.invalid>' rsa2048 sign 1d
+          gpg --batch --list-keys
+      - name: Package and sign release artifacts without publishing
+        run: ./mvnw -B -V -Prelease -DskipTests -Dgpg.passphrase= verify
 
   # Demo 编译验证：Demo 不属于 reactor，单独编译以发现适配模块迁移遗漏。
   # 本地已验证 JDK 8/17 下三个 Demo 均可编译。
   demo-smoke:
     name: Demo compile (JDK ${{ matrix.java }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         java: [ '8', '17' ]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-          cache: maven
+      - name: Cache Maven repository and wrapper
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '.mvn/wrapper/maven-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Install IJPay modules
         run: ./mvnw -B -V install -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
       - name: Compile demos
