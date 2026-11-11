@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AliPayApiToMapTest {
@@ -18,6 +19,21 @@ public class AliPayApiToMapTest {
 
 		Assert.assertEquals("", result.get("nullValue"));
 		Assert.assertEquals("1,2", result.get("multi"));
+	}
+
+	@Test
+	public void toMapKeepsMultiValueOrderAndEmptyValues() {
+		Map<String, String[]> requestParams = new LinkedHashMap<String, String[]>();
+		requestParams.put("ordered", new String[]{"3", "1", "2"});
+		requestParams.put("empty", new String[0]);
+		requestParams.put("blank", new String[]{""});
+
+		Map<String, String> result = AliPayApi.toMap(requestParams);
+
+		Assert.assertEquals("3,1,2", result.get("ordered"));
+		Assert.assertEquals("", result.get("empty"));
+		Assert.assertEquals("", result.get("blank"));
+		Assert.assertEquals(3, result.size());
 	}
 
 	@Test

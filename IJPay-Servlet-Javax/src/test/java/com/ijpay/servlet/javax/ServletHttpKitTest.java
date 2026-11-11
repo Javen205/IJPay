@@ -43,6 +43,7 @@ public class ServletHttpKitTest {
 		} finally {
 			System.setErr(originalErr);
 		}
+		Assert.assertTrue("关闭失败前仍应尝试关闭 Reader", stub.isReaderClosed());
 		Assert.assertEquals("关闭失败的 Reader 不应输出堆栈", 0, captured.size());
 	}
 

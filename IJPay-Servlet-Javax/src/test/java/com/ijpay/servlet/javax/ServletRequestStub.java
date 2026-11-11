@@ -38,6 +38,11 @@ final class ServletRequestStub {
 		return this;
 	}
 
+	ServletRequestStub nullParameter(String name) {
+		parameters.put(name, null);
+		return this;
+	}
+
 	ServletRequestStub remoteAddr(String remoteAddr) {
 		this.remoteAddr = remoteAddr;
 		return this;
